@@ -1,5 +1,6 @@
 import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { IProduct } from "../../app/interfaces/IProduct";
 
 interface IProps {
@@ -35,8 +36,8 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Share</Button>
-          <Button size="small">Learn More</Button>
+          <Button size="small">ADD TO CARD</Button>
+          <Button component={NavLink} to={`/catalog/${product.id}`} size="small">VIEW MORE</Button>
         </CardActions>
       </Card>
     </>
