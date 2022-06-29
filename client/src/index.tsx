@@ -1,16 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import App from './app/layout/App';
 import './app/layout/style.css';
+import { createBrowserHistory } from 'history';
+
+export const history = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <HistoryRouter history={history}>
       <App />
-    </BrowserRouter>
+    </HistoryRouter>
   </React.StrictMode>
 );
