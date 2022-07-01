@@ -7,6 +7,7 @@ const sleep = (s: number) => new Promise(resolve => setTimeout(resolve, s * 1000
 
 // this is the type of the error from the server
 axios.defaults.baseURL = "http://localhost:5000/api/";
+axios.defaults.withCredentials = true;
 
 // this is the type of the response from the server
 const responseBody = (response: AxiosResponse) => response.data;
@@ -65,9 +66,16 @@ const TestError = {
     getValidationError: () => requests.get('buggy/validation-error'),
 }
 
+const Basket = {
+    get: () => requests.get('basket'),
+    addItem: (productId: number, quantity = 1) => requests.post(`basket?productId=${productId}&quantity=${quantity}`, {}),
+    removeItem: (productId: number, quantity = 1) => requests.delete(`basket?productId=${productId}&quantity=${quantity}`),
+}
+
 const agent = {
     Catalog,
     TestError,
+    Basket
 }
 
 export default agent;
