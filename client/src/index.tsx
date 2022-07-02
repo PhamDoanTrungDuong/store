@@ -1,19 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
-import App from './app/layout/App';
-import './app/layout/style.css';
-import { createBrowserHistory } from 'history';
+import App from "./app/layout/App";
+import "./app/layout/style.css";
+import { createBrowserHistory } from "history";
+import { Provider } from "react-redux";
+import { store } from "./app/store/configureStore";
 
 export const history = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
     <HistoryRouter history={history}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </HistoryRouter>
   </React.StrictMode>
 );
