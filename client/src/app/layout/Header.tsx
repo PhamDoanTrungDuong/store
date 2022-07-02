@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { useStoreContext } from "../context/StoreContext";
+import { useAppSelector } from "../store/configureStore";
 
 interface IProps {
   darkMode: boolean;
@@ -44,7 +44,7 @@ const navStyle = {
 };
 
 const Header: React.FC<IProps> = ({ darkMode, setDarkMode }) => {
-  const {basket} = useStoreContext();
+  const {basket} = useAppSelector(state => state.basket);
   const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0);
 
   const handleThemeChange = () => {

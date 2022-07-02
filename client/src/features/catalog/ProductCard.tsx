@@ -9,27 +9,18 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import agent from "../../app/api/agent";
-import { useStoreContext } from "../../app/context/StoreContext";
 import { IProduct } from "../../app/interfaces/IProduct";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import { addBasketItemAsync } from "../basket/basketSlice";
 
 interface IProps {
   product: IProduct;
 }
 
 const ProductCard: React.FC<IProps> = ({ product }) => {
-  const [loading, setLoading] = useState(false);
-  const { setBasket } = useStoreContext();
-
-  const handleAddItem = (productId: number) => {
-    setLoading(true);
-    agent.Basket.addItem(productId)
-      .then((basket) => setBasket(basket))
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
-  };
+  const { status } = useAppSelector(state => state.basket);
+  const dispatch = useAppDispatch();
 
   return (
     <>
@@ -69,8 +60,8 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
         </CardContent>
         <CardActions>
           <LoadingButton
-            loading={loading}
-            onClick={() => handleAddItem(product.id)}
+            loading={status.includes('pendingAddItem'+ product.id)}
+            onClick={() => dispatch(addBasketItemAsync({productId: product.id}))}
             size="small"
           >
             ADD TO CARD
