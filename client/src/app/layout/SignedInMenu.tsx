@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store/configureStore";
 import { signOut } from "../../features/account/accountSlice";
 import { clearBasket } from "../../features/basket/basketSlice";
+import { NavLink } from "react-router-dom";
 
 const SignedInMenu: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -26,11 +27,17 @@ const SignedInMenu: React.FC = () => {
       </Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My orders</MenuItem>
-        <MenuItem onClick={() => {
-          dispatch(signOut());
-          dispatch(clearBasket())
-        }}>Logout</MenuItem>
+        <MenuItem component={NavLink} to="/orders">
+          My orders
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            dispatch(signOut());
+            dispatch(clearBasket());
+          }}
+        >
+          Logout
+        </MenuItem>
       </Menu>
     </>
   );

@@ -24,6 +24,7 @@ import { useAppDispatch } from "../store/configureStore";
 import { fetchBasketAsync } from "../../features/basket/basketSlice";
 import Register from "../../features/account/Register";
 import Login from "../../features/account/Login";
+import Orders from "../../features/orders/Orders";
 import { fetchCurrentUser } from "../../features/account/accountSlice";
 import PrivateRoute from "./PrivateRoute";
 
@@ -85,6 +86,7 @@ const App: React.FC = () => {
             />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/orders" element={<Orders />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Container>
