@@ -85,3 +85,5 @@ C:\NET\Restore\API\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.KeyDerivat
 C:\NET\Restore\API\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\NET\Restore\API\bin\Debug\net5.0\Microsoft.Extensions.Identity.Core.dll
 C:\NET\Restore\API\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll
+C:\NET\Restore\API\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\NET\Restore\API\bin\Debug\net5.0\Stripe.net.dll

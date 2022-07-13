@@ -29,6 +29,12 @@ namespace API.Data.Migrations
                     b.Property<string>("BuyerId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ClientSecret")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentIntentId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Baskets");
@@ -77,6 +83,9 @@ namespace API.Data.Migrations
 
                     b.Property<int>("OrderStatus")
                         .HasColumnType("int");
+
+                    b.Property<string>("PaymentIntentId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("Subtotal")
                         .HasColumnType("bigint");
@@ -174,14 +183,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "83dcc54e-c37e-41cc-8c36-144127fc384a",
+                            ConcurrencyStamp = "d98a8adf-5c8b-42d5-8185-6f340a084e3c",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "ceb69108-e628-466a-b597-4c1f4bac5ddf",
+                            ConcurrencyStamp = "b954b006-a7b4-4199-8f81-d0291e567d0e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

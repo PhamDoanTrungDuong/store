@@ -14,7 +14,7 @@ const Review: React.FC = () => {
       </Typography>
       {basket &&
       <BasketTable items={basket.items} isBasket={false}/>}
-      <Grid container sx={{ marginBottom: "100px" }}>
+      <Grid container>
         <Grid item xs={6} />
         <Grid item xs={6}>
           <BasketSumary />
