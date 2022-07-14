@@ -53,7 +53,7 @@ const Header: React.FC<IProps> = ({ darkMode, setDarkMode }) => {
     setDarkMode(!darkMode);
   };
   return (
-    <AppBar position="static" sx={{ mb: 4, bgcolor: "primary", padding: 1.5 }}>
+    <AppBar position="static" sx={{ bgcolor: "primary", padding: 1.5 }}>
       <Toolbar
         sx={{
           display: "flex",

@@ -66,10 +66,13 @@ const App: React.FC = () => {
         <ToastContainer position="top-right" hideProgressBar />
         <CssBaseline />
         <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+        <Routes>
+            <Route path="/" element={<Home />} />
+        </Routes>
         <Container>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/catalog" element={<Catalog />} />
+            <Route path="/"/>
+            <Route path="catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<ProductDetails />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
