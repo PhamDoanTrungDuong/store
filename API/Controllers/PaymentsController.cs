@@ -65,9 +65,7 @@ namespace API.Controllers
                   var order = await _context.Orders.FirstOrDefaultAsync(x => 
                   x.PaymentIntentId == charge.PaymentIntentId);
 
-                  if(order != null){
-                        if (charge.Status == "succeeded") order.OrderStatus = OrderStatus.PaymentReceived;
-                  }
+                  if (charge.Status == "succeeded") order.OrderStatus = OrderStatus.PaymentReceived;
 
                   await _context.SaveChangesAsync();
 
