@@ -4,7 +4,7 @@ import React from 'react'
 const About: React.FC = () => {
   return (
     <>
-      <Typography variant="h2">
+      <Typography variant="h2" sx={{ mt: 4 }}>
         About Page 
       </Typography>
     </>

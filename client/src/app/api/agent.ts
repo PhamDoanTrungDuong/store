@@ -8,7 +8,7 @@ import { store } from '../store/configureStore';
 const sleep = (s: number) => new Promise(resolve => setTimeout(resolve, s * 1000));
 
 // this is the type of the error from the server
-axios.defaults.baseURL = "http://localhost:5000/api/";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.withCredentials = true;
 
 // this is the type of the response from the server
@@ -18,11 +18,11 @@ axios.interceptors.request.use((config: any) => {
     const token = store.getState().account.user?.token;
     if(token) config.headers.Authorization = `Bearer ${token}`;
     return config
-}) 
+})
 
 //Error Handler
 axios.interceptors.response.use(async res => {
-    await sleep(0.5);
+    if(process.env.NODE_ENV === 'development') await sleep(0.5);
     const pagination = res.headers['pagination'];
     if(pagination){
         res.data = new PaginationResponse(res.data, JSON.parse(pagination));
@@ -92,6 +92,10 @@ const Orders = {
     create: (values: any) => requests.post('orders', values)
 }
 
+const Payments = {
+    createPaymentIntent: () => requests.post('payments', {})
+}
+
 const TestError = {
     get400Error: () => requests.get('buggy/bad-request'),
     get401Error: () => requests.get('buggy/unauthorized'),
@@ -107,6 +111,7 @@ const agent = {
     Basket,
     Account,
     Orders,
+    Payments,
 }
 
 export default agent;

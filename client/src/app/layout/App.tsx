@@ -11,7 +11,6 @@ import Home from "../../features/home/Home";
 import ProductDetails from "../../features/catalog/ProductDetails";
 import About from "../../features/about/About";
 import Basket from "../../features/basket/Basket";
-import Checkout from "../../features/checkout/Checkout";
 import Contact from "../../features/contact/Contact";
 import Catalog from "../../features/catalog/Catalog";
 import Errors from "../../features/errors/Errors";
@@ -27,6 +26,7 @@ import Login from "../../features/account/Login";
 import Orders from "../../features/orders/Orders";
 import { fetchCurrentUser } from "../../features/account/accountSlice";
 import PrivateRoute from "./PrivateRoute";
+import CheckoutWrapper from "../../features/checkout/CheckoutWrapper";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -66,10 +66,13 @@ const App: React.FC = () => {
         <ToastContainer position="top-right" hideProgressBar />
         <CssBaseline />
         <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+        <Routes>
+            <Route path="/" element={<Home />} />
+        </Routes>
         <Container>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/catalog" element={<Catalog />} />
+            <Route path="/"/>
+            <Route path="catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<ProductDetails />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
@@ -80,7 +83,7 @@ const App: React.FC = () => {
               path="/checkout"
               element={
                 <PrivateRoute>
-                  <Checkout />
+                  <CheckoutWrapper />
                 </PrivateRoute>
               }
             />

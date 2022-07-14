@@ -10,5 +10,9 @@ namespace API.DTOs
 
         public IEnumerable<BasketItemDto> Items { get; set; }
 
+        public string PaymentIntentId { get; set; }
+
+        public string ClientSecret { get; set; }
+
     }
 }
