@@ -13,7 +13,6 @@ import About from "../../features/about/About";
 import Basket from "../../features/basket/Basket";
 import Contact from "../../features/contact/Contact";
 import Catalog from "../../features/catalog/Catalog";
-import Errors from "../../features/errors/Errors";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ServerError from "../errors/ServerError";
@@ -24,6 +23,7 @@ import { fetchBasketAsync } from "../../features/basket/basketSlice";
 import Register from "../../features/account/Register";
 import Login from "../../features/account/Login";
 import Orders from "../../features/orders/Orders";
+import Inventory from "../../features/admin/Inventory";
 import { fetchCurrentUser } from "../../features/account/accountSlice";
 import PrivateRoute from "./PrivateRoute";
 import CheckoutWrapper from "../../features/checkout/CheckoutWrapper";
@@ -76,7 +76,6 @@ const App: React.FC = () => {
             <Route path="/catalog/:id" element={<ProductDetails />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/errors" element={<Errors />} />
             <Route path="/server-error" element={<ServerError />} />
             <Route path="/basket" element={<Basket />} />
             <Route
@@ -87,9 +86,24 @@ const App: React.FC = () => {
                 </PrivateRoute>
               }
             />
+            <Route
+              path="/orders"
+              element={
+                <PrivateRoute>
+                  <Orders />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/inventory"
+              element={
+                <PrivateRoute roles={['Admin']}>
+                  <Inventory />
+                </PrivateRoute>
+              }
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/orders" element={<Orders />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Container>

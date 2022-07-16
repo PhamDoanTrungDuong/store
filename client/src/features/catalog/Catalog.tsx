@@ -2,16 +2,14 @@ import {
   Grid,
   Paper,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import AppPagination from "../../app/components/AppPagination";
 import CheckboxButton from "../../app/components/CheckboxButton";
 import RadioButtonGroup from "../../app/components/RadioButtonGroup";
+import useProducts from "../../app/hooks/useProducts";
 import Loading from "../../app/layout/Loading";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import {
-  fetchFiltersAsync,
-  fetchProductsAsync,
-  productSelector,
   setPageNumber,
   setProductParams,
 } from "./catalogSlice";
@@ -25,22 +23,13 @@ const sortOptions = [
 ];
 
 const Catalog: React.FC = () => {
-  const products = useAppSelector(productSelector.selectAll);
-  const { productsLoaded, filtersLoaded, brands, types, productParams, pagination } =
-    useAppSelector((state) => state.catalog);
+  const {products, filtersLoaded, brands, types, pagination} = useProducts();
+
+  const { productParams } = useAppSelector((state) => state.catalog);
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (!productsLoaded) dispatch(fetchProductsAsync());
-}, [dispatch, productsLoaded]);
-
-  useEffect(() => {
-    if (!filtersLoaded) dispatch(fetchFiltersAsync());
-  }, [dispatch, filtersLoaded]);
-
   if (!filtersLoaded) return <Loading message="Loading Catalog..." />;
-
 
   return (
     <Grid container columnSpacing={4} sx={{ mb: 4, mt: 4, }}>
