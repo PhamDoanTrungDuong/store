@@ -1,5 +1,6 @@
 import {
   Button,
+  Container,
   Grid,
   Typography,
 } from "@mui/material";
@@ -15,7 +16,7 @@ const Basket: React.FC = () => {
     return <Typography variant="h3">Your basket is empty</Typography>;
 
   return (
-    <>
+    <Container sx={{mt: 4}}>
      <BasketTable items={basket.items} />
       <Grid container  sx={{marginBottom: '100px'}}>
       <Grid item xs={6} />
@@ -32,7 +33,7 @@ const Basket: React.FC = () => {
           </Button>
         </Grid>
       </Grid>
-    </>
+    </Container>
   );
 };
 
