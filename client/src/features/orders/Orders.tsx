@@ -38,7 +38,7 @@ const Order: React.FC = () => {
     );
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{mt: 4}}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>

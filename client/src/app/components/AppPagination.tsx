@@ -1,5 +1,5 @@
 import { Box, Pagination, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { IPagination } from "../interfaces/IPagination";
 
 interface IProps {
@@ -9,6 +9,12 @@ interface IProps {
 
 const AppPagination: React.FC<IProps> = ({ pagination, onPageChange }) => {
   const { currentPage, totalCount, totalPages, pageSize } = pagination;
+  const [pageNumber, setPageNumber] = useState(currentPage);
+
+  const handlePageChange = (page: number) => {
+    setPageNumber(page);
+    onPageChange(page)
+  }
   return (
     <div>
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -22,8 +28,8 @@ const AppPagination: React.FC<IProps> = ({ pagination, onPageChange }) => {
           color="primary"
           size="large"
           count={totalPages}
-          page={currentPage}
-          onChange={(e, page) => onPageChange(page)}
+          page={pageNumber}
+          onChange={(e, page) => handlePageChange(page)}
         />
       </Box>
     </div>

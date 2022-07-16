@@ -3,22 +3,28 @@ import React from 'react'
 import { useController, UseControllerProps } from 'react-hook-form'
 
 interface IProps extends UseControllerProps{
-      label: string
+      label: string;
+      multiline?: boolean;
+      rows?: number;
+      type?: string;
 }
 
-const AppTextInput: React.FC<IProps> = (props: IProps) => {
+const AppTextInput: React.FC<IProps> = (props) => {
 
 const {fieldState, field} = useController({...props, defaultValue: ''});
   return (
     <>
-      <TextField 
+      <TextField
             {...props}
             {...field}
+            multiline={props.multiline}
+            rows={props.rows}
+            type={props.type}
             fullWidth
             variant='standard'
             error={!!fieldState.error}
             helperText={fieldState.error?.message}
-      />
+        />
     </>
   )
 }

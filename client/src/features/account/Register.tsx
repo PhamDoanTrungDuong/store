@@ -52,6 +52,7 @@ const Register = () => {
         alignItems: "center",
         p: 3,
         mb: 10,
+        mt: 6,
       }}
     >
       <Box

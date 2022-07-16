@@ -24,7 +24,6 @@ const midLinks = [
   { title: "catalog", path: "/catalog" },
   { title: "about", path: "/about" },
   { title: "contact", path: "/contact" },
-  { title: "errors", path: "/errors" },
 ];
 
 const rightLinks = [
@@ -74,6 +73,14 @@ const Header: React.FC<IProps> = ({ darkMode, setDarkMode }) => {
               {title.toUpperCase()}
             </ListItem>
           ))}
+          {user && user.roles?.includes('Admin') &&
+          <ListItem
+            component={NavLink}
+            to={"/inventory"}
+            sx={navStyle}
+          >
+            INVENTORY
+          </ListItem>}
         </List>
 
         <Box display="flex" alignItems="center">

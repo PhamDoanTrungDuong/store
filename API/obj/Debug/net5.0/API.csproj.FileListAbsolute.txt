@@ -89,3 +89,7 @@ C:\NET\Restore\API\bin\Debug\net5.0\Newtonsoft.Json.dll
 C:\NET\Restore\API\bin\Debug\net5.0\Stripe.net.dll
 C:\NET\Restore\API\bin\Debug\net5.0\Npgsql.dll
 C:\NET\Restore\API\bin\Debug\net5.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\NET\Restore\API\bin\Debug\net5.0\AutoMapper.dll
+C:\NET\Restore\API\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\NET\Restore\API\bin\Debug\net5.0\CloudinaryDotNet.dll
+C:\NET\Restore\API\bin\Debug\net5.0\Microsoft.Extensions.WebEncoders.dll
