@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {
   Container,
-  createTheme,
   CssBaseline,
-  ThemeProvider,
 } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 import Header from "./Header";
@@ -27,6 +25,7 @@ import Inventory from "../../features/admin/Inventory";
 import { fetchCurrentUser } from "../../features/account/accountSlice";
 import PrivateRoute from "./PrivateRoute";
 import CheckoutWrapper from "../../features/checkout/CheckoutWrapper";
+import Footer from "./Footer";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -45,33 +44,20 @@ const App: React.FC = () => {
     initApp().then(() => setLoading(false));
   }, [initApp]);
 
-  const [darkMode, setDarkMode] = useState(false);
-
-  const paletteType = darkMode ? "dark" : "light";
-
-  const theme = createTheme({
-    palette: {
-      mode: paletteType,
-      background: {
-        default: paletteType === "light" ? "#eaeaea" : "#121212",
-      },
-    },
-  });
 
   if (loading) return <Loading message="Initialising app..." />;
 
   return (
-    <div className="App">
-      <ThemeProvider theme={theme}>
+    <section className="App h-screen overflow-y-auto overflow-x-hidden bg-blue px-10">
         <ToastContainer position="top-right" hideProgressBar />
         <CssBaseline />
-        <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+        <Header />
         <Routes>
-            <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home />} />
         </Routes>
         <Container>
           <Routes>
-            <Route path="/"/>
+            <Route path="/" />
             <Route path="catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<ProductDetails />} />
             <Route path="/about" element={<About />} />
@@ -97,7 +83,7 @@ const App: React.FC = () => {
             <Route
               path="/inventory"
               element={
-                <PrivateRoute roles={['Admin']}>
+                <PrivateRoute roles={["Admin"]}>
                   <Inventory />
                 </PrivateRoute>
               }
@@ -107,8 +93,8 @@ const App: React.FC = () => {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Container>
-      </ThemeProvider>
-    </div>
+        <Footer />
+    </section>
   );
 };
 

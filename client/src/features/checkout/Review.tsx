@@ -15,8 +15,7 @@ const Review: React.FC = () => {
       {basket &&
       <BasketTable items={basket.items} isBasket={false}/>}
       <Grid container>
-        <Grid item xs={6} />
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <BasketSumary />
         </Grid>
       </Grid>

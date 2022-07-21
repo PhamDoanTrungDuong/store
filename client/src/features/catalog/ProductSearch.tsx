@@ -16,8 +16,8 @@ const ProductSearch: React.FC = () => {
   return (
     <div>
       <TextField
-        label="Search products"
-        variant="outlined"
+        label="Search products..."
+        variant="standard"
         fullWidth
         value={searchTerm || ""}
         onChange={(e: any) => {

@@ -23,7 +23,9 @@ const SignedInMenu: React.FC = () => {
   return (
     <>
       <Button onClick={handleClick} color="inherit" sx={{ typography: "h6" }}>
-        {user?.email}
+        <span className="text-zinc-900 text-base underline underline-offset-8 transition-all">
+          {user?.email}
+        </span>
       </Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem onClick={handleClose}>Profile</MenuItem>

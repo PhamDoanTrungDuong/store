@@ -6,7 +6,6 @@ import {
   IconButton,
   List,
   ListItem,
-  Switch,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -15,21 +14,12 @@ import { NavLink } from "react-router-dom";
 import { useAppSelector } from "../store/configureStore";
 import SignedInMenu from "./SignedInMenu";
 
-interface IProps {
-  darkMode: boolean;
-  setDarkMode: (darkMode: boolean) => void;
-}
-
 const midLinks = [
-  { title: "catalog", path: "/catalog" },
-  { title: "about", path: "/about" },
-  { title: "contact", path: "/contact" },
+  { title: "Catalog", path: "/catalog" },
+  { title: "About", path: "/about" },
+  { title: "Contact", path: "/contact" },
 ];
 
-const rightLinks = [
-  { title: "login", path: "/login" },
-  { title: "register", path: "/register" },
-];
 const navStyle = {
   color: "inherit",
   typography: "h6",
@@ -43,16 +33,16 @@ const navStyle = {
   },
 };
 
-const Header: React.FC<IProps> = ({ darkMode, setDarkMode }) => {
+const Header: React.FC = () => {
   const { basket } = useAppSelector((state) => state.basket);
   const { user } = useAppSelector((state) => state.account);
   const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0);
 
-  const handleThemeChange = () => {
-    setDarkMode(!darkMode);
-  };
   return (
-    <AppBar position="static" sx={{ bgcolor: "primary", padding: 1.5 }}>
+    <AppBar
+      position="static"
+      sx={{ padding: 1.5, background: "transparent", boxShadow: "none" }}
+    >
       <Toolbar
         sx={{
           display: "flex",
@@ -63,24 +53,24 @@ const Header: React.FC<IProps> = ({ darkMode, setDarkMode }) => {
         <Box display="flex" alignItems="center">
           <Typography variant="h6" component={NavLink} to="/" sx={navStyle}>
             {" "}
-            STORE{" "}
+            STORE.{" "}
           </Typography>
-          <Switch onChange={handleThemeChange} />
         </Box>
         <List sx={{ display: "flex" }}>
           {midLinks.map(({ title, path }) => (
             <ListItem component={NavLink} to={path} key={path} sx={navStyle}>
-              {title.toUpperCase()}
+              <span className="text-zinc-900 transition duration-150 hover:underline underline-offset-8">
+                {title}
+              </span>
             </ListItem>
           ))}
-          {user && user.roles?.includes('Admin') &&
-          <ListItem
-            component={NavLink}
-            to={"/inventory"}
-            sx={navStyle}
-          >
-            INVENTORY
-          </ListItem>}
+          {user && user.roles?.includes("Admin") && (
+            <ListItem component={NavLink} to={"/inventory"} sx={navStyle}>
+              <span className="text-zinc-900 transition duration-150 hover:underline underline-offset-8">
+                Inventory
+              </span>
+            </ListItem>
+          )}
         </List>
 
         <Box display="flex" alignItems="center">
@@ -91,23 +81,23 @@ const Header: React.FC<IProps> = ({ darkMode, setDarkMode }) => {
             sx={{ color: "inherit" }}
           >
             <Badge badgeContent={itemCount} color="warning">
-              <ShoppingCartRoundedIcon />
+              <ShoppingCartRoundedIcon className="text-zinc-900 hover:underline underline-offset-8 transition-all" />
             </Badge>
           </IconButton>
           {user ? (
             <SignedInMenu />
           ) : (
             <List sx={{ display: "flex" }}>
-              {rightLinks.map(({ title, path }) => (
-                <ListItem
-                  component={NavLink}
-                  to={path}
-                  key={path}
-                  sx={navStyle}
-                >
-                  {title.toUpperCase()}
-                </ListItem>
-              ))}
+              <ListItem component={NavLink} to="./login" sx={navStyle}>
+                <span className="text-zinc-900 text-base hover:underline underline-offset-8 transition-all">
+                  Sign in
+                </span>
+              </ListItem>
+              <ListItem component={NavLink} to="./register" sx={navStyle}>
+                <span className="text-white text-base bg-black rounded-lg w-[80px] p-[10px] hover:bg-gray transition-all">
+                  Sign up
+                </span>
+              </ListItem>
             </List>
           )}
         </Box>

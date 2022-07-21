@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import React from "react";
 import Slider from "react-slick";
 
@@ -11,8 +11,8 @@ const Home: React.FC = () => {
     slidesToScroll: 1,
   };
   return (
-    <>
-        <Slider {...settings}>
+    <section className="mt-3">
+        <Slider {...settings} className="rounded-sm">
           <div>
             <img
               src="/images/hero3.jpg"
@@ -35,12 +35,10 @@ const Home: React.FC = () => {
             />
           </div>
         </Slider>
-        <Box display='flex' justifyContent='center' sx={{p: 4}}>
-            <Typography variant='h1'>
-                Welcom to the Store
-            </Typography>
-        </Box>
-    </>
+        <div className="h-[900px] text-center">
+          <Typography variant="h1">Welcom to the Store</Typography>
+        </div>
+    </section>
   );
 };
 

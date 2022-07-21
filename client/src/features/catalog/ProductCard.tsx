@@ -1,11 +1,9 @@
 import { LoadingButton } from "@mui/lab";
 import {
-  Avatar,
   Button,
   Card,
   CardActions,
   CardContent,
-  CardHeader,
   CardMedia,
   Typography,
 } from "@mui/material";
@@ -25,7 +23,7 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
   return (
     <>
       <Card>
-        <CardHeader
+        {/* <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: "secondary.main" }}>
               {product.name.charAt(0).toUpperCase()}
@@ -35,17 +33,19 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
           titleTypographyProps={{
             sx: { fontWeight: "bold", color: "info.dark" },
           }}
-        />
+        /> */}
         <CardMedia
           sx={{
-            height: 200,
             backgroundSize: "contain",
-            bgcolor: "primary.light",
           }}
+          className="bg-green h-[300px]"
           image={product.pictureUrl}
           title={product.name}
         />
         <CardContent>
+          <div className="text-lg font-medium">
+            {product.name}
+          </div>
           <Typography
             gutterBottom
             color="secondary"
