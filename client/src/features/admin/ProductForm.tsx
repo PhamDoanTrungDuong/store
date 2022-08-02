@@ -1,4 +1,4 @@
-import { Typography, Grid, Paper, Box, Button } from "@mui/material";
+import { Typography, Grid, Box, Button } from "@mui/material";
 import { useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import AppTextInput from "../../app/components/AppTextInput";
@@ -51,7 +51,7 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
         }
 
         return (
-            <Box component={Paper} sx={{ p: 4, mt: 4 }}>
+            <div className="rounded-div mt-5 p-5">
                 <Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
                     Product Details
                 </Typography>
@@ -92,7 +92,7 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
                         <LoadingButton loading={isSubmitting} type='submit' variant='contained' color='success'>Submit</LoadingButton>
                     </Box>
                 </form>
-            </Box>
+            </div>
         )
 }
 

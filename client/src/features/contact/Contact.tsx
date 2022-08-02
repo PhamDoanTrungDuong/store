@@ -1,19 +1,12 @@
-import { Container, Typography } from "@mui/material";
 import React from "react";
 
 const Contact: React.FC = () => {
   return (
-    <>
-      <Container
-        sx={{
-          mb: 10,
-          mt: 6,
-      }}>
-        <Typography variant='h3'>
-            Contact Page
-        </Typography>
-      </Container>
-    </>
+    <div className='h-screen rounded-div mt-5'>
+      <div>
+          <h1 className="text-2xl font-bold p-4">Contact</h1>
+      </div>
+    </div>
   );
 };
 

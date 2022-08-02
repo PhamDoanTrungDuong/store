@@ -1,4 +1,3 @@
-import { Typography } from "@mui/material";
 import React from "react";
 import Slider from "react-slick";
 
@@ -35,7 +34,7 @@ const Home: React.FC = () => {
             />
           </div>
         </Slider>
-        <div className="h-[900px] text-center p-4">
+        <div className="rounded-div mt-3 h-screen text-center p-4">
          <h1>Welcom to the Store.</h1>
         </div>
     </div>

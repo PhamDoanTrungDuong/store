@@ -7,7 +7,6 @@ import {
   TableContainer,
   TableRow,
   TextField,
-  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -56,21 +55,22 @@ const ProductDetails: React.FC = () => {
   if (!product) return <NotFound />;
 
   return (
-    <>
+    <div className="rounded-div mt-5 p-5">
       <Grid container spacing={6}>
         <Grid item xs={6}>
           <img
+           className="border rounded-xl"
             src={product.pictureUrl}
             alt={product.name}
             style={{ width: "100%" }}
           />
         </Grid>
         <Grid item xs={6}>
-          <Typography variant="h4">{product.name}</Typography>
+          <h4 className="text-3xl font-bold">{product.name}</h4>
           <Divider sx={{ mb: 2 }} />
-          <Typography variant="h4" color="secondary">
+          <h4 className='text-indigo-600 font-bold text-3xl'>
             ${(product.price / 100).toFixed(2)}
-          </Typography>
+          </h4>
           <TableContainer>
             <Table>
               <TableBody>
@@ -113,7 +113,7 @@ const ProductDetails: React.FC = () => {
                 disabled={item?.quantity === quantity || (!item && quantity === 0)}
                 loading={status.includes('pending')}
                 sx={{ height: "55px" }}
-                color="warning"
+                color="primary"
                 size="large"
                 variant="contained"
                 fullWidth
@@ -125,7 +125,7 @@ const ProductDetails: React.FC = () => {
           </Grid>
         </Grid>
       </Grid>
-    </>
+    </div>
   );
 };
 

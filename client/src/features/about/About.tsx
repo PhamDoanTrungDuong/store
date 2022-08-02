@@ -1,13 +1,12 @@
-import { Typography } from '@mui/material'
 import React from 'react'
 
 const About: React.FC = () => {
   return (
-    <>
-      <Typography variant="h2" sx={{ mt: 4 }}>
-        About Page 
-      </Typography>
-    </>
+    <div className='h-screen rounded-div mt-5'>
+      <div>
+          <h1 className="text-2xl font-bold p-4" >About</h1>
+      </div>
+    </div>
   )
 }
 

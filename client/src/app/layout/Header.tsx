@@ -24,13 +24,13 @@ const Header: React.FC = () => {
 		<div className="rounded-div flex items-center justify-between h-20 font-bold">
 			<div>
 				<Link to="/">
-					<h1 className="text-2xl font-bold text-primary">STORE.</h1>
+					<h1 className="text-3xl font-extrabold text-indigo-600">STORE.</h1>
 				</Link>
 			</div>
 			<div className="flex items-center">
 				{midLinks.map(({ title, path }) => (
 					<Link
-						className="text-primary p-4 hover:text-[#2b6cb0] hover:underline hover:underline-offset-2 duration-200"
+						className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
 						to={path}
 						key={path}>
 						{title}
@@ -38,7 +38,7 @@ const Header: React.FC = () => {
 				))}
 				{user && user.roles?.includes("Admin") && (
 					<Link
-						className="text-primary hover:text-[#2b6cb0] duration-200"
+						className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
 						to="/inventory">
 						Inventory
 					</Link>
