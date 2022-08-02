@@ -11,7 +11,7 @@ const Home: React.FC = () => {
     slidesToScroll: 1,
   };
   return (
-    <section className="mt-3">
+    <div className="mt-3 max-w-[1140px] mx-auto">
         <Slider {...settings} className="rounded-sm">
           <div>
             <img
@@ -35,10 +35,10 @@ const Home: React.FC = () => {
             />
           </div>
         </Slider>
-        <div className="h-[900px] text-center">
-          <Typography variant="h1">Welcom to the Store</Typography>
+        <div className="h-[900px] text-center p-4">
+         <h1>Welcom to the Store.</h1>
         </div>
-    </section>
+    </div>
   );
 };
 

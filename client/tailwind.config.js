@@ -3,16 +3,25 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      colors: {
-        blue: '#c9e8f2',
-        gray: '#8da2a9',
-        purple: '#ccd1f2',
-        green: '#c9f2d5',
-        darkgreen: '#8da995',
-        darkred: '#DC6E6D'
-      },
+      backgroundColor: {
+				primary: "var(--color-bg-primary)",
+				secondary: "var(--color-bg-secondary)",
+				button: "var(--color-bg-button)",
+			},
+			textColor: {
+				accent: "var(--color-text-accent)",
+				primary: "var(--color-text-primary)",
+				secondary: "var(--color-text-secondary)",
+				btnText: "var(--color-bg-secondary)",
+			},
+			borderColor: {
+				primary: "var(--color-bg-primary)",
+				secondary: "var(--color-bg-secondary)",
+				input: "var(--color-bg-input)",
+				accent: "var(--color-text-accent)",
+			},
       fontFamily: {
-        body: ['Rubik']
+        'rubik': ['Rubik', 'sans-serif']
       }
     },
   },

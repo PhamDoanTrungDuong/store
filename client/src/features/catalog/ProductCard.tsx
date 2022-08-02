@@ -23,17 +23,6 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
   return (
     <>
       <Card>
-        {/* <CardHeader
-          avatar={
-            <Avatar sx={{ bgcolor: "secondary.main" }}>
-              {product.name.charAt(0).toUpperCase()}
-            </Avatar>
-          }
-          title={product.name}
-          titleTypographyProps={{
-            sx: { fontWeight: "bold", color: "info.dark" },
-          }}
-        /> */}
         <CardMedia
           sx={{
             backgroundSize: "contain",

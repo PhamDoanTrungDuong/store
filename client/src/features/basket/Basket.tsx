@@ -1,4 +1,4 @@
-import { Button, Container, Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import BasketSumary from "./BasketSumary";
 import { NavLink } from "react-router-dom";
 import { useAppSelector } from "../../app/store/configureStore";
@@ -11,7 +11,7 @@ const Basket: React.FC = () => {
     return <Typography variant="h3">Your basket is empty</Typography>;
 
   return (
-    <Container sx={{ mt: 4 }}>
+    <div className="rounded-div mt-5 p-4">
       <BasketTable items={basket.items} />
       <Grid container className="mb-[100px]">
         <Grid item xs={12}>
@@ -22,12 +22,13 @@ const Basket: React.FC = () => {
             variant="contained"
             size="large"
             fullWidth
+            className="my-3"
           >
             Checkout
           </Button>
         </Grid>
       </Grid>
-    </Container>
+    </div>
   );
 };
 

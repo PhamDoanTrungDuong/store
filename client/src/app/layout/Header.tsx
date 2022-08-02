@@ -1,109 +1,79 @@
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
-import {
-  AppBar,
-  Badge,
-  Box,
-  IconButton,
-  List,
-  ListItem,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { Badge, IconButton } from "@mui/material";
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useAppSelector } from "../store/configureStore";
 import SignedInMenu from "./SignedInMenu";
 
 const midLinks = [
-  { title: "Catalog", path: "/catalog" },
-  { title: "About", path: "/about" },
-  { title: "Contact", path: "/contact" },
+	{ title: "Catalog", path: "/catalog" },
+	{ title: "About", path: "/about" },
+	{ title: "Contact", path: "/contact" },
 ];
 
-const navStyle = {
-  color: "inherit",
-  typography: "h6",
-  textDecoration: "none",
-  "&:hover": {
-    color: "grey.400",
-    transition: "0.1s ease-in-out",
-  },
-  "&.active": {
-    color: "text.secondary",
-  },
-};
 
 const Header: React.FC = () => {
-  const { basket } = useAppSelector((state) => state.basket);
-  const { user } = useAppSelector((state) => state.account);
-  const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0);
+	const { basket } = useAppSelector((state) => state.basket);
+	const { user } = useAppSelector((state) => state.account);
+	const itemCount = basket?.items.reduce(
+		(sum, item) => sum + item.quantity,
+		0
+	);
 
-  return (
-    <AppBar
-      position="static"
-      sx={{ padding: 1.5, background: "transparent", boxShadow: "none" }}
-    >
-      <Toolbar
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Box display="flex" alignItems="center">
-          <Typography variant="h6" component={NavLink} to="/" sx={navStyle}>
-            {" "}
-            STORE.{" "}
-          </Typography>
-        </Box>
-        <List sx={{ display: "flex" }}>
-          {midLinks.map(({ title, path }) => (
-            <ListItem component={NavLink} to={path} key={path} sx={navStyle}>
-              <span className="text-zinc-900 transition duration-150 hover:underline underline-offset-8">
-                {title}
-              </span>
-            </ListItem>
-          ))}
-          {user && user.roles?.includes("Admin") && (
-            <ListItem component={NavLink} to={"/inventory"} sx={navStyle}>
-              <span className="text-zinc-900 transition duration-150 hover:underline underline-offset-8">
-                Inventory
-              </span>
-            </ListItem>
-          )}
-        </List>
+	return (
+		<div className="rounded-div flex items-center justify-between h-20 font-bold">
+			<div>
+				<Link to="/">
+					<h1 className="text-2xl font-bold text-primary">STORE.</h1>
+				</Link>
+			</div>
+			<div className="flex items-center">
+				{midLinks.map(({ title, path }) => (
+					<Link
+						className="text-primary p-4 hover:text-[#2b6cb0] hover:underline hover:underline-offset-2 duration-200"
+						to={path}
+						key={path}>
+						{title}
+					</Link>
+				))}
+				{user && user.roles?.includes("Admin") && (
+					<Link
+						className="text-primary hover:text-[#2b6cb0] duration-200"
+						to="/inventory">
+						Inventory
+					</Link>
+				)}
+			</div>
 
-        <Box display="flex" alignItems="center">
-          <IconButton
-            component={NavLink}
-            to="/basket"
-            size="large"
-            sx={{ color: "inherit" }}
-          >
-            <Badge badgeContent={itemCount} color="warning">
-              <ShoppingCartRoundedIcon className="text-zinc-900 hover:underline underline-offset-8 transition-all" />
-            </Badge>
-          </IconButton>
-          {user ? (
-            <SignedInMenu />
-          ) : (
-            <List sx={{ display: "flex" }}>
-              <ListItem component={NavLink} to="./login" sx={navStyle}>
-                <span className="text-zinc-900 text-base hover:underline underline-offset-8 transition-all">
-                  Sign in
-                </span>
-              </ListItem>
-              <ListItem component={NavLink} to="./register" sx={navStyle}>
-                <span className="text-white text-base bg-black rounded-lg w-[80px] p-[10px] hover:bg-gray transition-all">
-                  Sign up
-                </span>
-              </ListItem>
-            </List>
-          )}
-        </Box>
-      </Toolbar>
-    </AppBar>
-  );
+			<div className="flex items-center justify-between ">
+				<IconButton
+					component={NavLink}
+					to="/basket"
+					size="large"
+					sx={{ color: "inherit" }}>
+					<Badge
+						badgeContent={itemCount}
+						color="warning">
+						<ShoppingCartRoundedIcon className="text-zinc-900 hover:underline underline-offset-8 transition-all" />
+					</Badge>
+				</IconButton>
+				{user ? (
+					<SignedInMenu />
+				) : (
+					<div className='flex justify-evenly'>
+						<Link className="text-primary py-2 ml-4 hover:text-[#2b6cb0] duration-200"
+							to="/login">
+							Sign In
+						</Link>
+						<Link className="bg-[#2b6cb0] border border-[#2b6cb0] text-white px-5 py-2 ml-4 rounded-3xl shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-[#2b6cb0] duration-200"
+							to="/register">
+							Sign up
+						</Link>
+					</div>
+				)}
+			</div>
+		</div>
+	);
 };
 
 export default Header;

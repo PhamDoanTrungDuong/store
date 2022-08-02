@@ -48,7 +48,7 @@ const App: React.FC = () => {
   if (loading) return <Loading message="Initialising app..." />;
 
   return (
-    <section className="App h-screen overflow-y-auto overflow-x-hidden bg-blue px-10">
+    <section className="">
         <ToastContainer position="top-right" hideProgressBar />
         <CssBaseline />
         <Header />
