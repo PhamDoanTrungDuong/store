@@ -11,7 +11,6 @@ const midLinks = [
 	{ title: "Contact", path: "/contact" },
 ];
 
-
 const Header: React.FC = () => {
 	const { basket } = useAppSelector((state) => state.basket);
 	const { user } = useAppSelector((state) => state.account);
@@ -24,7 +23,9 @@ const Header: React.FC = () => {
 		<div className="rounded-div flex items-center justify-between h-20 font-bold">
 			<div>
 				<Link to="/">
-					<h1 className="text-3xl font-extrabold text-indigo-600">STORE.</h1>
+					<h1 className="text-3xl font-extrabold text-indigo-600">
+						STORE.
+					</h1>
 				</Link>
 			</div>
 			<div className="flex items-center">
@@ -46,26 +47,31 @@ const Header: React.FC = () => {
 			</div>
 
 			<div className="flex items-center justify-between ">
-				<IconButton
-					component={NavLink}
-					to="/basket"
-					size="large"
-					sx={{ color: "inherit" }}>
-					<Badge
-						badgeContent={itemCount}
-						color="warning">
-						<ShoppingCartRoundedIcon className="text-zinc-900 hover:underline underline-offset-8 transition-all" />
-					</Badge>
-				</IconButton>
+				<div>
+					<IconButton
+						className="hover:text-indigo-600 duration-300"
+						component={NavLink}
+						to="/basket"
+						size="large"
+						sx={{ color: "inherit" }}>
+						<Badge
+							badgeContent={itemCount}
+							color="warning">
+							<ShoppingCartRoundedIcon />
+						</Badge>
+					</IconButton>
+				</div>
 				{user ? (
 					<SignedInMenu />
 				) : (
-					<div className='flex justify-evenly'>
-						<Link className="text-primary py-2 ml-4 hover:text-[#2b6cb0] duration-200"
+					<div className="flex justify-evenly">
+						<Link
+							className="text-primary py-2 ml-4 hover:text-indigo-600 duration-200"
 							to="/login">
 							Sign In
 						</Link>
-						<Link className="bg-[#2b6cb0] border border-[#2b6cb0] text-white px-5 py-2 ml-4 rounded-3xl shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-[#2b6cb0] duration-200"
+						<Link
+							className="bg-indigo-600 border border-indigo-600 text-white px-5 py-2 ml-4 rounded-full shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-indigo-600 duration-200"
 							to="/register">
 							Sign up
 						</Link>

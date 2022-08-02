@@ -1,5 +1,6 @@
 import React from "react";
 import { AiOutlineInstagram } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import { FaFacebookF, FaGithub, FaTiktok, FaTwitter } from "react-icons/fa";
 
 const Footer: React.FC = () => {
@@ -82,10 +83,12 @@ const Footer: React.FC = () => {
 										/>
 									</div>
 									<div>
-										<button className="bg-indigo-600 border border-indigo-600 text-white px-4 p-2 w-full rounded-xl shadow-xl hover:shadow-2xl my-2 hover:bg-transparent hover:text-indigo-600 duration-200">
-											Sign
-											up
-										</button>
+										<Link to="register">
+											<button className="bg-indigo-600 border border-indigo-600 text-white px-4 p-2 w-full rounded-xl shadow-xl hover:shadow-2xl my-2 hover:bg-transparent hover:text-indigo-600 duration-200">
+												Sign
+												up
+											</button>
+										</Link>
 									</div>
 								</form>
 							</div>
