@@ -5,14 +5,17 @@ import { IUser } from "../../app/interfaces/IUser";
 import { history } from "../..";
 import { toast } from "react-toastify";
 import { setBasket } from "../basket/basketSlice";
+import { IUsers } from "../../app/interfaces/IUsers";
 
 interface AccountState {
   user: IUser | null;
+  users: IUsers[] | null;
   isError: boolean;
 }
 
 const initialState: AccountState = {
   user: null,
+  users: [],
   isError: true,
 };
 
@@ -30,6 +33,18 @@ export const signInUser = createAsyncThunk<IUser, FieldValues>(
     }
   }
 );
+
+export const fetchUsers = createAsyncThunk<IUsers[]>(
+  "account/fetchUsers",
+  async () => {
+    try {
+        const users = await agent.Admin.getUserRole()
+        return users;
+    }catch(error: any){
+      console.log(error)
+    }
+  }
+)
 
 export const fetchCurrentUser = createAsyncThunk<IUser>(
   "account/fetchCurrentUser",
@@ -65,7 +80,7 @@ export const accountSlice = createSlice({
       let claims = JSON.parse(atob(action.payload.token.split('.')[1]));
       let roles = claims['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
       state.user = {...action.payload, roles: typeof(roles) === 'string' ? [roles] : roles};
-    },
+    }
   },
   extraReducers(builder) {
     builder.addCase(fetchCurrentUser.rejected, (state) => {
@@ -73,7 +88,15 @@ export const accountSlice = createSlice({
       localStorage.removeItem('user');
       toast.error('Session expired - please login again');
       history.push('/');
-    })
+    });
+
+    builder.addCase(fetchUsers.fulfilled, (state, action) => {
+        state.users = action.payload;
+    });
+    builder.addCase(fetchUsers.rejected, (state => {
+      state.users = null;
+    }));
+
     builder.addMatcher(
       isAnyOf(signInUser.fulfilled, fetchCurrentUser.fulfilled),
       (state, action) => {

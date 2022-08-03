@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 import { FieldValues, useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
-import { useAppDispatch } from "../../app/store/configureStore";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { signInUser } from "./accountSlice";
 import { history } from "../..";
 
@@ -27,7 +27,8 @@ const Login = () => {
 	const dispatch = useAppDispatch();
 	const location = useLocation() as unknown as LocationProps;
 
-	const from = location.state?.from?.pathname.toString() || "/catalog";
+
+	const from = location.state?.from?.pathname.toString() || "/";
 
 	const {
 		register,

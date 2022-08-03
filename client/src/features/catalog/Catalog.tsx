@@ -17,14 +17,16 @@ const sortOptions = [
 ];
 
 const Catalog: React.FC = () => {
+
 	const { products, filtersLoaded, brands, types, pagination } =
-		useProducts();
+	useProducts();
 
 	const { productParams } = useAppSelector((state) => state.catalog);
 
 	const dispatch = useAppDispatch();
 
 	if (!filtersLoaded) return <Loading message="Loading Catalog..." />;
+
 
 	return (
 		<div className="rounded-div mt-5">

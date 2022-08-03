@@ -22,45 +22,71 @@ const Header: React.FC = () => {
 	return (
 		<div className="rounded-div flex items-center justify-between h-20 font-bold">
 			<div>
-				<Link to="/">
-					<h1 className="text-3xl font-extrabold text-indigo-600">
-						STORE.
-					</h1>
-				</Link>
+				{!user?.roles?.includes("Admin") &&
+					<Link to="/">
+						<h1 className="text-3xl font-extrabold text-indigo-600">
+							STORE.
+						</h1>
+					</Link>
+				}
+				{user?.roles?.includes("Admin") &&
+					<Link to="/">
+						<h1 className="text-3xl font-extrabold text-indigo-600">
+							STORE.<span className="text-sm italic text-red-600">administration</span>
+						</h1>
+					</Link>
+				}
 			</div>
 			<div className="flex items-center">
-				{midLinks.map(({ title, path }) => (
-					<Link
-						className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
-						to={path}
-						key={path}>
-						{title}
-					</Link>
-				))}
-				{user && user.roles?.includes("Admin") && (
-					<Link
-						className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
-						to="/inventory">
-						Inventory
-					</Link>
+				<>
+				{midLinks.map(({ title, path }) => {
+					return (
+						!user?.roles?.includes("Admin") && (
+							<>
+								<Link
+									className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
+									to={path}
+									key={path}>
+									{title}
+								</Link>
+							</>
+						)
+					)
+				})}
+				{user?.roles?.includes("Admin") && (
+					<>
+						<Link
+							className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
+							to="/inventory">
+							Inventory
+						</Link>
+						<Link
+							className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
+							to="/role">
+							Role
+						</Link>
+					</>
 				)}
+				</>
 			</div>
 
 			<div className="flex items-center justify-between ">
-				<div>
-					<IconButton
-						className="hover:text-indigo-600 duration-300"
-						component={NavLink}
-						to="/basket"
-						size="large"
-						sx={{ color: "inherit" }}>
-						<Badge
-							badgeContent={itemCount}
-							color="warning">
-							<ShoppingCartRoundedIcon />
-						</Badge>
-					</IconButton>
-				</div>
+				{!user?.roles?.includes("Admin") && 
+					<div>
+						<IconButton
+							className="hover:text-indigo-600 duration-300"
+							component={NavLink}
+							to="/basket"
+							size="large"
+							sx={{ color: "inherit" }}>
+							<Badge
+								badgeContent={itemCount}
+								color="warning">
+								<ShoppingCartRoundedIcon />
+							</Badge>
+						</IconButton>
+					</div>
+				}
 				{user ? (
 					<SignedInMenu />
 				) : (

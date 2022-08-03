@@ -19,12 +19,13 @@ namespace API
             using var scope = host.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<StoreContext>();
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
             var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
             try
             {
                 Console.WriteLine("Seeding database...");
                 await context.Database.MigrateAsync();
-                await DbInitializer.Initialize(context, userManager);
+                await DbInitializer.Initialize(context, userManager, roleManager);
             }
             catch (Exception ex)
             {

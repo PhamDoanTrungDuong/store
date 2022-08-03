@@ -19,11 +19,8 @@ import agent from "../../app/api/agent";
 import { clearBasket } from "../basket/basketSlice";
 import { LoadingButton } from "@mui/lab";
 import { StripeElementType } from "@stripe/stripe-js";
-import {
-	CardNumberElement,
-	useElements,
-	useStripe,
-} from "@stripe/react-stripe-js";
+import { CardNumberElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { Link } from "react-router-dom";
 
 const steps = ["Shipping address", "Review your order", "Payment details"];
 
@@ -70,9 +67,7 @@ const Checkout: React.FC = () => {
 				return (
 					<PaymentForm
 						cardState={cardState}
-						onCardInputChange={
-							onCardInputChange
-						}
+						onCardInputChange={onCardInputChange}
 					/>
 				);
 			default:
@@ -103,8 +98,7 @@ const Checkout: React.FC = () => {
 		const { nameOnCard, saveAddress, ...shippingAddress } = data;
 		if (!stripe || !elements) return; //strip is not ready;
 		try {
-			const cardElement =
-				elements.getElement(CardNumberElement);
+			const cardElement = elements.getElement(CardNumberElement);
 			const paymentResult = await stripe.confirmCardPayment(
 				basket?.clientSecret!,
 				{
@@ -117,26 +111,19 @@ const Checkout: React.FC = () => {
 				}
 			);
 			console.log(paymentResult);
-			if (
-				paymentResult.paymentIntent?.status ===
-				"succeeded"
-			) {
+			if (paymentResult.paymentIntent?.status === "succeeded") {
 				const orderNumber = await agent.Orders.create({
 					saveAddress,
 					shippingAddress,
 				});
 				setOrderNumber(orderNumber);
 				setPaymentSucceeded(true);
-				setPaymentMessage(
-					"Thank you - We have received your payment"
-				);
+				setPaymentMessage("Thank you - We have received your payment");
 				setActiveStep(activeStep + 1);
 				dispatch(clearBasket());
 				setLoading(false);
 			} else {
-				setPaymentMessage(
-					paymentResult.error?.message!
-				);
+				setPaymentMessage(paymentResult.error?.message!);
 				setPaymentSucceeded(false);
 				setLoading(false);
 				setActiveStep(activeStep + 1);
@@ -175,10 +162,7 @@ const Checkout: React.FC = () => {
 	return (
 		<div className="rounded-div mt-5">
 			<FormProvider {...methods}>
-				<Container
-					component="main"
-					maxWidth="md"
-					sx={{ mb: 4 }}>
+				<Container component="main" maxWidth="md" sx={{ mb: 4 }}>
 					<Paper
 						variant="outlined"
 						sx={{
@@ -195,77 +179,55 @@ const Checkout: React.FC = () => {
 							activeStep={activeStep}
 							sx={{ pt: 3, pb: 5 }}>
 							{steps.map((label) => (
-								<Step
-									key={
-										label
-									}>
+								<Step key={label}>
 									<StepLabel>
-										{
-											label
-										}
+										{label}
 									</StepLabel>
 								</Step>
 							))}
 						</Stepper>
 						<>
-							{activeStep ===
-							steps.length ? (
+							{activeStep === steps.length ? (
 								<>
 									<Typography
 										variant="h5"
 										gutterBottom>
-										{
-											paymentMessage
-										}
+										{paymentMessage}
 									</Typography>
 									{paymentSucceeded ? (
+										<>
 										<Typography variant="subtitle1">
-											Your
-											order
-											number
-											is
-											#
+											Your order
+											number is #
 											{
 												orderNumber
 											}
-											.
-											We
-											have
-											not
-											emailed
-											your
-											order
+											. We have
+											not emailed
+											your order
 											confirmation,
-											and
-											will
-											not
-											send
-											you
-											an
-											update
-											when
-											your
-											order
-											has
-											shipped
-											as
-											this
-											is
-											a
-											fake
-											store
+											and will not
+											send you an
+											update when
+											your order
+											has shipped
+											as this is a
+											fake store
 										</Typography>
+										<div className="w-full flex justify-end ">
+										<button className="mt-2 px-4 py-2 rounded-xl text-white bg-indigo-600 border border-indigo-600 hover:text-indigo-600 hover:bg-transparent duration-300">
+											<Link to="/catalog">Back to Catalog</Link>
+										</button>
+										</div>
+										</>
 									) : (
 										<Button
 											variant="contained"
 											onClick={
 												handleBack
 											}>
-											Go
-											back
-											and
-											try
-											again
+											Go back and
+											try again
 										</Button>
 									)}
 								</>
@@ -274,9 +236,7 @@ const Checkout: React.FC = () => {
 									onSubmit={methods.handleSubmit(
 										handleNext
 									)}>
-									{getStepContent(
-										activeStep
-									)}
+									{getStepContent(activeStep)}
 									<Box
 										sx={{
 											display: "flex",

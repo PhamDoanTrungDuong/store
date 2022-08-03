@@ -8,7 +8,19 @@ namespace API.Data
 {
     public static class DbInitializer
     {
-        public static async Task Initialize(StoreContext context, UserManager<User> userManager){
+        public static async Task Initialize(StoreContext context, UserManager<User> userManager, RoleManager<Role> roleManager){
+            var roles = new List<Role>
+            {
+                new Role{Name = "Member"},
+                new Role{Name = "Admin"},
+                new Role{Name = "Moderator"},
+            };
+
+            foreach(var role in roles)
+            {
+                await roleManager.CreateAsync(role);
+            }
+
             if(!userManager.Users.Any())
             {
                 var user = new User

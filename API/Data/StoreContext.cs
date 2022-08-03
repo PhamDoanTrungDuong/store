@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
-     public class StoreContext : IdentityDbContext<User, Role, int>
+     public class StoreContext : IdentityDbContext<User, Role, int, IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
      {
           public StoreContext(DbContextOptions options) : base(options)
           {
@@ -31,6 +31,18 @@ namespace API.Data
                          new Role{Id = 1, Name = "Member", NormalizedName = "MEMBER"},
                          new Role{Id = 2, Name = "Admin", NormalizedName = "ADMIN"}
                     );
+
+               builder.Entity<User>()
+                    .HasMany(ur => ur.UserRoles)
+                    .WithOne(u => u.User)
+                    .HasForeignKey(ur => ur.UserId)
+                    .IsRequired();
+
+               builder.Entity<Role>()
+                    .HasMany(ur => ur.UserRoles)
+                    .WithOne(u => u.Role)
+                    .HasForeignKey(ur => ur.RoleId)
+                    .IsRequired();
           }
      }
 }

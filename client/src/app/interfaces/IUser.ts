@@ -5,4 +5,5 @@ export interface IUser {
       token: string;
       basket?: IBasket;
       roles?: string[];
+      username: string;
 }
