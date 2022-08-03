@@ -65,6 +65,11 @@ const Header: React.FC = () => {
 							to="/role">
 							Role
 						</Link>
+						<Link
+							className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
+							to="/admin-orders">
+							Orders
+						</Link>
 					</>
 				)}
 				</>

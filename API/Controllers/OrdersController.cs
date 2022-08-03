@@ -80,7 +80,7 @@ namespace API.Controllers
                 {
                     OrderItems = items,
                     BuyerId = User.Identity.Name,
-                    ShippingAddresss = orderDto.ShippingAddress,
+                    ShippingAddress = orderDto.ShippingAddress,
                     Subtotal = subtotal,
                     DeliveryFee = deliveryFee,
                     PaymentIntentId = basket.PaymentIntentId

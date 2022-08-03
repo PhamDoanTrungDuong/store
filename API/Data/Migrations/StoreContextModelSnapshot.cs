@@ -185,14 +185,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "e29bae47-e52b-44b5-98c9-ee53725a1451",
+                            ConcurrencyStamp = "b10b51e4-6682-4485-aad5-dd53b0d09bed",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "b881bbc6-d5e0-43cd-9f6e-b8cb171bd951",
+                            ConcurrencyStamp = "e011bbe9-c9cb-404f-8e1a-0d490569be54",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -417,7 +417,7 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.OrderAggregate.Order", b =>
                 {
-                    b.OwnsOne("API.Entities.OrderAggregate.ShippingAddress", "ShippingAddresss", b1 =>
+                    b.OwnsOne("API.Entities.OrderAggregate.ShippingAddress", "ShippingAddress", b1 =>
                         {
                             b1.Property<int>("OrderId")
                                 .ValueGeneratedOnAdd()
@@ -453,7 +453,7 @@ namespace API.Data.Migrations
                                 .HasForeignKey("OrderId");
                         });
 
-                    b.Navigation("ShippingAddresss");
+                    b.Navigation("ShippingAddress");
                 });
 
             modelBuilder.Entity("API.Entities.OrderAggregate.OrderItem", b =>

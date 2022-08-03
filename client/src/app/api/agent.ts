@@ -119,6 +119,7 @@ const Admin = {
     deleteProduct: (id: number) => requests.delete(`products/${id}`),
     getUserRole: () => requests.get('admin/user-with-roles'),
     editRole: (username: string, roles: string[]) => axios.post(`admin/edit-roles/${username}?roles=${roles}`),
+    getOrder: () => requests.get('admin/admin-get-orders'),
 }
 
 const TestError = {

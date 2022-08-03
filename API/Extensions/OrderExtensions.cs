@@ -16,6 +16,7 @@ namespace API.Extensions
                     BuyerId = order.BuyerId,
                     OrderDate = order.OrderDate,
                     DeliveryFee = order.DeliveryFee,
+                    ShippingAddress = order.ShippingAddress,
                     Subtotal = order.Subtotal,
                     OrderStatus = order.OrderStatus.ToString(),
                     Total = order.GetTotal(),
