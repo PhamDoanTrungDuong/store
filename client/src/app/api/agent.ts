@@ -122,6 +122,11 @@ const Admin = {
     getOrder: () => requests.get('admin/admin-get-orders'),
 }
 
+const Comment = {
+    getComment: (id: number) => requests.get(`comment?productId=${id}`),
+    postComment: (content: string) => requests.post('comment', content),
+}
+
 const TestError = {
     get400Error: () => requests.get('buggy/bad-request'),
     get401Error: () => requests.get('buggy/unauthorized'),
@@ -139,6 +144,7 @@ const agent = {
     Orders,
     Payments,
     Admin,
+    Comment,
 }
 
 export default agent;

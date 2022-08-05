@@ -25,5 +25,7 @@ namespace API.Entities
 
         public string PublicId { get; set; }
 
+        public ICollection<Comment> CommentReceived { get; set; }
+
     }
 }

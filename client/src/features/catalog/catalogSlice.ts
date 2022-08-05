@@ -7,6 +7,7 @@ import {
 import agent from "../../app/api/agent";
 import { RootState } from "../../app/store/configureStore";
 import { IPagination } from "../../app/interfaces/IPagination";
+import { IComment } from "../../app/interfaces/IComment";
 
 
 interface CatalogState {
@@ -15,6 +16,7 @@ interface CatalogState {
   status: string;
   brands: string[];
   types: string[];
+  comments: IComment[];
   productParams: ProductParams;
   pagination: IPagination | null;
 }
@@ -45,6 +47,17 @@ export const fetchProductsAsync = createAsyncThunk<IProduct[], void, {state: Roo
     }
   }
 );
+
+export const fetchCommentAsync = createAsyncThunk<IComment[], number>(
+  "catalog/fetchCommentAsync",
+  async (Id) => {
+    try{
+      return await agent.Comment.getComment(Id);
+    }catch(error: any){
+      console.log(error)
+    }
+  }
+)
 
 export const fetchProductAsync = createAsyncThunk<IProduct, number>(
   "catalog/fetchProductAsync",
@@ -86,10 +99,14 @@ export const catalogSlice = createSlice({
     status: "idle",
     brands: [],
     types: [],
+    comments: [],
     productParams: initParams(),
     pagination: null,
   }),
   reducers: {
+      setComments: (state, action) => {
+        state.comments = action.payload
+      },
       setPagination: (state, action) => {
         state.pagination = action.payload
       },
@@ -154,10 +171,23 @@ export const catalogSlice = createSlice({
       state.status = "idle";
       console.log(action.payload)
     });
+
+    //Product - comment
+    builder.addCase(fetchCommentAsync.pending, (state) => {
+      state.status = "fetchCommentAsync";
+    });
+    builder.addCase(fetchCommentAsync.fulfilled, (state, action) => {
+      state.comments = action.payload;
+      state.status = "idle";
+    })
+    builder.addCase(fetchCommentAsync.rejected, (state, action) => {
+      state.status = "idle";
+      console.log(action.payload)
+    });
   },
 });
 
-export const { setProductParams, resetProductParams, setPagination, setPageNumber, setProduct, removeProduct} = catalogSlice.actions;
+export const { setProductParams, resetProductParams, setPagination, setPageNumber, setProduct, removeProduct, setComments} = catalogSlice.actions;
 export const productSelector = productsAdapter.getSelectors(
   (state: RootState) => state.catalog
 );
