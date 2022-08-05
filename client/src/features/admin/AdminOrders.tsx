@@ -18,7 +18,7 @@ const AdminOrders: React.FC = () => {
 			.finally(() => setLoading(false));
 	}, []);
 
-  console.log(orders);
+  	console.log(orders);
 
 	if (loading) return <Loading message="Loading orders" />;
 

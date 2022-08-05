@@ -7,6 +7,8 @@ using API.Entities;
 using API.ViewModel;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Services
 {
@@ -33,6 +35,13 @@ namespace API.Services
             public async Task<Comment> GetComment(int id)
             {
                   return await _context.Comments.FindAsync(id);
+            }
+
+            public async Task<List<Comment>> GetComments()
+            {
+                  return await _context.Comments
+                              .OrderByDescending(x => x.CommentSent)
+                              .ToListAsync();
             }
 
             public async Task<PagedList<CommentDto>> GetCommentForProduct(CommentParams commentParams)

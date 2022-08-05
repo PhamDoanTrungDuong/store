@@ -9,6 +9,7 @@ namespace API.Entities
 
         public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<Comment> CommentSent { get; set; }
+        public ICollection<UserLike> LikedProducts { get; set; }
 
     }
 }

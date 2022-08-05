@@ -222,14 +222,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "e407869f-ee88-4e5c-919f-7bdee67eb87c",
+                            ConcurrencyStamp = "67455d33-964e-48d8-af0d-ca68ef646f3a",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "9594c2d5-c47a-471e-9d01-038a1aebcace",
+                            ConcurrencyStamp = "3f006bab-8b19-416c-9bd8-c922441f0cdc",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -330,6 +330,21 @@ namespace API.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserAddress");
+                });
+
+            modelBuilder.Entity("API.Entities.UserLike", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("LikedProductId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("UserId", "LikedProductId");
+
+                    b.HasIndex("LikedProductId");
+
+                    b.ToTable("Likes");
                 });
 
             modelBuilder.Entity("API.Entities.UserRole", b =>
@@ -554,6 +569,25 @@ namespace API.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("API.Entities.UserLike", b =>
+                {
+                    b.HasOne("API.Entities.Product", "LikedProduct")
+                        .WithMany("LikedByUsers")
+                        .HasForeignKey("LikedProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Entities.User", "User")
+                        .WithMany("LikedProducts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LikedProduct");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("API.Entities.UserRole", b =>
                 {
                     b.HasOne("API.Entities.Role", "Role")
@@ -622,6 +656,8 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Entities.Product", b =>
                 {
                     b.Navigation("CommentReceived");
+
+                    b.Navigation("LikedByUsers");
                 });
 
             modelBuilder.Entity("API.Entities.Role", b =>
@@ -634,6 +670,8 @@ namespace API.Data.Migrations
                     b.Navigation("Address");
 
                     b.Navigation("CommentSent");
+
+                    b.Navigation("LikedProducts");
 
                     b.Navigation("UserRoles");
                 });

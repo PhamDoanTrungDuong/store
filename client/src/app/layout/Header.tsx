@@ -70,13 +70,18 @@ const Header: React.FC = () => {
 							to="/admin-orders">
 							Orders
 						</Link>
+						<Link
+							className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
+							to="/admin-comments">
+							Comments
+						</Link>
 					</>
 				)}
 				</>
 			</div>
 
 			<div className="flex items-center justify-between ">
-				{!user?.roles?.includes("Admin") && 
+				{!user?.roles?.includes("Admin") &&
 					<div>
 						<IconButton
 							className="hover:text-indigo-600 duration-300"

@@ -90,10 +90,9 @@ const ProductDetails: React.FC = () => {
 			<Grid container spacing={6}>
 				<Grid item xs={6}>
 					<img
-						className="border rounded-xl"
+						className="border rounded-xl w-[90%]"
 						src={product.pictureUrl}
 						alt={product.name}
-						style={{ width: "100%" }}
 					/>
 				</Grid>
 				<Grid item xs={6}>

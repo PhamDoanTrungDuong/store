@@ -24,6 +24,7 @@ import Orders from "../../features/orders/Orders";
 import Inventory from "../../features/admin/Inventory";
 import AdminRole from "../../features/admin/AdminRole";
 import AdminOrders from "../../features/admin/AdminOrders";
+import AdminComment from "../../features/admin/AdminComment";
 import { fetchCurrentUser } from "../../features/account/accountSlice";
 import PrivateRoute from "./PrivateRoute";
 import CheckoutWrapper from "../../features/checkout/CheckoutWrapper";
@@ -102,7 +103,15 @@ const App: React.FC = () => {
               path="/admin-orders"
               element={
                 <PrivateRoute roles={["Admin"]}>
-                  <AdminOrders />
+                <AdminOrders />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin-comments"
+              element={
+                <PrivateRoute roles={["Admin"]}>
+                  <AdminComment />
                 </PrivateRoute>
               }
             />

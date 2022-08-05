@@ -7,6 +7,7 @@ using API.Extensions;
 using API.Services;
 using API.ViewModel;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,7 +24,7 @@ namespace API.Controllers
                   _commentService = commentService;
                   _mapper = mapper;
             }
-            
+
             [HttpPost]
             public async Task<ActionResult<CommentDto>> CreateComment(CreateCommentDto createCommentDto)
             {
@@ -52,6 +53,12 @@ namespace API.Controllers
                   return BadRequest(new ProblemDetails{Title = "Failed to send message"});
             }
 
+            [HttpGet("get-all-comments")]
+            public async Task<List<Comment>> GetComments()
+            {
+                  return await _commentService.GetComments();
+            }
+
             [HttpGet]
             public async Task<ActionResult<IEnumerable<CommentDto>>> GetCommentsForProduct([FromQuery] CommentParams commentParams)
             {
@@ -60,6 +67,23 @@ namespace API.Controllers
                   Response.AddPaginationHeader(comments.PaginationDto);
 
                   return comments;
+            }
+
+            [Authorize(Roles = "Admin")]
+            [HttpDelete("{id}")]
+            public async Task<ActionResult> DeleteComment(int id)
+            {
+                  var comment = await _commentService.GetComment(id);
+
+                  if(comment != null) {
+                        comment.userDeleted = true;
+                        _commentService.RemoveComment(comment);
+                  }
+
+                  if(await _commentService.SaveAllAsync()) return Ok();
+
+                  return BadRequest(new ProblemDetails{Title = "Problem deleting the comment"});
+
             }
       }
 }

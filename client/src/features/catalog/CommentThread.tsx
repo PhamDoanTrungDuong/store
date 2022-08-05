@@ -1,9 +1,9 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { IComment } from "../../app/interfaces/IComment";
 import moment from 'moment';
 import { AiOutlineLike } from "react-icons/ai";
 import { IoIosReturnLeft } from "react-icons/io";
+import agent from "../../app/api/agent";
 // import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 // import { fetchCommentAsync } from "./catalogSlice";
 
@@ -23,10 +23,12 @@ const CommentThread: React.FC<IProps> = ({ idProduct }) => {
       //================================================
 	const [comments, setComments] = useState<IComment[]>([]);
 	useEffect(() => {
-		axios.get(`comment?productId=${Number(idProduct)}`).then((res) => {
-			setComments(res.data.items);
-		});
+            if(idProduct !== undefined)
+                  agent.Comment.getComment(Number(idProduct))
+                        .then((res) => setComments(res.items))
+                        .catch((error) => console.log(error));
 	});
+
 
       const capitalize = (str: string) => {
             return str.charAt(0).toUpperCase() + str.slice(1);

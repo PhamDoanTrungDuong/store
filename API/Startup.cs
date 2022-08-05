@@ -133,6 +133,7 @@ namespace API
             services.AddScoped<PaymentService>();
             services.AddScoped<ImageService>();
             services.AddScoped<CommentService>();
+            services.AddScoped<LikesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
