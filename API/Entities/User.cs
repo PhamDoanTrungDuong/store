@@ -8,6 +8,7 @@ namespace API.Entities
         public UserAddress Address { get; set; }
 
         public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<Comment> CommentSent { get; set; }
 
     }
 }

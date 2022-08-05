@@ -18,9 +18,9 @@ interface IProps {
   ];
 
   interface IFormInput {
-	name: string;
-	value: string;
-    }
+    name: string;
+    value: string;
+  }
 
 const EditRoleForm: React.FC<IProps> = ({user, cancelEdit}) => {
 	const { register, handleSubmit } = useForm<IFormInput>();

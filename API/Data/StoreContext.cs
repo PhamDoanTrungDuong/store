@@ -15,6 +15,7 @@ namespace API.Data
           public DbSet<Product> Products { get; set; }
           public DbSet<Basket> Baskets { get; set; }
           public DbSet<Order> Orders { get; set; }
+          public DbSet<Comment> Comments { get; set; }
 
           protected override void OnModelCreating(ModelBuilder builder)
           {
@@ -43,6 +44,16 @@ namespace API.Data
                     .WithOne(u => u.Role)
                     .HasForeignKey(ur => ur.RoleId)
                     .IsRequired();
+
+               builder.Entity<Comment>()
+                    .HasOne(u => u.Product)
+                    .WithMany(c => c.CommentReceived)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+               builder.Entity<Comment>()
+                    .HasOne(u => u.User)
+                    .WithMany(c => c.CommentSent)
+                    .OnDelete(DeleteBehavior.Restrict);
           }
      }
 }
