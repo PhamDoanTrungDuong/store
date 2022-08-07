@@ -110,7 +110,6 @@ const Checkout: React.FC = () => {
 					},
 				}
 			);
-			console.log(paymentResult);
 			if (paymentResult.paymentIntent?.status === "succeeded") {
 				const orderNumber = await agent.Orders.create({
 					saveAddress,

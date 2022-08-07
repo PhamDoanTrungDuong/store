@@ -124,6 +124,10 @@ const Admin = {
     deleteComment: (id: number) => requests.delete(`comment/${id}`),
 }
 
+const Profile = {
+    updateProfile: (profile: any) => requests.putForm('account', createFormData(profile)),
+}
+
 const Comment = {
     getComment: (id: number) => requests.get(`comment?productId=${id}`),
     postComment: (content: string) => requests.post('comment', content),
@@ -147,6 +151,7 @@ const agent = {
     Payments,
     Admin,
     Comment,
+    Profile,
 }
 
 export default agent;

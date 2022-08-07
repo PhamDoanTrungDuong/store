@@ -28,10 +28,14 @@ const SignedInMenu: React.FC = () => {
         </span>
       </Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem component={NavLink} to="/orders">
-          My orders
-        </MenuItem>
+        {!user?.roles?.includes("Admin") &&
+          <span>
+              <MenuItem component={NavLink} to="/profile">Profile</MenuItem>
+              <MenuItem component={NavLink} to="/orders">
+                My orders
+              </MenuItem>
+          </span>
+        }
         <MenuItem
           onClick={() => {
             dispatch(signOut());

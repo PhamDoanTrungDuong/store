@@ -42,14 +42,14 @@ const Header: React.FC = () => {
 				{midLinks.map(({ title, path }) => {
 					return (
 						!user?.roles?.includes("Admin") && (
-							<div key={title}>
+							<React.Fragment key={title}>
 								<Link
 									className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
 									to={path}
 									key={path}>
 									{title}
 								</Link>
-							</div>
+							</React.Fragment>
 						)
 					)
 				})}

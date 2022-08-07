@@ -6,4 +6,5 @@ export interface IUser {
       basket?: IBasket;
       roles?: string[];
       username: string;
+      phone?: string;
 }

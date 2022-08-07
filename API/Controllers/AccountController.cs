@@ -5,6 +5,7 @@ using API.DTOs;
 using API.Entities;
 using API.Extensions;
 using API.Services;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,8 +18,10 @@ namespace API.Controllers
             private readonly UserManager<User> _userManager;
             private readonly TokenService _tokenService;
             private readonly StoreContext _context;
-            public AccountController(UserManager<User> userManager, TokenService tokenService, StoreContext context)
+            private readonly IMapper _mapper;
+            public AccountController(UserManager<User> userManager, TokenService tokenService, StoreContext context, IMapper mapper)
             {
+                  _mapper = mapper;
                   _context = context;
                   _tokenService = tokenService;
                   _userManager = userManager;
@@ -35,9 +38,9 @@ namespace API.Controllers
                   var userBasket = await RetrieveBasket(loginDto.UserName);
                   var anonBasket = await RetrieveBasket(Request.Cookies["buyerId"]);
 
-                  if(anonBasket != null)
+                  if (anonBasket != null)
                   {
-                        if(userBasket != null) _context.Baskets.Remove(userBasket);
+                        if (userBasket != null) _context.Baskets.Remove(userBasket);
                         anonBasket.BuyerId = user.UserName;
                         Response.Cookies.Delete("buyerId");
                         await _context.SaveChangesAsync();
@@ -47,7 +50,7 @@ namespace API.Controllers
                         Email = user.Email,
                         Token = await _tokenService.GenerateToken(user),
                         Basket = anonBasket != null ? anonBasket.MapBasketToDto() : userBasket?.MapBasketToDto()
-                  };  
+                  };
             }
 
             [HttpPost("register")]
@@ -77,14 +80,21 @@ namespace API.Controllers
             public async Task<ActionResult<UserDto>> GetCurrentUser()
             {
                   var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                  var address = await _userManager.Users
+                        .Where(x => x.UserName == User.Identity.Name)
+                        .Select(u => u.Address)
+                        .FirstOrDefaultAsync();
 
                   var userBasket = await RetrieveBasket(User.Identity.Name);
 
                   return new UserDto
                   {
                         Email = user.Email,
+                        Username = user.UserName,
+                        Phone = user.PhoneNumber,
                         Token = await _tokenService.GenerateToken(user),
                         Basket = userBasket?.MapBasketToDto(),
+                        Address = address?.MapAddressToDto()
                   };
             }
 
@@ -92,10 +102,41 @@ namespace API.Controllers
             [HttpGet("savedAddress")]
             public async Task<ActionResult<UserAddress>> GetSaveAddress()
             {
-                  return await _userManager.Users
+                  var address = await _userManager.Users
                         .Where(x => x.UserName == User.Identity.Name)
                         .Select(u => u.Address)
                         .FirstOrDefaultAsync();
+
+                  return address;
+            }
+
+            [HttpPut]
+            public async Task<ActionResult> EditProfile([FromForm] MemberUpdateDto memberUpdateDto, [FromForm] MemberUpdateInfoDto memberUpdateInfoDto)
+            {
+                  var user = await _userManager.Users
+                        .Where(x => x.UserName == User.Identity.Name)
+                        .FirstOrDefaultAsync();
+
+                  var userAddress = await _userManager.Users
+                        .Where(x => x.UserName == User.Identity.Name)
+                        .Select(u => u.Address)
+                        .FirstOrDefaultAsync();
+
+                  if (userAddress == null && user == null) return NotFound();
+
+                  user.PhoneNumber = memberUpdateInfoDto.Phone;
+                  user.Email = memberUpdateInfoDto.Email;
+
+                  await _userManager.UpdateAsync(user);
+
+                  _mapper.Map(memberUpdateDto, userAddress);
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if (result) return Ok(result);
+
+                  return BadRequest(new ProblemDetails { Title = "Problem updating user" });
+
             }
 
 

@@ -29,6 +29,7 @@ import { fetchCurrentUser } from "../../features/account/accountSlice";
 import PrivateRoute from "./PrivateRoute";
 import CheckoutWrapper from "../../features/checkout/CheckoutWrapper";
 import Footer from "./Footer";
+import Profile from "../../features/account/Profile";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -80,6 +81,14 @@ const App: React.FC = () => {
               element={
                 <PrivateRoute>
                   <Orders />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <Profile />
                 </PrivateRoute>
               }
             />
