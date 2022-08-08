@@ -39,7 +39,10 @@ export const fetchBasketAsync = createAsyncThunk<IBasket>(
   'basket/fetchBasketAsync',
   async (_, thunkAPI) => {
     try{
-      return await agent.Basket.get();
+      const basket =  await agent.Basket.get();
+      if(basket)
+        return basket
+      
     }catch(error: any){
       thunkAPI.rejectWithValue({error: error.data})
     }
