@@ -27,7 +27,7 @@ namespace API.Controllers
         {
             var basket = await RetrieveBasket(GetBuyerId());
 
-            if (basket == null) return NotFound();
+            if (basket == null) return NoContent();
 
             return basket.MapBasketToDto();
         }
