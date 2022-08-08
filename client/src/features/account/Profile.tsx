@@ -25,7 +25,6 @@ const Profile: React.FC = () => {
             try {
                 if (data) {
                     let response = await agent.Profile.updateProfile(data);
-			  console.log(response);
 			  if(response)
 			  {
 				alert("Update succesfull");

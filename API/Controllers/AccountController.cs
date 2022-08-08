@@ -127,16 +127,15 @@ namespace API.Controllers
                   user.PhoneNumber = memberUpdateInfoDto.Phone;
                   user.Email = memberUpdateInfoDto.Email;
 
-                  await _userManager.UpdateAsync(user);
+                  var re =  await _userManager.UpdateAsync(user);
 
                   _mapper.Map(memberUpdateDto, userAddress);
 
                   var result = await _context.SaveChangesAsync() > 0;
 
-                  if (result) return Ok(result);
+                  if (re != null || result) return Ok(re);
 
-                  return BadRequest(new ProblemDetails { Title = "Problem updating user" });
-
+                  return BadRequest(new ProblemDetails{Title = "Problem updating user"});
             }
 
 

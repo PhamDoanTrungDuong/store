@@ -14,21 +14,21 @@ const Home: React.FC = () => {
         <Slider {...settings} className="rounded-sm">
           <div>
             <img
-              src="/images/hero3.jpg"
+              src="/images/banner1.jpg"
               alt="hero"
               style={{ display: "block", width: "100%", maxHeight: 500 }}
             />
           </div>
           <div>
             <img
-              src="/images/hero2.jpg"
+              src="/images/banner2.jpg"
               alt="hero"
               style={{ display: "block", width: "100%", maxHeight: 500 }}
             />
           </div>
           <div>
             <img
-              src="/images/hero1.jpg"
+              src="/images/banner3.jpg"
               alt="hero"
               style={{ display: "block", width: "100%", maxHeight: 500 }}
             />

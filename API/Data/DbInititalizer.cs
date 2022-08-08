@@ -46,202 +46,554 @@ namespace API.Data
             var products = new List<Product>{
                 new Product
                 {
-                    Name = "Angular Speedster Board 2000",
+                    Name = "Nike Sportswear Air",
                     Description =
-                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                        "The Nike Air collection celebrates the legendary sneakers that helped shape the Swoosh brand over the decades. This French terry crew is made from heavy fleece fabric for soft warmth and comfort that lasts. A Nike Air rubber graphic printed on the chest and cover-stitch piping down the seams elevate the finish.",
                     Price = 20000,
-                    PictureUrl = "/images/products/sb-ang1.png",
-                    Brand = "Angular",
-                    Type = "Boards",
+                    PictureUrl = "/images/products/1.jpg",
+                    Brand = "Nike",
+                    Type = "Tops & T-Shirts",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Green Angular Board 3000",
-                    Description = "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
+                    Name = "Nike Dri-FIT A.I.R.",
+                    Description = "Add some abstract craft to your route in this Dri-FIT Tank. Our Artist-in-Residence Hola Lou brings her minimal approach with bold shapes printed over smooth fabric.",
                     Price = 15000,
-                    PictureUrl = "/images/products/sb-ang2.png",
-                    Brand = "Angular",
-                    Type = "Boards",
+                    PictureUrl = "/images/products/2.jpg",
+                    Brand = "Nike",
+                    Type = "Tops & T-Shirts",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Core Board Speed Rush 3",
+                    Name = "Adidas Air Max",
                     Description =
-                        "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
+                        "Stay covered against the elements in this woven jacket. Durable, water-repellent panels in the hood, chest and sleeves help put a barrier between you and bad weather so you stay comfortable when wind and rain are in the forecast. Zip pockets keep essential items secure and close at hand while Air Max branding adds street-ready style.",
                     Price = 18000,
-                    PictureUrl = "/images/products/sb-core1.png",
-                    Brand = "NetCore",
-                    Type = "Boards",
+                    PictureUrl = "/images/products/3.jpg",
+                    Brand = "Adidas",
+                    Type = "Tops & T-Shirts",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Net Core Super Board",
+                    Name = "Adidas Yoga Dri-FIT",
                     Description =
-                        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
+                        "The Nike Yoga Top is made from lightweight knit fabric for a soft, smooth feel against your skin. Sweat-wicking technology will help keep you dry so you can stay comfortable and focused on your practice. And it's mindfully made from at least 50% recycled polyester fibres.",
                     Price = 30000,
-                    PictureUrl = "/images/products/sb-core2.png",
-                    Brand = "NetCore",
-                    Type = "Boards",
+                    PictureUrl = "/images/products/4.jpg",
+                    Brand = "Adidas",
+                    Type = "Tops & T-Shirts",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "React Board Super Whizzy Fast",
+                    Name = "UA Windrunner",
                     Description =
-                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                        "The UA Windrunner Jacket gets updated with water-repellent materials and a packable design.Vent details on the back and on the chevron help keep you cool when your run heats up.This product is made from at least 50% recycled polyester fibres.",
                     Price = 25000,
-                    PictureUrl = "/images/products/sb-react1.png",
-                    Brand = "React",
-                    Type = "Boards",
+                    PictureUrl = "/images/products/5.jpg",
+                    Brand = "Under Armour",
+                    Type = "Tops & T-Shirts",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Typescript Entry Board",
+                    Name = "UA Pro Dri-FIT",
                     Description =
-                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                        "You give your all to the workout, pushing yourself to the limit. Let the Nike Pro Top keep you cool and comfortable with its soft, breathable fabric. It's got a relaxed fit so you can wear it on its own or over a base layer.",
                     Price = 12000,
-                    PictureUrl = "/images/products/sb-ts1.png",
-                    Brand = "TypeScript",
-                    Type = "Boards",
+                    PictureUrl = "/images/products/6.jpg",
+                    Brand = "Under Armour",
+                    Type = "Tops & T-Shirts",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Core Blue Hat",
+                    Name = "Nike Dri-FIT ADV A.P.S.",
                     Description =
-                        "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                        "Your busy day means you need to be ready to exercise at any time. We made the Advanced Performance System (A.P.S.) Top to answer the challenge with a smooth, stretchy and breathable feel that can be worn for your workout and beyond. Wear it on its own or as a layering piece to help you reach peak performance.",
+                    Price = 12000,
+                    PictureUrl = "/images/products/7.jpg",
+                    Brand = "Nike",
+                    Type = "Tops & T-Shirts",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "The UA Polo Rafa",
+                    Description =
+                        "This isn't your average polo—it's The Nike Polo. Every detail, from its innovative, sweat-wicking fabric to the hints of orange that nod to Nike's original shoe box, has been thoughtfully crafted to meet the needs of the everyday you. The result is a street-ready style that looks at home on the course, the court and everywhere else. Rafa's bull logo is featured on the chest. This product is made from 100% sustainable materials, using a blend of both recycled polyester and organic cotton fibres. The blend is at least 10% recycled fibres or at least 10% organic cotton fibres.",
+                    Price = 12000,
+                    PictureUrl = "/images/products/8.jpg",
+                    Brand = "Under Armour",
+                    Type = "Tops & T-Shirts",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "UA Dri-FIT Miler",
+                    Description =
+                        "Take on your daily route with the Nike Dri-FIT Miler Top.It offers lightweight performance and mobility for the entry-level runner.This product is made from at least 50% recycled polyester fibres.",
+                    Price = 12000,
+                    PictureUrl = "/images/products/9.jpg",
+                    Brand = "Under Armour",
+                    Type = "Tops & T-Shirts",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Fila Dri-FIT Challenger",
+                    Description =
+                        "The Fila Dri-FIT Rafa Challenger Top is built to perform. We used a knit fabric that's stretchy and very breathable to help you stay cool when your match heats up. This top also offers a sleeve design that feels smooth and natural through your swing, so you can focus on playing at your best, match after match. This product is made from 100% recycled polyester fibres.",
+                    Price = 12000,
+                    PictureUrl = "/images/products/10.jpg",
+                    Brand = "Fila",
+                    Type = "Tops & T-Shirts",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Adidas Stride D.Y.E.",
+                    Description =
+                        "Built for unrestricted movement, these lightweight Stride Shorts help keep your momentum going with an all-over neuron print tracing the pathways in your brain that release endorphins as the miles tick by. It's a celebration of you and the joy of the run.",
                     Price = 1000,
-                    PictureUrl = "/images/products/hat-core1.png",
-                    Brand = "NetCore",
-                    Type = "Hats",
+                    PictureUrl = "/images/products/11.jpg",
+                    Brand = "Adidas",
+                    Type = "Shorts",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Green React Woolen Hat",
+                    Name = "Adidas Dri-FIT",
                     Description =
-                        "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                        "The Adidas Dri-FIT Shorts are made to keep you moving during high-intensity training. Woven fabric stretches with every move, while vents at the hems are ideal for deep bends like Lunges and Squats. This product is made from 100% recycled polyester fibres.",
                     Price = 8000,
-                    PictureUrl = "/images/products/hat-react1.png",
-                    Brand = "React",
-                    Type = "Hats",
+                    PictureUrl = "/images/products/12.jpg",
+                    Brand = "Adidas",
+                    Type = "Shorts",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Purple React Woolen Hat",
+                    Name = "Nike Sportswear",
                     Description =
-                        "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                        "Equal parts style and laid-back comfort, the Nike Sportswear Shorts are an easy pick for everyday wear. Sweat-wicking technology helps you stay dry and comfortable while an added cargo pocket gives you a little extra space to secure your stuff.",
                     Price = 1500,
-                    PictureUrl = "/images/products/hat-react2.png",
-                    Brand = "React",
-                    Type = "Hats",
+                    PictureUrl = "/images/products/13.jpg",
+                    Brand = "Puma",
+                    Type = "Shorts",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Blue Code Gloves",
+                    Name = "Nike Dri-FIT",
                     Description =
-                        "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                        "The Nike Dri-FIT Shorts are made from 100% sustainable materials, using a blend of both recycled polyester and organic cotton fibres. The blend is at least 10% recycled fibres or at least 10% organic cotton fibres. Soft French terry fabric with sweat-wicking power helps you stay dry and comfortable from your first stretch through to your last set.",
+                    Price = 1500,
+                    PictureUrl = "/images/products/14.jpg",
+                    Brand = "Nike",
+                    Type = "Shorts",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Puma Dri-FIT ADV A.P.S.",
+                    Description =
+                        "Your workouts are an important part of your routine. That's why we made the Axis Performance System (A.P.S.) Shorts to be worn at any time, so you're ready for that high-intensity training on a moment's notice. They're stretchy and breathable so you can get through your reps with ease. Need to go for a quick swim? We added holes to the pockets to help water drain out if you're in the mood for some laps in the pool.",
+                    Price = 1500,
+                    PictureUrl = "/images/products/15.jpg",
+                    Brand = "Puma",
+                    Type = "Shorts",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Giannis Nike Dri-FIT",
+                    Description =
+                        "Suit up in sweat-wicking mesh shorts with prints inspired by the 9th wonder of the world—Giannis. Channel his championship mentality with a smooth, easy feel that lets you move up the court and beyond with ease.",
+                    Price = 1500,
+                    PictureUrl = "/images/products/16.jpg",
+                    Brand = "Puma",
+                    Type = "Shorts",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Reebok",
+                    Description =
+                        "When your team starts to flow with every pass and shot, it can feel like a flash of lightning. We celebrate that feeling in the soft, reversible feel of our Premium Shorts. Lightning on one side captures that electric energy on the court.",
+                    Price = 1500,
+                    PictureUrl = "/images/products/17.jpg",
+                    Brand = "Reebok",
+                    Type = "Shorts",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Paris Saint-Germain",
+                    Description =
+                        "Get comfortable without losing your cool in these all-day versatile Jordan x PSG shorts. They're made from breathable mesh with zip pockets for the essentials. Print and label details highlight our ongoing collaboration with your favourite football club.",
+                    Price = 1500,
+                    PictureUrl = "/images/products/18.jpg",
+                    Brand = "Reebok",
+                    Type = "Shorts",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Adidas Flex Vent Max",
+                    Description =
+                        "Made from lightweight, stretchy fabric, the Adidas Pro Flex Shorts move with your body through your most intense workouts. An elastic, fold-over waistband lets you easily adjust your fit and the sweat-wicking technology helps you stay dry, so you can zero in on the challenges ahead. This product is made from at least 75% recycled polyester fibres.",
+                    Price = 1500,
+                    PictureUrl = "/images/products/19.jpg",
+                    Brand = "Adidas",
+                    Type = "Shorts",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Addidas Dri-FIT",
+                    Description =
+                        "The Addidas Dri-FIT Shorts are made to keep you moving during high-intensity training. Woven fabric stretches with every move, while vents at the hems are ideal for deep bends like Lunges and Squats. This product is made from 100% recycled polyester fibres.",
+                    Price = 1500,
+                    PictureUrl = "/images/products/20.jpg",
+                    Brand = "Adidas",
+                    Type = "Shorts",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Fila Air Force 1 '07",
+                    Description =
+                        "The radiance lives on in the Nike Air Force 1 '07, the b-ball OG that puts a fresh spin on what you know best: durably stitched overlays, clean finishes and the perfect amount of flash to make you shine.",
                     Price = 1800,
-                    PictureUrl = "/images/products/glove-code1.png",
-                    Brand = "VS Code",
-                    Type = "Gloves",
+                    PictureUrl = "/images/products/31.jpg",
+                    Brand = "Fila",
+                    Type = "Shoes",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Green Code Gloves",
+                    Name = "Giannis Immortality 2",
                     Description =
-                        "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                        "Morph into all-timer with the Giannis Immortality 2. A plush foam package combined with a more focused fit in the midfoot in a super-lightweight design means you can maintain a high level of intensity and focus when victory hangs in the balance—just like Giannis at the critical moment.",
                     Price = 1500,
-                    PictureUrl = "/images/products/glove-code2.png",
-                    Brand = "VS Code",
-                    Type = "Gloves",
+                    PictureUrl = "/images/products/32.jpg",
+                    Brand = "Fila",
+                    Type = "Shoes",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Purple React Gloves",
+                    Name = "Puma Mercurial Superfly 9s",
                     Description =
-                        "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                        "Instantly tilt the pitch in the bold design of the light and low-to-the-ground Superfly 9 Club TF. Fast is in the Air.",
                     Price = 1600,
-                    PictureUrl = "/images/products/glove-react1.png",
-                    Brand = "React",
-                    Type = "Gloves",
+                    PictureUrl = "/images/products/33.jpg",
+                    Brand = "Puma",
+                    Type = "Shoes",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Green React Gloves",
+                    Name = "Jordan Series ES",
                     Description =
-                        "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                        "Inspired by Mike's backyard battles with his older brother Larry, the Jordan Series references their legendary sibling rivalry throughout the design. The rubber sole offers more than just impressive traction—it also tells the story of how MJ came to be #23. Look for the hidden reminder to Swing for the Fence, a direct quote from Larry to his little bro.",
                     Price = 1400,
-                    PictureUrl = "/images/products/glove-react2.png",
-                    Brand = "React",
-                    Type = "Gloves",
+                    PictureUrl = "/images/products/34.jpg",
+                    Brand = "Puma",
+                    Type = "Shoes",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Redis Red Boots",
+                    Name = "Adidas React Pegasus",
                     Description =
-                        "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
+                        "The Adidas React Pegasus Trail 4 GORE-TEX is your running companion for those days when the weather turns. Its waterproof GORE-TEX layer helps keep your feet dry, and less rubber in the outsole creates a smooth transition from road to trail without breaking stride.",
+                    Price = 1400,
+                    PictureUrl = "/images/products/35.jpg",
+                    Brand = "Adidas",
+                    Type = "Shoes",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "UA Zoom Mercurial",
+                    Description =
+                        "The pitch is yours when you lace up in the Vapor 15 Pro TF. It's loaded with a Zoom Air unit, so you can dominate in the waning minutes of a match—when it matters most. Fast is in the Air.",
+                    Price = 1400,
+                    PictureUrl = "/images/products/36.jpg",
+                    Brand = "Under Armour",
+                    Type = "Shoes",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Luka 1",
+                    Description =
+                        "Designed for No. 77 and made for every athlete craving speed and efficiency, Luka's debut delivers the goods. The first shoe with full-length Formula 23 foam, it has an ultra-supportive fit crafted with the step-back in mind. Meanwhile, strong and lightweight Flight Wire cables keep you feeling contained, whether you're playing indoors or out. This is the assist you've been waiting for—get out there and make your shot.",
+                    Price = 1400,
+                    PictureUrl = "/images/products/37.jpg",
+                    Brand = "Puma",
+                    Type = "Shoes",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Air Jordan 1 Mid",
+                    Description =
+                        "Inspired by the original AJ1, the Air Jordan 1 Mid offers fans a chance to follow in MJ's footsteps. Fresh colour trims the clean, classic materials, imbuing modernity into a classic design.",
+                    Price = 1400,
+                    PictureUrl = "/images/products/38.jpg",
+                    Brand = "Puma",
+                    Type = "Shoes",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Jordan Delta 3 SP",
+                    Description =
+                        "Combining high-end craft with high-tech features, these kicks are the embodiment of cool. Airy Ripstop and soft suede pair with a seamless interior for classic low-top looks and premium Jordan Brand comfort.",
+                    Price = 1400,
+                    PictureUrl = "/images/products/39.jpg",
+                    Brand = "Puma",
+                    Type = "Shoes",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Air Jordan XXXVI",
+                    Description =
+                        "Next up in the iconic Air Jordan franchise: a wearable expression of Luka's on-court energy. With a minimal yet durable design, this is one of the lightest Js to date. Equipped with a full-length Zoom Air Strobel unit stacked over a Zoom Air unit in the forefoot, you'll get energy return and elite responsiveness when you need it. Step on the court with the confidence that whatever you do—it's light work.",
+                    Price = 1400,
+                    PictureUrl = "/images/products/40.jpg",
+                    Brand = "Puma",
+                    Type = "Shoes",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "ReebokCourt Advantage",
+                    Description =
+                        "Gear up for your pre-game routine in our Advantage Jacket. Designed for dynamic movement, it lets you move side to side and power through your swing in smooth, stretchy fabric. Playing in the rain? We made this one water-repellent so wet conditions can't dampen your serve.",
                     Price = 25000,
-                    PictureUrl = "/images/products/boot-redis1.png",
-                    Brand = "Redis",
-                    Type = "Boots",
+                    PictureUrl = "/images/products/41.jpg",
+                    Brand = "Reebok",
+                    Type = "Jackets",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Core Red Boots",
+                    Name = "Adidas SB",
                     Description =
-                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                        "Ready to bomb some hills? This lightweight, skate-ready take on the classic zip-up bomber design gives you a breezy outer layer to protect you from the chill as your momentum builds. Fingers crossed for no speed wobbles.",
                     Price = 18999,
-                    PictureUrl = "/images/products/boot-core2.png",
-                    Brand = "NetCore",
-                    Type = "Boots",
+                    PictureUrl = "/images/products/42.jpg",
+                    Brand = "Adidas",
+                    Type = "Jackets",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Core Purple Boots",
+                    Name = "Adidas Sportswear Repeat",
                     Description =
-                        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
+                        "Zip up and get out of the door prepared, no matter the weather. Falling somewhere between a puffer and a windbreaker, this jacket features a durable, water-repellent shell and a low-profile build for warmth and comfort you can rely on.",
                     Price = 19999,
-                    PictureUrl = "/images/products/boot-core1.png",
-                    Brand = "NetCore",
-                    Type = "Boots",
+                    PictureUrl = "/images/products/43.jpg",
+                    Brand = "Adidas",
+                    Type = "Jackets",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Angular Purple Boots",
-                    Description = "Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.",
+                    Name = "Nike Therma-FIT Repel",
+                    Description = "Perfect for cooler temperatures, the Nike Therma-FIT Repel Gilet helps keep you running. Insulating technology is combined with water-repellent fabric so you stay dry and comfortable. It even has stitching nodding to the Windrunner's iconic chevron. This product is made from at least 75% organic cotton fibres.",
                     Price = 15000,
-                    PictureUrl = "/images/products/boot-ang2.png",
-                    Brand = "Angular",
-                    Type = "Boots",
+                    PictureUrl = "/images/products/44.jpg",
+                    Brand = "Nike",
+                    Type = "Jackets",
                     QuantityInStock = 100
                 },
                 new Product
                 {
-                    Name = "Angular Blue Boots",
+                    Name = "Nike Therma Repel",
                     Description =
-                        "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
+                        "Perfect for cooler temperatures, the Nike Therma-FIT Repel Gilet helps keep you running. Insulating technology is combined with water-repellent fabric so you stay dry and comfortable. It even has stitching nodding to the Windrunner's iconic chevron. This product is made from at least 75% organic cotton fibres.",
                     Price = 18000,
-                    PictureUrl = "/images/products/boot-ang1.png",
-                    Brand = "Angular",
-                    Type = "Boots",
+                    PictureUrl = "/images/products/45.jpg",
+                    Brand = "Nike",
+                    Type = "Jackets",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Therma-FIT Legacy",
+                    Description =
+                        "Filling the gap between a puffer and a windbreaker, the Nike Sportswear Therma-FIT Jacket offers just the right amount of warmth and loft for everyday layering. The water-repellent shell fabric is paired with synthetic insulation and a fleece lining to keep you warm and dry in cold, wet weather. Ripstop panels reinforce high-wear areas to provide long-lasting durability and style.",
+                    Price = 18000,
+                    PictureUrl = "/images/products/46.jpg",
+                    Brand = "Under Armour",
+                    Type = "Jackets",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Jordan 23 Engineered",
+                    Description =
+                        "You've reached the intersection of utility, style and sport. This gilet is warm, water-repellent and made from at least 75% sustainable materials. Fasten it with a streamlined combo of hidden snaps and a full-length zip.",
+                    Price = 18000,
+                    PictureUrl = "/images/products/47.jpg",
+                    Brand = "Nike",
+                    Type = "Jackets",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Jordan Essentials",
+                    Description =
+                        "This Jordan Essentials jacket has you covered when you're out and about. Built from lightweight fabric with a water-repellent coating, this full-zip windbreaker goes the distance to help you get outside in the elements. Michael Jordan's signature is embroidered on the upper back for a subtle nod to His Airness. This product is made from at least 75% recycled polyester fibres.",
+                    Price = 18000,
+                    PictureUrl = "/images/products/48.jpg",
+                    Brand = "Nike",
+                    Type = "Jackets",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Tottenham Hotspur",
+                    Description =
+                        "The Tottenham Hotspur Jacket combines utilitarian details with proud team print. Durable Ripstop fabric with a water-repellent finish helps keep you dry when the weather bares its teeth. It also has zip pockets to help keep your daily necessities close and secure when you're showing your love for your squad in cool, wet weather.",
+                    Price = 18000,
+                    PictureUrl = "/images/products/49.jpg",
+                    Brand = "Nike",
+                    Type = "Jackets",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Chelsea F.C.",
+                    Description =
+                        "With a design inspired by classic athletics jackets, the knit Chelsea F.C. Jacket offers lightweight warmth in an understated look. A loose fit layers easily over your other clothes, while zip pockets help keep everyday necessities secure. A team crest on the chest ensures people know where your football loyalty lies.",
+                    Price = 18000,
+                    PictureUrl = "/images/products/50.jpg",
+                    Brand = "Nike",
+                    Type = "Jackets",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Puma Multiplier",
+                    Description =
+                        "Run tall in the Nike Multiplier Crew Socks (2 Pairs). Sweat-wicking fabric helps you stay dry and cool, while mesh along the midfoot gives you breathability. A linear logo stands out as you run.",
+                    Price = 18000,
+                    PictureUrl = "/images/products/51.jpg",
+                    Brand = "Puma",
+                    Type = "Accessories",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Puma Heritage",
+                    Description =
+                        "The Puma Heritage Crossbody Bag gives you a durable design with multiple compartments to help keep you organised when you're out and about. An adjustable strap lets you customise your carrying experience.",
+                    Price = 18000,
+                    PictureUrl = "/images/products/52.jpg",
+                    Brand = "Puma",
+                    Type = "Accessories",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Addidas Utility Power",
+                    Description =
+                        "The Addidas Utility Power Duffel is the perfect partner for your pre- or post-day workout. It keeps your gear secure and ready to go with its durable design, utilising multiple pockets to help keep your things organised, along with padded straps for comfortable carrying.",
+                    Price = 18000,
+                    PictureUrl = "/images/products/53.jpg",
+                    Brand = "Adidas",
+                    Type = "Accessories",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Heritage Waistpack",
+                    Description =
+                        "Look to the Reebok Heritage Waistpack to store the small essentials that don't quite fit in your pockets. An internal zipped stash pocket helps keep things organised and easy to grab. This product is made from at least 65% recycled polyester.",
+                    Price = 18000,
+                    PictureUrl = "/images/products/54.jpg",
+                    Brand = "Reebok",
+                    Type = "Accessories",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Reebok Essentials",
+                    Description =
+                        "With its large laptop sleeve, phone holder and roomy main compartment, this backpack is made to take you places. Tonal trim highlights the construction, while its water-repellent details help secure your stuff even when the weather turns. This product is made from at least 50% recycled polyester fibres.",
+                    Price = 18000,
+                    PictureUrl = "/images/products/55.jpg",
+                    Brand = "Reebok",
+                    Type = "Accessories",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Heritage Backpack",
+                    Description =
+                        "Take your gear to go with the UA Heritage Backpack. Its spacious main compartment features a sleeve that holds up to a 15 laptop, so your computer is never out of reach. 2 zipped accessories pockets help keep your gear organised and easy to grab. This product is made from at least 65% recycled polyester fibres.",
+                    Price = 18000,
+                    PictureUrl = "/images/products/56.jpg",
+                    Brand = "Under Armour",
+                    Type = "Accessories",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Reebok Tote Bag",
+                    Description =
+                        "An elevated take on a classic, the Reebok Sportswear Tote keeps your everyday essentials organised. The spacious main compartment features interior pockets and a laptop sleeve for secure organisation, along with an exterior pocket for quick access to your keys, cards and phone. This product is made from at least 65% recycled polyester fibres.",
+                    Price = 18000,
+                    PictureUrl = "/images/products/57.jpg",
+                    Brand = "Reebok",
+                    Type = "Accessories",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Sportswear Heritage 86",
+                    Description =
+                        "The Nike Sportswear Heritage86 Cap is a classic 6-panel design with sweat-wicking support.It has a metal Swoosh ingot at the front and an adjustable closure for the perfect fit.",
+                    Price = 18000,
+                    PictureUrl = "/images/products/58.jpg",
+                    Brand = "Nike",
+                    Type = "Accessories",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Jordan Pro Jumpman",
+                    Description =
+                        "Show them your hops in the Jordan Pro Jumpman Snapback Hat.It has a flat bill and high structured crown made from tightly woven twill.The iconic logo is thickly embroidered on the front, a bold projection of the Brand's heritage.This product is made from at least 50% recycled polyester fibres.",
+                    Price = 18000,
+                    PictureUrl = "/images/products/59.jpg",
+                    Brand = "Fila",
+                    Type = "Accessories",
+                    QuantityInStock = 100
+                },
+                new Product
+                {
+                    Name = "Fila Vapor Grip3",
+                    Description =
+                        "The Fila Vapor Grip3 Gloves are designed to wear in both wet and dry conditions. An adjustable strap and foam cushioning give you a tighter grip, while the wristband sits lower to let your hand move naturally.",
+                    Price = 18000,
+                    PictureUrl = "/images/products/60.jpg",
+                    Brand = "Fila",
+                    Type = "Accessories",
                     QuantityInStock = 100
                 },
             };
-            
+
              foreach (var product in products)
             {
                 context.Products.Add(product);
