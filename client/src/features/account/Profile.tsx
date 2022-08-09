@@ -39,7 +39,7 @@ const Profile: React.FC = () => {
 
   return (
     <div className="h-[800px] rounded-div mt-5 p-5">
-			<FormProvider {...methods}>
+	<FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(handleSubmitData)}>
               <ProfileForm />
 		  <button type="submit" className="bg-indigo-600 border border-indigo-600 text-white px-4 p-2 w-full rounded-xl shadow-xl mt-10 hover:shadow-2xl my-2 hover:bg-transparent hover:text-indigo-600 duration-200">Save Changes</button>

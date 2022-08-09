@@ -1,63 +1,48 @@
-import { LoadingButton } from "@mui/lab";
-import {
-	Button,
-	Card,
-	CardContent,
-	CardMedia,
-} from "@mui/material";
-import { NavLink } from "react-router-dom";
 import { IProduct } from "../../app/interfaces/IProduct";
-import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import { useAppDispatch } from "../../app/store/configureStore";
 import { addBasketItemAsync } from "../basket/basketSlice";
 import { Link } from "react-router-dom";
+import {IoIosCart} from "react-icons/io"
 
 interface IProps {
 	product: IProduct;
 }
 
 const ProductCard: React.FC<IProps> = ({ product }) => {
-	const { status } = useAppSelector((state) => state.basket);
 	const dispatch = useAppDispatch();
 
 	return (
-		<div className="hover:shadow-2xl hover:scale-105 duration-300">
-			<Card>
+		<div className="border rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 duration-300">
+			<div>
 				<Link to={`/catalog/${product.id}`}>
-					<CardMedia
-						sx={{
-							backgroundSize:
-								"contain",
-						}}
-						className="h-[300px]"
-						image={product.pictureUrl}
-						title={product.name}
+					<img
+						className="h-full w-full object-contain rounded-t-xl"
+						src={product.pictureUrl}
+						alt={product.name}
 					/>
 				</Link>
-				<CardContent>
+				<div className="p-4">
 					<Link to={`/catalog/${product.id}`}>
 						<div className="text-lg font-medium">
 							{product.name}
 						</div>
 					</Link>
-					<div className="flex justify-between items-center px-1 py-4">
-						<h5 className="text-indigo-600 text-xl font-bold">
+					<div className="py-3">
+						<h5 className="text-sm text-gray-400 cursor-pointer">
+							{product.brand} /{" "}
+							{product.type}
+						</h5>
+					</div>
+					<div className="flex justify-between items-center ">
+					<h5 className="text-xl font-bold">
 							$
 							{(
 								product.price /
 								100
 							).toFixed(2)}
 						</h5>
-						<h5 className="text-sm text-gray-400">
-							{product.brand} /{" "}
-							{product.type}
-						</h5>
-					</div>
-					<div className="flex">
-						<LoadingButton
-							loading={status.includes(
-								"pendingAddItem" +
-									product.id
-							)}
+						<button
+							className="mr-3 hover:text-indigo-600 duration-300"
 							onClick={() =>
 								dispatch(
 									addBasketItemAsync(
@@ -66,21 +51,12 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 										}
 									)
 								)
-							}
-							size="small">
-							ADD TO CARD
-						</LoadingButton>
-						<div className="ml-3">
-            <Button
-							component={NavLink}
-							to={`/catalog/${product.id}`}
-							size="small">
-							VIEW MORE
-						</Button>
-            </div>
+							}>
+							<IoIosCart size="25"/>
+						</button>
 					</div>
-				</CardContent>
-			</Card>
+				</div>
+			</div>
 		</div>
 	);
 };

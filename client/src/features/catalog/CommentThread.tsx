@@ -12,13 +12,6 @@ interface IProps {
 }
 
 const CommentThread: React.FC<IProps> = ({ idProduct }) => {
-      // const { comments } = useAppSelector((state) => state.catalog);
-      // const dispatch = useAppDispatch();
-
-	// // const [comments, setComments] = useState<IComment[]>([]);
-	// useEffect(() => {
-	// 	dispatch(fetchCommentAsync(Number(idProduct)));
-	// }, [dispatch]);
 
       //================================================
 	const [comments, setComments] = useState<IComment[]>([]);
@@ -28,16 +21,17 @@ const CommentThread: React.FC<IProps> = ({ idProduct }) => {
                         .then((res) => setComments(res.items))
                         .catch((error) => console.log(error));
 	});
+      console.log(comments)
 
 
       const capitalize = (str: string) => {
             return str.charAt(0).toUpperCase() + str.slice(1);
       }
 	return (
-		<>
+		<div className={comments.length !== 0 ? "h-[500px]" : ""}>
 			{comments.map((comment) => {
 				return (
-                              <div key={comment.id}>
+                              <div key={comment.id} >
                                     <section className="relative w-full flex items-center justify-center bg-white my-2">
                                           <div className="flex-col w-full py-4 mt-3 bg-white border-b-2 border-r-2 border-gray-200 sm:px-4 sm:py-4 md:px-4 sm:rounded-lg sm:shadow-sm">
                                                 <div className="flex flex-row">
@@ -76,7 +70,7 @@ const CommentThread: React.FC<IProps> = ({ idProduct }) => {
 
 				);
 			})}
-		</>
+		</div>
 	);
 };
 

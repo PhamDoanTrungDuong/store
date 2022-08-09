@@ -11,7 +11,6 @@ import About from "../../features/about/About";
 import Basket from "../../features/basket/Basket";
 import Contact from "../../features/contact/Contact";
 import Catalog from "../../features/catalog/Catalog";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ServerError from "../errors/ServerError";
 import NotFound from "../errors/NotFound";
@@ -53,7 +52,6 @@ const App: React.FC = () => {
 
   return (
     <section className="">
-        <ToastContainer position="top-right" hideProgressBar />
         <CssBaseline />
         <Header />
         <Routes>

@@ -63,6 +63,9 @@ export const basketSlice = createSlice({
     },
     clearBasket: (state) => {
       state.basket = null;
+    },
+    setStateBasket: (state) => {
+      state.status = "idle";
     }
   },
   extraReducers: (builder => {
@@ -92,7 +95,7 @@ export const basketSlice = createSlice({
 
     builder.addMatcher(isAnyOf(addBasketItemAsync.fulfilled, fetchBasketAsync.fulfilled) , (state, action) => {
       state.basket = action.payload;
-      state.status = 'idle';
+      state.status = 'addSuccess';
     });
     builder.addMatcher(isAnyOf(addBasketItemAsync.rejected, fetchBasketAsync.rejected), (state, action) => {
       state.status = 'idle';
@@ -100,5 +103,5 @@ export const basketSlice = createSlice({
   })
 });
 
-export const { setBasket, clearBasket } = basketSlice.actions;
+export const { setBasket, clearBasket, setStateBasket } = basketSlice.actions;
 export default basketSlice.reducer;

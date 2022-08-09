@@ -1,6 +1,5 @@
-import { Button, Grid } from "@mui/material";
 import BasketSumary from "./BasketSumary";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAppSelector } from "../../app/store/configureStore";
 import BasketTable from "./BasketTable";
 
@@ -23,21 +22,20 @@ const Basket: React.FC = () => {
 
 	return (
 		<div className="rounded-div mt-5 p-4">
-			<BasketTable items={basket.items} />
-			<Grid container className="mb-[100px]">
-				<Grid item xs={12}>
-					<BasketSumary />
-					<Button
-						component={NavLink}
-						to="/checkout"
-						variant="contained"
-						size="large"
-						fullWidth
-						className="my-3">
-						Checkout
-					</Button>
-				</Grid>
-			</Grid>
+			<div className="flex flex-row gap-3">
+				<div className="basis-2/3 overflow-y-scroll scroll-smooth h-[500px]">
+					<BasketTable items={basket.items} />
+				</div>
+				<div className="basis-1/3">
+						<BasketSumary />
+						<Link to="/checkout">
+							<button
+								className="bg-indigo-600 border border-indigo-600 text-white p-4 w-full rounded-lg shadow-xl hover:shadow-2xl my-2 hover:bg-transparent hover:text-indigo-600 duration-200">
+								Checkout
+							</button>
+						</Link>
+				</div>
+			</div>
 		</div>
 	);
 };

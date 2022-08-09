@@ -1,13 +1,8 @@
 import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Container from "@mui/material/Container";
-import { Paper } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 import { FieldValues, useForm } from "react-hook-form";
-import { LoadingButton } from "@mui/lab";
 import { useAppDispatch } from "../../app/store/configureStore";
 import { signInUser } from "./accountSlice";
 import { history } from "../..";
@@ -25,6 +20,7 @@ const Login = () => {
 	};
 
 	const dispatch = useAppDispatch();
+
 	const location = useLocation() as unknown as LocationProps;
 
 
@@ -33,7 +29,7 @@ const Login = () => {
 	const {
 		register,
 		handleSubmit,
-		formState: { isSubmitting, errors, isValid },
+		formState: { errors, isValid },
 	} = useForm<FormData>({
 		mode: "all",
 	});
@@ -48,37 +44,17 @@ const Login = () => {
 
 	return (
 		<div className="rounded-div mt-5">
-			<Container
-				component={Paper}
-				maxWidth="xs"
-				sx={{
-					display: "flex",
-					flexDirection: "column",
-					alignItems: "center",
-					p: 3,
-					mb: 10,
-					mt: 6,
-				}}>
-				<Box
-					sx={{
-						p: 4,
-						display: "flex",
-						flexDirection: "column",
-						alignItems: "center",
-					}}>
+			<div className="max-w-[500px] border h-auto border-slate-300 rounded-2xl px-4 py-10 my-[100px] mx-auto">
+				<div className="p-4 flex flex-col items-center">
 					<div className="bg-indigo-600 p-4 text-white rounded-full">
 						<LockOutlinedIcon />
 					</div>
 					<h1 className="font-bold text-2xl">
 						Sign in
 					</h1>
-					<Box
-						component="form"
-						onSubmit={handleSubmit(
+					<form onSubmit={handleSubmit(
 							submitForm
-						)}
-						noValidate
-						sx={{ mt: 1 }}>
+						)}>
 						<TextField
 							margin="normal"
 							fullWidth
@@ -117,25 +93,20 @@ const Login = () => {
 									?.message
 							}
 						/>
-						<LoadingButton
+						<button
+							className="p-3 my-5 w-full c-btn"
 							disabled={!isValid}
-							loading={isSubmitting}
-							type="submit"
-							fullWidth
-							variant="contained"
-							sx={{ mt: 3, mb: 2 }}>
+							type="submit">
 							Sign In
-						</LoadingButton>
-						<Grid container>
-							<Grid item>
+						</button>
+						<div className="text-center mt-3">
 								<Link to="/register">
 										<h4>Don't have an account? <span className="font-medium underline underline-offset-2 text-indigo-600 hover:text-indigo-400 duration-300">Sign Up</span> </h4>
 								</Link>
-							</Grid>
-						</Grid>
-					</Box>
-				</Box>
-			</Container>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
 	);
 };

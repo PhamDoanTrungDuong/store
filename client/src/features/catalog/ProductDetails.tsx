@@ -1,24 +1,17 @@
 import {
-	Divider,
-	Grid,
-	Table,
-	TableBody,
-	TableCell,
-	TableContainer,
-	TableRow,
 	TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NotFound from "../../app/errors/NotFound";
 import Loading from "../../app/layout/Loading";
-import { LoadingButton } from "@mui/lab";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
-import { addBasketItemAsync, removeBasketItemAsync } from "../basket/basketSlice";
+import { addBasketItemAsync, removeBasketItemAsync, setStateBasket } from "../basket/basketSlice";
 import { fetchProductAsync, productSelector } from "./catalogSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
 import CommentThread from "./CommentThread";
 import agent from "../../app/api/agent";
+import Swal from "sweetalert2";
 
 interface Inputs {
 	productId: string;
@@ -27,10 +20,21 @@ interface Inputs {
 
 const ProductDetails: React.FC = () => {
 	const { register, handleSubmit } = useForm<Inputs>();
-	const { basket, status } = useAppSelector((state) => state.basket);
+	const { basket } = useAppSelector((state) => state.basket);
 	const { status: productStatus } = useAppSelector((state) => state.catalog);
 	const dispatch = useAppDispatch();
 	const params = useParams();
+	const { status } = useAppSelector((state) => state.basket);
+
+		if(status === "addSuccess"){
+			Swal.fire({
+				icon: 'success',
+				title: 'Added Product Successful',
+				showConfirmButton: false,
+				timer: 1500
+			    })
+			dispatch(setStateBasket());
+		}
 
 
 	const idProduct = params.id;
@@ -38,7 +42,7 @@ const ProductDetails: React.FC = () => {
 	const { id } = useParams<{ id: any }>();
 	const product = useAppSelector((state) => productSelector.selectById(state, id));
 
-	const [quantity, setQuantity] = useState(0);
+	const [quantity, setQuantity] = useState(1);
 
 	const item = basket?.items.find((i) => i.productId === product?.id);
 
@@ -87,104 +91,67 @@ const ProductDetails: React.FC = () => {
 
 	return (
 		<div className="rounded-div mt-5 p-5">
-			<Grid container spacing={6}>
-				<Grid item xs={6}>
+			<div className="grid grid-cols-2 ml-4">
+				<div>
 					<img
-						className="border rounded-xl w-[90%]"
+						className="border rounded-xl w-[80%] object-contain"
 						src={product.pictureUrl}
 						alt={product.name}
 					/>
-				</Grid>
-				<Grid item xs={6}>
-					<h4 className="text-3xl font-bold">{product.name}</h4>
-					<Divider sx={{ mb: 2 }} />
-					<h4 className="text-indigo-600 font-bold text-3xl">
-						${(product.price / 100).toFixed(2)}
-					</h4>
-					<TableContainer>
-						<Table>
-							<TableBody>
-								<TableRow>
-									<TableCell>Name</TableCell>
-									<TableCell>
-										{product.name}
-									</TableCell>
-								</TableRow>
-								<TableRow>
-									<TableCell>
-										Description
-									</TableCell>
-									<TableCell>
-										{
-											product.description
-										}
-									</TableCell>
-								</TableRow>
-								<TableRow>
-									<TableCell>Type</TableCell>
-									<TableCell>
-										{product.type}
-									</TableCell>
-								</TableRow>
-								<TableRow>
-									<TableCell>Brand</TableCell>
-									<TableCell>
-										{product.brand}
-									</TableCell>
-								</TableRow>
-								<TableRow>
-									<TableCell>
-										Quantity
-									</TableCell>
-									<TableCell>
-										{
-											product.quantityInStock
-										}
-									</TableCell>
-								</TableRow>
-							</TableBody>
-						</Table>
-					</TableContainer>
-					<Grid container spacing={3} sx={{ marginTop: "10px" }}>
-						<Grid item xs={6}>
+				</div>
+				<div className="max-w-[400px]">
+					<div className="p-2 uppercase font-medium text-black text-xs bg-[#DAD8E1] border w-fit">
+						<h1>{product.type}</h1>
+					</div>
+					<div className="mt-8">
+						<h4 className="text-3xl font-bold">{product.name}</h4>
+					</div>
+					<div className="mt-5 text-[#C1C4C7]">
+						<h4>SKU: #{product.id}</h4>
+					</div>
+					<div className="mt-5 text-gray-400">
+						<p>{product.description}</p>
+					</div>
+					<div className="my-8 flex justify-between items-center">
+						<div>
 							<TextField
-								variant="outlined"
-								type="number"
-								label="Quatity in Cart"
-								fullWidth
-								value={quantity}
-								onChange={hanldeInputChange}
-							/>
-						</Grid>
-						<Grid item xs={6}>
-							<LoadingButton
+										variant="outlined"
+										type="number"
+										label="Quatity in Cart"
+										fullWidth
+										value={quantity}
+										onChange={hanldeInputChange}
+									/>
+						</div>
+						<h4 className="font-bold text-3xl">
+							${(product.price / 100).toFixed(2)}
+						</h4>
+					</div>
+					<div>
+							<button
+								className={(item?.quantity ===
+									quantity ||
+								(!item && quantity === 0)) ? "p-4 w-full text-white bg-zinc-300 rounded-lg" : "p-4 w-full text-white bg-indigo-600 hover:bg-transparent hover:text-indigo-600 duration-300 border border-indigo-600 rounded-lg" }
 								disabled={
 									item?.quantity ===
 										quantity ||
 									(!item && quantity === 0)
 								}
-								loading={status.includes("pending")}
-								sx={{ height: "55px" }}
-								color="primary"
-								size="large"
-								variant="contained"
-								fullWidth
 								onClick={hanldeUpdateCart}>
 								{item
 									? "Update Quantity"
 									: "Add to Cart"}
-							</LoadingButton>
-						</Grid>
-					</Grid>
-				</Grid>
-			</Grid>
-			<div>
-				<h1 className="text-3xl font-bold mt-5">Comment</h1>
+							</button>
+					</div>
+				</div>
+			</div>
+			<div className="mt-10">
+				<h1 className="text-3xl font-bold">Comment</h1>
 
 				<div>
 					<form
 						onSubmit={handleSubmit(submitComment)}
-						className="w-full  bg-white rounded-xl pt-2">
+						className="w-full bg-white rounded-xl pt-2">
 						<h2 className="px-4 pt-3 pb-2 text-black text-lg font-medium">
 							Add a new comment
 						</h2>
@@ -201,7 +168,7 @@ const ProductDetails: React.FC = () => {
 								<div className="mr-1">
 									<button
 										type="submit"
-										className="bg-indigo-600 border border-indigo-600 text-white p-5 w-full rounded-2xl shadow-xl hover:shadow-2xl my-2 hover:bg-transparent hover:text-indigo-600 duration-200">
+										className="bg-indigo-600 border border-indigo-600 text-white p-5 w-full rounded-lg shadow-xl hover:shadow-2xl my-2 hover:bg-transparent hover:text-indigo-600 duration-200">
 										Post Comment
 									</button>
 								</div>
@@ -209,7 +176,7 @@ const ProductDetails: React.FC = () => {
 						</div>
 					</form>
 				</div>
-				<div className="my-5 w-4/6 h-[500px] overflow-y-scroll scrollbar-hide">
+				<div className="my-5 w-4/6 h-auto overflow-y-scroll scrollbar-hide">
 					<CommentThread idProduct={idProduct} />
 				</div>
 			</div>

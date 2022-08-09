@@ -1,4 +1,3 @@
-import { Grid } from "@mui/material";
 import React from "react";
 import { IProduct } from "../../app/interfaces/IProduct";
 import { useAppSelector } from "../../app/store/configureStore";
@@ -13,19 +12,19 @@ const ProductList: React.FC<IProps> = ({ products }) => {
   const {productsLoaded} = useAppSelector(state => state.catalog);
   return (
     <>
-      <Grid container spacing={4}>
+      <div className="my-6 grid grid-cols-3 gap-6">
         {products.map((product) => {
           return (
-            <Grid item xs={4} key={product.id}>
+            <div className="" key={product.id}>
               {!productsLoaded ? (
                 <ProductCardSkeleton />
               ) : (
                 <ProductCard product={product} />
               )}
-            </Grid>
+            </div>
           );
         })}
-      </Grid>
+      </div>
     </>
   );
 };

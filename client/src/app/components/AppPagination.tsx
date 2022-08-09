@@ -1,4 +1,4 @@
-import { Box, Pagination, Typography } from "@mui/material";
+import { Pagination } from "@mui/material";
 import React, { useState } from "react";
 import { IPagination } from "../interfaces/IPagination";
 
@@ -17,21 +17,25 @@ const AppPagination: React.FC<IProps> = ({ pagination, onPageChange }) => {
   }
   return (
     <div>
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Typography>
-          Displaying {(currentPage - 1) * pageSize + 1}-
+      <div className="flex justify-between items-center">
+        <p className="text-lg">
+          Displaying <span className="font-medium">{(currentPage - 1) * pageSize + 1}-
           {currentPage * pageSize > totalCount
             ? totalCount
-            : currentPage * pageSize} of { totalCount} items
-        </Typography>
+            : currentPage * pageSize}
+            </span> of{" "}
+            <span className="font-medium">
+              { totalCount}
+            </span>
+             {" "}items
+        </p>
         <Pagination
-          color="primary"
           size="large"
           count={totalPages}
           page={pageNumber}
           onChange={(e, page) => handlePageChange(page)}
         />
-      </Box>
+      </div>
     </div>
   );
 };

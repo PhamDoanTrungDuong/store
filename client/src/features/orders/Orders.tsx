@@ -1,13 +1,3 @@
-import {
-	TableContainer,
-	Paper,
-	Table,
-	TableHead,
-	TableRow,
-	TableCell,
-	TableBody,
-	Button,
-} from "@mui/material";
 import { useEffect, useState } from "react";
 import agent from "../../app/api/agent";
 import { IOrder } from "../../app/interfaces/IOrder";
@@ -45,80 +35,65 @@ const Order: React.FC = () => {
 
 	return (
 		<div className="rounded-div mt-5 p-5">
-			<TableContainer component={Paper} sx={{ mt: 4 }}>
-				<Table
-					sx={{ minWidth: 650 }}
-					aria-label="simple table">
-					<TableHead>
-						<TableRow>
-							<TableCell>
+				<table className="table-auto w-full">
+					<thead>
+						<tr>
+							<td className='px-4 py-3'>
 								Order number
-							</TableCell>
-							<TableCell align="center">
+							</td>
+							<td className='px-4 py-3' align="center">
 								Total
-							</TableCell>
-							<TableCell align="center">
+							</td>
+							<td className='px-4 py-3' align="center">
 								Order Date
-							</TableCell>
-							<TableCell align="center">
+							</td>
+							<td className='px-4 py-3' align="center">
 								Order Status
-							</TableCell>
-							<TableCell align="center"></TableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
+							</td>
+							<td className='px-4 py-3' align="center"></td>
+						</tr>
+					</thead>
+					<tbody>
 						{orders?.map((order) => (
-							<TableRow
-								key={order.id}
-								sx={{
-									"&:last-child td, &:last-child th":
-										{
-											border: 0,
-										},
-								}}>
-								<TableCell
-									sx={{
-										pl: 6,
-									}}
-									component="th"
-									scope="row">
+							<tr key={order.id}>
+								<td className='py-4'>
 									#{" "}
 									{
 										order.id
 									}
-								</TableCell>
-								<TableCell align="center">
+								</td>
+								<td align="center">
 									{currencyFormat(
 										order.total
 									)}
-								</TableCell>
-								<TableCell align="center">
+								</td>
+								<td align="center">
 									{
 										order.orderDate.split(
 											"T"
 										)[0]
 									}
-								</TableCell>
-								<TableCell align="center">
+								</td>
+								<td align="center">
 									{
 										order.orderStatus
 									}
-								</TableCell>
-								<TableCell align="center">
-									<Button
+								</td>
+								<td align="center">
+									<button
+									className="c-btn"
 										onClick={() =>
 											setSelectedOrderNumber(
 												order.id
 											)
 										}>
 										View
-									</Button>
-								</TableCell>
-							</TableRow>
+									</button>
+								</td>
+							</tr>
 						))}
-					</TableBody>
-				</Table>
-			</TableContainer>
+					</tbody>
+				</table>
 		</div>
 	);
 };

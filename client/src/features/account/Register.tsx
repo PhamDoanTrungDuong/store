@@ -1,14 +1,8 @@
 import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Container from "@mui/material/Container";
-import { Paper } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { LoadingButton } from "@mui/lab";
 import agent from "../../app/api/agent";
-import { toast } from "react-toastify";
 import { history } from "../..";
 
 const Register = () => {
@@ -21,7 +15,7 @@ const Register = () => {
 		register,
 		handleSubmit,
 		setError,
-		formState: { isSubmitting, errors, isValid },
+		formState: { errors, isValid },
 	} = useForm<FormData>({
 		mode: "all",
 	});
@@ -46,40 +40,20 @@ const Register = () => {
 
 	return (
 		<div className="rounded-div mt-5">
-			<Container
-				component={Paper}
-				maxWidth="sm"
-				sx={{
-					display: "flex",
-					flexDirection: "column",
-					alignItems: "center",
-					p: 3,
-					mb: 10,
-					mt: 6,
-				}}>
-				<Box
-					sx={{
-						p: 4,
-						display: "flex",
-						flexDirection: "column",
-						alignItems: "center",
-					}}>
+			<div className="max-w-[500px] border h-auto border-slate-300 rounded-2xl px-4 py-10 my-[100px] mx-auto">
+				<div className="p-4 flex flex-col items-center">
 					<div className="bg-indigo-600 p-4 text-white rounded-full">
 						<LockOutlinedIcon />
 					</div>
 					<h1 className="font-bold text-2xl">
-						Sign in
+						Sign Up
 					</h1>
-					<Box
-						component="form"
+					<form
 						onSubmit={handleSubmit((data) =>
 							agent.Account.register(
 								data
 							)
 								.then(() => {
-									toast.success(
-										"Registration successful - you can now login"
-									);
 									history.push(
 										"/login"
 									);
@@ -92,9 +66,7 @@ const Register = () => {
 											error
 										)
 								)
-						)}
-						noValidate
-						sx={{ mt: 1 }}>
+						)}>
 						<TextField
 							margin="normal"
 							fullWidth
@@ -153,27 +125,22 @@ const Register = () => {
 									?.message
 							}
 						/>
-						<LoadingButton
+						<button
+							className="p-3 my-5 w-full c-btn"
 							disabled={!isValid}
-							loading={isSubmitting}
-							type="submit"
-							fullWidth
-							variant="contained"
-							sx={{ mt: 3, mb: 2 }}>
+							type="submit">
 							Register
-						</LoadingButton>
-						<Grid container>
-							<Grid item>
+						</button>
+						<div className="text-center mt-3">
 								<Link to="/login">
 										<h4>
-                      Already have an account? <span className="font-medium underline underline-offset-2 text-indigo-600 hover:text-indigo-400 duration-300">Sign In</span>
-                      </h4>
+										Already have an account? <span className="font-medium underline underline-offset-2 text-indigo-600 hover:text-indigo-400 duration-300">Sign In</span>
+										</h4>
 								</Link>
-							</Grid>
-						</Grid>
-					</Box>
-				</Box>
-			</Container>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
 	);
 };

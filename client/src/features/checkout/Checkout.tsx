@@ -6,7 +6,6 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
@@ -168,12 +167,9 @@ const Checkout: React.FC = () => {
 							my: { xs: 3, md: 6 },
 							p: { xs: 2, md: 3 },
 						}}>
-						<Typography
-							component="h1"
-							variant="h4"
-							align="center">
+						<h1 className="text-3xl font-bold uppercase text-center">
 							Checkout
-						</Typography>
+						</h1>
 						<Stepper
 							activeStep={activeStep}
 							sx={{ pt: 3, pb: 5 }}>
@@ -188,14 +184,12 @@ const Checkout: React.FC = () => {
 						<>
 							{activeStep === steps.length ? (
 								<>
-									<Typography
-										variant="h5"
-										gutterBottom>
+									<h5 className="text-xl font medium">
 										{paymentMessage}
-									</Typography>
+									</h5>
 									{paymentSucceeded ? (
 										<>
-										<Typography variant="subtitle1">
+										<h1 className="text-2xl my-2">
 											Your order
 											number is #
 											{
@@ -212,7 +206,7 @@ const Checkout: React.FC = () => {
 											has shipped
 											as this is a
 											fake store
-										</Typography>
+										</h1>
 										<div className="w-full flex justify-end ">
 										<button className="mt-2 px-4 py-2 rounded-xl text-white bg-indigo-600 border border-indigo-600 hover:text-indigo-600 hover:bg-transparent duration-300">
 											<Link to="/catalog">Back to Catalog</Link>

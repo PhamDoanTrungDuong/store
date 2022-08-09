@@ -107,7 +107,7 @@ const Header: React.FC = () => {
 							Sign In
 						</Link>
 						<Link
-							className="bg-indigo-600 border border-indigo-600 text-white px-5 py-2 ml-4 rounded-full shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-indigo-600 duration-200"
+							className="bg-indigo-600 border border-indigo-600 text-white px-5 py-2 ml-4 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-indigo-600 duration-200"
 							to="/register">
 							Sign up
 						</Link>

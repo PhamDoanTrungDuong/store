@@ -11,12 +11,14 @@ interface AccountState {
   user: IUser | null;
   users: IUsers[] | null;
   isError: boolean;
+  status: string;
 }
 
 const initialState: AccountState = {
   user: null,
   users: [],
   isError: true,
+  status: 'idle'
 };
 
 export const signInUser = createAsyncThunk<IUser, FieldValues>(
@@ -72,6 +74,7 @@ export const accountSlice = createSlice({
   initialState,
   reducers: {
     signOut: (state) => {
+      state.status = "logoutSuccess"
       state.user = null;
       localStorage.removeItem("user");
       history.push("/");
@@ -80,7 +83,10 @@ export const accountSlice = createSlice({
       let claims = JSON.parse(atob(action.payload.token.split('.')[1]));
       let roles = claims['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
       state.user = {...action.payload, roles: typeof(roles) === 'string' ? [roles] : roles};
-    }
+    },
+    setStateUser: (state) => {
+      state.status = "idle"
+    },
   },
   extraReducers(builder) {
     builder.addCase(fetchCurrentUser.rejected, (state) => {
@@ -103,6 +109,7 @@ export const accountSlice = createSlice({
         let claims = JSON.parse(atob(action.payload.token.split('.')[1]));
         let roles = claims['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
         state.user = {...action.payload, roles: typeof(roles) === 'string' ? [roles] : roles};
+        state.status = "loginSuccess"
         state.isError = false;
       }
     );
@@ -115,5 +122,5 @@ export const accountSlice = createSlice({
   },
 });
 
-export const { signOut, setUser } = accountSlice.actions;
+export const { signOut, setUser, setStateUser } = accountSlice.actions;
 export default accountSlice.reducer;

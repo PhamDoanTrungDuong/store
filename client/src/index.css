@@ -22,4 +22,7 @@
 	li {
 		@apply cursor-pointer text-sm hover:text-indigo-600 duration-75 hover:scale-105 font-medium
 	}
+	.c-btn {
+		@apply bg-indigo-600 border border-indigo-600 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-indigo-600 duration-200
+	}
 }
