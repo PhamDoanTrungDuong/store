@@ -26,15 +26,20 @@ const ProductDetails: React.FC = () => {
 	const params = useParams();
 	const { status } = useAppSelector((state) => state.basket);
 
+	useEffect(() => {
 		if(status === "addSuccess"){
+
 			Swal.fire({
 				icon: 'success',
 				title: 'Added Product Successful',
 				showConfirmButton: false,
 				timer: 1500
 			    })
-			dispatch(setStateBasket());
+			}
+		return () => {
+				dispatch(setStateBasket());
 		}
+	}, [dispatch, status]);
 
 
 	const idProduct = params.id;

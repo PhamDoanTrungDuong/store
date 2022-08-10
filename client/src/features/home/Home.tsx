@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Slider from "react-slick";
 import Swal from "sweetalert2";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
@@ -14,24 +14,27 @@ const Home: React.FC = () => {
   };
   const { status } = useAppSelector((state) => state.account);
   const dispatch = useAppDispatch()
-  if(status === "loginSuccess"){
-    Swal.fire({
-      icon: 'success',
-      title: 'Your has been Login',
-      showConfirmButton: false,
-      timer: 1500
-    });
-    dispatch(setStateUser());
-  };
-  if(status === "logoutSuccess"){
-    Swal.fire({
-      icon: 'warning',
-      title: 'Your has been Logout',
-      showConfirmButton: false,
-      timer: 1500
-    });
-    dispatch(setStateUser());
-  };
+  useEffect(() => {
+    if(status === "loginSuccess"){
+      Swal.fire({
+        icon: 'success',
+        title: 'Your has been Login',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    };
+    if(status === "logoutSuccess"){
+      Swal.fire({
+        icon: 'warning',
+        title: 'Your has been Logout',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    };
+    return () => {
+      dispatch(setStateUser());
+    }
+  })
   return (
     <div className="mt-5 max-w-[1140px] mx-auto">
         <Slider {...settings} className="rounded-sm">

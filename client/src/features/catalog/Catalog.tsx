@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AppPagination from "../../app/components/AppPagination";
 import CheckboxButton from "../../app/components/CheckboxButton";
 import RadioButtonGroup from "../../app/components/RadioButtonGroup";
@@ -26,7 +26,8 @@ const Catalog: React.FC = () => {
 	const { status } = useAppSelector((state) => state.basket);
 
 	const dispatch = useAppDispatch();
-	
+
+	useEffect(() => {
 		if(status === "addSuccess"){
 			Swal.fire({
 				icon: 'success',
@@ -34,8 +35,11 @@ const Catalog: React.FC = () => {
 				showConfirmButton: false,
 				timer: 1500
 			    })
+			}
+		return () => {
 			dispatch(setStateBasket());
 		}
+	}, [dispatch, status])
 
 
 	if (!filtersLoaded) return <Loading message="Loading Catalog..." />;
