@@ -8,3 +8,8 @@ export interface IUser {
       username: string;
       phone?: string;
 }
+
+export interface MemberParams {
+      pageNumber: number;
+      pageSize: number;
+}

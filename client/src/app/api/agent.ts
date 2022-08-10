@@ -3,6 +3,7 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { history } from "../..";
 import { store } from '../store/configureStore';
+import Swal from 'sweetalert2';
 
 // this is the type of the response from the server
 const sleep = (s: number) => new Promise(resolve => setTimeout(resolve, s * 1000));
@@ -45,17 +46,32 @@ axios.interceptors.response.use(async res => {
             toast.error(data.title);
             break;
         case 401:
-            toast.error(data.title);
+            Swal.fire({
+                icon: "error",
+                title: "You need to login",
+                showConfirmButton: false,
+                timer: 1500,
+            });
             break;
         case 403:
-            toast.error('You are not allowed to do that!');
+            Swal.fire({
+                icon: "error",
+                title: "You are not allowed to do that!",
+                showConfirmButton: false,
+                timer: 1500,
+            });
             break;
         case 404:
             history.push("/not-found");
             toast.error(data.title);
             break;
         case 500:
-            toast.error(data.title);
+            Swal.fire({
+                icon: "error",
+                title: data.title,
+                showConfirmButton: false,
+                timer: 1500,
+            });
             break;
     }
     return Promise.reject(error.response);
@@ -120,6 +136,8 @@ const Admin = {
     getUserRole: () => requests.get('admin/user-with-roles'),
     editRole: (username: string, roles: string[]) => axios.post(`admin/edit-roles/${username}?roles=${roles}`),
     getOrder: () => requests.get('admin/admin-get-orders'),
+    getMembers: (params: URLSearchParams) => requests.get('account/all-members', params),
+    deleteMember: (id: string) => requests.delete(`account/delete-member/${id}`),
     getComments: () => requests.get('comment/get-all-comments'),
     deleteComment: (id: number) => requests.delete(`comment/${id}`),
 }

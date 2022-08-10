@@ -1,25 +1,35 @@
-import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
+import { RootState } from './../../app/store/configureStore';
+import { createAsyncThunk, createEntityAdapter, createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { FieldValues } from "react-hook-form";
 import agent from "../../app/api/agent";
-import { IUser } from "../../app/interfaces/IUser";
+import { IUser, MemberParams } from "../../app/interfaces/IUser";
 import { history } from "../..";
 import { toast } from "react-toastify";
 import { setBasket } from "../basket/basketSlice";
 import { IUsers } from "../../app/interfaces/IUsers";
+import { IPagination } from '../../app/interfaces/IPagination';
+
+const memberAdapter = createEntityAdapter<IUser>();
 
 interface AccountState {
+  membersLoaded: boolean;
   user: IUser | null;
   users: IUsers[] | null;
   isError: boolean;
   status: string;
+  memberParams: MemberParams;
+  pagination: IPagination | null;
 }
 
-const initialState: AccountState = {
-  user: null,
-  users: [],
-  isError: true,
-  status: 'idle'
-};
+
+const initParams = () => {
+  return {
+    pageNumber: 1,
+    pageSize: 6,
+  }
+}
+
+
 
 export const signInUser = createAsyncThunk<IUser, FieldValues>(
   "account/signInUser",
@@ -69,9 +79,38 @@ export const fetchCurrentUser = createAsyncThunk<IUser>(
   }
 );
 
+const getAxiosParams = (memberParams: MemberParams) => {
+  const params = new URLSearchParams();
+  params.append('pageNumber', memberParams.pageNumber.toString());
+  params.append('pageSize', memberParams.pageSize.toString());
+  return params;
+}
+
+export const fetchMembersAsync = createAsyncThunk<IUser[], void, {state: RootState}>(
+  "account/fetchMembersAsync",
+  async (_, thunkAPI) => {
+    const params = getAxiosParams(thunkAPI.getState().account.memberParams);
+      try {
+        const response = await agent.Admin.getMembers(params);
+        thunkAPI.dispatch(setPagination(response.pagination));
+        return response.items;
+      }catch(error: any){
+        return thunkAPI.rejectWithValue({ error: error.data });
+      }
+  }
+)
+
 export const accountSlice = createSlice({
   name: "account",
-  initialState,
+  initialState: memberAdapter.getInitialState<AccountState>({
+      membersLoaded: false,
+      user: null,
+      users: [],
+      isError: true,
+      status: 'idle',
+      memberParams: initParams(),
+      pagination: null,
+  }),
   reducers: {
     signOut: (state) => {
       state.status = "logoutSuccess"
@@ -87,6 +126,21 @@ export const accountSlice = createSlice({
     setStateUser: (state) => {
       state.status = "idle"
     },
+    setPagination: (state, action) => {
+      state.pagination = action.payload
+    },
+    setPageNumber: (state, action) => {
+      state.membersLoaded = false;
+      state.memberParams = {...state.memberParams, ...action.payload};
+    },
+    setMember: (state, action) => {
+      memberAdapter.upsertOne(state, action.payload);
+      state.membersLoaded = false;
+    },
+    removeMember: (state, action) => {
+      memberAdapter.removeOne(state, action.payload);
+      state.membersLoaded = false;
+  }
   },
   extraReducers(builder) {
     builder.addCase(fetchCurrentUser.rejected, (state) => {
@@ -94,6 +148,18 @@ export const accountSlice = createSlice({
       localStorage.removeItem('user');
       toast.error('Session expired - please login again');
       history.push('/');
+    });
+
+    builder.addCase(fetchMembersAsync.pending, (state) => {
+      state.status = "pendingFetchingMember";
+    });
+    builder.addCase(fetchMembersAsync.fulfilled, (state, action) => {
+      memberAdapter.setAll(state, action.payload)
+      state.status = "idle"
+      state.membersLoaded = true;
+    });
+    builder.addCase(fetchMembersAsync.rejected, (state) => {
+      state.status = "pendingFetchingMember";
     });
 
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
@@ -122,5 +188,8 @@ export const accountSlice = createSlice({
   },
 });
 
-export const { signOut, setUser, setStateUser } = accountSlice.actions;
+export const { signOut, setUser, setStateUser, setPagination, setPageNumber, setMember, removeMember } = accountSlice.actions;
+export const membersSelector = memberAdapter.getSelectors(
+  (state: RootState) => state.account
+);
 export default accountSlice.reducer;

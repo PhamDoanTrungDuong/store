@@ -14,26 +14,6 @@ interface IProps {
 const BasketTable: React.FC<IProps> = ({ items, isBasket = true }) => {
 	const { status } = useAppSelector((state) => state.basket);
 	const dispatch = useAppDispatch();
-	// if(status === "removeSuccess"){
-	// 	Swal.fire({
-	// 		title: 'Are you sure?',
-	// 		text: "You won't be able to revert this!",
-	// 		icon: 'warning',
-	// 		showCancelButton: true,
-	// 		confirmButtonColor: '#3085d6',
-	// 		cancelButtonColor: '#d33',
-	// 		confirmButtonText: 'Yes, delete it!'
-	// 	    }).then((result: any) => {
-	// 		if (result.isConfirmed) {
-	// 		  Swal.fire(
-	// 		    'Deleted!',
-	// 		    'Your product has been deleted.',
-	// 		    'success'
-	// 		  )
-	// 		}
-	// 	    })
-	// 	dispatch(setStateBasket());
-	// }
 
 	return (
 		<table className="table-auto">
@@ -47,8 +27,7 @@ const BasketTable: React.FC<IProps> = ({ items, isBasket = true }) => {
 				</tr>
 			</thead>
 			<tbody>
-				{items.map((item) => (
-					<>
+				{items.map((item, idx) => (
 						<tr key={item.productId}>
 							<td className="py-4">
 								<Link
@@ -153,7 +132,6 @@ const BasketTable: React.FC<IProps> = ({ items, isBasket = true }) => {
 								</td>
 							)}
 						</tr>
-					</>
 				))}
 			</tbody>
 		</table>

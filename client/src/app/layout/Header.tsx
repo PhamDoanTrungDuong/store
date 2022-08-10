@@ -6,7 +6,7 @@ import { useAppSelector } from "../store/configureStore";
 import SignedInMenu from "./SignedInMenu";
 
 const midLinks = [
-	{ title: "Catalog", path: "/catalog" },
+	{ title: "Products", path: "/catalog" },
 	{ title: "About", path: "/about" },
 	{ title: "Contact", path: "/contact" },
 ];
@@ -24,14 +24,14 @@ const Header: React.FC = () => {
 			<div>
 				{!user?.roles?.includes("Admin") &&
 					<Link to="/">
-						<h1 className="text-3xl font-extrabold text-indigo-600">
+						<h1 className="text-3xl font-rubik italic font-extrabold text-indigo-600">
 							STORE.
 						</h1>
 					</Link>
 				}
 				{user?.roles?.includes("Admin") &&
 					<Link to="/">
-						<h1 className="text-3xl font-extrabold text-indigo-600">
+						<h1 className="text-3xl font-rubik italic font-extrabold text-indigo-600">
 							STORE.<span className="text-sm italic text-red-600">administration</span>
 						</h1>
 					</Link>
@@ -74,6 +74,11 @@ const Header: React.FC = () => {
 							className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
 							to="/admin-comments">
 							Comments
+						</Link>
+						<Link
+							className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
+							to="/admin-members">
+							Members
 						</Link>
 					</>
 				)}

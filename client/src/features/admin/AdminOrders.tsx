@@ -7,7 +7,7 @@ import { currencyFormat } from '../../app/utilities/util';
 import OrderDetailed from '../orders/OrderDetailed';
 
 const AdminOrders: React.FC = () => {
-  const [orders, setOrders] = useState<IOrder[] | null>(null);
+  	const [orders, setOrders] = useState<IOrder[] | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [selectedOrderNumber, setSelectedOrderNumber] = useState(0);
 

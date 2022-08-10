@@ -29,6 +29,7 @@ import PrivateRoute from "./PrivateRoute";
 import CheckoutWrapper from "../../features/checkout/CheckoutWrapper";
 import Footer from "./Footer";
 import Profile from "../../features/account/Profile";
+import AdminMembers from "../../features/admin/AdminMembers";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -119,6 +120,14 @@ const App: React.FC = () => {
               element={
                 <PrivateRoute roles={["Admin"]}>
                   <AdminComment />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin-members"
+              element={
+                <PrivateRoute roles={["Admin"]}>
+                  <AdminMembers />
                 </PrivateRoute>
               }
             />

@@ -23,7 +23,7 @@ const SignedInMenu: React.FC = () => {
   return (
     <>
       <Button onClick={handleClick} color="inherit" sx={{ typography: "h6" }}>
-        <span className="text-zinc-900 text-base underline underline-offset-8 transition-all">
+        <span className="text-zinc-900 text-base lowercase underline underline-offset-8 transition-all">
           {user?.email}
         </span>
       </Button>

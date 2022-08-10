@@ -14,6 +14,7 @@ import Swal from "sweetalert2";
 import { setStateBasket } from "../basket/basketSlice";
 
 const sortOptions = [
+	{ value: "latest", label: "Latest Product" },
 	{ value: "name", label: "Alphabetical" },
 	{ value: "priceDesc", label: "Hight to low" },
 	{ value: "price", label: "Low to hight" },

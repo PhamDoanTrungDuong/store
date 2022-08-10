@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { FieldValues, FormProvider, useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
 import agent from '../../app/api/agent';
 import ProfileForm from './ProfileForm';
 
@@ -27,9 +28,19 @@ const Profile: React.FC = () => {
                     let response = await agent.Profile.updateProfile(data);
 			  if(response)
 			  {
-				alert("Update succesfull");
+				Swal.fire({
+					icon: 'success',
+					title: 'Update Profile Successful',
+					showConfirmButton: false,
+					timer: 1500
+				    })
 			  }else{
-				alert("something wrong");
+				Swal.fire({
+					icon: 'error',
+					title: 'Failed To Update Profile',
+					showConfirmButton: false,
+					timer: 1500
+				    })
 			  }
                 }
             } catch (error) {

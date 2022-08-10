@@ -1,6 +1,4 @@
-import {
-	TextField,
-} from "@mui/material";
+import { TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NotFound from "../../app/errors/NotFound";
@@ -27,20 +25,18 @@ const ProductDetails: React.FC = () => {
 	const { status } = useAppSelector((state) => state.basket);
 
 	useEffect(() => {
-		if(status === "addSuccess"){
-
+		if (status === "addSuccess") {
 			Swal.fire({
-				icon: 'success',
-				title: 'Added Product Successful',
+				icon: "success",
+				title: "Added Product Successful",
 				showConfirmButton: false,
-				timer: 1500
-			    })
-			}
-		return () => {
-				dispatch(setStateBasket());
+				timer: 1500,
+			});
 		}
+		return () => {
+			dispatch(setStateBasket());
+		};
 	}, [dispatch, status]);
-
 
 	const idProduct = params.id;
 
@@ -89,7 +85,7 @@ const ProductDetails: React.FC = () => {
 	const submitComment: SubmitHandler<Inputs> = (data: any, e: any) => {
 		e.target.reset();
 		data = { ...data, productId: idProduct };
-		if(data){
+		if (data) {
 			agent.Comment.postComment(data);
 		}
 	};
@@ -109,7 +105,9 @@ const ProductDetails: React.FC = () => {
 						<h1>{product.type}</h1>
 					</div>
 					<div className="mt-8">
-						<h4 className="text-3xl font-bold">{product.name}</h4>
+						<h4 className="text-3xl font-bold">
+							{product.name}
+						</h4>
 					</div>
 					<div className="mt-5 text-[#C1C4C7]">
 						<h4>SKU: #{product.id}</h4>
@@ -120,33 +118,33 @@ const ProductDetails: React.FC = () => {
 					<div className="my-8 flex justify-between items-center">
 						<div>
 							<TextField
-										variant="outlined"
-										type="number"
-										label="Quatity in Cart"
-										fullWidth
-										value={quantity}
-										onChange={hanldeInputChange}
-									/>
+								variant="outlined"
+								type="number"
+								label="Quatity in Cart"
+								fullWidth
+								value={quantity}
+								onChange={hanldeInputChange}
+							/>
 						</div>
 						<h4 className="font-bold text-3xl">
 							${(product.price / 100).toFixed(2)}
 						</h4>
 					</div>
 					<div>
-							<button
-								className={(item?.quantity ===
-									quantity ||
-								(!item && quantity === 0)) ? "p-4 w-full text-white bg-zinc-300 rounded-lg" : "p-4 w-full text-white bg-indigo-600 hover:bg-transparent hover:text-indigo-600 duration-300 border border-indigo-600 rounded-lg" }
-								disabled={
-									item?.quantity ===
-										quantity ||
-									(!item && quantity === 0)
-								}
-								onClick={hanldeUpdateCart}>
-								{item
-									? "Update Quantity"
-									: "Add to Cart"}
-							</button>
+						<button
+							className={
+								item?.quantity === quantity ||
+								(!item && quantity === 0)
+									? "p-4 w-full text-white bg-zinc-300 rounded-lg"
+									: "p-4 w-full text-white bg-indigo-600 hover:bg-transparent hover:text-indigo-600 duration-300 border border-indigo-600 rounded-lg"
+							}
+							disabled={
+								item?.quantity === quantity ||
+								(!item && quantity === 0)
+							}
+							onClick={hanldeUpdateCart}>
+							{item ? "Update Quantity" : "Add to Cart"}
+						</button>
 					</div>
 				</div>
 			</div>

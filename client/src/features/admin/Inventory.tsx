@@ -41,7 +41,7 @@ const Inventory: React.FC = () => {
 		setTarget(id);
 		agent.Admin.deleteProduct(id)
 			.then(() => dispatch(removeProduct(id)))
-			.catch((error) => console.log(error))
+			.catch((error: any) => console.log(error))
 			.finally(() => setLoading(false));
 	}
 

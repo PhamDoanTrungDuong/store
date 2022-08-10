@@ -27,6 +27,7 @@ const CommentThread: React.FC<IProps> = ({ idProduct }) => {
       const capitalize = (str: string) => {
             return str.charAt(0).toUpperCase() + str.slice(1);
       }
+      
 	return (
 		<div className={comments.length !== 0 ? "h-[500px]" : ""}>
 			{comments.map((comment) => {

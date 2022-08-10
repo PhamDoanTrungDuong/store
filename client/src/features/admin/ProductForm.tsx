@@ -84,7 +84,6 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
                                     <img src={product?.pictureUrl} alt={product?.name} style={{maxHeight: 200}} />
                                 )}
                             </Box>
-
                         </Grid>
                     </Grid>
                     <Box display='flex' justifyContent='space-between' sx={{ mt: 3 }}>

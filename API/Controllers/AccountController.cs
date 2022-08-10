@@ -5,6 +5,7 @@ using API.DTOs;
 using API.Entities;
 using API.Extensions;
 using API.Services;
+using API.ViewModel;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -138,6 +139,40 @@ namespace API.Controllers
                   return BadRequest(new ProblemDetails{Title = "Problem updating user"});
             }
 
+            [Authorize(Roles = "Admin")]
+            [HttpGet("all-members")]
+            public async Task<ActionResult<PagedList<User>>> GetMembers([FromQuery] MemberDto memberDto)
+            {
+                  var query = _context.Users
+                        .Include(x => x.Address)
+                        .OrderBy(x => x.Id)
+                        .AsQueryable();
+
+                  var members = await PagedList<User>.ToPagedList(query, memberDto.PageNumber, memberDto.PageSize);
+
+                  Response.AddPaginationHeader(members.PaginationDto);
+
+                  return members;
+            }
+
+            [Authorize(Roles = "Admin")]
+            [HttpDelete("delete-member/{id}")]
+            public async Task<ActionResult> memberDelete(string id)
+            {
+                  var user = await _userManager.FindByIdAsync(id);
+
+                  if(user != null)
+                  {
+                        var result = await _userManager.DeleteAsync(user);
+                        if(result.Succeeded)
+                        {
+                              return Ok(true);
+                        }else{
+                              return BadRequest(new ProblemDetails{Title = "Failed to delete user"});
+                        }
+                  }else
+                        return NotFound("User Not Found");
+            }
 
             private async Task<Basket> RetrieveBasket(string buyerId)
             {

@@ -85,7 +85,7 @@ const initParams = () => {
   return {
     pageNumber: 1,
     pageSize: 6,
-    orderBy: 'name',
+    orderBy: 'latest',
     brands: [],
     types: [],
   }
@@ -115,7 +115,6 @@ export const catalogSlice = createSlice({
         state.productParams = {...state.productParams, ...action.payload};
       },
       setProductParams: (state, action) => {
-        console.log(action);
         state.productsLoaded = false;
         state.productParams = {...state.productParams, ...action.payload, pageNumber: 1};
       },
@@ -169,7 +168,6 @@ export const catalogSlice = createSlice({
     })
     builder.addCase(fetchFiltersAsync.rejected, (state, action) => {
       state.status = "idle";
-      console.log(action.payload)
     });
 
     //Product - comment
@@ -182,7 +180,6 @@ export const catalogSlice = createSlice({
     })
     builder.addCase(fetchCommentAsync.rejected, (state, action) => {
       state.status = "idle";
-      console.log(action.payload)
     });
   },
 });

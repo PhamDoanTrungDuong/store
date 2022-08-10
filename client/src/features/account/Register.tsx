@@ -127,7 +127,7 @@ const Register = () => {
 						/>
 						<button
 							className="p-3 my-5 w-full c-btn"
-							disabled={!isValid}
+						disabled={!isValid}
 							type="submit">
 							Register
 						</button>
