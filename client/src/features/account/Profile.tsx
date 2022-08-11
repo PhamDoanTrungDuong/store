@@ -49,7 +49,7 @@ const Profile: React.FC = () => {
         }
 
   return (
-    <div className="h-[800px] rounded-div mt-5 p-5">
+    <div className="h-[800px] mt-5 p-5">
 	<FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(handleSubmitData)}>
               <ProfileForm />

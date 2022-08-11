@@ -21,8 +21,6 @@ const CommentThread: React.FC<IProps> = ({ idProduct }) => {
                         .then((res) => setComments(res.items))
                         .catch((error) => console.log(error));
 	});
-      console.log(comments)
-
 
       const capitalize = (str: string) => {
             return str.charAt(0).toUpperCase() + str.slice(1);

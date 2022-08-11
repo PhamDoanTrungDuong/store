@@ -91,7 +91,7 @@ const ProductDetails: React.FC = () => {
 	};
 
 	return (
-		<div className="rounded-div mt-5 p-5">
+		<div className="mt-5 p-5">
 			<div className="grid grid-cols-2 ml-4">
 				<div>
 					<img

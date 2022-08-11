@@ -46,7 +46,7 @@ const Catalog: React.FC = () => {
 	if (!filtersLoaded) return <Loading message="Loading Catalog..." />;
 
 	return (
-		<div className="rounded-div mt-5">
+		<div className="mt-5">
 			<div>
 				<div className="flex flex-row my-4">
 					<div className="basis-1/5">

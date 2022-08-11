@@ -15,7 +15,7 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder }) => {
 			0
 		) ?? 0;
 	return (
-		<div className="rounded-div mt-5 p-5">
+		<div className=" mt-5 p-5">
 			<div className="flex justify-between items-center mb-5">
 				<h4 className="text-3xl">
 					Order #{order.id} - {order.orderStatus}

@@ -38,7 +38,7 @@ const EditRoleForm: React.FC<IProps> = ({user, cancelEdit}) => {
 		return item ? true : false
 	}
   return (
-    <div className='rounded-div h-[300px] mt-5 p-5'>
+    <div className='h-[300px] mt-5 p-5'>
       <div><h1 className='text-2xl font-bold'>Edit roles for {user?.username}</h1></div>
       <div className="mx-auto p-5 w-full h-full flex flex-col justify-center items-center">
         <div>

@@ -51,7 +51,7 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
         }
 
         return (
-            <div className="rounded-div mt-5 p-5">
+            <div className="rmt-5 p-5">
                 <Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
                     Product Details
                 </Typography>

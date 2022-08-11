@@ -52,12 +52,8 @@ const AdminRole: React.FC = () => {
 		);
 
 	return (
-		<div className="rounded-div mt-5 p-5">
-			<div className="flex justify-between">
-				<h4 className="text-2xl p-4">
-					Role Managemant
-				</h4>
-			</div>
+		<div className=" mt-5 p-5">
+			<h4 className="text-2xl font-bold my-4">Roles</h4>
 			<TableContainer component={Paper}>
 				<Table>
 					<TableHead>

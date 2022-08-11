@@ -8,7 +8,7 @@ const Basket: React.FC = () => {
 
 	if (!basket)
 		return (
-			<div className="rounded-div mt-5 h-screen p-4">
+			<div className=" mt-5 h-screen p-4">
 				<h1 className="text-2xl font-bold">
 					Your basket is empty{" "}
 					<span>
@@ -21,7 +21,7 @@ const Basket: React.FC = () => {
 		);
 
 	return (
-		<div className="rounded-div mt-5 p-4">
+		<div className=" mt-5 p-4">
 			<div className="flex flex-row gap-3">
 				<div className="basis-2/3 overflow-y-scroll scroll-smooth h-[500px]">
 					<BasketTable items={basket.items} />

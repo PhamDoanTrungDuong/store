@@ -6,7 +6,7 @@ import { store } from '../store/configureStore';
 import Swal from 'sweetalert2';
 
 // this is the type of the response from the server
-const sleep = (s: number) => new Promise(resolve => setTimeout(resolve, s * 1000));
+const sleep = (s: number) => new Promise(resolve => setTimeout(resolve, s * 300));
 
 // this is the type of the error from the server
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
@@ -151,6 +151,12 @@ const Comment = {
     postComment: (content: string) => requests.post('comment', content),
 }
 
+const Statistisc = {
+    getTotal: () => requests.get('orders/get-total-order'),
+    getAllTotal: () => requests.get('orders/getAll-total-order'),
+    getMemberCount: () => requests.get('account/get-member-count'),
+}
+
 const TestError = {
     get400Error: () => requests.get('buggy/bad-request'),
     get401Error: () => requests.get('buggy/unauthorized'),
@@ -170,6 +176,7 @@ const agent = {
     Admin,
     Comment,
     Profile,
+    Statistisc,
 }
 
 export default agent;

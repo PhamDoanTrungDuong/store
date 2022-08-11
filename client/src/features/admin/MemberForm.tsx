@@ -57,7 +57,7 @@ const MemberForm: React.FC<Props> = ({ member, cancelEdit }) => {
         }
 
 	return (
-		<div className="rounded-div mt-5 p-5">
+		<div className=" mt-5 p-5">
 			<Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
 				Create Member
 			</Typography>

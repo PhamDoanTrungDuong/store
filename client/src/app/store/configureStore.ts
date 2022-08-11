@@ -4,13 +4,15 @@ import counterReducer from "../../features/contact/counterSlice";
 import BasketReducer from "../../features/basket/basketSlice";
 import CatalogReducer from "../../features/catalog/catalogSlice";
 import AccountReducer from '../../features/account/accountSlice';
+import OrderReducer from '../../features/orders/orderSlice';
 
 export const store = configureStore({
     reducer: {
         counter: counterReducer,
         basket: BasketReducer,
         catalog: CatalogReducer,
-        account: AccountReducer
+        account: AccountReducer,
+        order: OrderReducer
     }
 })
 

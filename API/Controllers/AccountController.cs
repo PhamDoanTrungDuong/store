@@ -174,6 +174,16 @@ namespace API.Controllers
                         return NotFound("User Not Found");
             }
 
+            [Authorize(Roles = "Admin")]
+            [HttpGet("get-member-count")]
+            public async Task<int> GetMemberCount()
+            {
+                var subtotal = await _context.Users
+                    .ToListAsync();
+
+                return subtotal.Count();
+            }
+
             private async Task<Basket> RetrieveBasket(string buyerId)
             {
                   if (string.IsNullOrEmpty(buyerId))

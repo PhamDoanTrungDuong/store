@@ -1,10 +1,11 @@
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { BsTrash } from "react-icons/bs";
 import { LoadingButton } from "@mui/lab";
-import { addBasketItemAsync, removeBasketItemAsync,  } from "./basketSlice";
+import { addBasketItemAsync, removeBasketItemAsync, setStateBasket,  } from "./basketSlice";
 import { useAppSelector, useAppDispatch } from "../../app/store/configureStore";
 import { BasketItem } from "../../app/interfaces/IBasket";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 interface IProps {
 	items: BasketItem[];
@@ -14,6 +15,10 @@ interface IProps {
 const BasketTable: React.FC<IProps> = ({ items, isBasket = true }) => {
 	const { status } = useAppSelector((state) => state.basket);
 	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		if(status === "addSuccess") dispatch(setStateBasket());
+	}, [dispatch, status])
 
 	return (
 		<table className="table-auto">
@@ -54,49 +59,44 @@ const BasketTable: React.FC<IProps> = ({ items, isBasket = true }) => {
 							</td>
 							<td align="center">${(item.price / 100).toFixed(2)}</td>
 							<td align="center">
-								{isBasket && (
-									<LoadingButton
-										loading={
-											status ===
-											"pendingRemoveItem" +
-												item.productId +
-												"remove"
-										}
-										onClick={() => {
-											dispatch(
-												removeBasketItemAsync(
-													{
-														productId: item.productId,
-														quantity: 1,
-														name: "remove",
-													}
-												)
-											);
-										}}>
-										<IoIosArrowBack />
-									</LoadingButton>
-								)}
-								{item.quantity}
-								{isBasket && (
-									<LoadingButton
-										loading={
-											status ===
-											"pendingAddItem" +
-												item.productId
-										}
-										onClick={() => {
-											dispatch(
-												addBasketItemAsync(
-													{
-														productId: item.productId,
-														quantity: 1,
-													}
-												)
-											);
-										}}>
-										<IoIosArrowForward />
-									</LoadingButton>
-								)}
+								<div className="flex flex-row justify-evenly items-center">
+									{isBasket && (
+										<button
+											className="hover:text-red-600 p-2 border rounded-full"
+											onClick={() => {
+												dispatch(
+													removeBasketItemAsync(
+														{
+															productId: item.productId,
+															quantity: 1,
+															name: "remove",
+														}
+													)
+												);
+											}}>
+											<IoIosArrowBack />
+										</button>
+									)}
+									<span>
+										{item.quantity}
+									</span>
+									{isBasket && (
+										<button
+										className="hover:text-green-600 p-2 border rounded-full"
+											onClick={() => {
+												dispatch(
+													addBasketItemAsync(
+														{
+															productId: item.productId,
+															quantity: 1,
+														}
+													)
+												);
+											}}>
+											<IoIosArrowForward />
+										</button>
+									)}
+								</div>
 							</td>
 							<td align="center">
 								$

@@ -23,7 +23,6 @@ const Login = () => {
 
 	const location = useLocation() as unknown as LocationProps;
 
-
 	const from = location.state?.from?.pathname.toString() || "/";
 
 	const {
@@ -43,7 +42,7 @@ const Login = () => {
 	};
 
 	return (
-		<div className="rounded-div mt-5">
+		<div className="mt-5">
 			<div className="max-w-[500px] border h-auto border-slate-300 rounded-2xl px-4 py-10 my-[100px] mx-auto">
 				<div className="p-4 flex flex-col items-center">
 					<div className="bg-indigo-600 p-4 text-white rounded-full">

@@ -92,10 +92,12 @@ export const basketSlice = createSlice({
     builder.addCase(removeBasketItemAsync.rejected, (state, action) => {
       state.status = 'idle';
     });
+    builder.addCase(addBasketItemAsync.fulfilled, (state, action) => {
+      state.status = 'addSuccess';
+    });
 
     builder.addMatcher(isAnyOf(addBasketItemAsync.fulfilled, fetchBasketAsync.fulfilled) , (state, action) => {
       state.basket = action.payload;
-      state.status = 'addSuccess';
     });
     builder.addMatcher(isAnyOf(addBasketItemAsync.rejected, fetchBasketAsync.rejected), (state, action) => {
       state.status = 'idle';

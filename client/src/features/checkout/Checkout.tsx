@@ -158,7 +158,7 @@ const Checkout: React.FC = () => {
 	};
 
 	return (
-		<div className="rounded-div mt-5">
+		<div className=" mt-5">
 			<FormProvider {...methods}>
 				<Container component="main" maxWidth="md" sx={{ mb: 4 }}>
 					<Paper

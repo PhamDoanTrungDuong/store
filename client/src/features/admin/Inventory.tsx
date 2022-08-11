@@ -58,9 +58,9 @@ const Inventory: React.FC = () => {
 			/>
 		);
 	return (
-		<div className="rounded-div mt-5">
+		<div className="mt-5 p-5">
 			<div className="flex justify-between">
-				<h4 className="text-2xl p-4">Inventory</h4>
+				<h4 className="text-2xl font-bold my-4">Inventory</h4>
 				<div className="p-4">
 					<button
 						onClick={() =>

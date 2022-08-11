@@ -31,6 +31,29 @@ namespace API.Controllers
                     .ToListAsync();
             }
 
+            [Authorize]
+            [HttpGet("get-total-order")]
+            public async Task<long> GetTotalOrder()
+            {
+                var subtotal = await _context.Orders
+                    .Where(x => x.BuyerId == User.Identity.Name)
+                    .Select(x => x.GetTotal())
+                    .ToListAsync();
+
+                return subtotal.Sum();
+            }
+
+            [Authorize(Roles = "Admin")]
+            [HttpGet("getAll-total-order")]
+            public async Task<long> GetAllTotalOrder()
+            {
+                var subtotal = await _context.Orders
+                    .Select(x => x.GetTotal())
+                    .ToListAsync();
+
+                return subtotal.Sum();
+            }
+
             [HttpGet("{id}", Name = "GetOrder")]
             public async Task<ActionResult<OrderDto>> GetOrder(int id)
             {

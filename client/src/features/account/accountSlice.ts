@@ -17,6 +17,7 @@ interface AccountState {
   users: IUsers[] | null;
   isError: boolean;
   status: string;
+  count: number;
   memberParams: MemberParams;
   pagination: IPagination | null;
 }
@@ -100,6 +101,18 @@ export const fetchMembersAsync = createAsyncThunk<IUser[], void, {state: RootSta
   }
 )
 
+export const fetchMemberCount = createAsyncThunk<number>(
+  "order/fetchMemberCount",
+  async () => {
+      try {
+          const members = await agent.Statistisc.getMemberCount();
+          return members
+      }catch(error){
+          console.log(error)
+      }
+  }
+)
+
 export const accountSlice = createSlice({
   name: "account",
   initialState: memberAdapter.getInitialState<AccountState>({
@@ -108,6 +121,7 @@ export const accountSlice = createSlice({
       users: [],
       isError: true,
       status: 'idle',
+      count: 0,
       memberParams: initParams(),
       pagination: null,
   }),
@@ -168,6 +182,12 @@ export const accountSlice = createSlice({
     builder.addCase(fetchUsers.rejected, (state => {
       state.users = null;
     }));
+    builder.addCase(fetchMemberCount.fulfilled, (state, action) => {
+      state.count = action.payload;
+    });
+    builder.addCase(signInUser.fulfilled, (state, action) => {
+        state.status = "loginSuccess"
+    });
 
     builder.addMatcher(
       isAnyOf(signInUser.fulfilled, fetchCurrentUser.fulfilled),
@@ -175,7 +195,6 @@ export const accountSlice = createSlice({
         let claims = JSON.parse(atob(action.payload.token.split('.')[1]));
         let roles = claims['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
         state.user = {...action.payload, roles: typeof(roles) === 'string' ? [roles] : roles};
-        state.status = "loginSuccess"
         state.isError = false;
       }
     );

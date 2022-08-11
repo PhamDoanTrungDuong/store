@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {
-  Container,
   CssBaseline,
 } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
@@ -30,6 +29,7 @@ import CheckoutWrapper from "../../features/checkout/CheckoutWrapper";
 import Footer from "./Footer";
 import Profile from "../../features/account/Profile";
 import AdminMembers from "../../features/admin/AdminMembers";
+import AdminHome from "../../features/admin/AdminHome";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -58,9 +58,17 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Home />} />
         </Routes>
-        <Container>
+        <div className="rounded-div mt-5 overflow-x-hidden">
           <Routes>
             <Route path="/" />
+            <Route
+              path="/admin-home"
+              element={
+                <PrivateRoute roles={["Admin"]}>
+                  <AdminHome />
+                </PrivateRoute>
+              }
+            />
             <Route path="catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<ProductDetails />} />
             <Route path="/about" element={<About />} />
@@ -135,7 +143,7 @@ const App: React.FC = () => {
             <Route path="/register" element={<Register />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </Container>
+        </div>
         <Footer />
     </section>
   );
