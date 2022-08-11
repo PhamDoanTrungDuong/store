@@ -18,7 +18,7 @@ const AdminHome: React.FC = () => {
 	}, [dispatch]);
 
 	return (
-		<div className="h-screen mt-5 p-5">
+		<div className="rounded-div h-screen mt-5 p-5">
 			<div className="text-2xl font-bold my-4">Statistics</div>
 			<div className="flex gap-4">
 				<div className="text-white bg-gradient-to-r from-indigo-600 to-indigo-400 px-8 py-6 rounded-[30px] w-[30%] mb-4">

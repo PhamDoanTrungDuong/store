@@ -30,7 +30,7 @@ const Header: React.FC = () => {
 					</Link>
 				}
 				{user?.roles?.includes("Admin") &&
-					<Link to="/admin-home">
+					<Link to="/">
 						<h1 className="text-3xl font-rubik italic font-extrabold text-indigo-600">
 							STORE.<span className="text-sm italic text-red-600">administration</span>
 						</h1>

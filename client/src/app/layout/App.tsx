@@ -29,7 +29,6 @@ import CheckoutWrapper from "../../features/checkout/CheckoutWrapper";
 import Footer from "./Footer";
 import Profile from "../../features/account/Profile";
 import AdminMembers from "../../features/admin/AdminMembers";
-import AdminHome from "../../features/admin/AdminHome";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -61,14 +60,6 @@ const App: React.FC = () => {
         <div className="rounded-div mt-5 overflow-x-hidden">
           <Routes>
             <Route path="/" />
-            <Route
-              path="/admin-home"
-              element={
-                <PrivateRoute roles={["Admin"]}>
-                  <AdminHome />
-                </PrivateRoute>
-              }
-            />
             <Route path="catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<ProductDetails />} />
             <Route path="/about" element={<About />} />

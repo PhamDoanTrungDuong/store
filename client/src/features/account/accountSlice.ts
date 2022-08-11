@@ -185,7 +185,7 @@ export const accountSlice = createSlice({
     builder.addCase(fetchMemberCount.fulfilled, (state, action) => {
       state.count = action.payload;
     });
-    builder.addCase(signInUser.fulfilled, (state, action) => {
+    builder.addCase(signInUser.pending, (state) => {
         state.status = "loginSuccess"
     });
 
