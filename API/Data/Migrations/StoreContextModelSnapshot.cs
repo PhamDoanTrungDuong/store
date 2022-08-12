@@ -225,14 +225,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "a6017c40-8d3a-4fa4-b838-5a25260a1514",
+                            ConcurrencyStamp = "7ed938b8-1dce-4fc1-8415-41ee45cad4e6",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "14119f07-a9ee-4ef5-b14b-ab5786abba22",
+                            ConcurrencyStamp = "3382e0c7-05f3-4ada-aead-438692c7bac2",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -475,13 +475,13 @@ namespace API.Data.Migrations
                     b.HasOne("API.Entities.Product", "Product")
                         .WithMany("CommentReceived")
                         .HasForeignKey("productId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API.Entities.User", "User")
                         .WithMany("CommentSent")
                         .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");

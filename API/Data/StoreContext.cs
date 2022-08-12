@@ -49,12 +49,12 @@ namespace API.Data
                builder.Entity<Comment>()
                     .HasOne(u => u.Product)
                     .WithMany(c => c.CommentReceived)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                builder.Entity<Comment>()
                     .HasOne(u => u.User)
                     .WithMany(c => c.CommentSent)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                builder.Entity<UserLike>()
                     .HasKey(k => new {k.UserId, k.LikedProductId});
