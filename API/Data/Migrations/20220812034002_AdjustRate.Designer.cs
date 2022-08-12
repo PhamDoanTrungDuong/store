@@ -3,15 +3,17 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20220812034002_AdjustRate")]
+    partial class AdjustRate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -194,6 +196,37 @@ namespace API.Data.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("API.Entities.Rating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("Rate")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("text");
+
+                    b.Property<int>("productId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("productName")
+                        .HasColumnType("text");
+
+                    b.Property<int>("userId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("productId");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("Ratings");
+                });
+
             modelBuilder.Entity("API.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -225,14 +258,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "a6017c40-8d3a-4fa4-b838-5a25260a1514",
+                            ConcurrencyStamp = "5a06072b-4f9a-4d7f-aa92-cf44e65d22a7",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "14119f07-a9ee-4ef5-b14b-ab5786abba22",
+                            ConcurrencyStamp = "b3772bdf-ab03-48b4-beb5-8f22f2de2bbb",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -563,6 +596,25 @@ namespace API.Data.Migrations
                     b.Navigation("ItemOrdered");
                 });
 
+            modelBuilder.Entity("API.Entities.Rating", b =>
+                {
+                    b.HasOne("API.Entities.Product", "Product")
+                        .WithMany("RatingReceived")
+                        .HasForeignKey("productId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("API.Entities.User", "User")
+                        .WithMany("RatingSent")
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("API.Entities.UserAddress", b =>
                 {
                     b.HasOne("API.Entities.User", null)
@@ -661,6 +713,8 @@ namespace API.Data.Migrations
                     b.Navigation("CommentReceived");
 
                     b.Navigation("LikedByUsers");
+
+                    b.Navigation("RatingReceived");
                 });
 
             modelBuilder.Entity("API.Entities.Role", b =>
@@ -675,6 +729,8 @@ namespace API.Data.Migrations
                     b.Navigation("CommentSent");
 
                     b.Navigation("LikedProducts");
+
+                    b.Navigation("RatingSent");
 
                     b.Navigation("UserRoles");
                 });

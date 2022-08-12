@@ -6,5 +6,6 @@ export interface IComment {
       productName: string
       content: string
       commentSent: string
+      rate: number
       items: any
 }
