@@ -148,6 +148,7 @@ const Profile = {
 
 const Comment = {
     getComment: (id: number) => requests.get(`comment?productId=${id}`),
+    getRatings: (id: number) => requests.get(`comment/get-ratings?productId=${id}`),
     postComment: (content: string) => requests.post('comment', content),
 }
 

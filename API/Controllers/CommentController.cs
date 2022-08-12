@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Data;
@@ -43,7 +45,8 @@ namespace API.Controllers
                         Product = product,
                         Username = user.UserName,
                         productName = product.Name,
-                        Content = createCommentDto.Content
+                        Content = createCommentDto.Content,
+                        Rate = createCommentDto.Rate,
                   };
 
                   _commentService.AddComment(comment);
@@ -69,6 +72,56 @@ namespace API.Controllers
                   return comments;
             }
 
+            [HttpGet("get-ratings")]
+            public async Task<double> GetRatings(int productId)
+            {
+                  var arr = await _context.Comments
+                        .Where(p => p.productId == productId)
+                        .Select(x => x.Rate)
+                        .ToArrayAsync();
+
+                  int count1 = 0;
+                  int count2 = 0;
+                  int count3 = 0;
+                  int count4 = 0;
+                  int count5 = 0;
+
+                  for (int i = 0; i < arr.Length; i++)
+                  {
+                        switch(arr[i])
+                        {
+                              case 1:
+                                    count1++;
+                                    break;
+                              case 2:
+                                    count2++;
+                                    break;
+                              case 3:
+                                    count3++;
+                                    break;
+                              case 4:
+                                    count4++;
+                                    break;
+                              case 5:
+                                    count5++;
+                                    break;
+                              default:
+                                    break;
+                        }
+                  }
+
+                  if(count5 == 0 && count4 == 0 && count3 == 0 && count2 == 0 && count1 == 0)
+                  {
+                        return 0;
+                  }
+
+                  double rating = (double)(5 * count5 + 4 * count4 + 3 * count3 + 2 * count2 + 1 * count1) / (count5 + count4 + count3 + count2 + count1);
+
+                  rating = Math.Round(rating, 1);
+
+                  return rating;
+            }
+
             [Authorize(Roles = "Admin")]
             [HttpDelete("{id}")]
             public async Task<ActionResult> DeleteComment(int id)
@@ -85,5 +138,7 @@ namespace API.Controllers
                   return BadRequest(new ProblemDetails{Title = "Problem deleting the comment"});
 
             }
+
       }
+
 }

@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { Box, Rating, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NotFound from "../../app/errors/NotFound";
@@ -18,11 +18,24 @@ interface Inputs {
 
 const ProductDetails: React.FC = () => {
 	const { register, handleSubmit } = useForm<Inputs>();
+	const [valuesStar, setValuesStar] = useState<number | null>(0);
+	const [avg, setAvg] = useState<number>(0);
 	const { basket } = useAppSelector((state) => state.basket);
 	const { status: productStatus } = useAppSelector((state) => state.catalog);
 	const dispatch = useAppDispatch();
 	const params = useParams();
 	const { status } = useAppSelector((state) => state.basket);
+	const [hover, setHover] = useState(-1);
+	const labels: { [index: string]: string } = {
+		1: 'Useless+',
+		2: 'Poor+',
+		3: 'Ok+',
+		4: 'Good+',
+		5: 'Excellent+',
+	};
+	function getLabelText(value: number) {
+		return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
+	}
 
 	useEffect(() => {
 		if (status === "addSuccess") {
@@ -43,7 +56,15 @@ const ProductDetails: React.FC = () => {
 	const { id } = useParams<{ id: any }>();
 	const product = useAppSelector((state) => productSelector.selectById(state, id));
 
-	const [quantity, setQuantity] = useState(1);
+	useEffect(() => {
+		if (id !== undefined)
+			agent.Comment.getRatings(Number(id))
+				.then((res) => setAvg(res))
+				.catch((error) => console.log(error));
+		// console.log("[AvgStarRating]: ", avg);
+	}, [avg, id]);
+
+	const [quantity, setQuantity] = useState(0);
 
 	const item = basket?.items.find((i) => i.productId === product?.id);
 
@@ -84,7 +105,8 @@ const ProductDetails: React.FC = () => {
 
 	const submitComment: SubmitHandler<Inputs> = (data: any, e: any) => {
 		e.target.reset();
-		data = { ...data, productId: idProduct };
+		setValuesStar(0);
+		data = { ...data, rate: valuesStar, productId: idProduct };
 		if (data) {
 			agent.Comment.postComment(data);
 		}
@@ -101,8 +123,14 @@ const ProductDetails: React.FC = () => {
 					/>
 				</div>
 				<div className="max-w-[400px]">
-					<div className="p-2 uppercase font-medium text-black text-xs bg-[#DAD8E1] border w-fit">
-						<h1>{product.type}</h1>
+					<div className="flex gap-10 items-center">
+						<div className="p-2 uppercase font-bold text-black text-xs bg-[#DAD8E1] border w-fit">
+							<h1>{product.type}</h1>
+						</div>
+						<div className="flex items-center">
+							<p className="mr-2 text-xl text-indigo-600 font-medium underline underline-offset-4">{avg.toFixed(1)} /5</p>
+							<Rating name="read-only" size="large" value={Math.ceil(avg)} readOnly />
+						</div>
 					</div>
 					<div className="mt-8">
 						<h4 className="text-3xl font-bold">
@@ -149,7 +177,7 @@ const ProductDetails: React.FC = () => {
 				</div>
 			</div>
 			<div className="mt-10">
-				<h1 className="text-3xl font-bold">Comment</h1>
+				<h1 className="text-3xl font-bold">Comment and Evaluate</h1>
 
 				<div>
 					<form
@@ -160,6 +188,30 @@ const ProductDetails: React.FC = () => {
 						</h2>
 						<div className="flex flex-row justify-between mx-3 mb-6">
 							<div className="w-full md:w-full px-2 mb-2 mt-2">
+								<div className="flex justify-start items-center my-2">
+									<span className="mr-3 font-medium">
+										Evaluate:
+									</span>
+									<Rating
+										name="simple-controlled"
+										value={valuesStar}
+										getLabelText={getLabelText}
+										onChange={(
+											event,
+											newValue
+										) => {
+											setValuesStar(
+												newValue
+											);
+										}}
+										onChangeActive={(event, newHover) => {
+											setHover(newHover);
+										}}
+									/>
+									{valuesStar !== null && (
+										<Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : valuesStar]}</Box>
+									)}
+								</div>
 								<input
 									{...register("content")}
 									className=" rounded border border-gray-300 leading-normal resize-none w-full p-5 focus:outline-none focus:bg-white"
@@ -167,7 +219,7 @@ const ProductDetails: React.FC = () => {
 									placeholder="Type Your Comment"
 								/>
 							</div>
-							<div className="w-full md:w-full flex items-start px-3">
+							<div className="w-full md:w-full flex flex-row items-end px-3">
 								<div className="mr-1">
 									<button
 										type="submit"

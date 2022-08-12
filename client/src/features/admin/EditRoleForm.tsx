@@ -14,7 +14,8 @@ interface IProps {
 
   const availableRoles: any[] = [
     {name: 'Admin', value: 'Admin'},
-    {name: 'Member', value: 'Member'}
+    {name: 'Member', value: 'Member'},
+    {name: 'Moderator', value: 'Moderator'}
   ];
 
   interface IFormInput {

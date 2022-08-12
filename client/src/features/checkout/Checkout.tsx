@@ -20,6 +20,8 @@ import { LoadingButton } from "@mui/lab";
 import { StripeElementType } from "@stripe/stripe-js";
 import { CardNumberElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import { setStateUser } from "../account/accountSlice";
 
 const steps = ["Shipping address", "Review your order", "Payment details"];
 
@@ -41,6 +43,21 @@ const Checkout: React.FC = () => {
 	const { basket } = useAppSelector((state) => state.basket);
 	const stripe = useStripe();
 	const elements = useElements();
+
+	const { status } = useAppSelector((state) => state.account);
+	useEffect(() => {
+		if (status === "loginSuccess") {
+			Swal.fire({
+				icon: "success",
+				title: "Your has been Login",
+				showConfirmButton: false,
+				timer: 1500,
+			});
+		}
+		return () => {
+			dispatch(setStateUser());
+		};
+	}, [dispatch, status]);
 
 	const onCardInputChange = (e: any) => {
 		setCardState({

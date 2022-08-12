@@ -10,6 +10,7 @@ namespace API.DTOs
         public int productId { get; set; }
         public string productName { get; set; }
         public string Content { get; set; }
+        public int Rate { get; set; }
         public DateTime CommentSent { get; set; }
     }
 }

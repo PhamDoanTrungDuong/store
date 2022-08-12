@@ -6,10 +6,11 @@ import {
 	TableRow,
 	TableCell,
 	TableBody,
+	Rating,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import agent from "../../app/api/agent";
-import moment from 'moment';
+import moment from "moment";
 import { IComment } from "../../app/interfaces/IComment";
 
 const AdminComment: React.FC = () => {
@@ -20,8 +21,8 @@ const AdminComment: React.FC = () => {
 			.catch((error) => console.log(error));
 	});
 
-  function handleDeleteComment(id: number) {
-		  agent.Admin.deleteComment(id);
+	function handleDeleteComment(id: number) {
+		agent.Admin.deleteComment(id);
 	}
 	return (
 		<div className=" mt-5 p-5">
@@ -35,7 +36,12 @@ const AdminComment: React.FC = () => {
 							<TableCell align="left">
 								Product Name
 							</TableCell>
-							<TableCell align="center" size="small">Content</TableCell>
+							<TableCell align="center" size="small">
+								Content
+							</TableCell>
+							<TableCell align="center" size="small">
+								Rating
+							</TableCell>
 							<TableCell align="center">
 								Timestampe
 							</TableCell>
@@ -63,23 +69,41 @@ const AdminComment: React.FC = () => {
 											}
 										</span>
 									</TableCell>
-                  <TableCell size="small">
-                  <span className="flex flex-wrap">
+									<TableCell size="small">
+										<span className="flex flex-wrap">
 											{
 												item.content
 											}
 										</span>
 									</TableCell>
-									<TableCell >
-                  <span>
-											{
-												moment(item.commentSent).format('MMMM Do YYYY, h:mm:ss a')
-											}
+									<TableCell>
+										{item.rate !==
+											0 && (
+											<Rating
+												name="read-only"
+												readOnly
+												value={
+													item.rate
+												}
+											/>
+										)}
+									</TableCell>
+									<TableCell>
+										<span>
+											{moment(
+												item.commentSent
+											).format(
+												"MMMM Do YYYY, h:mm:ss a"
+											)}
 										</span>
 									</TableCell>
 									<TableCell>
 										<button
-                      onClick={() => handleDeleteComment(item.id)}
+											onClick={() =>
+												handleDeleteComment(
+													item.id
+												)
+											}
 											className="px-4 py-2 text-white border border-red-600 font-bold bg-red-600 hover:bg-transparent hover:text-red-600 duration-200 rounded-lg">
 											Delete
 										</button>
