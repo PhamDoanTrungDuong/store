@@ -60,6 +60,8 @@ const App: React.FC = () => {
         <div className="rounded-div mt-5 overflow-x-hidden">
           <Routes>
             <Route path="/" />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<ProductDetails />} />
             <Route path="/about" element={<About />} />
@@ -130,8 +132,7 @@ const App: React.FC = () => {
                 </PrivateRoute>
               }
             />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

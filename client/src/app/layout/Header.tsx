@@ -126,7 +126,7 @@ const Header: React.FC = () => {
 					)}
 				</div>
 				<div onClick={handleNav} className="sm:hidden cursor-pointer z-50">
-					{nav ? (
+					{!nav ? (
 						<AiOutlineMenu size={20} />
 					) : (
 						<AiOutlineClose size={20} />
@@ -135,7 +135,7 @@ const Header: React.FC = () => {
 			</div>
 			<div
 				className={
-					!nav
+					nav
 						? "absolute md:hidden h-screen top-0 left-0 flex flex-col justify-center items-center z-10 w-full px-4 py-7 duration-300 bg-zinc-50/80"
 						: "absolute md:hidden h-screen top-0 left-[-100%] flex flex-col justify-center items-center z-10 w-full px-4 py-7 duration-300 bg-zinc-50/80"
 				}>
@@ -144,7 +144,7 @@ const Header: React.FC = () => {
 						return (
 							!user?.roles?.includes("Admin") && (
 								<li
-									onClick={() => setNav(true)}
+									onClick={() => setNav(false)}
 									className="p-4 text-xl"
 									key={title}>
 									<Link
@@ -163,14 +163,14 @@ const Header: React.FC = () => {
 						</div>
 					) : (
 						<ul className="mt-4">
-							<li onClick={() => setNav(true)} className="flex items-center my-3">
+							<li onClick={() => setNav(false)} className="flex items-center my-3">
 								<Link
 									className="text-primary p-3 text-lg py-2 ml-4 hover:text-indigo-600 duration-200"
 									to="/login">
 									Sign In
 								</Link>
 							</li>
-							<li onClick={() => setNav(true)} >
+							<li onClick={() => setNav(false)} >
 								<Link
 									className="bg-indigo-600 border border-indigo-600 text-white px-5 py-2 ml-4 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-indigo-600 duration-200"
 									to="/register">

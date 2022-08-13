@@ -114,22 +114,22 @@ const ProductDetails: React.FC = () => {
 
 	return (
 		<div className="mt-5 p-5">
-			<div className="grid grid-cols-2 ml-4">
+			<div className="grid md:grid-cols-2 ml-4">
 				<div>
 					<img
-						className="border rounded-xl w-[80%] object-contain"
+						className="border rounded-xl w-[100%] md:w-[80%] object-contain"
 						src={product.pictureUrl}
 						alt={product.name}
 					/>
 				</div>
-				<div className="max-w-[400px]">
+				<div className="max-w-[400px] mt-5 md:mt-0">
 					<div className="flex gap-10 items-center">
 						<div className="p-2 uppercase font-bold text-black text-xs bg-[#DAD8E1] border w-fit">
 							<h1>{product.type}</h1>
 						</div>
 						<div className="flex items-center">
-							<p className="mr-2 text-xl text-indigo-600 font-medium underline underline-offset-4">{avg.toFixed(1)} /5</p>
-							<Rating name="read-only" size="large" value={Math.ceil(avg)} readOnly />
+							<p className="mr-2 text-lg md:text-xl text-indigo-600 font-medium underline underline-offset-4">{avg.toFixed(1)} /5</p>
+							<Rating name="read-only" size="small" value={Math.ceil(avg)} readOnly />
 						</div>
 					</div>
 					<div className="mt-8">
@@ -154,7 +154,7 @@ const ProductDetails: React.FC = () => {
 								onChange={hanldeInputChange}
 							/>
 						</div>
-						<h4 className="font-bold text-3xl">
+						<h4 className="font-bold text-2xl md:text-3xl">
 							${(product.price / 100).toFixed(2)}
 						</h4>
 					</div>
@@ -186,52 +186,58 @@ const ProductDetails: React.FC = () => {
 						<h2 className="px-4 pt-3 pb-2 text-black text-lg font-medium">
 							Add a new comment
 						</h2>
-						<div className="flex flex-row justify-between mx-3 mb-6">
+						<div className="flex flex-col md:flex-row justify-between mx-3 mb-6">
 							<div className="w-full md:w-full px-2 mb-2 mt-2">
 								<div className="flex justify-start items-center my-2">
 									<span className="mr-3 font-medium">
 										Evaluate:
 									</span>
-									<Rating
-										name="simple-controlled"
-										value={valuesStar}
-										getLabelText={getLabelText}
-										onChange={(
-											event,
-											newValue
-										) => {
-											setValuesStar(
+									<div className="flex gap-1">
+										<Rating
+											name="simple-controlled"
+											value={valuesStar}
+											getLabelText={getLabelText}
+											onChange={(
+												event,
 												newValue
-											);
-										}}
-										onChangeActive={(event, newHover) => {
-											setHover(newHover);
-										}}
-									/>
-									{valuesStar !== null && (
-										<Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : valuesStar]}</Box>
-									)}
+											) => {
+												setValuesStar(
+													newValue
+												);
+											}}
+											onChangeActive={(event, newHover) => {
+												setHover(newHover);
+											}}
+										/>
+										<span>
+											{valuesStar !== null && (
+												<Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : valuesStar]}</Box>
+											)}
+										</span>
+									</div>
 								</div>
-								<input
-									{...register("content")}
-									className=" rounded border border-gray-300 leading-normal resize-none w-full p-5 focus:outline-none focus:bg-white"
-									name="content"
-									placeholder="Type Your Comment"
-								/>
+								<div>
+									<input
+										{...register("content")}
+										className=" rounded border border-gray-300 leading-normal resize-none w-full px-5 py-3 focus:outline-none focus:bg-white"
+										name="content"
+										placeholder="Type Your Comment"
+									/>
+								</div>
 							</div>
-							<div className="w-full md:w-full flex flex-row items-end px-3">
+							<div className="w-full md:w-full flex flex-row justify-end md:justify-start px-1 md:m-2 items-end">
 								<div className="mr-1">
 									<button
 										type="submit"
-										className="bg-indigo-600 border border-indigo-600 text-white p-5 w-full rounded-lg shadow-xl hover:shadow-2xl my-2 hover:bg-transparent hover:text-indigo-600 duration-200">
-										Post Comment
+										className="bg-indigo-600 border text-sm md:text-base border-indigo-600 text-white p-3 w-full rounded-lg shadow-xl hover:shadow-2xl hover:bg-transparent hover:text-indigo-600 duration-200">
+										Submit
 									</button>
 								</div>
 							</div>
 						</div>
 					</form>
 				</div>
-				<div className="my-5 w-4/6 h-auto overflow-y-scroll scrollbar-hide">
+				<div className="my-5 w-full md:w-4/6 h-auto overflow-y-scroll scrollbar-hide">
 					<CommentThread idProduct={idProduct} />
 				</div>
 			</div>

@@ -55,10 +55,10 @@ const Order: React.FC = () => {
 					</div>
 				</div>
 			</div>
-			<table className="table-auto w-full text-sm md:text-base">
+			<table className="table-auto w-full text-xs sm:text-sm md:text-base">
 				<thead>
 					<tr className="border-b-2">
-						<td className="px-4 py-3">Order number</td>
+						<td className="px-0 md:px-4 py-3">Order number</td>
 						<td className="px-4 py-3" align="center">
 							Total
 						</td>

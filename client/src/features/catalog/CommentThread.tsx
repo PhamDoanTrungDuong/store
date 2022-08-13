@@ -60,6 +60,7 @@ const CommentThread: React.FC<IProps> = ({ idProduct }) => {
 													0 && (
 													<Rating
 														name="read-only"
+														size="small"
 														readOnly
 														value={
 															comment.rate

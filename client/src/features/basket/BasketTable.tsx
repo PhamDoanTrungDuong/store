@@ -24,9 +24,9 @@ const BasketTable: React.FC<IProps> = ({ items, isBasket = true }) => {
 		<table className="max-w-[400px] sm:max-w-[500px] md:max-w-[600px]">
 			<thead>
 				<tr>
-					<th align="left" className="px-0 md:px-20 pb-5">Product</th>
-					<th align="center" className="px-0 md:px-10 pb-5">Price</th>
-					<th align="center" className="px-0 md:px-10 pb-5">Quantity</th>
+					<th align="left" className="px-5 md:px-20 pb-5">Product</th>
+					<th align="center" className="px-5 md:px-10 pb-5">Price</th>
+					<th align="center" className="px-5 md:px-10 pb-5">Quantity</th>
 					<th align="center" className="px-5 md:px-10 pb-5">Subtotal</th>
 					{isBasket && <th align="right"></th>}
 				</tr>
