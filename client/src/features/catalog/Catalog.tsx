@@ -49,7 +49,7 @@ const Catalog: React.FC = () => {
 		<div className="mt-5">
 			<div>
 				<div className="flex flex-row my-4">
-					<div className="basis-1/5">
+					<div className="hidden md:block basis-1/5">
 						<div className="mb-4"></div>
 
 						<div className="mb-4">
@@ -126,15 +126,15 @@ const Catalog: React.FC = () => {
 							/>
 						</div>
 					</div>
-					<div className="basis-4/5">
+					<div className="basis md:basis-4/5">
 						<ProductSearch />
 						<ProductList products={products} />
 					</div>
 				</div>
 
 				<div className="flex flex-row my-4 mb-5">
-					<div className="basis-1/5"></div>
-					<div className="basis-4/5">
+					<div className="basis sm:basis-1/5"></div>
+					<div className="basis md:basis-4/5">
 						{pagination && (
 							<AppPagination
 								pagination={pagination}

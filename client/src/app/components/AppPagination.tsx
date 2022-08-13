@@ -18,7 +18,7 @@ const AppPagination: React.FC<IProps> = ({ pagination, onPageChange }) => {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <p className="text-lg">
+        <p className="hidden lg:block text-lg">
           Displaying <span className="font-medium">{(currentPage - 1) * pageSize + 1}-
           {currentPage * pageSize > totalCount
             ? totalCount

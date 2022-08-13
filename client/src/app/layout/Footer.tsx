@@ -68,21 +68,21 @@ const Footer: React.FC = () => {
 				</div>
 				<div className="text-right">
 					<div className="w-full flex justify-end">
-						<div className="w-full md:w-[400px] relative text-left">
-							<p className="text-left text-lg font-medium">
+						<div className="w-full md:w-[450px] relative text-left">
+							<p className="text-center mt-5 sm:mt-0 sm:text-left text-lg font-medium">
 								Sign up for
 								shopping
 							</p>
 							<div className="py-4">
-								<form className="flex justify-between items-center">
-									<div className="w-[300px]">
+								<form className="flex justify-between items-center gap-3">
+									<div className="w-4/5">
 										<input
 											className="bg-primary border px-2 py-2 mr-2 shadow-xl w-full rounded-xl focus:outline-none"
 											type="email"
 											placeholder="Enter your email"
 										/>
 									</div>
-									<div>
+									<div className="w-1/5">
 										<Link to="register">
 											<button className="bg-indigo-600 border border-indigo-600 text-white px-4 p-2 w-full rounded-xl shadow-xl hover:shadow-2xl my-2 hover:bg-transparent hover:text-indigo-600 duration-200">
 												Sign
@@ -133,7 +133,7 @@ const Footer: React.FC = () => {
 					</div>
 				</div>
 			</div>
-			<p className="text-center py-4">Welcom to the Store</p>
+			<p className="text-center text-lg font-bold py-4">Welcom to the <span className="text-indigo-600">Store.</span></p>
 		</div>
 	);
 };

@@ -38,7 +38,7 @@ const Order: React.FC = () => {
 
 	return (
 		<div className=" mt-5 p-5">
-			<div className="text-white bg-gradient-to-r from-indigo-600 to-indigo-400 px-8 py-6 rounded-[30px] w-[30%] mb-4">
+			<div className="text-white bg-gradient-to-r from-indigo-600 to-indigo-400 px-8 py-6 rounded-[30px] w-[100%] md:w-[30%] mb-4">
 				<div className="flex justify-between mb-3">
 					<div className="p-3 bg-white text-indigo-600 rounded-2xl inline-block">
 						<BiPurchaseTag size={25} />
@@ -55,7 +55,7 @@ const Order: React.FC = () => {
 					</div>
 				</div>
 			</div>
-			<table className="table-auto w-full">
+			<table className="table-auto w-full text-sm md:text-base">
 				<thead>
 					<tr className="border-b-2">
 						<td className="px-4 py-3">Order number</td>
