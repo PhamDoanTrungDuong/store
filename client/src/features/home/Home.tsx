@@ -13,8 +13,10 @@ const Home: React.FC = () => {
 		dots: true,
 		infinite: true,
 		speed: 500,
+		arrows: false,
 		slidesToShow: 1,
 		slidesToScroll: 1,
+		autoplay: true,
 	};
 	const { status } = useAppSelector((state) => state.account);
 	const dispatch = useAppDispatch();
@@ -56,12 +58,12 @@ const Home: React.FC = () => {
 
 	const { user } = useAppSelector((state) => state.account);
 	return (
-		<div className="mt-5 max-w-[1140px] mx-auto">
+		<div className="max-w-[1140px] mx-auto mt-2">
 			{user?.roles?.includes("Admin") ? (
 				<AdminHome />
 			) : (
 				<div>
-					<Slider {...settings} className="rounded-sm">
+					<Slider {...settings}>
 						<div>
 							<img
 								src="/images/banner1.jpg"

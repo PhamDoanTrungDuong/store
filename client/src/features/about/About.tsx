@@ -2,7 +2,7 @@ import React from "react";
 
 const About: React.FC = () => {
 	return (
-		<div className="w-full my-32">
+		<div className="w-full mb-32 mt-10">
 			<div className="max-w-[1140px] mx-auto">
 				<div className="text-center">
 					<h2 className="text-4xl capitalize font-bold">
