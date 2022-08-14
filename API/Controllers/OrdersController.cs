@@ -26,6 +26,7 @@ namespace API.Controllers
             public async Task<ActionResult<List<OrderDto>>> GetOrders()
             {
                 return await _context.Orders
+                    .OrderByDescending(x => x.OrderDate)
                     .ProjectOrderToOrderDto()
                     .Where(x => x.BuyerId == User.Identity.Name)
                     .ToListAsync();

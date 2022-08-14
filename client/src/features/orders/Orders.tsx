@@ -55,6 +55,7 @@ const Order: React.FC = () => {
 					</div>
 				</div>
 			</div>
+			<div className="h-[600px] overflow-y-scroll">
 			<table className="table-auto w-full text-xs sm:text-sm md:text-base">
 				<thead>
 					<tr className="border-b-2">
@@ -97,6 +98,7 @@ const Order: React.FC = () => {
 					))}
 				</tbody>
 			</table>
+			</div>
 		</div>
 	);
 };

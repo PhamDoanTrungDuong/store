@@ -46,7 +46,8 @@ const AdminRole: React.FC = () => {
 	return (
 		<div className=" mt-5 p-5">
 			<h4 className="text-2xl font-bold my-4">Roles</h4>
-			<TableContainer component={Paper}>
+			<div className="h-[600px] overflow-y-scroll">
+				<TableContainer component={Paper}>
 				<Table>
 					<TableHead>
 						<TableRow>
@@ -99,7 +100,8 @@ const AdminRole: React.FC = () => {
 						})}
 					</TableBody>
 				</Table>
-			</TableContainer>
+				</TableContainer>
+			</div>
 		</div>
 	);
 };

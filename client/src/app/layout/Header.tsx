@@ -67,13 +67,13 @@ const Header: React.FC = () => {
 							</Link>
 							<Link
 								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
-								to="/role">
-								Role
+								to="/admin-members">
+								Members
 							</Link>
 							<Link
 								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
-								to="/admin-orders">
-								Orders
+								to="/role">
+								Role
 							</Link>
 							<Link
 								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
@@ -82,8 +82,8 @@ const Header: React.FC = () => {
 							</Link>
 							<Link
 								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
-								to="/admin-members">
-								Members
+								to="/admin-orders">
+								Orders
 							</Link>
 						</>
 					)}

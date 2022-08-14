@@ -109,6 +109,7 @@ const Home: React.FC = () => {
 
 						{/* Contact */}
 						<Contact />
+						<hr />
 					</div>
 				</div>
 			)}
