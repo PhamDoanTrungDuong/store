@@ -67,6 +67,11 @@ const Header: React.FC = () => {
 							</Link>
 							<Link
 								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
+								to="/admin-categories">
+								Categories
+							</Link>
+							<Link
+								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
 								to="/admin-members">
 								Members
 							</Link>
@@ -185,6 +190,11 @@ const Header: React.FC = () => {
 								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
 								to="/inventory">
 								Inventory
+							</Link>
+							<Link
+								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
+								to="/admin-categories">
+								Categories
 							</Link>
 							<Link
 								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"

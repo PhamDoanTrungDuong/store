@@ -24,7 +24,10 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
             resolver: yupResolver<any>(validationSchema)
       });
 
-        const { brands, types } = useProducts();
+        const { brands, categories } = useProducts();
+
+        var cate = categories.map((item: any) => {return item.name});
+
         const watchFile = watch('file', null);
         const dispatch = useAppDispatch();
 
@@ -41,6 +44,8 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
                 if (product) {
                     response = await agent.Admin.updateProduct(data);
                 } else {
+                    const cate: any = categories.find((e: any) => e.name === data.type);
+                    data.currentCateId = cate.cateId
                     response = await agent.Admin.createProduct(data);
                 }
                 dispatch(setProduct(response));
@@ -64,7 +69,7 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
                             <AppSelectList items={brands} control={control} name='brand' label='Brand' />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <AppSelectList items={types} control={control} name='type' label='Type' />
+                            <AppSelectList items={cate} control={control} name='type'label='Type' />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                         <AppTextInput type='number' control={control} name='price' label='Price' />

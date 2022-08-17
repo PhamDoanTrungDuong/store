@@ -110,7 +110,7 @@ const Catalog: React.FC = () => {
 									/>
 								</div>
 								<h4 className="ml-[3px] font-medium">
-									Types
+									Categories
 								</h4>
 							</div>
 							<CheckboxButton

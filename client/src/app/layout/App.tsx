@@ -29,6 +29,7 @@ import CheckoutWrapper from "../../features/checkout/CheckoutWrapper";
 import Footer from "./Footer";
 import Profile from "../../features/account/Profile";
 import AdminMembers from "../../features/admin/AdminMembers";
+import AdminCategories from "../../features/admin/AdminCategories";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -132,7 +133,15 @@ const App: React.FC = () => {
                 </PrivateRoute>
               }
             />
-            
+            <Route
+              path="/admin-categories"
+              element={
+                <PrivateRoute roles={["Admin"]}>
+                  <AdminCategories />
+                </PrivateRoute>
+              }
+            />
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

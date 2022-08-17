@@ -86,7 +86,7 @@ namespace API.Controllers
 
                   if (result) return CreatedAtRoute("GetProduct", new { Id = product.Id }, product);
 
-                  return BadRequest(new ProblemDetails { Title = "Pronlem creating new product" });
+                  return BadRequest(new ProblemDetails { Title = "Problem creating new product" });
             }
 
             [Authorize(Roles = "Admin")]

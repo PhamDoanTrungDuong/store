@@ -26,6 +26,9 @@ namespace API.DTOs
         public string Brand { get; set; }
 
         [Required]
+        public string CurrentCateId { get; set; }
+
+        [Required]
         [Range(0, 200)]
         public int QuantityInStock { get; set; }
     }

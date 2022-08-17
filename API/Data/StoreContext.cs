@@ -16,12 +16,13 @@ namespace API.Data
           public DbSet<Basket> Baskets { get; set; }
           public DbSet<Order> Orders { get; set; }
           public DbSet<Comment> Comments { get; set; }
+          public DbSet<Category> Categories { get; set; }
           public DbSet<UserLike> Likes { get; set; }
 
           protected override void OnModelCreating(ModelBuilder builder)
           {
                base.OnModelCreating(builder);
-
+               // USER - ROLE
                builder.Entity<User>()
                     .HasOne(a => a.Address)
                     .WithOne()
@@ -46,6 +47,7 @@ namespace API.Data
                     .HasForeignKey(ur => ur.RoleId)
                     .IsRequired();
 
+               //COMMENTS
                builder.Entity<Comment>()
                     .HasOne(u => u.Product)
                     .WithMany(c => c.CommentReceived)
@@ -56,6 +58,14 @@ namespace API.Data
                     .WithMany(c => c.CommentSent)
                     .OnDelete(DeleteBehavior.Cascade);
 
+               // CATEGORY
+               builder.Entity<Product>()
+                    .HasOne(c => c.Category)
+                    .WithMany(p => p.Products)
+                    .HasForeignKey(k => k.CurrentCateId);
+
+
+               //USER LIKE
                builder.Entity<UserLike>()
                     .HasKey(k => new {k.UserId, k.LikedProductId});
 

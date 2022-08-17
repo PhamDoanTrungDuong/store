@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace API.Data.Migrations
 {
-    public partial class PostGresInitial : Migration
+    public partial class Initialize : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -65,19 +65,32 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    CateId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.CateId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     BuyerId = table.Column<string>(type: "text", nullable: true),
-                    ShippingAddresss_FullName = table.Column<string>(type: "text", nullable: true),
-                    ShippingAddresss_Address1 = table.Column<string>(type: "text", nullable: true),
-                    ShippingAddresss_Address2 = table.Column<string>(type: "text", nullable: true),
-                    ShippingAddresss_City = table.Column<string>(type: "text", nullable: true),
-                    ShippingAddresss_State = table.Column<string>(type: "text", nullable: true),
-                    ShippingAddresss_Zip = table.Column<string>(type: "text", nullable: true),
-                    ShippingAddresss_Country = table.Column<string>(type: "text", nullable: true),
+                    ShippingAddress_FullName = table.Column<string>(type: "text", nullable: true),
+                    ShippingAddress_Address1 = table.Column<string>(type: "text", nullable: true),
+                    ShippingAddress_Address2 = table.Column<string>(type: "text", nullable: true),
+                    ShippingAddress_City = table.Column<string>(type: "text", nullable: true),
+                    ShippingAddress_State = table.Column<string>(type: "text", nullable: true),
+                    ShippingAddress_Zip = table.Column<string>(type: "text", nullable: true),
+                    ShippingAddress_Country = table.Column<string>(type: "text", nullable: true),
                     OrderDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Subtotal = table.Column<long>(type: "bigint", nullable: false),
                     DeliveryFee = table.Column<long>(type: "bigint", nullable: false),
@@ -87,25 +100,6 @@ namespace API.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    Price = table.Column<long>(type: "bigint", nullable: false),
-                    PictureUrl = table.Column<string>(type: "text", nullable: true),
-                    Type = table.Column<string>(type: "text", nullable: true),
-                    Brand = table.Column<string>(type: "text", nullable: true),
-                    QuantityInStock = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -239,6 +233,33 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    Price = table.Column<long>(type: "bigint", nullable: false),
+                    PictureUrl = table.Column<string>(type: "text", nullable: true),
+                    Type = table.Column<string>(type: "text", nullable: true),
+                    Brand = table.Column<string>(type: "text", nullable: true),
+                    QuantityInStock = table.Column<int>(type: "integer", nullable: false),
+                    PublicId = table.Column<string>(type: "text", nullable: true),
+                    CurrentCateId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_Categories_CurrentCateId",
+                        column: x => x.CurrentCateId,
+                        principalTable: "Categories",
+                        principalColumn: "CateId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrderItem",
                 columns: table => new
                 {
@@ -289,13 +310,69 @@ namespace API.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    userId = table.Column<int>(type: "integer", nullable: false),
+                    Username = table.Column<string>(type: "text", nullable: true),
+                    productId = table.Column<int>(type: "integer", nullable: false),
+                    productName = table.Column<string>(type: "text", nullable: true),
+                    Content = table.Column<string>(type: "text", nullable: true),
+                    Rate = table.Column<int>(type: "integer", nullable: false),
+                    CommentSent = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    userDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_userId",
+                        column: x => x.userId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Comments_Products_productId",
+                        column: x => x.productId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Likes",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    LikedProductId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Likes", x => new { x.UserId, x.LikedProductId });
+                    table.ForeignKey(
+                        name: "FK_Likes_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Likes_Products_LikedProductId",
+                        column: x => x.LikedProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "084498b1-ffd3-4a91-8eed-e6bc8bd8ef4e", "Member", "MEMBER" },
-                    { 2, "77d97dab-2f17-43b4-84d0-0e70dbe3dcc2", "Admin", "ADMIN" }
+                    { 1, "7e7e9c44-9fcd-43b2-95ce-c200d48c112a", "Member", "MEMBER" },
+                    { 2, "e98a3f8c-b05b-45a2-8077-edbd0b38bd9a", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -346,9 +423,29 @@ namespace API.Data.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_productId",
+                table: "Comments",
+                column: "productId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_userId",
+                table: "Comments",
+                column: "userId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Likes_LikedProductId",
+                table: "Likes",
+                column: "LikedProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderItem_OrderId",
                 table: "OrderItem",
                 column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_CurrentCateId",
+                table: "Products",
+                column: "CurrentCateId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -372,6 +469,12 @@ namespace API.Data.Migrations
                 name: "BasketItems");
 
             migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
+                name: "Likes");
+
+            migrationBuilder.DropTable(
                 name: "OrderItem");
 
             migrationBuilder.DropTable(
@@ -391,6 +494,9 @@ namespace API.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }

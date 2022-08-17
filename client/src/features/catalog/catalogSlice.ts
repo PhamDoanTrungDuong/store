@@ -16,6 +16,7 @@ interface CatalogState {
   status: string;
   brands: string[];
   types: string[];
+  categories: string[];
   comments: IComment[];
   productParams: ProductParams;
   pagination: IPagination | null;
@@ -81,6 +82,17 @@ export const fetchFiltersAsync = createAsyncThunk(
   }
 )
 
+export const fetchCategoriesAsync = createAsyncThunk(
+  "catalog/fetchCategoriesAsync",
+  async (_ ,thunkAPI) => {
+    try{
+      return await agent.Admin.getCategories();
+    }catch(error: any){
+      return thunkAPI.rejectWithValue({ error: error.data });
+    }
+  }
+)
+
 const initParams = () => {
   return {
     pageNumber: 1,
@@ -99,6 +111,7 @@ export const catalogSlice = createSlice({
     status: "idle",
     brands: [],
     types: [],
+    categories: [],
     comments: [],
     productParams: initParams(),
     pagination: null,
@@ -168,6 +181,10 @@ export const catalogSlice = createSlice({
     })
     builder.addCase(fetchFiltersAsync.rejected, (state, action) => {
       state.status = "idle";
+    });
+
+    builder.addCase(fetchCategoriesAsync.fulfilled, (state, action) => {
+      state.categories = action.payload
     });
 
     //Product - comment

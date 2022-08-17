@@ -18,5 +18,8 @@ namespace API.Entities
         public string PublicId { get; set; }
         public ICollection<Comment> CommentReceived { get; set; }
         public ICollection<UserLike> LikedByUsers { get; set; }
+
+        public int CurrentCateId { get; set; }
+        public Category Category { get; set; }
     }
 }

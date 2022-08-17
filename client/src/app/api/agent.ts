@@ -140,6 +140,10 @@ const Admin = {
     deleteMember: (id: string) => requests.delete(`account/delete-member/${id}`),
     getComments: () => requests.get('comment/get-all-comments'),
     deleteComment: (id: number) => requests.delete(`comment/${id}`),
+    getCategories: () => requests.get('category'),
+    createCategory: (name: string) => requests.post('category', name),
+    deleteCategory: (id: number) => requests.delete(`category/${id}`),
+
 }
 
 const Profile = {

@@ -5,6 +5,7 @@ import BasketReducer from "../../features/basket/basketSlice";
 import CatalogReducer from "../../features/catalog/catalogSlice";
 import AccountReducer from '../../features/account/accountSlice';
 import OrderReducer from '../../features/orders/orderSlice';
+import AdminReducer from '../../features/admin/adminSlice';
 
 export const store = configureStore({
     reducer: {
@@ -12,7 +13,8 @@ export const store = configureStore({
         basket: BasketReducer,
         catalog: CatalogReducer,
         account: AccountReducer,
-        order: OrderReducer
+        order: OrderReducer,
+        admin: AdminReducer
     }
 })
 

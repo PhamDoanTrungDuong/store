@@ -9,6 +9,8 @@ namespace API.Data
     public static class DbInitializer
     {
         public static async Task Initialize(StoreContext context, UserManager<User> userManager, RoleManager<Role> roleManager){
+
+            // ROLE
             var roles = new List<Role>
             {
                 new Role{Name = "Member"},
@@ -21,6 +23,23 @@ namespace API.Data
                 await roleManager.CreateAsync(role);
             }
 
+            // CATEGORIES
+            if(context.Categories.Any()) return;
+            var categories = new List<Category>
+            {
+                new Category{Name = "Tops & T-Shirts"},
+                new Category{Name = "Shorts"},
+                new Category{Name = "Shoes"},
+                new Category{Name = "Jackets"},
+                new Category{Name = "Accessories"},
+            };
+
+            foreach (var category in categories)
+            {
+                context.Categories.Add(category);
+            }
+
+            // USER
             if(!userManager.Users.Any())
             {
                 var user = new User
@@ -42,6 +61,7 @@ namespace API.Data
                 await userManager.AddToRolesAsync(admin, new[] {"Member", "Admin"});
             }
 
+            // PRODUCT
             if(context.Products.Any()) return;
             var products = new List<Product>{
                 new Product
@@ -53,6 +73,7 @@ namespace API.Data
                     PictureUrl = "/images/products/1.jpg",
                     Brand = "Nike",
                     Type = "Tops & T-Shirts",
+                    CurrentCateId = 1,
                     QuantityInStock = 100
                 },
                 new Product
@@ -63,6 +84,7 @@ namespace API.Data
                     PictureUrl = "/images/products/2.jpg",
                     Brand = "Nike",
                     Type = "Tops & T-Shirts",
+                    CurrentCateId = 1,
                     QuantityInStock = 100
                 },
                 new Product
@@ -74,6 +96,7 @@ namespace API.Data
                     PictureUrl = "/images/products/3.jpg",
                     Brand = "Adidas",
                     Type = "Tops & T-Shirts",
+                    CurrentCateId = 1,
                     QuantityInStock = 100
                 },
                 new Product
@@ -85,6 +108,7 @@ namespace API.Data
                     PictureUrl = "/images/products/4.jpg",
                     Brand = "Adidas",
                     Type = "Tops & T-Shirts",
+                    CurrentCateId = 1,
                     QuantityInStock = 100
                 },
                 new Product
@@ -96,6 +120,7 @@ namespace API.Data
                     PictureUrl = "/images/products/5.jpg",
                     Brand = "Under Armour",
                     Type = "Tops & T-Shirts",
+                    CurrentCateId = 1,
                     QuantityInStock = 100
                 },
                 new Product
@@ -107,6 +132,7 @@ namespace API.Data
                     PictureUrl = "/images/products/6.jpg",
                     Brand = "Under Armour",
                     Type = "Tops & T-Shirts",
+                    CurrentCateId = 1,
                     QuantityInStock = 100
                 },
                 new Product
@@ -118,6 +144,7 @@ namespace API.Data
                     PictureUrl = "/images/products/7.jpg",
                     Brand = "Nike",
                     Type = "Tops & T-Shirts",
+                    CurrentCateId = 1,
                     QuantityInStock = 100
                 },
                 new Product
@@ -129,6 +156,7 @@ namespace API.Data
                     PictureUrl = "/images/products/8.jpg",
                     Brand = "Under Armour",
                     Type = "Tops & T-Shirts",
+                    CurrentCateId = 1,
                     QuantityInStock = 100
                 },
                 new Product
@@ -140,6 +168,7 @@ namespace API.Data
                     PictureUrl = "/images/products/9.jpg",
                     Brand = "Under Armour",
                     Type = "Tops & T-Shirts",
+                    CurrentCateId = 1,
                     QuantityInStock = 100
                 },
                 new Product
@@ -151,6 +180,7 @@ namespace API.Data
                     PictureUrl = "/images/products/10.jpg",
                     Brand = "Fila",
                     Type = "Tops & T-Shirts",
+                    CurrentCateId = 1,
                     QuantityInStock = 100
                 },
                 new Product
@@ -162,6 +192,7 @@ namespace API.Data
                     PictureUrl = "/images/products/11.jpg",
                     Brand = "Adidas",
                     Type = "Shorts",
+                    CurrentCateId = 2,
                     QuantityInStock = 100
                 },
                 new Product
@@ -173,6 +204,7 @@ namespace API.Data
                     PictureUrl = "/images/products/12.jpg",
                     Brand = "Adidas",
                     Type = "Shorts",
+                    CurrentCateId = 2,
                     QuantityInStock = 100
                 },
                 new Product
@@ -184,6 +216,7 @@ namespace API.Data
                     PictureUrl = "/images/products/13.jpg",
                     Brand = "Puma",
                     Type = "Shorts",
+                    CurrentCateId = 2,
                     QuantityInStock = 100
                 },
                 new Product
@@ -195,6 +228,7 @@ namespace API.Data
                     PictureUrl = "/images/products/14.jpg",
                     Brand = "Nike",
                     Type = "Shorts",
+                    CurrentCateId = 2,
                     QuantityInStock = 100
                 },
                 new Product
@@ -206,6 +240,7 @@ namespace API.Data
                     PictureUrl = "/images/products/15.jpg",
                     Brand = "Puma",
                     Type = "Shorts",
+                    CurrentCateId = 2,
                     QuantityInStock = 100
                 },
                 new Product
@@ -217,6 +252,7 @@ namespace API.Data
                     PictureUrl = "/images/products/16.jpg",
                     Brand = "Puma",
                     Type = "Shorts",
+                    CurrentCateId = 2,
                     QuantityInStock = 100
                 },
                 new Product
@@ -228,6 +264,7 @@ namespace API.Data
                     PictureUrl = "/images/products/17.jpg",
                     Brand = "Reebok",
                     Type = "Shorts",
+                    CurrentCateId = 2,
                     QuantityInStock = 100
                 },
                 new Product
@@ -239,6 +276,7 @@ namespace API.Data
                     PictureUrl = "/images/products/18.jpg",
                     Brand = "Reebok",
                     Type = "Shorts",
+                    CurrentCateId = 2,
                     QuantityInStock = 100
                 },
                 new Product
@@ -250,6 +288,7 @@ namespace API.Data
                     PictureUrl = "/images/products/19.jpg",
                     Brand = "Adidas",
                     Type = "Shorts",
+                    CurrentCateId = 2,
                     QuantityInStock = 100
                 },
                 new Product
@@ -261,6 +300,7 @@ namespace API.Data
                     PictureUrl = "/images/products/20.jpg",
                     Brand = "Adidas",
                     Type = "Shorts",
+                    CurrentCateId = 2,
                     QuantityInStock = 100
                 },
                 new Product
@@ -272,6 +312,7 @@ namespace API.Data
                     PictureUrl = "/images/products/31.jpg",
                     Brand = "Fila",
                     Type = "Shoes",
+                    CurrentCateId = 3,
                     QuantityInStock = 100
                 },
                 new Product
@@ -283,6 +324,7 @@ namespace API.Data
                     PictureUrl = "/images/products/32.jpg",
                     Brand = "Fila",
                     Type = "Shoes",
+                    CurrentCateId = 3,
                     QuantityInStock = 100
                 },
                 new Product
@@ -294,6 +336,7 @@ namespace API.Data
                     PictureUrl = "/images/products/33.jpg",
                     Brand = "Puma",
                     Type = "Shoes",
+                    CurrentCateId = 3,
                     QuantityInStock = 100
                 },
                 new Product
@@ -305,6 +348,7 @@ namespace API.Data
                     PictureUrl = "/images/products/34.jpg",
                     Brand = "Puma",
                     Type = "Shoes",
+                    CurrentCateId = 3,
                     QuantityInStock = 100
                 },
                 new Product
@@ -316,6 +360,7 @@ namespace API.Data
                     PictureUrl = "/images/products/35.jpg",
                     Brand = "Adidas",
                     Type = "Shoes",
+                    CurrentCateId = 3,
                     QuantityInStock = 100
                 },
                 new Product
@@ -327,6 +372,7 @@ namespace API.Data
                     PictureUrl = "/images/products/36.jpg",
                     Brand = "Under Armour",
                     Type = "Shoes",
+                    CurrentCateId = 3,
                     QuantityInStock = 100
                 },
                 new Product
@@ -338,6 +384,7 @@ namespace API.Data
                     PictureUrl = "/images/products/37.jpg",
                     Brand = "Puma",
                     Type = "Shoes",
+                    CurrentCateId = 3,
                     QuantityInStock = 100
                 },
                 new Product
@@ -349,6 +396,7 @@ namespace API.Data
                     PictureUrl = "/images/products/38.jpg",
                     Brand = "Puma",
                     Type = "Shoes",
+                    CurrentCateId = 3,
                     QuantityInStock = 100
                 },
                 new Product
@@ -360,6 +408,7 @@ namespace API.Data
                     PictureUrl = "/images/products/39.jpg",
                     Brand = "Puma",
                     Type = "Shoes",
+                    CurrentCateId = 3,
                     QuantityInStock = 100
                 },
                 new Product
@@ -371,6 +420,7 @@ namespace API.Data
                     PictureUrl = "/images/products/40.jpg",
                     Brand = "Puma",
                     Type = "Shoes",
+                    CurrentCateId = 3,
                     QuantityInStock = 100
                 },
                 new Product
@@ -382,6 +432,7 @@ namespace API.Data
                     PictureUrl = "/images/products/41.jpg",
                     Brand = "Reebok",
                     Type = "Jackets",
+                    CurrentCateId = 4,
                     QuantityInStock = 100
                 },
                 new Product
@@ -393,6 +444,7 @@ namespace API.Data
                     PictureUrl = "/images/products/42.jpg",
                     Brand = "Adidas",
                     Type = "Jackets",
+                    CurrentCateId = 4,
                     QuantityInStock = 100
                 },
                 new Product
@@ -404,6 +456,7 @@ namespace API.Data
                     PictureUrl = "/images/products/43.jpg",
                     Brand = "Adidas",
                     Type = "Jackets",
+                    CurrentCateId = 4,
                     QuantityInStock = 100
                 },
                 new Product
@@ -414,6 +467,7 @@ namespace API.Data
                     PictureUrl = "/images/products/44.jpg",
                     Brand = "Nike",
                     Type = "Jackets",
+                    CurrentCateId = 4,
                     QuantityInStock = 100
                 },
                 new Product
@@ -425,6 +479,7 @@ namespace API.Data
                     PictureUrl = "/images/products/45.jpg",
                     Brand = "Nike",
                     Type = "Jackets",
+                    CurrentCateId = 4,
                     QuantityInStock = 100
                 },
                 new Product
@@ -436,6 +491,7 @@ namespace API.Data
                     PictureUrl = "/images/products/46.jpg",
                     Brand = "Under Armour",
                     Type = "Jackets",
+                    CurrentCateId = 4,
                     QuantityInStock = 100
                 },
                 new Product
@@ -447,6 +503,7 @@ namespace API.Data
                     PictureUrl = "/images/products/47.jpg",
                     Brand = "Nike",
                     Type = "Jackets",
+                    CurrentCateId = 4,
                     QuantityInStock = 100
                 },
                 new Product
@@ -458,6 +515,7 @@ namespace API.Data
                     PictureUrl = "/images/products/48.jpg",
                     Brand = "Nike",
                     Type = "Jackets",
+                    CurrentCateId = 4,
                     QuantityInStock = 100
                 },
                 new Product
@@ -469,6 +527,7 @@ namespace API.Data
                     PictureUrl = "/images/products/49.jpg",
                     Brand = "Nike",
                     Type = "Jackets",
+                    CurrentCateId = 4,
                     QuantityInStock = 100
                 },
                 new Product
@@ -480,6 +539,7 @@ namespace API.Data
                     PictureUrl = "/images/products/50.jpg",
                     Brand = "Nike",
                     Type = "Jackets",
+                    CurrentCateId = 4,
                     QuantityInStock = 100
                 },
                 new Product
@@ -491,6 +551,7 @@ namespace API.Data
                     PictureUrl = "/images/products/51.jpg",
                     Brand = "Puma",
                     Type = "Accessories",
+                    CurrentCateId = 5,
                     QuantityInStock = 100
                 },
                 new Product
@@ -502,6 +563,7 @@ namespace API.Data
                     PictureUrl = "/images/products/52.jpg",
                     Brand = "Puma",
                     Type = "Accessories",
+                    CurrentCateId = 5,
                     QuantityInStock = 100
                 },
                 new Product
@@ -513,6 +575,7 @@ namespace API.Data
                     PictureUrl = "/images/products/53.jpg",
                     Brand = "Adidas",
                     Type = "Accessories",
+                    CurrentCateId = 5,
                     QuantityInStock = 100
                 },
                 new Product
@@ -524,6 +587,7 @@ namespace API.Data
                     PictureUrl = "/images/products/54.jpg",
                     Brand = "Reebok",
                     Type = "Accessories",
+                    CurrentCateId = 5,
                     QuantityInStock = 100
                 },
                 new Product
@@ -535,6 +599,7 @@ namespace API.Data
                     PictureUrl = "/images/products/55.jpg",
                     Brand = "Reebok",
                     Type = "Accessories",
+                    CurrentCateId = 5,
                     QuantityInStock = 100
                 },
                 new Product
@@ -546,6 +611,7 @@ namespace API.Data
                     PictureUrl = "/images/products/56.jpg",
                     Brand = "Under Armour",
                     Type = "Accessories",
+                    CurrentCateId = 5,
                     QuantityInStock = 100
                 },
                 new Product
@@ -557,6 +623,7 @@ namespace API.Data
                     PictureUrl = "/images/products/57.jpg",
                     Brand = "Reebok",
                     Type = "Accessories",
+                    CurrentCateId = 5,
                     QuantityInStock = 100
                 },
                 new Product
@@ -568,6 +635,7 @@ namespace API.Data
                     PictureUrl = "/images/products/58.jpg",
                     Brand = "Nike",
                     Type = "Accessories",
+                    CurrentCateId = 5,
                     QuantityInStock = 100
                 },
                 new Product
@@ -579,6 +647,7 @@ namespace API.Data
                     PictureUrl = "/images/products/59.jpg",
                     Brand = "Fila",
                     Type = "Accessories",
+                    CurrentCateId = 5,
                     QuantityInStock = 100
                 },
                 new Product
@@ -590,6 +659,7 @@ namespace API.Data
                     PictureUrl = "/images/products/60.jpg",
                     Brand = "Fila",
                     Type = "Accessories",
+                    CurrentCateId = 5,
                     QuantityInStock = 100
                 },
             };

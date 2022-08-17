@@ -65,6 +65,21 @@ namespace API.Data.Migrations
                     b.ToTable("BasketItems");
                 });
 
+            modelBuilder.Entity("API.Entities.Category", b =>
+                {
+                    b.Property<int>("CateId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("CateId");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("API.Entities.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -168,6 +183,9 @@ namespace API.Data.Migrations
                     b.Property<string>("Brand")
                         .HasColumnType("text");
 
+                    b.Property<int>("CurrentCateId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
@@ -190,6 +208,8 @@ namespace API.Data.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CurrentCateId");
 
                     b.ToTable("Products");
                 });
@@ -225,14 +245,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "7ed938b8-1dce-4fc1-8415-41ee45cad4e6",
+                            ConcurrencyStamp = "7e7e9c44-9fcd-43b2-95ce-c200d48c112a",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "3382e0c7-05f3-4ada-aead-438692c7bac2",
+                            ConcurrencyStamp = "e98a3f8c-b05b-45a2-8077-edbd0b38bd9a",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -563,6 +583,17 @@ namespace API.Data.Migrations
                     b.Navigation("ItemOrdered");
                 });
 
+            modelBuilder.Entity("API.Entities.Product", b =>
+                {
+                    b.HasOne("API.Entities.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CurrentCateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("API.Entities.UserAddress", b =>
                 {
                     b.HasOne("API.Entities.User", null)
@@ -649,6 +680,11 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Entities.Basket", b =>
                 {
                     b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("API.Entities.Category", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("API.Entities.OrderAggregate.Order", b =>
