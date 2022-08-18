@@ -42,20 +42,6 @@ const Home: React.FC = () => {
 		};
 	}, [dispatch, status]);
 
-	// useEffect(() => {
-	// 	if (status === "logoutSuccess") {
-	// 		Swal.fire({
-	// 			icon: "warning",
-	// 			title: "Your has been Logout",
-	// 			showConfirmButton: false,
-	// 			timer: 1500,
-	// 		});
-	// 	}
-	// 	return () => {
-	// 		dispatch(setStateUser());
-	// 	};
-	// }, [dispatch, status]);
-
 	const { user } = useAppSelector((state) => state.account);
 	return (
 		<div className="max-w-[1140px] mx-auto mt-2">

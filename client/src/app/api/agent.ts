@@ -48,7 +48,7 @@ axios.interceptors.response.use(async res => {
         case 401:
             Swal.fire({
                 icon: "error",
-                title: "You need to login",
+                title: data.title,
                 showConfirmButton: false,
                 timer: 1500,
             });
@@ -56,7 +56,7 @@ axios.interceptors.response.use(async res => {
         case 403:
             Swal.fire({
                 icon: "error",
-                title: "You are not allowed to do that!",
+                title: data.title,
                 showConfirmButton: false,
                 timer: 1500,
             });

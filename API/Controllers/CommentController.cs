@@ -32,7 +32,7 @@ namespace API.Controllers
             {
                   var username = User.GetUsername();
 
-                  if (username == null) return Unauthorized();
+                  if (username == null) return Unauthorized(new ProblemDetails{ Title = "You must Login to comment"});
 
                   var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == username);
                   var product = await _context.Products.FindAsync(createCommentDto.ProductId);
