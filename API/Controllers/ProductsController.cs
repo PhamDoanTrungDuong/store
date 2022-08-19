@@ -43,6 +43,12 @@ namespace API.Controllers
                   return products;
             }
 
+            [HttpGet("get-product-count")]
+            public async Task<int> GetCounterProduct()
+            {
+                  return await _context.Products.CountAsync();
+            }
+
             [HttpGet("{id}", Name = "GetProduct")]
             public async Task<ActionResult<Product>> GetProductById(int id)
             {

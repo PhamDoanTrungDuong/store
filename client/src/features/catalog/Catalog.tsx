@@ -21,7 +21,7 @@ const sortOptions = [
 ];
 
 const Catalog: React.FC = () => {
-	const { products, filtersLoaded, brands, types, categories, pagination } = useProducts();
+	const { products, filtersLoaded, brands, categories, pagination } = useProducts();
 
 	var cate = categories.map((item: any) => {return item.name});
 
@@ -29,8 +29,6 @@ const Catalog: React.FC = () => {
 	const { status } = useAppSelector((state) => state.basket);
 
 	const dispatch = useAppDispatch();
-
-	console.log(types)
 
 	useEffect(() => {
 		if(status === "addSuccess"){

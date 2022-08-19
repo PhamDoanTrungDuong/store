@@ -61,7 +61,6 @@ const ProductDetails: React.FC = () => {
 			agent.Comment.getRatings(Number(id))
 				.then((res) => setAvg(res))
 				.catch((error) => console.log(error));
-		// console.log("[AvgStarRating]: ", avg);
 	}, [avg, id]);
 
 	const [quantity, setQuantity] = useState(0);

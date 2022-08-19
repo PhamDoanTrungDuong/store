@@ -103,12 +103,12 @@ const MemberForm: React.FC<Props> = ({ member, cancelEdit }) => {
 				/>
 				<div className="flex justify-between items-center gap-4">
 					<button
-						className="p-3 my-5 w-full c-btn bg-zinc-300 border-none text-black hover:border hover:border-zinc-300"
+						className="p-3 my-5 w-full c-btn bg-zinc-300 border-none text-black hover:border-2 hover:border-black"
 						onClick={cancelEdit}>
 						Cancel
 					</button>
 					<button
-						className="p-3 my-5 w-full c-btn"
+						className={!isValid ? "p-3 my-5 w-full bg-slate-400 rounded-lg" : "p-3 my-5 w-full c-btn"}
 						disabled={!isValid}
 						type="submit">
 						Create

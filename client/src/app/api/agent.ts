@@ -96,6 +96,7 @@ const Catalog = {
     list: (params: URLSearchParams) => requests.get('products', params),
     details: (id: number) => requests.get(`products/${id}`),
     fetchFilter: () => requests.get('products/filters'),
+    getProductCount: () => requests.get('products/get-product-count'),
 }
 
 const Basket = {

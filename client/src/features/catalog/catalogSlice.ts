@@ -20,6 +20,7 @@ interface CatalogState {
   comments: IComment[];
   productParams: ProductParams;
   pagination: IPagination | null;
+  productCount: number;
 }
 
 const productsAdapter = createEntityAdapter<IProduct>();
@@ -82,6 +83,17 @@ export const fetchFiltersAsync = createAsyncThunk(
   }
 )
 
+export const getProductCounterAsync = createAsyncThunk(
+  "catalog/getProductCounterAsync",
+  async (_ ,thunkAPI) => {
+    try{
+      return await agent.Catalog.getProductCount();
+    }catch(error: any){
+      return thunkAPI.rejectWithValue({ error: error.data });
+    }
+  }
+)
+
 export const fetchCategoriesAsync = createAsyncThunk(
   "catalog/fetchCategoriesAsync",
   async (_ ,thunkAPI) => {
@@ -115,6 +127,7 @@ export const catalogSlice = createSlice({
     comments: [],
     productParams: initParams(),
     pagination: null,
+    productCount: 0,
   }),
   reducers: {
       setComments: (state, action) => {
@@ -185,6 +198,10 @@ export const catalogSlice = createSlice({
 
     builder.addCase(fetchCategoriesAsync.fulfilled, (state, action) => {
       state.categories = action.payload
+    });
+
+    builder.addCase(getProductCounterAsync.fulfilled, (state, action) => {
+      state.productCount = action.payload
     });
 
     //Product - comment

@@ -126,8 +126,8 @@ const Register = () => {
 							}
 						/>
 						<button
-							className="p-3 my-5 w-full c-btn"
-						disabled={!isValid}
+							className={!isValid ? "p-3 my-5 w-full bg-slate-400 rounded-lg" : "p-3 my-5 w-full c-btn"}
+							disabled={!isValid}
 							type="submit">
 							Register
 						</button>
