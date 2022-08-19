@@ -3,6 +3,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import agent from "../../app/api/agent";
 import { ICategory } from "../../app/interfaces/ICategory";
+import { useAppDispatch } from "../../app/store/configureStore";
+import { setCateLoad } from "./adminSlice";
 
 interface Props {
 	category?: ICategory;
@@ -21,9 +23,12 @@ const CategoryForm: React.FC<Props> = ({ category, cancelEdit }) => {
 		mode: "all",
 	});
 
+	const dispatch = useAppDispatch();
+
 	async function handleSubmitData(data: any) {
 		try {
 			await agent.Admin.createCategory(data);
+			dispatch(setCateLoad());
 			cancelEdit();
 		} catch (error) {
 			console.log(error);

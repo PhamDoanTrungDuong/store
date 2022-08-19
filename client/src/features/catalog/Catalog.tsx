@@ -21,12 +21,16 @@ const sortOptions = [
 ];
 
 const Catalog: React.FC = () => {
-	const { products, filtersLoaded, brands, types, pagination } = useProducts();
+	const { products, filtersLoaded, brands, types, categories, pagination } = useProducts();
+
+	var cate = categories.map((item: any) => {return item.name});
 
 	const { productParams } = useAppSelector((state) => state.catalog);
 	const { status } = useAppSelector((state) => state.basket);
 
 	const dispatch = useAppDispatch();
+
+	console.log(types)
 
 	useEffect(() => {
 		if(status === "addSuccess"){
@@ -114,7 +118,7 @@ const Catalog: React.FC = () => {
 								</h4>
 							</div>
 							<CheckboxButton
-								options={types}
+								options={cate}
 								checked={productParams.types}
 								onChange={(options: string[]) =>
 									dispatch(

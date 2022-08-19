@@ -34,7 +34,9 @@ namespace API.Controllers
             [HttpGet]
             public async Task<List<Category>> GetCategory()
             {
-                var categories = await _context.Categories.ToListAsync();
+                var categories = await _context.Categories
+                                .OrderByDescending(x => x.CateId)
+                                .ToListAsync();
 
                 return categories;
             }

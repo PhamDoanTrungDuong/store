@@ -3,11 +3,13 @@ import agent from "../../app/api/agent";
 import { ICategory } from "../../app/interfaces/ICategory";
 
 export interface AdminState {
+      load: boolean;
       categories: ICategory[] | null;
 }
 
 const initialState: AdminState = {
-      categories: []
+      categories: [],
+      load: false,
 }
 
 export const fetchCategories = createAsyncThunk<ICategory[]>(
@@ -26,6 +28,9 @@ export const adminSlice = createSlice({
     name: 'admin',
     initialState,
     reducers: {
+      setCateLoad: (state) => {
+            state.load = !state.load;
+      }
     },
     extraReducers(builder) {
       builder.addCase(fetchCategories.fulfilled, (state, action) => {
@@ -34,5 +39,5 @@ export const adminSlice = createSlice({
     }
 })
 
-// export const {} = adminSlice.actions
+export const {setCateLoad} = adminSlice.actions
 export default adminSlice.reducer

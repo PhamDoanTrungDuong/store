@@ -13,11 +13,11 @@ import React, { useEffect, useState } from "react";
 import agent from "../../app/api/agent";
 import { ICategory } from "../../app/interfaces/ICategory";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
-import { fetchCategories } from "./adminSlice";
+import { fetchCategories, setCateLoad } from "./adminSlice";
 import CategoryForm from "./CategoryForm";
 
 const AdminCategories: React.FC = () => {
-	const { categories } = useAppSelector((state) => state.admin);
+	const { categories, load } = useAppSelector((state) => state.admin);
 	const [loading, setLoading] = useState(false);
 	const [editMode, setEditMode] = useState(false);
 	const [target, setTarget] = useState<number | null>(null);
@@ -26,8 +26,8 @@ const AdminCategories: React.FC = () => {
 
 	const dispatch = useAppDispatch();
 	useEffect(() => {
-		 dispatch(fetchCategories())
-	}, [dispatch]);
+		load === true ? dispatch(fetchCategories()) : dispatch(fetchCategories());
+	}, [dispatch, load]);
 
 	function cancelEdit() {
 		if (selectedCategory) setSelectedCategory(undefined);
@@ -38,6 +38,7 @@ const AdminCategories: React.FC = () => {
 		setLoading(true);
 		setTarget(id);
 		await agent.Admin.deleteCategory(id)
+			.then(() => dispatch(setCateLoad()))
 			.catch((error) => console.log(error))
 			.finally(() => setLoading(false));
 	};
