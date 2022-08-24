@@ -133,6 +133,9 @@ namespace API.Data.Migrations
                     b.Property<long>("DeliveryFee")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("DeliveryStatus")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("timestamp without time zone");
 
@@ -245,14 +248,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "7e7e9c44-9fcd-43b2-95ce-c200d48c112a",
+                            ConcurrencyStamp = "fa1aab61-b244-4059-9d39-5dc47908f91d",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "e98a3f8c-b05b-45a2-8077-edbd0b38bd9a",
+                            ConcurrencyStamp = "926d8fe8-2916-479f-894d-37a5cd976aea",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

@@ -115,7 +115,8 @@ const Account = {
 const Orders = {
     list: () => requests.get('orders'),
     fetch: (id: number) => requests.get(`orders/${id}`),
-    create: (values: any) => requests.post('orders', values)
+    create: (values: any) => requests.post('orders', values),
+    statusDelivery: (values: any) => requests.post('orders/delivery-status', values)
 }
 
 const Payments = {

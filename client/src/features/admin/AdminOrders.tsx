@@ -6,28 +6,51 @@ import {
 	TableRow,
 	TableCell,
 	TableBody,
-	Button,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import agent from "../../app/api/agent";
 import { IOrder } from "../../app/interfaces/IOrder";
-import Loading from "../../app/layout/Loading";
+// import Loading from "../../app/layout/Loading";
 import { currencyFormat } from "../../app/utilities/util";
 import OrderDetailed from "../orders/OrderDetailed";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import { TbGift, TbHome2 } from "react-icons/tb";
+import { RiTruckLine } from "react-icons/ri";
+
+const style = {
+	position: "absolute" as "absolute",
+	top: "50%",
+	left: "50%",
+	transform: "translate(-50%, -50%)",
+	width: 400,
+	bgcolor: "background.paper",
+	border: "2px solid #000",
+	boxShadow: 24,
+	p: 4,
+};
 
 const AdminOrders: React.FC = () => {
 	const [orders, setOrders] = useState<IOrder[] | null>(null);
-	const [loading, setLoading] = useState(true);
+	// const [loading, setLoading] = useState(true);
 	const [selectedOrderNumber, setSelectedOrderNumber] = useState(0);
+	const [selectedDeli, setSelectedDeli] = useState<number>(0);
+	const { register, handleSubmit } = useForm();
+	const [open, setOpen] = useState(false);
+	const handleOpen = () => setOpen(true);
+	const handleClose = () => setOpen(false);
 
 	useEffect(() => {
-		agent.Admin.getOrder()
-			.then((orders) => setOrders(orders))
-			.catch((error) => console.log(error))
-			.finally(() => setLoading(false));
-	}, []);
+		if (!open)
+			agent.Admin.getOrder()
+				.then((orders) => setOrders(orders))
+				.catch((error) => console.log(error));
+		// .finally(() => setLoading(false));
+	}, [open]);
 
-	if (loading) return <Loading message="Loading orders" />;
+	// if (loading) return <Loading message="Loading orders" />;
 
 	if (selectedOrderNumber > 0)
 		return (
@@ -36,6 +59,14 @@ const AdminOrders: React.FC = () => {
 				setSelectedOrder={setSelectedOrderNumber}
 			/>
 		);
+
+	const onSubmit = (data: any) => {
+		data = { id: selectedDeli, ...data };
+		agent.Orders.statusDelivery(data).then(() => {
+			setSelectedDeli(0);
+			handleClose();
+		});
+	};
 
 	return (
 		<div className="mt-5 p-5">
@@ -47,15 +78,21 @@ const AdminOrders: React.FC = () => {
 							<TableRow>
 								<TableCell>Order number</TableCell>
 								<TableCell>Fullname</TableCell>
-								<TableCell>City</TableCell>
-								<TableCell>Address</TableCell>
-								<TableCell align="center">Total</TableCell>
+								{/* <TableCell>City</TableCell>
+								<TableCell>Address</TableCell> */}
+								<TableCell align="center">
+									Total
+								</TableCell>
 								<TableCell align="center">
 									Order Date
 								</TableCell>
 								<TableCell align="center">
 									Order Status
 								</TableCell>
+								<TableCell align="center">
+									Delivery Status
+								</TableCell>
+								<TableCell align="center"></TableCell>
 								<TableCell align="center"></TableCell>
 							</TableRow>
 						</TableHead>
@@ -84,8 +121,12 @@ const AdminOrders: React.FC = () => {
 												.fullName
 										}
 									</TableCell>
-									<TableCell>
-										{order.shippingAddress.city}
+									{/* <TableCell>
+										{
+											order
+												.shippingAddress
+												.city
+										}
 									</TableCell>
 									<TableCell>
 										{
@@ -93,7 +134,7 @@ const AdminOrders: React.FC = () => {
 												.shippingAddress
 												.address1
 										}
-									</TableCell>
+									</TableCell> */}
 									<TableCell align="center">
 										{currencyFormat(
 											order.total
@@ -110,20 +151,113 @@ const AdminOrders: React.FC = () => {
 										{order.orderStatus}
 									</TableCell>
 									<TableCell align="center">
-										<Button
+										{order.deliveryStatus ===
+										"OrderPlaced" ? (
+											<div className="flex justify-center items-center">
+												<TbGift
+													size={
+														25
+													}
+													className="mr-3 text-indigo-600"
+												/>{" "}
+												Order
+												Placed
+											</div>
+										) : order.deliveryStatus ===
+										  "OnTheWay" ? (
+											<div className="flex justify-center items-center">
+												<RiTruckLine
+													size={
+														25
+													}
+													className="mr-3 fill-red-600"
+												/>{" "}
+												On
+												The
+												Way
+											</div>
+										) : order.deliveryStatus ===
+										  "ProductDelivered" ? (
+											<div className="flex justify-center items-center">
+												<TbHome2
+													size={
+														25
+													}
+													className="mr-3 text-green-600"
+												/>{" "}
+												Delivered
+											</div>
+										) : (
+											"Order Placed"
+										)}
+									</TableCell>
+									<TableCell align="center">
+										<button
+											className="bg-yellow-400 border border-yellow-400 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-yellow-400 duration-200 mr-3"
+											onClick={() => {
+												handleOpen();
+												setSelectedDeli(
+													order.id
+												);
+											}}>
+											Delivery
+										</button>
+										<button
+											className="c-btn"
 											onClick={() =>
 												setSelectedOrderNumber(
 													order.id
 												)
 											}>
 											View
-										</Button>
+										</button>
 									</TableCell>
 								</TableRow>
 							))}
 						</TableBody>
 					</Table>
 				</TableContainer>
+				<Modal
+					open={open}
+					onClose={handleClose}
+					aria-labelledby="modal-modal-title"
+					aria-describedby="modal-modal-description">
+					<Box sx={style}>
+						<Typography
+							id="modal-modal-title"
+							variant="h6"
+							component="h2">
+							Delivery Status
+						</Typography>
+						<div id="modal-modal-description">
+							<form
+								onSubmit={handleSubmit(onSubmit)}
+								className="flex flex-col ">
+								<select
+									className="p-4 focus:outline-hidden"
+									{...register(
+										"deliveryStatus"
+									)}
+									name="deliveryStatus">
+									<option value="OrderPlaced">
+										Order Placed
+									</option>
+									<option value="OnTheWay">
+										OnTheWay
+									</option>
+									<option value="ProductDelivered">
+										Product Delivered
+									</option>
+								</select>
+								<input
+									className="c-btn mt-5 cursor-pointer"
+									type="submit"
+									value="Submit"
+								/>
+							</form>
+						</div>
+					</Box>
+				</Modal>
 			</div>
 		</div>
 	);

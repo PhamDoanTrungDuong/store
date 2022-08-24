@@ -25,5 +25,6 @@ export interface IOrder {
   subtotal: number;
   deliveryFee: number;
   orderStatus: string;
+  deliveryStatus: string;
   total: number;
 }

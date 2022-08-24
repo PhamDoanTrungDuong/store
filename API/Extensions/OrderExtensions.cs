@@ -19,6 +19,7 @@ namespace API.Extensions
                     ShippingAddress = order.ShippingAddress,
                     Subtotal = order.Subtotal,
                     OrderStatus = order.OrderStatus.ToString(),
+                    DeliveryStatus = order.DeliveryStatus.ToString(),
                     Total = order.GetTotal(),
                     OrderItems = order.OrderItems.Select(item => new OrderItemDto
                     {

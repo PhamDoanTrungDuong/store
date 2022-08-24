@@ -40,6 +40,7 @@ namespace API.Controllers
                   return Ok(users);
             }
 
+            [Authorize(Policy = "RequireAdminRole")]
             [HttpPost("edit-roles/{username}")]
             public async Task<ActionResult> EditRoles(string username, [FromQuery] string roles)
             {
@@ -65,11 +66,13 @@ namespace API.Controllers
 
                   return Ok(await _userManager.GetRolesAsync(user));
             }
-
+            
+            [Authorize(Policy = "RequireAdminRole")]
             [HttpGet("admin-get-orders")]
             public async Task<ActionResult<List<OrderDto>>> GetOrders()
             {
                   return await _context.Orders
+                      .OrderByDescending(x => x.Id)
                       .ProjectOrderToOrderDto()
                       .ToListAsync();
             }

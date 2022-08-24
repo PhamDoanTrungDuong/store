@@ -32,6 +32,15 @@ namespace API.Controllers
                     .ToListAsync();
             }
 
+            // [HttpGet("get-all-orders")]
+            // public async Task<ActionResult<List<OrderDto>>> GetAllOrders()
+            // {
+            //     return await _context.Orders
+            //         .OrderByDescending(x => x.Id)
+            //         .ProjectOrderToOrderDto()
+            //         .ToListAsync();
+            // }
+
             [Authorize]
             [HttpGet("get-total-order")]
             public async Task<long> GetTotalOrder()
@@ -62,6 +71,24 @@ namespace API.Controllers
                     .ProjectOrderToOrderDto()
                     .Where(x => x.BuyerId == User.Identity.Name && x.Id == id)
                     .FirstOrDefaultAsync();
+            }
+
+            [Authorize(Roles = "Admin")]
+            [HttpPost("delivery-status")]
+            public async Task<ActionResult> ChangeDeliveryStatus(DeliveryDto deliveryDto)
+            {
+                    var order = await _context.Orders.FirstOrDefaultAsync(x =>
+                              x.Id == deliveryDto.Id);
+
+                    if(deliveryDto.DeliveryStatus == "OrderPlaced") order.DeliveryStatus = DeliveryStatus.OrderPlaced;
+
+                    if(deliveryDto.DeliveryStatus == "OnTheWay") order.DeliveryStatus = DeliveryStatus.OnTheWay;
+
+                    if(deliveryDto.DeliveryStatus == "ProductDelivered") order.DeliveryStatus = DeliveryStatus.ProductDelivered;
+
+                    await _context.SaveChangesAsync();
+
+                    return new EmptyResult();
             }
 
             [HttpPost]

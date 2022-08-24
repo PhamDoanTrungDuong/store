@@ -21,6 +21,13 @@ namespace API.Data
 
           protected override void OnModelCreating(ModelBuilder builder)
           {
+               foreach (var entityType in builder.Model.GetEntityTypes ()) {
+                    var tableName = entityType.GetTableName ();
+                    if (tableName.StartsWith ("AspNet")) {
+                         entityType.SetTableName (tableName.Substring (6));
+                    }
+               }
+
                base.OnModelCreating(builder);
                // USER - ROLE
                builder.Entity<User>()

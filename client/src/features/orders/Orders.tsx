@@ -9,6 +9,9 @@ import { fetchMemberTotal } from "./orderSlice";
 import { BiPurchaseTag } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { IoMdArrowDropup } from "react-icons/io";
+import { TbGift, TbHome2 } from "react-icons/tb";
+import { RiTruckLine } from "react-icons/ri";
+
 
 const Order: React.FC = () => {
 	const [orders, setOrders] = useState<IOrder[] | null>(null);
@@ -69,6 +72,9 @@ const Order: React.FC = () => {
 						<td className="px-4 py-3" align="center">
 							Order Status
 						</td>
+						<td className="px-4 py-3" align="center">
+							Delivery Status
+						</td>
 						<td className="px-4 py-3" align="center"></td>
 					</tr>
 				</thead>
@@ -83,6 +89,19 @@ const Order: React.FC = () => {
 								{order.orderDate.split("T")[0]}
 							</td>
 							<td align="center">{order.orderStatus}</td>
+							<td align="center">{order.deliveryStatus === 'OrderPlaced' ? (
+								<div className='flex justify-center items-center'>
+									<TbGift size={25} className='mr-3 text-indigo-600' /> Order Placed
+								</div>
+							) : order.deliveryStatus === "OnTheWay" ? (
+								<div className='flex justify-center items-center'>
+									<RiTruckLine size={25} className='mr-3 fill-red-600' /> On The Way
+								</div>
+							) : order.deliveryStatus === "ProductDelivered" ? (
+								<div className='flex justify-center items-center'>
+									<TbHome2 size={25} className='mr-3 text-green-600' /> Delivered
+								</div>
+							) : "Order Placed"}</td>
 							<td align="center">
 								<button
 									className="c-btn"
