@@ -5,8 +5,9 @@ export interface IUser {
       token: string;
       basket?: IBasket;
       roles?: string[];
-      username: string;
+      userName: string;
       phone?: string;
+      pictureUrl?: string;
 }
 
 export interface MemberParams {

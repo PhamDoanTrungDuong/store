@@ -46,40 +46,6 @@ const Header: React.FC = () => {
 							)
 						);
 					})}
-					{/* {user?.roles?.includes("Admin") && (
-						<>
-							<Link
-								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
-								to="/inventory">
-								Inventory
-							</Link>
-							<Link
-								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
-								to="/admin-categories">
-								Categories
-							</Link>
-							<Link
-								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
-								to="/admin-members">
-								Members
-							</Link>
-							<Link
-								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
-								to="/role">
-								Role
-							</Link>
-							<Link
-								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
-								to="/admin-comments">
-								Comments
-							</Link>
-							<Link
-								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
-								to="/admin-orders">
-								Orders
-							</Link>
-						</>
-					)} */}
 				</>
 			</div>
 
@@ -100,7 +66,7 @@ const Header: React.FC = () => {
 						</IconButton>
 					</div>
 				)}
-				<div className="hidden md:block">
+				<div className="hidden md:flex">
 					{user ? (
 						<SignedInMenu />
 					) : (
@@ -126,6 +92,7 @@ const Header: React.FC = () => {
 					)}
 				</div>
 			</div>
+			{/* Mobile menu */}
 			<div
 				className={
 					nav
@@ -172,40 +139,6 @@ const Header: React.FC = () => {
 							</li>
 						</ul>
 					)}
-					{/* {user?.roles?.includes("Admin") && (
-						<>
-							<Link
-								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
-								to="/inventory">
-								Inventory
-							</Link>
-							<Link
-								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
-								to="/admin-categories">
-								Categories
-							</Link>
-							<Link
-								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
-								to="/role">
-								Role
-							</Link>
-							<Link
-								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
-								to="/admin-orders">
-								Orders
-							</Link>
-							<Link
-								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
-								to="/admin-comments">
-								Comments
-							</Link>
-							<Link
-								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
-								to="/admin-members">
-								Members
-							</Link>
-						</>
-					)} */}
 				</ul>
 			</div>
 		</div>

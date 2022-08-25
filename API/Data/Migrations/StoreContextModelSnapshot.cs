@@ -242,20 +242,20 @@ namespace API.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles");
+                    b.ToTable("Roles");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "fa1aab61-b244-4059-9d39-5dc47908f91d",
+                            ConcurrencyStamp = "ba27a4e7-37ee-4ce3-8109-d52e5dff85d0",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "926d8fe8-2916-479f-894d-37a5cd976aea",
+                            ConcurrencyStamp = "a8c39599-3682-4de4-8b54-aeea4e63265c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -305,6 +305,12 @@ namespace API.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("PictureUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PublicId")
+                        .HasColumnType("text");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
@@ -324,7 +330,7 @@ namespace API.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.ToTable("AspNetUsers");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("API.Entities.UserAddress", b =>
@@ -385,7 +391,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles");
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -408,7 +414,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims");
+                    b.ToTable("RoleClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
@@ -431,7 +437,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims");
+                    b.ToTable("UserClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
@@ -452,7 +458,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins");
+                    b.ToTable("UserLogins");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -471,7 +477,7 @@ namespace API.Data.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens");
+                    b.ToTable("UserTokens");
                 });
 
             modelBuilder.Entity("API.Entities.BasketItem", b =>

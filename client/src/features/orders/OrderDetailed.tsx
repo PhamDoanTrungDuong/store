@@ -20,7 +20,7 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder }) => {
 			<div className="flex justify-between items-center mb-5">
 				<div>
 					<h4 className="hidden md:block text-2xl font-bold uppercase">
-						ORDER #{order.id} - {order.orderStatus}
+						ORDER #{order.id} - {order.orderStatus === "PaymentReceived" ? "PR" : order.orderStatus}
 					</h4>
 				</div>
 				<div className="w-[55%]">

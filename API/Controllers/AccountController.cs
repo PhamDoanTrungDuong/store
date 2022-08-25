@@ -20,8 +20,10 @@ namespace API.Controllers
             private readonly TokenService _tokenService;
             private readonly StoreContext _context;
             private readonly IMapper _mapper;
-            public AccountController(UserManager<User> userManager, TokenService tokenService, StoreContext context, IMapper mapper)
+            private readonly ImageService _imageService;
+            public AccountController(UserManager<User> userManager, TokenService tokenService, StoreContext context, IMapper mapper, ImageService imageService)
             {
+                  _imageService = imageService;
                   _mapper = mapper;
                   _context = context;
                   _tokenService = tokenService;
@@ -34,7 +36,7 @@ namespace API.Controllers
                   var user = await _userManager.FindByNameAsync(loginDto.UserName);
 
                   if (user == null || !await _userManager.CheckPasswordAsync(user, loginDto.Password))
-                        return Unauthorized(new ProblemDetails{ Title = "Username or Password incorrect"});
+                        return Unauthorized(new ProblemDetails { Title = "Username or Password incorrect" });
 
 
                   var userBasket = await RetrieveBasket(loginDto.UserName);
@@ -51,6 +53,9 @@ namespace API.Controllers
                   {
                         Email = user.Email,
                         Token = await _tokenService.GenerateToken(user),
+                        Username = user.UserName,
+                        Phone = user.PhoneNumber,
+                        PictureUrl = user.PictureUrl,
                         Basket = anonBasket != null ? anonBasket.MapBasketToDto() : userBasket?.MapBasketToDto()
                   };
             }
@@ -94,6 +99,7 @@ namespace API.Controllers
                         Email = user.Email,
                         Username = user.UserName,
                         Phone = user.PhoneNumber,
+                        PictureUrl = user.PictureUrl,
                         Token = await _tokenService.GenerateToken(user),
                         Basket = userBasket?.MapBasketToDto(),
                         Address = address?.MapAddressToDto()
@@ -126,10 +132,21 @@ namespace API.Controllers
 
                   if (userAddress == null && user == null) return NotFound();
 
+                  if (memberUpdateInfoDto.File != null)
+                  {
+                        var imageResult = await _imageService.AddImageAsync(memberUpdateInfoDto.File);
+
+                        if (imageResult.Error != null)
+                              return BadRequest(new ProblemDetails { Title = imageResult.Error.Message });
+
+                        user.PictureUrl = imageResult.SecureUrl.ToString();
+                        user.PublicId = imageResult.PublicId;
+                  }
+
                   user.PhoneNumber = memberUpdateInfoDto.Phone;
                   user.Email = memberUpdateInfoDto.Email;
 
-                  var re =  await _userManager.UpdateAsync(user);
+                  var re = await _userManager.UpdateAsync(user);
 
                   _mapper.Map(memberUpdateDto, userAddress);
 
@@ -137,7 +154,7 @@ namespace API.Controllers
 
                   if (re != null || result) return Ok(re);
 
-                  return BadRequest(new ProblemDetails{Title = "Problem updating user"});
+                  return BadRequest(new ProblemDetails { Title = "Problem updating user" });
             }
 
             [Authorize(Roles = "Admin")]
@@ -162,16 +179,19 @@ namespace API.Controllers
             {
                   var user = await _userManager.FindByIdAsync(id);
 
-                  if(user != null)
+                  if (user != null)
                   {
                         var result = await _userManager.DeleteAsync(user);
-                        if(result.Succeeded)
+                        if (result.Succeeded)
                         {
                               return Ok(true);
-                        }else{
-                              return BadRequest(new ProblemDetails{Title = "Failed to delete user"});
                         }
-                  }else
+                        else
+                        {
+                              return BadRequest(new ProblemDetails { Title = "Failed to delete user" });
+                        }
+                  }
+                  else
                         return NotFound("User Not Found");
             }
 
@@ -179,10 +199,10 @@ namespace API.Controllers
             [HttpGet("get-member-count")]
             public async Task<int> GetMemberCount()
             {
-                var subtotal = await _context.Users
-                    .ToListAsync();
+                  var subtotal = await _context.Users
+                      .ToListAsync();
 
-                return subtotal.Count();
+                  return subtotal.Count();
             }
 
             private async Task<Basket> RetrieveBasket(string buyerId)

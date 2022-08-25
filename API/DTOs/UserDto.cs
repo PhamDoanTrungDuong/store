@@ -10,5 +10,6 @@ namespace API.DTOs
         public string Phone { get; set; }
         public BasketDto Basket { get; set; }
         public AddressDto Address { get; set; }
+        public string PictureUrl { get; set; }
     }
 }

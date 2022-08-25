@@ -21,6 +21,8 @@ namespace API.Data
 
           protected override void OnModelCreating(ModelBuilder builder)
           {
+               base.OnModelCreating(builder);
+
                foreach (var entityType in builder.Model.GetEntityTypes ()) {
                     var tableName = entityType.GetTableName ();
                     if (tableName.StartsWith ("AspNet")) {
@@ -28,7 +30,6 @@ namespace API.Data
                     }
                }
 
-               base.OnModelCreating(builder);
                // USER - ROLE
                builder.Entity<User>()
                     .HasOne(a => a.Address)

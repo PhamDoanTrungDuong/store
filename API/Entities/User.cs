@@ -6,6 +6,8 @@ namespace API.Entities
     public class User : IdentityUser<int>
     {
         public UserAddress Address { get; set; }
+        public string PictureUrl { get; set; }
+        public string PublicId { get; set; }
 
         public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<Comment> CommentSent { get; set; }

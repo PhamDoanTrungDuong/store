@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react'
-import { FieldValues, FormProvider, useForm } from 'react-hook-form';
-import Swal from 'sweetalert2';
-import agent from '../../app/api/agent';
-import ProfileForm from './ProfileForm';
+import React, { useEffect } from "react";
+import { FieldValues, FormProvider, useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+import agent from "../../app/api/agent";
+import { useAppSelector } from "../../app/store/configureStore";
+import ProfileForm from "./ProfileForm";
 
 const Profile: React.FC = () => {
+	const { user } = useAppSelector((state) => state.account);
 
-  const methods = useForm({
+	const methods = useForm({
 		mode: "all",
 	});
 
@@ -23,42 +25,51 @@ const Profile: React.FC = () => {
 	}, [methods]);
 
 	async function handleSubmitData(data: FieldValues) {
-            try {
-                if (data) {
-                    let response = await agent.Profile.updateProfile(data);
-			  if(response)
-			  {
-				Swal.fire({
-					icon: 'success',
-					title: 'Update Profile Successful',
-					showConfirmButton: false,
-					timer: 1500
-				    })
-			  }else{
-				Swal.fire({
-					icon: 'error',
-					title: 'Failed To Update Profile',
-					showConfirmButton: false,
-					timer: 1500
-				    })
-			  }
-                }
-            } catch (error) {
-                console.log(error)
-            }
-        }
+		try {
+			if (data) {
+				let response = await agent.Profile.updateProfile(data);
+				if (response) {
+					Swal.fire({
+						icon: "success",
+						title: "Update Profile Successful",
+						showConfirmButton: false,
+						timer: 1500,
+					});
+				} else {
+					Swal.fire({
+						icon: "error",
+						title: "Failed To Update Profile",
+						showConfirmButton: false,
+						timer: 1500,
+					});
+				}
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	}
 
-  return (
-    <div className="h-[800px] mt-5 p-5">
-	<FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(handleSubmitData)}>
-              <ProfileForm />
-		  <button type="submit" className="bg-indigo-600 border border-indigo-600 text-white px-4 p-2 w-full rounded-xl shadow-xl mt-10 hover:shadow-2xl my-2 hover:bg-transparent hover:text-indigo-600 duration-200">Save Changes</button>
-          </form>
-      </FormProvider>
+	return (
+		<div className="h-[800px] my-5 p-5">
+			<div className="">
+				<img
+					className="w-[15%] mx-auto hover:scale-105 duration-200 border border-gray-300 cursor-pointer rounded-full"
+					src={user?.pictureUrl ? user?.pictureUrl : "/images/empty-user.png"}
+					alt={user?.userName}
+				/>
+			</div>
+			<FormProvider {...methods}>
+				<form onSubmit={methods.handleSubmit(handleSubmitData)}>
+					<ProfileForm user={user}/>
+					<button
+						type="submit"
+						className="bg-indigo-600 border border-indigo-600 text-white px-4 p-2 w-full rounded-xl shadow-xl mt-10 hover:shadow-2xl my-2 hover:bg-transparent hover:text-indigo-600 duration-200">
+						Save Changes
+					</button>
+				</form>
+			</FormProvider>
+		</div>
+	);
+};
 
-    </div>
-  )
-}
-
-export default Profile
+export default Profile;

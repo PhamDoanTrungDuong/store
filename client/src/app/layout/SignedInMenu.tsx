@@ -9,44 +9,63 @@ import { clearBasket } from "../../features/basket/basketSlice";
 import { NavLink } from "react-router-dom";
 
 const SignedInMenu: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.account);
-  const [anchorEl, setAnchorEl] = useState<null>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: any) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+	const dispatch = useAppDispatch();
+	const { user } = useAppSelector((state) => state.account);
+	const [anchorEl, setAnchorEl] = useState<null>(null);
+	const open = Boolean(anchorEl);
+	const handleClick = (event: any) => {
+		setAnchorEl(event.currentTarget);
+	};
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
 
-  return (
-    <>
-      <Button onClick={handleClick} color="inherit" sx={{ typography: "h6" }}>
-        <span className="text-zinc-900 text-base lowercase underline underline-offset-8 transition-all">
-          {user?.email}
-        </span>
-      </Button>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        {!user?.roles?.includes("Admin") &&
-          <span>
-              <MenuItem component={NavLink} to="/profile">Profile</MenuItem>
-              <MenuItem component={NavLink} to="/orders">
-                My orders
-              </MenuItem>
-          </span>
-        }
-        <MenuItem
-          onClick={() => {
-            dispatch(signOut());
-            dispatch(clearBasket());
-          }}
-        >
-          Logout
-        </MenuItem>
-      </Menu>
-    </>
-  );
+	return (
+		<div className="flex items-center max-w-[200px]">
+			{user?.roles?.includes("Admin") ? (
+				<img
+					className="w-[20%] hover:scale-105 duration-200 mx-2 border border-gray-300 cursor-pointer rounded-full"
+					src="/images/admin.jpg"
+					alt={user?.userName}
+				/>
+			) : (
+				<img
+					className="w-[20%] hover:scale-105 duration-200 mx-2 border border-gray-300 cursor-pointer rounded-full"
+					src={
+						user?.pictureUrl
+							? user?.pictureUrl
+							: "/images/empty-user.png"
+					}
+					alt={user?.userName}
+				/>
+			)}
+
+			<Button onClick={handleClick} color="inherit" sx={{ typography: "h6" }}>
+				<span className="text-zinc-900 text-base lowercase underline underline-offset-8 transition-all">
+					{user?.email}
+				</span>
+			</Button>
+			<Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+				{!user?.roles?.includes("Admin") && (
+					<span>
+						<MenuItem component={NavLink} to="/profile">
+							Profile
+						</MenuItem>
+						<MenuItem component={NavLink} to="/orders">
+							My orders
+						</MenuItem>
+					</span>
+				)}
+				<MenuItem
+					onClick={() => {
+						dispatch(signOut());
+						dispatch(clearBasket());
+					}}>
+					Logout
+				</MenuItem>
+			</Menu>
+		</div>
+	);
 };
 
 export default SignedInMenu;

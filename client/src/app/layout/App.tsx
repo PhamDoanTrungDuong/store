@@ -39,12 +39,13 @@ const App: React.FC = () => {
 
 	const initApp = useCallback(async () => {
 		try {
-			await dispatch(fetchCurrentUser());
+			if(loading)
+				await dispatch(fetchCurrentUser());
 			await dispatch(fetchBasketAsync());
 		} catch (error) {
 			console.log(error);
 		}
-	}, [dispatch]);
+	}, [dispatch, loading]);
 
 	useEffect(() => {
 		initApp().then(() => setLoading(false));
@@ -133,6 +134,14 @@ const App: React.FC = () => {
 									<PrivateRoute
 										roles={["Admin"]}>
 										<AdminCategories />
+									</PrivateRoute>
+								}
+							/>
+							<Route
+								path="/profile"
+								element={
+									<PrivateRoute>
+										<Profile />
 									</PrivateRoute>
 								}
 							/>

@@ -105,9 +105,28 @@ const AdminMembers: React.FC = () => {
 									{member.id}
 								</TableCell>
 								<TableCell align="left">
-									<span>
-										{member.userName}
-									</span>
+								<Box
+											display="flex"
+											alignItems="center">
+											<img
+												src={
+													member.pictureUrl
+												}
+												alt={
+													member.userName
+												}
+												style={{
+													height: 50,
+													marginRight: 20,
+												}}
+												className='rounded-full'
+											/>
+											<span>
+												{
+													member.userName
+												}
+											</span>
+										</Box>
 								</TableCell>
 								<TableCell align="left">
 									<span>
