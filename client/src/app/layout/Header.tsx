@@ -23,23 +23,11 @@ const Header: React.FC = () => {
 	return (
 		<div className="rounded-div flex items-center justify-between h-20 font-bold">
 			<div>
-				{!user?.roles?.includes("Admin") && (
 					<Link to="/">
 						<h1 className="text-3xl font-rubik italic font-extrabold text-indigo-600">
 							STORE.
 						</h1>
 					</Link>
-				)}
-				{user?.roles?.includes("Admin") && (
-					<Link to="/">
-						<h1 className="text-3xl font-rubik italic font-extrabold text-indigo-600">
-							STORE.
-							<span className="text-sm italic text-red-600">
-								administration
-							</span>
-						</h1>
-					</Link>
-				)}
 			</div>
 
 			<div className="md:flex hidden items-center">
@@ -58,7 +46,7 @@ const Header: React.FC = () => {
 							)
 						);
 					})}
-					{user?.roles?.includes("Admin") && (
+					{/* {user?.roles?.includes("Admin") && (
 						<>
 							<Link
 								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
@@ -91,7 +79,7 @@ const Header: React.FC = () => {
 								Orders
 							</Link>
 						</>
-					)}
+					)} */}
 				</>
 			</div>
 
@@ -184,7 +172,7 @@ const Header: React.FC = () => {
 							</li>
 						</ul>
 					)}
-					{user?.roles?.includes("Admin") && (
+					{/* {user?.roles?.includes("Admin") && (
 						<>
 							<Link
 								className="text-primary p-4 hover:text-indigo-600 hover:scale-125 duration-200 hover:text-base"
@@ -217,7 +205,7 @@ const Header: React.FC = () => {
 								Members
 							</Link>
 						</>
-					)}
+					)} */}
 				</ul>
 			</div>
 		</div>

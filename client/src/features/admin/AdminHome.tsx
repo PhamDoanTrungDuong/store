@@ -13,6 +13,7 @@ const AdminHome: React.FC = () => {
 	const { allTotal } = useAppSelector((state) => state.order);
 	const { count } = useAppSelector((state) => state.account);
 	const { productCount } = useAppSelector((state) => state.catalog);
+	
 
 	useEffect(() => {
 		dispatch(fetchAllTotal());
@@ -21,7 +22,7 @@ const AdminHome: React.FC = () => {
 	}, [dispatch]);
 
 	return (
-		<div className="rounded-div h-screen mt-5 p-5">
+		<>
 			<div className="text-2xl font-bold my-4">Statistics</div>
 			<div className="flex gap-4">
 				<div className="text-white bg-gradient-to-r from-indigo-600 to-indigo-400 px-8 py-6 rounded-[30px] w-[30%] mb-4">
@@ -36,14 +37,15 @@ const AdminHome: React.FC = () => {
 							<p>{currencyFormat(allTotal)}</p>
 						</div>
 						<div className="flex font-medium justify-between items-center mt-1">
-							<h1 className="text-xl font-bold">Total Sale</h1>
+							<h1 className="text-xl font-bold">
+								Total Sale
+							</h1>
 							<button className="py-2 px-4 hover:shadow-indigo-900 duration-300 bg-indigo-500 shadow-md rounded-full flex">
 								+2,36% <IoMdArrowDropup size={20} />
 							</button>
 						</div>
 					</div>
 				</div>
-
 
 				<div className="text-white bg-gradient-to-r from-green-600 to-green-400 px-8 py-6 rounded-[30px] w-[30%] mb-4">
 					<div className="flex justify-between mb-3">
@@ -57,7 +59,9 @@ const AdminHome: React.FC = () => {
 							<p>+{count}</p>
 						</div>
 						<div className="flex font-medium justify-between items-center mt-1">
-							<h1 className="text-xl font-bold">Total Users</h1>
+							<h1 className="text-xl font-bold">
+								Total Users
+							</h1>
 							<button className="py-2 px-4 hover:shadow-green-900 duration-300 bg-green-500 shadow-md rounded-full flex">
 								+4,23% <IoMdArrowDropup size={20} />
 							</button>
@@ -77,7 +81,9 @@ const AdminHome: React.FC = () => {
 							<p>{productCount}</p>
 						</div>
 						<div className="flex font-medium justify-between items-center mt-1">
-							<h1 className="text-xl font-bold">Total Product</h1>
+							<h1 className="text-xl font-bold">
+								Total Product
+							</h1>
 							<button className="py-2 px-4 hover:shadow-cyan-900 duration-300 bg-cyan-500 shadow-md rounded-full flex">
 								+2 <IoMdArrowDropup size={20} />
 							</button>
@@ -85,7 +91,7 @@ const AdminHome: React.FC = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 

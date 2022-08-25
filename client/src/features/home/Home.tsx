@@ -4,7 +4,6 @@ import Swal from "sweetalert2";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import About from "../about/About";
 import { setStateUser } from "../account/accountSlice";
-import AdminHome from "../admin/AdminHome";
 import Advertise from "../Advertise/Advertise";
 import Contact from "../contact/Contact";
 
@@ -42,63 +41,58 @@ const Home: React.FC = () => {
 		};
 	}, [dispatch, status]);
 
-	const { user } = useAppSelector((state) => state.account);
 	return (
 		<div className="max-w-[1140px] mx-auto mt-2">
-			{user?.roles?.includes("Admin") ? (
-				<AdminHome />
-			) : (
-				<div>
-					<Slider {...settings}>
-						<div>
-							<img
-								src="/images/banner1.jpg"
-								alt="hero"
-								style={{
-									display: "block",
-									width: "100%",
-									maxHeight: 500,
-								}}
-							/>
-						</div>
-						<div>
-							<img
-								src="/images/banner2.jpg"
-								alt="hero"
-								style={{
-									display: "block",
-									width: "100%",
-									maxHeight: 500,
-								}}
-							/>
-						</div>
-						<div>
-							<img
-								src="/images/banner3.jpg"
-								alt="hero"
-								style={{
-									display: "block",
-									width: "100%",
-									maxHeight: 500,
-								}}
-							/>
-						</div>
-					</Slider>
-					<div className="mt-3 text-center p-4">
-						{/* About */}
-						<About />
-						<hr />
-
-						{/* Image */}
-						<Advertise />
-						<hr />
-
-						{/* Contact */}
-						<Contact />
-						<hr />
+			<div>
+				<Slider {...settings}>
+					<div>
+						<img
+							src="/images/banner1.jpg"
+							alt="hero"
+							style={{
+								display: "block",
+								width: "100%",
+								maxHeight: 500,
+							}}
+						/>
 					</div>
+					<div>
+						<img
+							src="/images/banner2.jpg"
+							alt="hero"
+							style={{
+								display: "block",
+								width: "100%",
+								maxHeight: 500,
+							}}
+						/>
+					</div>
+					<div>
+						<img
+							src="/images/banner3.jpg"
+							alt="hero"
+							style={{
+								display: "block",
+								width: "100%",
+								maxHeight: 500,
+							}}
+						/>
+					</div>
+				</Slider>
+				<div className="mt-3 text-center p-4">
+					{/* About */}
+					<About />
+					<hr />
+
+					{/* Image */}
+					<Advertise />
+					<hr />
+
+					{/* Contact */}
+					<Contact />
+					<hr />
 				</div>
-			)}
+			</div>
 		</div>
 	);
 };
