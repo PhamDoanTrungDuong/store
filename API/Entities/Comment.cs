@@ -8,6 +8,7 @@ namespace API.Entities
         public int userId { get; set; }
         public string Username { get; set; }
         public User User { get; set; }
+        public string PictureUrl { get; set; }
         public int productId { get; set; }
         public string productName { get; set; }
         public Product Product { get; set; }

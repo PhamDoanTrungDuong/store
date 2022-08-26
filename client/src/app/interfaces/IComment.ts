@@ -1,5 +1,6 @@
 export interface IComment {
-      id: number
+      id: number;
+      pictureUrl?: string;
       userId: number
       username: string
       productId: number

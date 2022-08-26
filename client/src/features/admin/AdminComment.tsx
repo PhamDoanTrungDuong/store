@@ -33,20 +33,28 @@ const AdminComment: React.FC = () => {
 						<TableHead>
 							<TableRow>
 								<TableCell>#</TableCell>
-								<TableCell align="left">Username</TableCell>
+								<TableCell align="left">
+									Username
+								</TableCell>
 								<TableCell align="left">
 									Product Name
 								</TableCell>
-								<TableCell align="center" size="small">
+								<TableCell
+									align="center"
+									size="small">
 									Content
 								</TableCell>
-								<TableCell align="center" size="small">
+								<TableCell
+									align="center"
+									size="small">
 									Rating
 								</TableCell>
 								<TableCell align="center">
 									Timestampe
 								</TableCell>
-								<TableCell align="left">Delete</TableCell>
+								<TableCell align="left">
+									Delete
+								</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
@@ -57,11 +65,28 @@ const AdminComment: React.FC = () => {
 											{item.id}
 										</TableCell>
 										<TableCell>
-											<span>
-												{
-													item.username
-												}
-											</span>
+											<div className="flex text-lg font-bold">
+												<img
+													src={
+														item?.pictureUrl
+															? item?.pictureUrl
+															: "/images/empty-user.png"
+													}
+													alt={
+														item.username
+													}
+													style={{
+														height: 50,
+														marginRight: 20,
+													}}
+													className="rounded-full"
+												/>
+												<span className="flex items-center capitalize">
+													{
+														item.username
+													}
+												</span>
+											</div>
 										</TableCell>
 										<TableCell>
 											<span>

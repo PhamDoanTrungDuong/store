@@ -12,5 +12,6 @@ namespace API.DTOs
         public string Content { get; set; }
         public int Rate { get; set; }
         public DateTime CommentSent { get; set; }
+        public string PictureUrl { get; set; }
     }
 }

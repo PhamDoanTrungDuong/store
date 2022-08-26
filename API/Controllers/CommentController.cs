@@ -47,6 +47,7 @@ namespace API.Controllers
                         productName = product.Name,
                         Content = createCommentDto.Content,
                         Rate = createCommentDto.Rate,
+                        PictureUrl = user.PictureUrl
                   };
 
                   _commentService.AddComment(comment);

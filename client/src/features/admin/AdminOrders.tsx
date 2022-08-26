@@ -115,11 +115,13 @@ const AdminOrders: React.FC = () => {
 										# {order.id}
 									</TableCell>
 									<TableCell>
-										{
-											order
-												.shippingAddress
-												.fullName
-										}
+										<span className="font-bold text-lg capitalize">
+											{
+												order
+													.shippingAddress
+													.fullName
+											}
+										</span>
 									</TableCell>
 									{/* <TableCell>
 										{

@@ -29,7 +29,7 @@ const AdminRole: React.FC = () => {
 
 	useEffect(() => {
 		initApp();
-	});
+	}, [initApp]);
 
 	function handleSelectUser(user: IUsers) {
 		setSelectedUser(user);
@@ -48,58 +48,83 @@ const AdminRole: React.FC = () => {
 			<h4 className="text-2xl font-bold my-4">Roles</h4>
 			<div className="h-[600px] overflow-y-scroll">
 				<TableContainer component={Paper}>
-				<Table>
-					<TableHead>
-						<TableRow>
-							<TableCell>#</TableCell>
-							<TableCell align="left">Username</TableCell>
-							<TableCell align="left">Role</TableCell>
-							<TableCell align="left">Edit</TableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{users?.map((item: any) => {
-							return (
-								<TableRow key={item.id}>
-									<TableCell>
-										{item.id}
-									</TableCell>
-									<TableCell>
-										<span className="font-bold text-lg">
-											{
-												item.username
-											}
-										</span>
-									</TableCell>
-									<TableCell>
-										{item.roles.join(
-											", "
-										)}
-									</TableCell>
-									<TableCell>
-										{item.username ===
-											"admin" &&
-										item.roles.includes(
-											"Admin"
-										) ? (
-											<div></div>
-										) : (
-											<button
-												className="px-4 py-2 text-white border border-amber-500 font-bold bg-amber-500 hover:bg-transparent hover:text-amber-500 duration-200 rounded-lg"
-												onClick={() =>
-													handleSelectUser(
-														item
-													)
-												}>
-												Edit
-											</button>
-										)}
-									</TableCell>
-								</TableRow>
-							);
-						})}
-					</TableBody>
-				</Table>
+					<Table>
+						<TableHead>
+							<TableRow>
+								<TableCell>#</TableCell>
+								<TableCell align="left">
+									Username
+								</TableCell>
+								<TableCell align="left">
+									Role
+								</TableCell>
+								<TableCell align="left">
+									Edit
+								</TableCell>
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							{users?.map((item: any) => {
+								return (
+									<TableRow key={item.id}>
+										<TableCell>
+											{item.id}
+										</TableCell>
+										<TableCell>
+											<div className="flex text-lg font-bold">
+												<img
+													src={
+														item?.pictureUrl
+															? item?.pictureUrl
+															: "/images/empty-user.png"
+													}
+													alt={
+														item.username
+													}
+													style={{
+														height: 50,
+														marginRight: 20,
+													}}
+													className="rounded-full"
+												/>
+												<span className='flex items-center capitalize'>
+													{
+														item.username
+													}
+												</span>
+											</div>
+										</TableCell>
+										<TableCell>
+											<p className="font-medium text-md">
+												{item.roles.join(
+													", "
+												)}
+											</p>
+										</TableCell>
+										<TableCell>
+											{item.username ===
+												"admin" &&
+											item.roles.includes(
+												"Admin"
+											) ? (
+												<div></div>
+											) : (
+												<button
+													className="px-4 py-2 text-white border border-amber-500 font-bold bg-amber-500 hover:bg-transparent hover:text-amber-500 duration-200 rounded-lg"
+													onClick={() =>
+														handleSelectUser(
+															item
+														)
+													}>
+													Edit
+												</button>
+											)}
+										</TableCell>
+									</TableRow>
+								);
+							})}
+						</TableBody>
+					</Table>
 				</TableContainer>
 			</div>
 		</div>

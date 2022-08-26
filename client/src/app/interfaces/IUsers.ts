@@ -1,5 +1,6 @@
 export interface IUsers {
-      id: number
+      id: number;
+      pictureUrl: string;
       roles: string[];
       username: string;
 };

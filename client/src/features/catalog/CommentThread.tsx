@@ -37,8 +37,12 @@ const CommentThread: React.FC<IProps> = ({ idProduct }) => {
 								<div className="flex flex-row">
 									<img
 										className="w-12 h-12 border-2 border-gray-300 rounded-full"
-										alt="Anonymous's avatar"
-										src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&faces=1&faceindex=1&facepad=2.5&w=500&h=500&q=80"
+										src={
+											comment?.pictureUrl
+												? comment?.pictureUrl
+												: "/images/empty-user.png"
+										}
+										alt={comment?.username}
 									/>
 									<div className="flex-col mt-1">
 										<div className="flex justify-start items-center px-4 font-bold leading-tight">

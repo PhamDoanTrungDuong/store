@@ -110,7 +110,9 @@ const AdminMembers: React.FC = () => {
 											alignItems="center">
 											<img
 												src={
-													member.pictureUrl
+													member?.pictureUrl
+															? member?.pictureUrl
+															: "/images/empty-user.png"
 												}
 												alt={
 													member.userName

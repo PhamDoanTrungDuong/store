@@ -93,6 +93,9 @@ namespace API.Data.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("text");
 
+                    b.Property<string>("PictureUrl")
+                        .HasColumnType("text");
+
                     b.Property<int>("Rate")
                         .HasColumnType("integer");
 
@@ -248,14 +251,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "ba27a4e7-37ee-4ce3-8109-d52e5dff85d0",
+                            ConcurrencyStamp = "4bc6db1a-bb18-4e6a-aa1f-e11142b43fc3",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "a8c39599-3682-4de4-8b54-aeea4e63265c",
+                            ConcurrencyStamp = "9ee47c08-d8f0-450f-8674-e8437746bfbd",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
