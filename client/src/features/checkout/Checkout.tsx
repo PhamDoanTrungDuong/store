@@ -22,6 +22,7 @@ import { CardNumberElement, useElements, useStripe } from "@stripe/react-stripe-
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { setStateUser } from "../account/accountSlice";
+import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 
 const steps = ["Shipping address", "Review your order", "Payment details"];
 
@@ -206,29 +207,75 @@ const Checkout: React.FC = () => {
 									</h5>
 									{paymentSucceeded ? (
 										<>
-										<h1 className="text-2xl my-2">
-											Your order
-											number is #
-											{
-												orderNumber
-											}
-											. We have
-											not emailed
-											your order
-											confirmation,
-											and will not
-											send you an
-											update when
-											your order
-											has shipped
-											as this is a
-											fake store
-										</h1>
-										<div className="w-full flex justify-end ">
-										<button className="mt-2 px-4 py-2 rounded-xl text-white bg-indigo-600 border border-indigo-600 hover:text-indigo-600 hover:bg-transparent duration-300">
-											<Link to="/catalog">Back to Catalog</Link>
-										</button>
-										</div>
+											<h1 className="text-2xl my-2">
+												Your
+												order
+												number
+												is #
+												{
+													orderNumber
+												}
+												. We
+												have
+												not
+												emailed
+												your
+												order
+												confirmation,
+												and
+												will
+												not
+												send
+												you
+												an
+												update
+												when
+												your
+												order
+												has
+												shipped
+												as
+												this
+												is a
+												fake
+												store
+											</h1>
+											<div className="w-full flex justify-end ">
+												<div className="flex justify-center items-center gap-2">
+													<button className="mt-2 px-4 py-2 rounded-xl text-indigo-600 bg-white border border-indigo-600 hover:text-white hover:bg-indigo-600 duration-300">
+														<Link
+															to="/catalog"
+															className="flex items-center gap-2 font-medium">
+															{" "}
+															<AiOutlineArrowLeft
+																className="font-bold"
+																size={
+																	20
+																}
+															/>{" "}
+															Back
+															to
+															Catalog
+														</Link>
+													</button>
+													<button className="mt-2 px-4 py-2 rounded-xl text-white bg-indigo-600 border border-indigo-600 hover:text-indigo-600 hover:bg-transparent duration-300">
+														<Link
+															to="/orders"
+															className="flex items-center gap-2 font-medium">
+															Go
+															to
+															your
+															Order{" "}
+															<AiOutlineArrowRight
+																className="font-bold"
+																size={
+																	20
+																}
+															/>
+														</Link>
+													</button>
+												</div>
+											</div>
 										</>
 									) : (
 										<Button

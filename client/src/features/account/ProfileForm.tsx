@@ -26,6 +26,7 @@ const ProfileForm: React.FC<Props> = ({user}) => {
       <>
       <h6 className="text-xl font-medium">
         Your Profile
+        <p className='text-sm text-red-600 italic font-medium'>*Please fill in the information to be able to pay with MoMo</p>
       </h6>
         <div>
         <div className="py-4">

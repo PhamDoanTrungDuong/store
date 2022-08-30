@@ -6,11 +6,13 @@ import { getCookie } from "../../app/utilities/util";
 export interface BasketState {
   basket: IBasket | null;
   status: string;
+  signature: string;
 }
 
 const initialState: BasketState = {
   basket: null,
-  status: 'idle'
+  status: 'idle',
+  signature: ""
 };
 
 export const addBasketItemAsync = createAsyncThunk<IBasket, {productId: number, quantity?: number}>(
@@ -61,6 +63,9 @@ export const basketSlice = createSlice({
     setBasket: (state, action) => {
       state.basket = action.payload;
     },
+    setSignature: (state, action) => {
+      state.signature = action.payload;
+    },
     clearBasket: (state) => {
       state.basket = null;
     },
@@ -105,5 +110,5 @@ export const basketSlice = createSlice({
   })
 });
 
-export const { setBasket, clearBasket, setStateBasket } = basketSlice.actions;
+export const { setBasket, clearBasket, setStateBasket, setSignature } = basketSlice.actions;
 export default basketSlice.reducer;

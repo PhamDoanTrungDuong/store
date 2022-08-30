@@ -33,6 +33,7 @@ axios.interceptors.response.use(async res => {
 }, (error: AxiosError) => {
     const {data, status}: any = error.response;
     switch (status) {
+        
         case 400:
             if(data.errors) {
                 const modelStateErrors: string[] = [];
@@ -43,7 +44,12 @@ axios.interceptors.response.use(async res => {
                 }
                 throw modelStateErrors.flat();
             }
-            toast.error(data.title);
+            Swal.fire({
+                icon: "warning",
+                title: data.title,
+                showConfirmButton: false,
+                timer: 1500,
+            });
             break;
         case 401:
             Swal.fire({
@@ -116,11 +122,13 @@ const Orders = {
     list: () => requests.get('orders'),
     fetch: (id: number) => requests.get(`orders/${id}`),
     create: (values: any) => requests.post('orders', values),
+    Momocreate: () => requests.get('orders/momo-order'),
     statusDelivery: (values: any) => requests.post('orders/delivery-status', values)
 }
 
 const Payments = {
-    createPaymentIntent: () => requests.post('payments', {})
+    createPaymentIntent: () => requests.post('payments', {}),
+    momoPayment: () => requests.post('payments/Momo-payment', {})
 }
 
 function createFormData(item: any) {

@@ -31,6 +31,7 @@ import AdminCategories from "../../features/admin/AdminCategories";
 import AdminHome from "../../features/admin/AdminHome";
 import SideBar from "../../features/admin/SideBar";
 import SignedInMenu from "./SignedInMenu";
+import MoMoPaymentSucceeded from "../../features/checkout/MoMoPaymentSucceeded";
 
 const App: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -205,6 +206,12 @@ const App: React.FC = () => {
 									<PrivateRoute>
 										<Profile />
 									</PrivateRoute>
+								}
+							/>
+							<Route
+								path="/returnUrl"
+								element={
+									<MoMoPaymentSucceeded />
 								}
 							/>
 							<Route path="*" element={<NotFound />} />

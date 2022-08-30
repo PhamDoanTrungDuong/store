@@ -121,16 +121,19 @@ namespace API.Controllers
             [HttpPut]
             public async Task<ActionResult> EditProfile([FromForm] MemberUpdateDto memberUpdateDto, [FromForm] MemberUpdateInfoDto memberUpdateInfoDto)
             {
-                  var user = await _userManager.Users
-                        .Where(x => x.UserName == User.Identity.Name)
-                        .FirstOrDefaultAsync();
+                  var user = await _context.Users
+                        .Include(a => a.Address)
+                        .FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
+                  // var user = await _userManager.Users
+                  //       .Where(x => x.UserName == User.Identity.Name)
+                  //       .FirstOrDefaultAsync();
 
-                  var userAddress = await _userManager.Users
-                        .Where(x => x.UserName == User.Identity.Name)
-                        .Select(u => u.Address)
-                        .FirstOrDefaultAsync();
+                  // var userAddress = await _userManager.Users
+                  //       .Where(x => x.UserName == User.Identity.Name)
+                  //       .Select(u => u.Address)
+                  //       .FirstOrDefaultAsync();
 
-                  if (userAddress == null && user == null) return NotFound();
+                  // if (userAddress == null && user == null) return NotFound();
 
                   if (memberUpdateInfoDto.File != null)
                   {
@@ -148,7 +151,18 @@ namespace API.Controllers
 
                   var re = await _userManager.UpdateAsync(user);
 
-                  _mapper.Map(memberUpdateDto, userAddress);
+                  var updateAddress = new UserAddress {
+                        FullName = memberUpdateDto.FullName,
+                        Address1 = memberUpdateDto.Address1,
+                        Address2 = memberUpdateDto.Address2,
+                        City = memberUpdateDto.City,
+                        Zip = memberUpdateDto.Zip,
+                        State = memberUpdateDto.State,
+                        Country = memberUpdateDto.City,
+                  };
+
+                  user.Address = updateAddress;
+                  // _mapper.Map(updateAddress, userAddress);
 
                   var result = await _context.SaveChangesAsync() > 0;
 

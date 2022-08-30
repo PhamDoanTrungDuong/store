@@ -32,14 +32,6 @@ namespace API.Controllers
                     .ToListAsync();
             }
 
-            // [HttpGet("get-all-orders")]
-            // public async Task<ActionResult<List<OrderDto>>> GetAllOrders()
-            // {
-            //     return await _context.Orders
-            //         .OrderByDescending(x => x.Id)
-            //         .ProjectOrderToOrderDto()
-            //         .ToListAsync();
-            // }
 
             [Authorize]
             [HttpGet("get-total-order")]
@@ -158,6 +150,81 @@ namespace API.Controllers
 
                     user.Address = address;
                 }
+
+                var result = await _context.SaveChangesAsync() > 0;
+
+                if(result) return CreatedAtRoute("GetOrder", new {id = order.Id}, order.Id);
+
+                return BadRequest("Problem creating order");
+            }
+
+            [HttpGet("momo-order")]
+            public async Task<ActionResult<int>> CreateMoMoOrder()
+            {
+                var basket = await _context.Baskets
+                        .RetrieveBasketWithItems(User.Identity.Name)
+                        .FirstOrDefaultAsync();
+
+                var userShippingAddres = await _context.Users
+                        .Where(x => x.UserName == User.Identity.Name)
+                        .Include(x => x.Address)
+                        .FirstOrDefaultAsync();
+
+                if(basket == null) return NoContent();
+
+                var items = new List<OrderItem>();
+
+                foreach (var item in basket.Items)
+                {
+                    var productItem = await _context.Products.FindAsync(item.ProductId);
+                    if(productItem == null) return NotFound();
+                    var itemOrdered = new ProductItemOrdered
+                    {
+                        ProductId = productItem.Id,
+                        Name = productItem.Name,
+                        PictureUrl = productItem.PictureUrl
+                    };
+
+                    var orderItem = new OrderItem
+                    {
+                        ItemOrdered = itemOrdered,
+                        Price = productItem.Price,
+                        Quantity = item.Quantity
+                    };
+
+                    items.Add(orderItem);
+                    productItem.QuantityInStock -= item.Quantity;
+                }
+
+                var subtotal = items.Sum(item => item.Price * item.Quantity);
+                var deliveryFee = subtotal > 10000 ? 0 : 500;
+
+                if(userShippingAddres.Address == null)
+                {
+                    return BadRequest(new ProblemDetails{Title = "Please check your information from your profile"});
+                }
+
+                var shipadr = new ShippingAddress {
+                    FullName = userShippingAddres.Address.FullName,
+                    Address1 = userShippingAddres.Address.Address1,
+                    Address2 = userShippingAddres.Address.Address2,
+                    City = userShippingAddres.Address.City,
+                    Zip = userShippingAddres.Address.Zip,
+                    State = userShippingAddres.Address.State,
+                    Country = userShippingAddres.Address.City,
+                };
+
+                var order = new Order
+                {
+                    OrderItems = items,
+                    BuyerId = User.Identity.Name,
+                    ShippingAddress = shipadr,
+                    Subtotal = subtotal,
+                    DeliveryFee = deliveryFee,
+                };
+
+                _context.Orders.Add(order);
+                _context.Baskets.Remove(basket);
 
                 var result = await _context.SaveChangesAsync() > 0;
 
