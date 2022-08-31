@@ -38,7 +38,6 @@ namespace API.Controllers
                   if (user == null || !await _userManager.CheckPasswordAsync(user, loginDto.Password))
                         return Unauthorized(new ProblemDetails { Title = "Username or Password incorrect" });
 
-
                   var userBasket = await RetrieveBasket(loginDto.UserName);
                   var anonBasket = await RetrieveBasket(Request.Cookies["buyerId"]);
 

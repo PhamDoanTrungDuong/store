@@ -122,7 +122,7 @@ const Orders = {
     list: () => requests.get('orders'),
     fetch: (id: number) => requests.get(`orders/${id}`),
     create: (values: any) => requests.post('orders', values),
-    Momocreate: () => requests.get('orders/momo-order'),
+    // Momocreate: () => requests.get('orders/momo-order'),
     statusDelivery: (values: any) => requests.post('orders/delivery-status', values)
 }
 
