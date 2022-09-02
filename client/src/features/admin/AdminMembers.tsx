@@ -85,7 +85,7 @@ const AdminMembers: React.FC = () => {
 							<TableCell align="center">
 								Country
 							</TableCell>
-							<TableCell align="center">Active</TableCell>
+							{/* <TableCell align="center">Active</TableCell> */}
 							<TableCell align="right"></TableCell>
 						</TableRow>
 					</TableHead>
@@ -180,7 +180,7 @@ const AdminMembers: React.FC = () => {
 											: "-"}
 									</span>
 								</TableCell>
-								<TableCell align="left">
+								{/* <TableCell align="left">
 									{member.userName ===
 									"admin" ? (
 										<div></div>
@@ -197,7 +197,7 @@ const AdminMembers: React.FC = () => {
 											}
 										/>
 									)}
-								</TableCell>
+								</TableCell> */}
 								<TableCell align="right">
 									<LoadingButton
 										onClick={() =>
