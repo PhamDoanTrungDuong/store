@@ -10,7 +10,6 @@ import {
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import agent from "../../app/api/agent";
-import { IOrder } from "../../app/interfaces/IOrder";
 // import Loading from "../../app/layout/Loading";
 import { currencyFormat } from "../../app/utilities/util";
 import OrderDetailed from "../orders/OrderDetailed";
@@ -19,6 +18,9 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { TbGift, TbHome2 } from "react-icons/tb";
 import { RiTruckLine } from "react-icons/ri";
+import { useAppSelector, useAppDispatch } from "../../app/store/configureStore";
+import { fetchOrdersAsync, setOrdLoad } from "./adminSlice";
+import OrderSearch from "../../app/components/OrderSearch";
 
 const style = {
 	position: "absolute" as "absolute",
@@ -33,7 +35,8 @@ const style = {
 };
 
 const AdminOrders: React.FC = () => {
-	const [orders, setOrders] = useState<IOrder[] | null>(null);
+	const {orders, loadOrder} = useAppSelector(state => state.admin)
+	const dispatch = useAppDispatch();
 	// const [loading, setLoading] = useState(true);
 	const [selectedOrderNumber, setSelectedOrderNumber] = useState(0);
 	const [selectedDeli, setSelectedDeli] = useState<number>(0);
@@ -43,14 +46,8 @@ const AdminOrders: React.FC = () => {
 	const handleClose = () => setOpen(false);
 
 	useEffect(() => {
-		if (!open)
-			agent.Admin.getOrder()
-				.then((orders) => setOrders(orders))
-				.catch((error) => console.log(error));
-		// .finally(() => setLoading(false));
-	}, [open]);
-
-	// if (loading) return <Loading message="Loading orders" />;
+		!loadOrder ? dispatch(fetchOrdersAsync()) : dispatch(fetchOrdersAsync());
+	}, [dispatch, loadOrder])
 
 	if (selectedOrderNumber > 0)
 		return (
@@ -63,6 +60,7 @@ const AdminOrders: React.FC = () => {
 	const onSubmit = (data: any) => {
 		data = { id: selectedDeli, ...data };
 		agent.Orders.statusDelivery(data).then(() => {
+			dispatch(setOrdLoad())
 			setSelectedDeli(0);
 			handleClose();
 		});
@@ -70,7 +68,12 @@ const AdminOrders: React.FC = () => {
 
 	return (
 		<div className="mt-5 p-5">
-			<h4 className="text-2xl font-bold my-4">Orders</h4>
+			<div className="flex gap-2 justify-start items-center mb-5">
+				<h4 className=" basis-1/4 text-2xl font-bold my-4">Orders</h4>
+				<div className="basis-3/4 w-[40%]">
+					<OrderSearch />
+				</div>
+			</div>
 			<div className="h-[500px] overflow-y-scroll">
 				<TableContainer component={Paper}>
 					<Table sx={{ minWidth: 650 }} aria-label="simple table">

@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import agent from "../../app/api/agent";
+import CategorySearch from "../../app/components/CategorySearch";
 import { ICategory } from "../../app/interfaces/ICategory";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { fetchCategories, setCateLoad } from "./adminSlice";
@@ -25,9 +26,10 @@ const AdminCategories: React.FC = () => {
 	const [selectedCategory, setSelectedCategory] = useState<ICategory | undefined>(undefined);
 
 	const dispatch = useAppDispatch();
+
 	useEffect(() => {
-		load === true ? dispatch(fetchCategories()) : dispatch(fetchCategories());
-	}, [dispatch, load]);
+		!load ? dispatch(fetchCategories()) : dispatch(fetchCategories());
+	}, [dispatch, load])
 
 	function cancelEdit() {
 		if (selectedCategory) setSelectedCategory(undefined);
@@ -45,11 +47,13 @@ const AdminCategories: React.FC = () => {
 
 	if (editMode) return <CategoryForm category={selectedCategory} cancelEdit={cancelEdit} />;
 
-
 	return (
 		<div className="mt-5 p-5">
-			<div className="flex justify-between">
+			<div className="flex justify-between items-center">
 				<h4 className="text-2xl font-bold my-4">Category</h4>
+				<div className="w-[60%]">
+					<CategorySearch />
+				</div>
 				<div className="p-4">
 					<button
 						onClick={() => setEditMode(true)}

@@ -19,6 +19,7 @@ const Login = () => {
 		};
 	};
 
+	// const [googleUser, setGoogleUser] = useState({});
 	const dispatch = useAppDispatch();
 
 	const location = useLocation() as unknown as LocationProps;
@@ -40,6 +41,25 @@ const Login = () => {
 			console.log(error);
 		}
 	};
+
+	// const handleGoogleSignIn = async () => {
+	// 	try {
+	// 		await googleSignIn();
+	// 	}catch(error) {
+	// 		console.log(error)
+	// 	}
+	// }
+
+	// useEffect(() => {
+	// 	const unsubcribe = onAuthStateChanged(auth, (currentUser: any) => {
+	// 		setGoogleUser(currentUser);
+	// 		console.log("[googleUser]: ", currentUser);
+	// 	});
+
+	// 	return () => {
+	// 		unsubcribe();
+	// 	}
+	// }, [])
 	return (
 		<div className="mt-5">
 			<div className="max-w-[350px] md:max-w-[400px] border h-auto border-slate-300 rounded-2xl px-4 py-10 my-[100px] mx-auto">
@@ -97,6 +117,13 @@ const Login = () => {
 							type="submit">
 							Sign In
 						</button>
+						{/* <hr />
+						<div className="flex flex-col justify-center items-center gap-2">
+							<p>or</p>
+							<div>
+								<GoogleButton onClick={handleGoogleSignIn} />
+							</div>
+						</div> */}
 						<div className="text-center mt-3">
 								<Link to="/register">
 										<h4>Don't have an account? <span className="font-medium underline underline-offset-2 text-indigo-600 hover:text-indigo-400 duration-300">Sign Up</span> </h4>

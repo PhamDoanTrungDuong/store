@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
@@ -34,6 +35,10 @@ namespace API.Controllers
             public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
             {
                   var user = await _userManager.FindByNameAsync(loginDto.UserName);
+
+                  var lockedUser = await _userManager.IsLockedOutAsync(user);
+
+                  if(lockedUser) return BadRequest(new ProblemDetails{ Title = "User are Locked for some resons"});
 
                   if (user == null || !await _userManager.CheckPasswordAsync(user, loginDto.Password))
                         return Unauthorized(new ProblemDetails { Title = "Username or Password incorrect" });
@@ -79,6 +84,61 @@ namespace API.Controllers
                   await _userManager.AddToRoleAsync(user, "Member");
 
                   return StatusCode(201);
+            }
+
+            [Authorize]
+            [HttpPost("change-password")]
+            public async Task<ActionResult> ChangePassword(ChangeUserPasswordViewModel model)
+            {
+                  if (ModelState.IsValid) {
+                        var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+                        if (user != null)
+                        {
+                              IdentityResult result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+
+                              if (!result.Succeeded)
+                              {
+                                    foreach (var error in result.Errors)
+                                    {
+                                          ModelState.AddModelError(error.Code, error.Description);
+                                    }
+
+                                    return ValidationProblem();
+                              }
+
+                              return Ok(user);
+                        }
+                  }
+                  return BadRequest(new ProblemDetails{Title = "Something wrong with password or confirm password"});
+            }
+
+            [Authorize(Roles = "Admin")]
+            [HttpPost("lock-user/{id}")]
+            public async Task<ActionResult> LockUser(string id)
+            {
+                  var userId = await _userManager.FindByIdAsync(id);
+                  var isUserLocked = await _userManager.IsLockedOutAsync(userId);
+
+                  if(!(userId.LockoutEnabled && userId.LockoutEnd != null))
+                  {
+                        var result = await _userManager.SetLockoutEnabledAsync(userId, true);
+                        if(result.Succeeded)
+                        {
+                              await _userManager.SetLockoutEndDateAsync(userId, DateTimeOffset.MaxValue);
+                              return Ok();
+                        }
+                  }else
+                  {
+                        var result = await _userManager.SetLockoutEnabledAsync(userId, false);
+                        if(result.Succeeded)
+                        {
+                              await _userManager.SetLockoutEndDateAsync(userId, null);
+                              return Ok();
+                        }
+                  }
+
+                  return BadRequest(new ProblemDetails{Title = "Somethings wrong with locked User"});
             }
 
             [Authorize]
@@ -175,6 +235,7 @@ namespace API.Controllers
             public async Task<ActionResult<PagedList<User>>> GetMembers([FromQuery] MemberDto memberDto)
             {
                   var query = _context.Users
+                        .Search(memberDto.SearchTerm)
                         .Include(x => x.Address)
                         .OrderBy(x => x.Id)
                         .AsQueryable();

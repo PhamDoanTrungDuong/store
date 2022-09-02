@@ -17,3 +17,11 @@ export interface ProductParams {
   pageNumber: number;
   pageSize: number;
 }
+
+export interface CategoriesParams {
+  searchTerm?: string;
+}
+
+export interface CommentsParams {
+  searchTerm?: string;
+}

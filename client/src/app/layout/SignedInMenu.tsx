@@ -54,6 +54,9 @@ const SignedInMenu: React.FC = () => {
 						<MenuItem component={NavLink} to="/orders">
 							My orders
 						</MenuItem>
+						<MenuItem component={NavLink} to="/change-pwd">
+							Change password
+						</MenuItem>
 					</span>
 				)}
 				<MenuItem

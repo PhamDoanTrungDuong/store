@@ -113,6 +113,7 @@ const Basket = {
 
 const Account = {
     login: (values: any) => requests.post('account/login', values),
+    changePwd: (values: any) => requests.post('account/change-password', values),
     register: (values: any) => requests.post('account/register', values),
     currentUser: () => requests.get('account/currentUser'),
     fetchAddress: () => requests.get('account/savedAddress')
@@ -122,7 +123,7 @@ const Orders = {
     list: () => requests.get('orders'),
     fetch: (id: number) => requests.get(`orders/${id}`),
     create: (values: any) => requests.post('orders', values),
-    // Momocreate: () => requests.get('orders/momo-order'),
+    Momocreate: () => requests.get('orders/momo-order'),
     statusDelivery: (values: any) => requests.post('orders/delivery-status', values)
 }
 
@@ -145,15 +146,17 @@ const Admin = {
     deleteProduct: (id: number) => requests.delete(`products/${id}`),
     getUserRole: () => requests.get('admin/user-with-roles'),
     editRole: (username: string, roles: string[]) => axios.post(`admin/edit-roles/${username}?roles=${roles}`),
-    getOrder: () => requests.get('admin/admin-get-orders'),
+    getOrders: (params: URLSearchParams) => requests.get('admin/admin-get-orders', params),
     getMembers: (params: URLSearchParams) => requests.get('account/all-members', params),
     deleteMember: (id: string) => requests.delete(`account/delete-member/${id}`),
-    getComments: () => requests.get('comment/get-all-comments'),
+    getComments: (params: URLSearchParams) => requests.get('comment/get-all-comments', params),
     deleteComment: (id: number) => requests.delete(`comment/${id}`),
-    getCategories: () => requests.get('category'),
+    getCategories: () => requests.get('category/get-category-client'),
+    getAdminCategories: (params: URLSearchParams) => requests.get('category', params),
     createCategory: (name: string) => requests.post('category', name),
     deleteCategory: (id: number) => requests.delete(`category/${id}`),
-
+    lockUser: (id: string) => requests.post(`account/lock-user/${id}`, {}),
+    unlockUser: (id: string) => requests.post(`account/unlock-user/${id}`, {}),
 }
 
 const Profile = {

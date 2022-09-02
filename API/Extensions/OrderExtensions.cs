@@ -31,5 +31,14 @@ namespace API.Extensions
                     }).ToList()
                 }).AsNoTracking();
         }
+
+        public static IQueryable<Order> Search(this IQueryable<Order> query, string searchTerm)
+        {
+            if(string.IsNullOrEmpty(searchTerm)) return query;
+
+            var lowerCaseSearchTerm = searchTerm.Trim().ToLower();
+
+            return query.Where(p => p.ShippingAddress.FullName.ToLower().Contains(lowerCaseSearchTerm));
+        }
     }
 }

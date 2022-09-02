@@ -28,3 +28,7 @@ export interface IOrder {
   deliveryStatus: string;
   total: number;
 }
+
+export interface OrdersParams {
+  searchTerm?: string;
+}

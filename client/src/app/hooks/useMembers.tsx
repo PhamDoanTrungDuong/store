@@ -9,12 +9,13 @@ const useMembers = () => {
       const dispatch = useAppDispatch();
 
       useEffect(() => {
-         if(!membersLoaded) dispatch(fetchMembersAsync());
+         !membersLoaded ? dispatch(fetchMembersAsync()) : dispatch(fetchMembersAsync());
       }, [dispatch, membersLoaded]);
 
   return {
       members,
       pagination,
+      membersLoaded
   }
 }
 

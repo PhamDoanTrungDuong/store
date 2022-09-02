@@ -80,7 +80,7 @@ const AdminHome: React.FC = () => {
 					<div className="relative mt-5">
 						<div className=" flex gap-x-6 text-3xl font-bold">
 							<div className="flex mb-5 -space-x-4">
-								{members.map((i) => {
+								{members.slice(0, 3).map((i) => {
 									return (
 										<img
 											className="w-10 h-10 rounded-full border-2 border-white dark:border-gray-800"
@@ -96,7 +96,7 @@ const AdminHome: React.FC = () => {
 								<a
 									className="flex justify-center items-center w-10 h-10 text-xs font-medium text-white bg-gray-700 rounded-full border-2 border-white hover:bg-gray-600 dark:border-gray-800"
 									href="#">
-									+{count}
+									+{count - 3}
 								</a>
 							</div>
 							<p>{count} Users</p>

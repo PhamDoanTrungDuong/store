@@ -8,25 +8,35 @@ import {
 	TableBody,
 	Rating,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import agent from "../../app/api/agent";
 import moment from "moment";
-import { IComment } from "../../app/interfaces/IComment";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import { fetchCommentsAsync, setComLoad } from "./adminSlice";
+import CommentSearch from "../../app/components/CommentSearch";
 
 const AdminComment: React.FC = () => {
-	const [comments, setComments] = useState<IComment[]>([]);
+	const { comments, loadComment } = useAppSelector((state) => state.admin);
+	const dispatch = useAppDispatch();
+
 	useEffect(() => {
-		agent.Admin.getComments()
-			.then((res) => setComments(res))
-			.catch((error) => console.log(error));
-	});
+		!loadComment ? dispatch(fetchCommentsAsync()) : dispatch(fetchCommentsAsync());
+	}, [dispatch, loadComment]);
 
 	function handleDeleteComment(id: number) {
-		agent.Admin.deleteComment(id);
+		agent.Admin.deleteComment(id).then(() => {
+			dispatch(setComLoad())
+		});
 	}
+
 	return (
 		<div className=" mt-5 p-5">
-			<h4 className="text-2xl font-bold my-4">Comments</h4>
+			<div className="flex gap-2 justify-start items-center mb-5">
+				<h4 className=" basis-1/4 text-2xl font-bold my-4">Comments</h4>
+				<div className="basis-3/4 w-[40%]">
+					<CommentSearch />
+				</div>
+			</div>
 			<div className="h-[600px] overflow-y-scroll">
 				<TableContainer component={Paper}>
 					<Table>

@@ -97,3 +97,4 @@ C:\NET\Restore\API\obj\Debug\net5.0\scopedcss\bundle\API.styles.css
 C:\NET\Restore\API\obj\Debug\net5.0\API.RazorTargetAssemblyInfo.cache
 C:\NET\Restore\API\obj\Debug\net5.0\API.csproj.CopyComplete
 C:\NET\Restore\API\obj\Debug\net5.0\API.genruntimeconfig.cache
+C:\NET\Restore\API\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.Google.dll

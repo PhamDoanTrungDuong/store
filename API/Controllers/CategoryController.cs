@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Extensions;
+using API.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +34,17 @@ namespace API.Controllers
             // }
 
             [HttpGet]
-            public async Task<List<Category>> GetCategory()
+            public async Task<List<Category>> GetCategory([FromQuery] CategoryVm categoryVm)
+            {
+                var categories = await _context.Categories
+                                .Search(categoryVm.SearchTerm)
+                                .OrderByDescending(x => x.CateId)
+                                .ToListAsync();
+
+                return categories;
+            }
+            [HttpGet("get-category-client")]
+            public async Task<List<Category>> GetCategories()
             {
                 var categories = await _context.Categories
                                 .OrderByDescending(x => x.CateId)
