@@ -11,6 +11,7 @@ export interface IUser {
 }
 
 export interface MemberParams {
+      searchTerm?: string;
       pageNumber: number;
       pageSize: number;
 }

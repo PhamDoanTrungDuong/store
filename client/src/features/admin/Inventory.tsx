@@ -20,6 +20,7 @@ import { LoadingButton } from "@mui/lab";
 import { currencyFormat } from "../../app/utilities/util";
 import { IProduct } from "../../app/interfaces/IProduct";
 import useProducts from "../../app/hooks/useProducts";
+import ProductSearch from "../catalog/ProductSearch";
 
 const Inventory: React.FC = () => {
 	const { products, pagination } = useProducts();
@@ -59,8 +60,11 @@ const Inventory: React.FC = () => {
 		);
 	return (
 		<div className="mt-5 p-5 ">
-			<div className="flex justify-between">
+			<div className="flex justify-between items-center mb-3">
 				<h4 className="text-2xl font-bold my-4">Inventory</h4>
+				<div className="w-[60%]">
+					<ProductSearch />
+				</div>
 				<div className="p-4">
 					<button
 						onClick={() =>

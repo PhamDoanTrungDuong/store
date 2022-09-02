@@ -5,6 +5,7 @@ using API.Data;
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -67,15 +68,16 @@ namespace API.Controllers
 
                   return Ok(await _userManager.GetRolesAsync(user));
             }
-            
+
             [Authorize(Policy = "RequireAdminRole")]
             [HttpGet("admin-get-orders")]
-            public async Task<ActionResult<List<OrderDto>>> GetOrders()
+            public async Task<ActionResult<List<OrderDto>>> GetOrders([FromQuery] OrderVm orderVm)
             {
                   return await _context.Orders
-                      .OrderByDescending(x => x.Id)
-                      .ProjectOrderToOrderDto()
-                      .ToListAsync();
+                        .Search(orderVm.SearchTerm)
+                        .OrderByDescending(x => x.Id)
+                        .ProjectOrderToOrderDto()
+                        .ToListAsync();
             }
       }
 }

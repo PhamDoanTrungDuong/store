@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "upOyM1ReoZ489aahArGrY3RwRbnPoTDDqa1oxEyEkki4hT8uZpeFid+IewnVvhpqKmsTcrzsQoF/Ywth/vPuMg==",
+  "dgSpecHash": "CGqJ62AeeK/0VKGVS2qPqp/4K/xXxa17H1CV1kiIMKQce6x5ovZq833+KXQXXjiFUKQjHInCmv9EJJ9RlyimHA==",
   "success": true,
   "projectFilePath": "C:\\NET\\Restore\\API\\API.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\Admin\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\cloudinarydotnet\\1.15.2\\cloudinarydotnet.1.15.2.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.authentication.google\\5.0.17\\microsoft.aspnetcore.authentication.google.5.0.17.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\5.0.17\\microsoft.aspnetcore.authentication.jwtbearer.5.0.17.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.17\\microsoft.aspnetcore.cryptography.internal.5.0.17.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\5.0.17\\microsoft.aspnetcore.cryptography.keyderivation.5.0.17.nupkg.sha512",

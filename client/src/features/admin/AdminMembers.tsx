@@ -19,7 +19,8 @@ import MemberForm from "./MemberForm";
 import AppPagination from "../../app/components/AppPagination";
 import { removeMember, setPageNumber } from "../account/accountSlice";
 import { useAppDispatch } from "../../app/store/configureStore";
-
+import AppSwitch from "../../app/components/AppSwitch";
+import MemberSearch from "../../app/components/MemberSearch";
 
 const AdminMembers: React.FC = () => {
 	const { members, pagination } = useMembers();
@@ -41,23 +42,21 @@ const AdminMembers: React.FC = () => {
 		setLoading(true);
 		setTarget(id);
 		await agent.Admin.deleteMember(id)
-				.then(() => dispatch(removeMember(id)))
-				.catch((error) => console.log(error))
-				.finally(() => setLoading(false))
-	}
+			.then(() => dispatch(removeMember(id)))
+			.catch((error) => console.log(error))
+			.finally(() => setLoading(false));
+	};
 
-	if (editMode)
-		return (
-			<MemberForm
-				member={selectedMember}
-				cancelEdit={cancelEdit}
-			/>
-		);
+	if (editMode) return <MemberForm member={selectedMember} cancelEdit={cancelEdit} />;
+
 
 	return (
 		<div className="mt-5 p-5">
-			<div className="flex justify-between">
-			<h4 className="text-2xl font-bold my-4">Members</h4>
+			<div className="flex justify-between items-center">
+				<h4 className="text-2xl font-bold my-4">Members</h4>
+				<div className="w-[60%]">
+					<MemberSearch />
+				</div>
 				<div className="p-4">
 					<button
 						onClick={() => setEditMode(true)}
@@ -86,6 +85,7 @@ const AdminMembers: React.FC = () => {
 							<TableCell align="center">
 								Country
 							</TableCell>
+							<TableCell align="center">Active</TableCell>
 							<TableCell align="right"></TableCell>
 						</TableRow>
 					</TableHead>
@@ -105,30 +105,30 @@ const AdminMembers: React.FC = () => {
 									{member.id}
 								</TableCell>
 								<TableCell align="left">
-								<Box
-											display="flex"
-											alignItems="center">
-											<img
-												src={
-													member?.pictureUrl
-															? member?.pictureUrl
-															: "/images/empty-user.png"
-												}
-												alt={
-													member.userName
-												}
-												style={{
-													height: 50,
-													marginRight: 20,
-												}}
-												className='rounded-full'
-											/>
-											<span>
-												{
-													member.userName
-												}
-											</span>
-										</Box>
+									<Box
+										display="flex"
+										alignItems="center">
+										<img
+											src={
+												member?.pictureUrl
+													? member?.pictureUrl
+													: "/images/empty-user.png"
+											}
+											alt={
+												member.userName
+											}
+											style={{
+												height: 50,
+												marginRight: 20,
+											}}
+											className="rounded-full"
+										/>
+										<span>
+											{
+												member.userName
+											}
+										</span>
+									</Box>
 								</TableCell>
 								<TableCell align="left">
 									<span>
@@ -179,6 +179,24 @@ const AdminMembers: React.FC = () => {
 													?.country
 											: "-"}
 									</span>
+								</TableCell>
+								<TableCell align="left">
+									{member.userName ===
+									"admin" ? (
+										<div></div>
+									) : (
+										<AppSwitch
+											id={
+												member.id
+											}
+											lockoutEnabled={
+												member.lockoutEnabled
+											}
+											lockoutEnd={
+												member.lockoutEnd
+											}
+										/>
+									)}
 								</TableCell>
 								<TableCell align="right">
 									<LoadingButton

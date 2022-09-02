@@ -58,9 +58,12 @@ namespace API.Controllers
             }
 
             [HttpGet("get-all-comments")]
-            public async Task<List<Comment>> GetComments()
+            public async Task<List<Comment>> GetComments([FromQuery] CommentVm commentVm)
             {
-                  return await _commentService.GetComments();
+                  return await _context.Comments
+                              .Search(commentVm.SearchTerm)
+                              .OrderByDescending(x => x.CommentSent)
+                              .ToListAsync();
             }
 
             [HttpGet]
