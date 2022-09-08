@@ -49,7 +49,7 @@ const AdminHome: React.FC = () => {
 			{
 				label: "Total Money Per Month",
 				data: labels.map(() =>
-					faker.datatype.number({ min: 0, max: +(allTotal/100) })
+					faker.datatype.number({ min: 0, max: +(allTotal / 100) })
 				),
 				backgroundColor: "rgba(255, 99, 132, 0.5)",
 			},
@@ -122,10 +122,19 @@ const AdminHome: React.FC = () => {
 								{members.slice(0, 3).map((i) => {
 									return (
 										<img
-											key={i.pictureUrl}
+											key={
+												i.pictureUrl
+											}
 											className="w-10 h-10 rounded-full border-2 border-white dark:border-gray-800"
 											src={
-												i.pictureUrl
+												i.userName.includes(
+													"admin"
+												)
+													? "/images/admin.jpg"
+													: i.pictureUrl ===
+													  null
+													? "/images/empty-user.png"
+													: i.pictureUrl
 											}
 											alt={
 												i.userName
@@ -136,7 +145,10 @@ const AdminHome: React.FC = () => {
 								<a
 									className="flex justify-center items-center w-10 h-10 text-xs font-medium text-white bg-gray-700 rounded-full border-2 border-white hover:bg-gray-600 dark:border-gray-800"
 									href="#">
-									+{count - 3}
+									+
+									{count - 3 < 0
+										? 0
+										: count - 3}
 								</a>
 							</div>
 							<p>{count} Users</p>

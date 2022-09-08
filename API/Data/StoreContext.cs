@@ -18,7 +18,8 @@ namespace API.Data
           public DbSet<Comment> Comments { get; set; }
           public DbSet<Category> Categories { get; set; }
           public DbSet<UserLike> Likes { get; set; }
-
+          public DbSet<Entities.Size> Sizes { get; set; }
+          public DbSet<Colour> Colours { get; set; }
           protected override void OnModelCreating(ModelBuilder builder)
           {
                base.OnModelCreating(builder);
@@ -72,6 +73,21 @@ namespace API.Data
                     .WithMany(p => p.Products)
                     .HasForeignKey(k => k.CurrentCateId);
 
+               //PRODUCT ATTR
+               builder.Entity<ProductAttributes>()
+                    .HasKey(k => new {k.ColourId, k.ProductId, k.SizeId});
+               builder.Entity<Product>()
+                    .HasMany(p => p.ProductAttributes)
+                    .WithOne(a => a.Product)
+                    .HasForeignKey(fk => fk.ProductId);
+               builder.Entity<Size>()
+                    .HasMany(p => p.ProductAttributes)
+                    .WithOne(a => a.Size)
+                    .HasForeignKey(fk => fk.SizeId);
+               builder.Entity<Colour>()
+                    .HasMany(p => p.ProductAttributes)
+                    .WithOne(a => a.Colour)
+                    .HasForeignKey(fk => fk.ColourId);
 
                //USER LIKE
                builder.Entity<UserLike>()
