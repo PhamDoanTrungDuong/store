@@ -2,11 +2,11 @@ import { IProduct } from "../../app/interfaces/IProduct";
 import { useAppDispatch } from "../../app/store/configureStore";
 import { addBasketItemAsync } from "../basket/basketSlice";
 import { Link } from "react-router-dom";
-import {IoIosCart} from "react-icons/io"
-import {FaHeart} from "react-icons/fa"
+import { IoIosCart } from "react-icons/io";
+import { FaHeart } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import agent from "../../app/api/agent";
-import { Rating } from "@mui/material";
+import { Rating, Tooltip } from "@mui/material";
 
 interface IProps {
 	product: IProduct;
@@ -27,11 +27,22 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 		<div className="border rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 duration-300">
 			<div>
 				<Link to={`/catalog/${product.id}`}>
-					<img
-						className="h-full w-full object-contain rounded-t-xl"
-						src={product.pictureUrl}
-						alt={product.name}
-					/>
+					<div className="relative">
+						<img
+							className="h-full w-full object-contain rounded-t-xl"
+							src={product.pictureUrl}
+							alt={product.name}
+						/>
+						{product?.quantityInStock! < 0 ? (
+							<img
+								src="./images/out-of-stock-2.png"
+								alt={product.name}
+								className="absolute top-0 left-3 w-[22%]"
+							/>
+						) : (
+							""
+						)}
+					</div>
 				</Link>
 				<div className="p-4">
 					<Link to={`/catalog/${product.id}`}>
@@ -41,39 +52,54 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 					</Link>
 					<div className="py-3">
 						<h5 className="text-sm text-gray-400 cursor-pointer">
-							{product.brand} /{" "}
-							{product.type}
+							{product.brand} / {product.type}
 						</h5>
 					</div>
 					<div className="flex items-center my-1">
-						<Rating name="read-only" size="small" value={Math.ceil(avg)} readOnly />
-						<p className="text-sm ml-2 text-gray-500">({avg})5</p>
+						<Rating
+							name="read-only"
+							size="small"
+							value={Math.ceil(avg)}
+							readOnly
+						/>
+						<p className="text-sm ml-2 text-gray-500">
+							({avg})5
+						</p>
 					</div>
 					<div className="flex justify-between items-center">
 						<h5 className="text-xl font-bold">
-							$
-							{(
-								product.price /
-								100
-							).toFixed(2)}
+							${(product.price / 100).toFixed(2)}
 						</h5>
 						<div className="flex items-center">
 							<button className="mr-3">
-								<FaHeart size="20" className="text-gray-600 hover:text-red-600 duration-300" />
+								<FaHeart
+									size="20"
+									className="text-gray-600 hover:text-red-600 duration-300"
+								/>
 							</button>
-							<button
-								className="mr-3 text-gray-600 hover:text-indigo-600 duration-300"
-								onClick={() =>
-									dispatch(
-										addBasketItemAsync(
-											{
-												productId: product.id,
-											}
+							{!(product?.quantityInStock! < 1) ? (
+								<button
+									className="p-2 rounded-full text-gray-600 hover:text-indigo-600 duration-300 hover:bg-indigo-100"
+									onClick={() =>
+										dispatch(
+											addBasketItemAsync(
+												{
+													productId: product.id,
+												}
+											)
 										)
-									)
-								}>
-								<IoIosCart size="25"/>
-							</button>
+									}>
+									<IoIosCart size="30" />
+								</button>
+							) : (
+								<Tooltip
+									title="Out of stock"
+									placement="top">
+									<button className="p-2 cursor-default text-gray-600">
+										<IoIosCart size="30" />
+									</button>
+								</Tooltip>
+							)}
 						</div>
 					</div>
 				</div>

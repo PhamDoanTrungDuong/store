@@ -8,6 +8,8 @@ import {
 	TableCell,
 	TableBody,
 	Box,
+	Menu,
+	MenuItem,
 } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import AppPagination from "../../app/components/AppPagination";
@@ -21,16 +23,23 @@ import { currencyFormat } from "../../app/utilities/util";
 import { IProduct } from "../../app/interfaces/IProduct";
 import useProducts from "../../app/hooks/useProducts";
 import ProductSearch from "../catalog/ProductSearch";
+import { HiDotsVertical } from "react-icons/hi"
 
 const Inventory: React.FC = () => {
 	const { products, pagination } = useProducts();
 	const dispatch = useAppDispatch();
 	const [editMode, setEditMode] = useState(false);
-	const [selectedProduct, setSelectedProduct] = useState<
-		IProduct | undefined
-	>(undefined);
+	const [selectedProduct, setSelectedProduct] = useState<IProduct | undefined>(undefined);
 	const [loading, setLoading] = useState(false);
 	const [target, setTarget] = useState(0);
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const open = Boolean(anchorEl);
+	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
 
 	function handleSelectProduct(product: IProduct) {
 		setSelectedProduct(product);
@@ -51,13 +60,7 @@ const Inventory: React.FC = () => {
 		setEditMode(false);
 	}
 
-	if (editMode)
-		return (
-			<ProductForm
-				product={selectedProduct}
-				cancelEdit={cancelEdit}
-			/>
-		);
+	if (editMode) return <ProductForm product={selectedProduct} cancelEdit={cancelEdit} />;
 	return (
 		<div className="mt-5 p-5 ">
 			<div className="flex justify-between items-center mb-3">
@@ -67,133 +70,153 @@ const Inventory: React.FC = () => {
 				</div>
 				<div className="p-4">
 					<button
-						onClick={() =>
-							setEditMode(true)
-						}
+						onClick={() => setEditMode(true)}
 						className="border text-white px-6 py-1 border-indigo-600 bg-indigo-600 text-lg rounded-lg hover:text-indigo-600 hover:bg-transparent duration-200 ease-in-out ">
 						Create
 					</button>
 				</div>
 			</div>
 			<TableContainer component={Paper}>
-				<Table
-					sx={{ minWidth: 650 }}
-					aria-label="simple table">
+				<Table sx={{ minWidth: 650 }} aria-label="simple table">
 					<TableHead>
 						<TableRow>
 							<TableCell>#</TableCell>
-							<TableCell align="left">
-								Product
-							</TableCell>
-							<TableCell align="right">
-								Price
-							</TableCell>
-							<TableCell align="center">
-								Type
-							</TableCell>
-							<TableCell align="center">
-								Brand
-							</TableCell>
+							<TableCell align="left">Product</TableCell>
+							<TableCell align="right">Price</TableCell>
+							<TableCell align="center">Type</TableCell>
+							<TableCell align="center">Brand</TableCell>
 							<TableCell align="center">
 								Quantity
 							</TableCell>
-							<TableCell align="right"></TableCell>
+							<TableCell align="center">Options</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{products.map(
-							(product: any) => (
-								<TableRow
-									key={
-										product.id
-									}
-									sx={{
-										"&:last-child td, &:last-child th":
+						{products.map((product: any) => (
+							<TableRow
+								key={product.id}
+								sx={{
+									"&:last-child td, &:last-child th":
+										{
+											border: 0,
+										},
+								}}>
+								<TableCell
+									component="th"
+									scope="row">
+									{product.id}
+								</TableCell>
+								<TableCell align="left">
+									<Box
+										display="flex"
+										alignItems="center">
+										<img
+											src={
+												product.pictureUrl
+											}
+											alt={
+												product.name
+											}
+											style={{
+												height: 50,
+												marginRight: 20,
+											}}
+										/>
+										<span>
 											{
-												border: 0,
-											},
-									}}>
-									<TableCell
-										component="th"
-										scope="row">
-										{
-											product.id
-										}
-									</TableCell>
-									<TableCell align="left">
-										<Box
-											display="flex"
-											alignItems="center">
-											<img
-												src={
-													product.pictureUrl
-												}
-												alt={
-													product.name
-												}
-												style={{
-													height: 50,
-													marginRight: 20,
-												}}
-											/>
-											<span>
-												{
-													product.name
-												}
-											</span>
-										</Box>
-									</TableCell>
-									<TableCell align="right">
-										{currencyFormat(
-											product.price
-										)}
-									</TableCell>
-									<TableCell align="center">
-										{
-											product.type
-										}
-									</TableCell>
-									<TableCell align="center">
-										{
-											product.brand
-										}
-									</TableCell>
-									<TableCell align="center">
-										{
-											product.quantityInStock
-										}
-									</TableCell>
-									<TableCell align="right">
+												product.name
+											}
+										</span>
+									</Box>
+								</TableCell>
+								<TableCell align="right">
+									{currencyFormat(
+										product.price
+									)}
+								</TableCell>
+								<TableCell align="center">
+									{product.type}
+								</TableCell>
+								<TableCell align="center">
+									{product.brand}
+								</TableCell>
+								<TableCell align="center">
+									{product.quantityInStock < 0 ? 0 : product.quantityInStock }
+								</TableCell>
+								<TableCell align="center">
+									<div>
 										<Button
-											onClick={() =>
-												handleSelectProduct(
-													product
-												)
+											id="basic-button"
+											aria-controls={
+												open
+													? "basic-menu"
+													: undefined
 											}
-											startIcon={
-												<Edit />
+											aria-haspopup="true"
+											aria-expanded={
+												open
+													? "true"
+													: undefined
 											}
-										/>
-										<LoadingButton
-											loading={
-												loading &&
-												target ===
-													product.id
+											onClick={
+												handleClick
+											}>
+											<HiDotsVertical size={20} />
+										</Button>
+										<Menu
+											id="basic-menu"
+											anchorEl={
+												anchorEl
 											}
-											startIcon={
-												<Delete />
+											open={open}
+											onClose={
+												handleClose
 											}
-											color="error"
-											onClick={() =>
-												handleDeleteProduct(
-													product.id
-												)
-											}
-										/>
-									</TableCell>
-								</TableRow>
-							)
-						)}
+											MenuListProps={{
+												"aria-labelledby":
+													"basic-button",
+											}}>
+											<MenuItem
+												onClick={
+													handleClose
+												}>
+												<Button
+													onClick={() =>
+														handleSelectProduct(
+															product
+														)
+													}
+													startIcon={
+														<Edit />
+													}
+													>Edit</Button>
+											</MenuItem>
+											<MenuItem
+												onClick={
+													handleClose
+												}>
+												<LoadingButton
+													loading={
+														loading &&
+														target ===
+															product.id
+													}
+													startIcon={
+														<Delete />
+													}
+													color="error"
+													onClick={() =>
+														handleDeleteProduct(
+															product.id
+														)
+													}
+												>Delete</LoadingButton>
+											</MenuItem>
+										</Menu>
+									</div>
+								</TableCell>
+							</TableRow>
+						))}
 					</TableBody>
 				</Table>
 			</TableContainer>

@@ -38,15 +38,24 @@ namespace API.Controllers
             var basket = await RetrieveBasket(GetBuyerId());
             if(basket == null) basket = CreateBasket();
 
-            var product = await _context.Products.FindAsync(productId);
-            if(product == null) return BadRequest(new ProblemDetails{Title = "Product not found"});
+            var productItem = await _context.Products.FindAsync(productId);
+            if(productItem == null) return NotFound();
+            if(productItem.QuantityInStock < 1)
+            {
+                return BadRequest(new ProblemDetails{Title = $"{productItem.Name} is out of stock"});
+            }
+            else
+            {
+                var product = await _context.Products.FindAsync(productId);
+                if(product == null) return BadRequest(new ProblemDetails{Title = "Product not found"});
 
-            basket.AddItem(product, quantity);
+                basket.AddItem(product, quantity);
 
-            var result = await _context.SaveChangesAsync() > 0;
-            if(result) return CreatedAtRoute("GetBasket", basket.MapBasketToDto());
+                var result = await _context.SaveChangesAsync() > 0;
+                if(result) return CreatedAtRoute("GetBasket", basket.MapBasketToDto());
 
-            return BadRequest(new ProblemDetails{Title = "Problem saving item to basket"});
+                return BadRequest(new ProblemDetails{Title = "Problem saving item to basket"});
+            }
         }
 
 

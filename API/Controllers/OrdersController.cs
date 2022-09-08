@@ -98,6 +98,7 @@ namespace API.Controllers
                 {
                     var productItem = await _context.Products.FindAsync(item.ProductId);
                     if(productItem == null) return NotFound();
+                    if(productItem.QuantityInStock < 1) return BadRequest(new ProblemDetails{Title = $"Product {productItem.Name} is out of stock"});
                     var itemOrdered = new ProductItemOrdered
                     {
                         ProductId = productItem.Id,
@@ -178,6 +179,7 @@ namespace API.Controllers
                 {
                     var productItem = await _context.Products.FindAsync(item.ProductId);
                     if(productItem == null) return NotFound();
+                    if(productItem.QuantityInStock < 1) return BadRequest(new ProblemDetails{Title = $"Product {productItem.Name} is out of stock"});
                     var itemOrdered = new ProductItemOrdered
                     {
                         ProductId = productItem.Id,

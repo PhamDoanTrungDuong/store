@@ -185,7 +185,6 @@ export const accountSlice = createSlice({
 		});
 		builder.addCase(fetchMembersAsync.fulfilled, (state, action) => {
 			memberAdapter.setAll(state, action.payload);
-			console.log(action.payload)
 			state.status = "idle";
 			state.membersLoaded = true;
 		});

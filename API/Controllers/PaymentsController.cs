@@ -41,6 +41,13 @@ namespace API.Controllers
 
                   if (basket == null) return NotFound();
 
+                  // foreach (var item in basket.Items)
+                  // {
+                  //       var productItem = await _context.Products.FindAsync(item.ProductId);
+                  //       if(productItem == null) return NotFound();
+                  //       if(productItem.QuantityInStock < 1) return BadRequest(new ProblemDetails{Title = $"Product {productItem.Name} is out of stock"});
+                  // }
+
                   var intent = await _paymentService.CreateOrUpdatePaymentIntent(basket);
 
                   if (intent == null) return BadRequest(new ProblemDetails { Title = " Problem creating payment intent" });
@@ -111,6 +118,7 @@ namespace API.Controllers
                   {
                         var productItem = await _context.Products.FindAsync(item.ProductId);
                         if(productItem == null) return NotFound();
+                        // if(productItem.QuantityInStock < 1) return BadRequest(new ProblemDetails{Title = $"Product {productItem.Name} is out of stock"});
                         var itemOrdered = new ProductItemOrdered
                         {
                               ProductId = productItem.Id,
@@ -126,7 +134,6 @@ namespace API.Controllers
                         };
 
                         items.Add(orderItem);
-                        productItem.QuantityInStock -= item.Quantity;
                   }
 
                   var subtotal = items.Sum(item => item.Price * item.Quantity);

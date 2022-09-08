@@ -41,7 +41,6 @@ const AdminHome: React.FC = () => {
 	const { members } = useMembers();
 	const dispatch = useAppDispatch();
 	const { allTotal } = useAppSelector((state) => state.order);
-	console.log(allTotal)
 	const { count } = useAppSelector((state) => state.account);
 	const { productCount } = useAppSelector((state) => state.catalog);
 	const data = {
@@ -65,7 +64,7 @@ const AdminHome: React.FC = () => {
 	return (
 		<>
 			<div className="text-2xl font-bold my-4">Statistics</div>
-			<div className="flex gap-4">
+			<div className="flex justify-center gap-4">
 				<div className="text-white bg-gradient-to-r from-indigo-600 to-indigo-400 px-8 py-6 rounded-[30px] w-[30%] mb-4">
 					<div className="flex justify-between mb-3">
 						<div className="p-3 bg-white text-indigo-600 rounded-2xl inline-block">
@@ -123,6 +122,7 @@ const AdminHome: React.FC = () => {
 								{members.slice(0, 3).map((i) => {
 									return (
 										<img
+											key={i.pictureUrl}
 											className="w-10 h-10 rounded-full border-2 border-white dark:border-gray-800"
 											src={
 												i.pictureUrl

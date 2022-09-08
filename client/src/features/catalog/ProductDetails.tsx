@@ -114,12 +114,21 @@ const ProductDetails: React.FC = () => {
 	return (
 		<div className="mt-5 p-5">
 			<div className="grid md:grid-cols-2 ml-4">
-				<div>
+				<div className="relative">
 					<img
 						className="border rounded-xl w-[100%] md:w-[80%] object-contain"
 						src={product.pictureUrl}
 						alt={product.name}
 					/>
+					{product?.quantityInStock! < 0 ? (
+							<img
+								src="/images/out-of-stock-2.png"
+								alt={product.name}
+								className="absolute top-0 left-3 w-[15%]"
+							/>
+						) : (
+							""
+						)}
 				</div>
 				<div className="max-w-[400px] mt-5 md:mt-0">
 					<div className="flex gap-10 items-center">
@@ -149,6 +158,9 @@ const ProductDetails: React.FC = () => {
 								type="number"
 								label="Quatity in Cart"
 								fullWidth
+								minRows={1}
+								maxRows={11}
+								// InputProps={{ inputProps: { min: "1", max: "10", step: "1" } }}
 								value={quantity}
 								onChange={hanldeInputChange}
 							/>
