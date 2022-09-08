@@ -80,6 +80,21 @@ namespace API.Data.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("API.Entities.Colour", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Colour_value")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Colours");
+                });
+
             modelBuilder.Entity("API.Entities.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -220,6 +235,26 @@ namespace API.Data.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("API.Entities.ProductAttributes", b =>
+                {
+                    b.Property<int>("ColourId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SizeId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ColourId", "ProductId", "SizeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SizeId");
+
+                    b.ToTable("ProductAttributes");
+                });
+
             modelBuilder.Entity("API.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -251,17 +286,32 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "4bc6db1a-bb18-4e6a-aa1f-e11142b43fc3",
+                            ConcurrencyStamp = "dd658b9f-95d5-462c-b944-00deecd0e311",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "9ee47c08-d8f0-450f-8674-e8437746bfbd",
+                            ConcurrencyStamp = "bfbfc06d-8d2a-4b26-b262-90fa0387f31d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
+                });
+
+            modelBuilder.Entity("API.Entities.Size", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Size_value")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sizes");
                 });
 
             modelBuilder.Entity("API.Entities.User", b =>
@@ -606,6 +656,33 @@ namespace API.Data.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("API.Entities.ProductAttributes", b =>
+                {
+                    b.HasOne("API.Entities.Colour", "Colour")
+                        .WithMany("ProductAttributes")
+                        .HasForeignKey("ColourId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Entities.Product", "Product")
+                        .WithMany("ProductAttributes")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Entities.Size", "Size")
+                        .WithMany("ProductAttributes")
+                        .HasForeignKey("SizeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Colour");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Size");
+                });
+
             modelBuilder.Entity("API.Entities.UserAddress", b =>
                 {
                     b.HasOne("API.Entities.User", null)
@@ -699,6 +776,11 @@ namespace API.Data.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("API.Entities.Colour", b =>
+                {
+                    b.Navigation("ProductAttributes");
+                });
+
             modelBuilder.Entity("API.Entities.OrderAggregate.Order", b =>
                 {
                     b.Navigation("OrderItems");
@@ -709,11 +791,18 @@ namespace API.Data.Migrations
                     b.Navigation("CommentReceived");
 
                     b.Navigation("LikedByUsers");
+
+                    b.Navigation("ProductAttributes");
                 });
 
             modelBuilder.Entity("API.Entities.Role", b =>
                 {
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("API.Entities.Size", b =>
+                {
+                    b.Navigation("ProductAttributes");
                 });
 
             modelBuilder.Entity("API.Entities.User", b =>
