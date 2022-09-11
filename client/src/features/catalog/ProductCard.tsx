@@ -85,6 +85,8 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 											addBasketItemAsync(
 												{
 													productId: product.id,
+													color: "white",
+													size: "S"
 												}
 											)
 										)

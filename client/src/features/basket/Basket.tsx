@@ -46,10 +46,10 @@ const Basket: React.FC = () => {
 	return (
 		<div className=" mt-5 p-4">
 			<div className="flex flex-col md:flex-row gap-3">
-				<div className="md:basis-2/3 overflow-y-scroll scroll-smooth h-[500px]">
+				<div className="md:basis-[70%] overflow-y-scroll scroll-smooth h-[500px]">
 					<BasketTable items={basket.items} />
 				</div>
-				<div className="md:basis-1/3">
+				<div className="md:basis-[30%]">
 					<BasketSumary />
 					<div className="mt-5">
 						<h1 className="text-lg text-center text-gray-400 font-bold italic">

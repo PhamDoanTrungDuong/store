@@ -10,6 +10,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import CommentThread from "./CommentThread";
 import agent from "../../app/api/agent";
 import Swal from "sweetalert2";
+import { IoIosArrowDown } from "react-icons/io"
 
 interface Inputs {
 	productId: string;
@@ -19,6 +20,10 @@ interface Inputs {
 const ProductDetails: React.FC = () => {
 	const { register, handleSubmit } = useForm<Inputs>();
 	const [valuesStar, setValuesStar] = useState<number | null>(0);
+	const [colors , setColors] = useState([]);
+	const [sizes , setSizes] = useState([]);
+	const [selectedColor , setSelectedColor] = useState("white");
+	const [selectedSize , setSelectedSize] = useState("S");
 	const [avg, setAvg] = useState<number>(0);
 	const { basket } = useAppSelector((state) => state.basket);
 	const { status: productStatus } = useAppSelector((state) => state.catalog);
@@ -27,14 +32,14 @@ const ProductDetails: React.FC = () => {
 	const { status } = useAppSelector((state) => state.basket);
 	const [hover, setHover] = useState(-1);
 	const labels: { [index: string]: string } = {
-		1: 'Useless+',
-		2: 'Poor+',
-		3: 'Ok+',
-		4: 'Good+',
-		5: 'Excellent+',
+		1: "Useless+",
+		2: "Poor+",
+		3: "Ok+",
+		4: "Good+",
+		5: "Excellent+",
 	};
 	function getLabelText(value: number) {
-		return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
+		return `${value} Star${value !== 1 ? "s" : ""}, ${labels[value]}`;
 	}
 
 	useEffect(() => {
@@ -63,6 +68,16 @@ const ProductDetails: React.FC = () => {
 				.catch((error) => console.log(error));
 	}, [avg, id]);
 
+	useEffect(() => {
+		if (id !== undefined)
+			agent.Catalog.getColors()
+				.then((res) => setColors(res))
+				.catch((error) => console.log(error));
+			agent.Catalog.getSizes()
+				.then((res) => setSizes(res))
+				.catch((error) => console.log(error));
+	}, [id]);
+
 	const [quantity, setQuantity] = useState(0);
 
 	const item = basket?.items.find((i) => i.productId === product?.id);
@@ -85,6 +100,8 @@ const ProductDetails: React.FC = () => {
 				addBasketItemAsync({
 					productId: product?.id!,
 					quantity: updatedQty,
+					color: selectedColor,
+					size: selectedSize
 				})
 			);
 		} else {
@@ -111,6 +128,13 @@ const ProductDetails: React.FC = () => {
 		}
 	};
 
+	const handleColor = (value: string) => {
+		setSelectedColor(value);
+	}
+	const handleSize = (value: string) => {
+		setSelectedSize(value)
+	}
+
 	return (
 		<div className="mt-5 p-5">
 			<div className="grid md:grid-cols-2 ml-4">
@@ -121,14 +145,14 @@ const ProductDetails: React.FC = () => {
 						alt={product.name}
 					/>
 					{product?.quantityInStock! < 0 ? (
-							<img
-								src="/images/out-of-stock-2.png"
-								alt={product.name}
-								className="absolute top-0 left-3 w-[15%]"
-							/>
-						) : (
-							""
-						)}
+						<img
+							src="/images/out-of-stock-2.png"
+							alt={product.name}
+							className="absolute top-0 left-3 w-[15%]"
+						/>
+					) : (
+						""
+					)}
 				</div>
 				<div className="max-w-[400px] mt-5 md:mt-0">
 					<div className="flex gap-10 items-center">
@@ -136,8 +160,15 @@ const ProductDetails: React.FC = () => {
 							<h1>{product.type}</h1>
 						</div>
 						<div className="flex items-center">
-							<p className="mr-2 text-lg md:text-xl text-indigo-600 font-medium underline underline-offset-4">{avg.toFixed(1)} /5</p>
-							<Rating name="read-only" size="small" value={Math.ceil(avg)} readOnly />
+							<p className="mr-2 text-lg md:text-xl text-indigo-600 font-medium underline underline-offset-4">
+								{avg.toFixed(1)} /5
+							</p>
+							<Rating
+								name="read-only"
+								size="small"
+								value={Math.ceil(avg)}
+								readOnly
+							/>
 						</div>
 					</div>
 					<div className="mt-8">
@@ -168,6 +199,33 @@ const ProductDetails: React.FC = () => {
 						<h4 className="font-bold text-2xl md:text-3xl">
 							${(product.price / 100).toFixed(2)}
 						</h4>
+					</div>
+					<div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
+						<div className="flex items-center">
+							<span className="mr-3">Color</span>
+							{colors && colors.map((color: any, idx) => {
+								return (
+									<span key={color.id}>
+										<button onClick={() => handleColor(color.colour_value)} className={`border-2 border-gray-300 ${selectedColor === color.colour_value ? "border-black/70" : ""} ml-1 bg-${color.colour_value}-500 rounded-full w-6 h-6 focus:outline-none`}></button>
+									</span>
+								)
+							})}
+						</div>
+						<div className="flex ml-6 items-center">
+							<span className="mr-3">Size</span>
+							<div className="relative">
+								<select onChange={(e) => handleSize(e.target.value)} className="rounded border appearance-none border-gray-700 py-2 focus:outline-none focus:border-indigo-600 text-base pl-3 pr-10">
+									{sizes && sizes.map((size: any) => {
+										return (
+											<option value={size.size_value}>{size.size_value}</option>
+										)
+									})}
+								</select>
+								<span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
+									<IoIosArrowDown />
+								</span>
+							</div>
+						</div>
 					</div>
 					<div>
 						<button
@@ -206,8 +264,12 @@ const ProductDetails: React.FC = () => {
 									<div className="flex gap-1">
 										<Rating
 											name="simple-controlled"
-											value={valuesStar}
-											getLabelText={getLabelText}
+											value={
+												valuesStar
+											}
+											getLabelText={
+												getLabelText
+											}
 											onChange={(
 												event,
 												newValue
@@ -216,20 +278,40 @@ const ProductDetails: React.FC = () => {
 													newValue
 												);
 											}}
-											onChangeActive={(event, newHover) => {
-												setHover(newHover);
+											onChangeActive={(
+												event,
+												newHover
+											) => {
+												setHover(
+													newHover
+												);
 											}}
 										/>
 										<span>
-											{valuesStar !== null && (
-												<Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : valuesStar]}</Box>
+											{valuesStar !==
+												null && (
+												<Box
+													sx={{
+														ml: 2,
+													}}>
+													{
+														labels[
+															hover !==
+															-1
+																? hover
+																: valuesStar
+														]
+													}
+												</Box>
 											)}
 										</span>
 									</div>
 								</div>
 								<div>
 									<input
-										{...register("content")}
+										{...register(
+											"content"
+										)}
 										className=" rounded border border-gray-300 leading-normal resize-none w-full px-5 py-3 focus:outline-none focus:bg-white"
 										name="content"
 										placeholder="Type Your Comment"

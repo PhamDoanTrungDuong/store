@@ -74,20 +74,28 @@ namespace API.Data
                     .HasForeignKey(k => k.CurrentCateId);
 
                //PRODUCT ATTR
-               builder.Entity<ProductAttributes>()
-                    .HasKey(k => new {k.ColourId, k.ProductId, k.SizeId});
-               builder.Entity<Product>()
-                    .HasMany(p => p.ProductAttributes)
-                    .WithOne(a => a.Product)
-                    .HasForeignKey(fk => fk.ProductId);
-               builder.Entity<Size>()
-                    .HasMany(p => p.ProductAttributes)
-                    .WithOne(a => a.Size)
-                    .HasForeignKey(fk => fk.SizeId);
-               builder.Entity<Colour>()
-                    .HasMany(p => p.ProductAttributes)
-                    .WithOne(a => a.Colour)
-                    .HasForeignKey(fk => fk.ColourId);
+               builder.Entity<ProductSize>()
+                    .HasKey(k => new {k.SizeId, k.ProductId});
+               builder.Entity<ProductColour>()
+                    .HasKey(k => new {k.ColourId, k.ProductId});
+
+               // builder.Entity<Colour>()
+               //      .HasMany(p => p.ProductColours)
+               //      .WithOne(a => a.Colour)
+               //      .HasForeignKey(fk => fk.ColourId);
+               //  builder.Entity<Product>()
+               //      .HasMany(p => p.ProductColours)
+               //      .WithOne(a => a.Product)
+               //      .HasForeignKey(fk => fk.ProductId);
+
+               // builder.Entity<Size>()
+               //      .HasMany(p => p.ProductSizes)
+               //      .WithOne(a => a.Size)
+               //      .HasForeignKey(fk => fk.SizeId);
+               //  builder.Entity<Product>()
+               //      .HasMany(p => p.ProductSizes)
+               //      .WithOne(a => a.Product)
+               //      .HasForeignKey(fk => fk.ProductId);
 
                //USER LIKE
                builder.Entity<UserLike>()

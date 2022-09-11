@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,8 +19,11 @@ namespace API.Entities
         public string PublicId { get; set; }
         public ICollection<Comment> CommentReceived { get; set; }
         public ICollection<UserLike> LikedByUsers { get; set; }
-        public ICollection<ProductAttributes> ProductAttributes { get; set; }
+
+        public ICollection<ProductColour> ProductColours { get; set; }
         
+        public ICollection<ProductSize> ProductSizes { get; set; }
+
         public int CurrentCateId { get; set; }
         public Category Category { get; set; }
     }

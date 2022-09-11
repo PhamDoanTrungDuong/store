@@ -49,6 +49,17 @@ namespace API.Controllers
                   return await _context.Products.CountAsync();
             }
 
+            [HttpGet("get-colors")]
+            public async Task<List<Colour>> GetColors()
+            {
+                  return await _context.Colours.ToListAsync();
+            }
+            [HttpGet("get-sizes")]
+            public async Task<List<Size>> GetSizes()
+            {
+                  return await _context.Sizes.ToListAsync();
+            }
+
             [HttpGet("{id}", Name = "GetProduct")]
             public async Task<ActionResult<Product>> GetProductById(int id)
             {

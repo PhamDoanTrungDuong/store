@@ -6,6 +6,8 @@ export interface BasketItem {
   brand: string;
   type: string;
   quantity: number;
+  color: string;
+  size: string;
 }
 
 export interface IBasket {
