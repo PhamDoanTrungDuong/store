@@ -47,7 +47,7 @@ const Home: React.FC = () => {
 				<Slider {...settings}>
 					<div>
 						<img
-							src="/images/banner3.jpg"
+							src="/images/banner6.jpg"
 							alt="hero"
 							style={{
 								display: "block",
