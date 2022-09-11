@@ -47,7 +47,29 @@ const Home: React.FC = () => {
 				<Slider {...settings}>
 					<div>
 						<img
+							src="/images/banner3.jpg"
+							alt="hero"
+							style={{
+								display: "block",
+								width: "100%",
+								maxHeight: 500,
+							}}
+						/>
+					</div>
+					<div>
+						<img
 							src="/images/banner1.jpg"
+							alt="hero"
+							style={{
+								display: "block",
+								width: "100%",
+								maxHeight: 500,
+							}}
+						/>
+					</div>
+					<div>
+						<img
+							src="/images/banner4.jpg"
 							alt="hero"
 							style={{
 								display: "block",
@@ -69,7 +91,7 @@ const Home: React.FC = () => {
 					</div>
 					<div>
 						<img
-							src="/images/banner3.jpg"
+							src="/images/banner5.jpg"
 							alt="hero"
 							style={{
 								display: "block",

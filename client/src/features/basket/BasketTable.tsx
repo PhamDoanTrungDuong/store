@@ -27,9 +27,9 @@ const BasketTable: React.FC<IProps> = ({ items, isBasket = true }) => {
 					<th align="left" className="px-5 md:px-20 pb-5">
 						Product
 					</th>
-					<th align="center" className="px-5 md:px-10 pb-5">
+					{/* <th align="center" className="px-5 md:px-10 pb-5">
 						Variations
-					</th>
+					</th> */}
 					<th align="center" className="px-5 md:px-10 pb-5">
 						Price
 					</th>
@@ -65,9 +65,9 @@ const BasketTable: React.FC<IProps> = ({ items, isBasket = true }) => {
 								</div>
 							</Link>
 						</td>
-						<td align="center" className="uppercase">
+						{/* <td align="center" className="uppercase">
 							{item.color}, {item.size}
-						</td>
+						</td> */}
 						<td align="center">
 							${(item.price / 100).toFixed(2)}
 						</td>

@@ -200,7 +200,7 @@ const ProductDetails: React.FC = () => {
 							${(product.price / 100).toFixed(2)}
 						</h4>
 					</div>
-					<div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
+					{/* <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
 						<div className="flex items-center">
 							<span className="mr-3">Color</span>
 							{colors && colors.map((color: any, idx) => {
@@ -226,7 +226,7 @@ const ProductDetails: React.FC = () => {
 								</span>
 							</div>
 						</div>
-					</div>
+					</div> */}
 					<div>
 						<button
 							className={
