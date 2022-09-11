@@ -28,6 +28,8 @@ namespace API.Extensions
                         PictureUrl = item.ItemOrdered.PictureUrl,
                         Price = item.Price,
                         Quantity = item.Quantity,
+                        Color = item.ItemOrdered.Color,
+                        Size = item.ItemOrdered.Size
                     }).ToList()
                 }).AsNoTracking();
         }

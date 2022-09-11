@@ -15,15 +15,20 @@ namespace API.Entities
 
         public string ClientSecret { get; set; }
 
-        public void AddItem(Product product, int quantity)
+        public void AddItem(Product product, int quantity, string color, string size)
         {
-            if(Items.All(item => item.ProductId != product.Id))
-            {
-                Items.Add(new BasketItem{Product = product, Quantity = quantity});
-            }
+            // if(Items.All(item => item.ProductId != product.Id))
+            // {
+            //     Items.Add(new BasketItem{Product = product, Quantity = quantity, Color = color, Size = size});
+            // }
 
-            var existingItem = Items.FirstOrDefault(item => item.ProductId == product.Id);
-            if(existingItem != null) existingItem.Quantity += quantity;
+            var existingItem = Items.FirstOrDefault(item => item.ProductId == product.Id && item.Color == color && item.Size == size);
+            if(existingItem != null)
+            {
+                existingItem.Quantity += quantity;
+            }else{
+                Items.Add(new BasketItem{Product = product, Quantity = quantity, Color = color, Size = size});
+            }
         }
 
         public void RemoveItem(int productId, int quantity)

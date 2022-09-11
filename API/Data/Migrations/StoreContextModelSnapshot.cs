@@ -50,11 +50,17 @@ namespace API.Data.Migrations
                     b.Property<int>("BasketId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Color")
+                        .HasColumnType("text");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Size")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -235,7 +241,7 @@ namespace API.Data.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("API.Entities.ProductAttributes", b =>
+            modelBuilder.Entity("API.Entities.ProductColour", b =>
                 {
                     b.Property<int>("ColourId")
                         .HasColumnType("integer");
@@ -243,16 +249,26 @@ namespace API.Data.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("SizeId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ColourId", "ProductId", "SizeId");
+                    b.HasKey("ColourId", "ProductId");
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("SizeId");
+                    b.ToTable("ProductColour");
+                });
 
-                    b.ToTable("ProductAttributes");
+            modelBuilder.Entity("API.Entities.ProductSize", b =>
+                {
+                    b.Property<int>("SizeId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("SizeId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductSize");
                 });
 
             modelBuilder.Entity("API.Entities.Role", b =>
@@ -286,14 +302,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "dd658b9f-95d5-462c-b944-00deecd0e311",
+                            ConcurrencyStamp = "87face74-74a1-4db2-aa4b-246d8aaf8c4a",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "bfbfc06d-8d2a-4b26-b262-90fa0387f31d",
+                            ConcurrencyStamp = "604d9ce0-6544-4f3e-b177-f689494432f8",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -625,6 +641,9 @@ namespace API.Data.Migrations
                                 .HasColumnType("integer")
                                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                            b1.Property<string>("Color")
+                                .HasColumnType("text");
+
                             b1.Property<string>("Name")
                                 .HasColumnType("text");
 
@@ -633,6 +652,9 @@ namespace API.Data.Migrations
 
                             b1.Property<int>("ProductId")
                                 .HasColumnType("integer");
+
+                            b1.Property<string>("Size")
+                                .HasColumnType("text");
 
                             b1.HasKey("OrderItemId");
 
@@ -656,27 +678,38 @@ namespace API.Data.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("API.Entities.ProductAttributes", b =>
+            modelBuilder.Entity("API.Entities.ProductColour", b =>
                 {
                     b.HasOne("API.Entities.Colour", "Colour")
-                        .WithMany("ProductAttributes")
+                        .WithMany("ProductColours")
                         .HasForeignKey("ColourId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API.Entities.Product", "Product")
-                        .WithMany("ProductAttributes")
+                        .WithMany("ProductColours")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Colour");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("API.Entities.ProductSize", b =>
+                {
+                    b.HasOne("API.Entities.Product", "Product")
+                        .WithMany("ProductSizes")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API.Entities.Size", "Size")
-                        .WithMany("ProductAttributes")
+                        .WithMany("ProductSizes")
                         .HasForeignKey("SizeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Colour");
 
                     b.Navigation("Product");
 
@@ -778,7 +811,7 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Colour", b =>
                 {
-                    b.Navigation("ProductAttributes");
+                    b.Navigation("ProductColours");
                 });
 
             modelBuilder.Entity("API.Entities.OrderAggregate.Order", b =>
@@ -792,7 +825,9 @@ namespace API.Data.Migrations
 
                     b.Navigation("LikedByUsers");
 
-                    b.Navigation("ProductAttributes");
+                    b.Navigation("ProductColours");
+
+                    b.Navigation("ProductSizes");
                 });
 
             modelBuilder.Entity("API.Entities.Role", b =>
@@ -802,7 +837,7 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Size", b =>
                 {
-                    b.Navigation("ProductAttributes");
+                    b.Navigation("ProductSizes");
                 });
 
             modelBuilder.Entity("API.Entities.User", b =>

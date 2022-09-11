@@ -7,6 +7,8 @@ export interface IProduct {
   type?: string;
   brand: string;
   quantityInStock?: number;
+  color: string;
+  size: string;
 }
 
 export interface ProductParams {

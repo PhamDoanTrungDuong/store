@@ -15,11 +15,11 @@ const initialState: BasketState = {
   signature: ""
 };
 
-export const addBasketItemAsync = createAsyncThunk<IBasket, {productId: number, quantity?: number}>(
+export const addBasketItemAsync = createAsyncThunk<IBasket, {productId: number, quantity?: number, color: string, size: string}>(
   'basket/addBasketItemAsync',
-  async ({productId, quantity = 1}, thunkAPI) => {
+  async ({productId, quantity = 1, color, size}, thunkAPI) => {
     try{
-        return await agent.Basket.addItem(productId, quantity);
+        return await agent.Basket.addItem(productId, quantity, color, size);
     }catch(error: any){
       return thunkAPI.rejectWithValue({error: error.data})
     }

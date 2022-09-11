@@ -103,7 +103,9 @@ namespace API.Controllers
                     {
                         ProductId = productItem.Id,
                         Name = productItem.Name,
-                        PictureUrl = productItem.PictureUrl
+                        PictureUrl = productItem.PictureUrl,
+                        Color = item.Color,
+                        Size = item.Size
                     };
 
                     var orderItem = new OrderItem
@@ -184,7 +186,9 @@ namespace API.Controllers
                     {
                         ProductId = productItem.Id,
                         Name = productItem.Name,
-                        PictureUrl = productItem.PictureUrl
+                        PictureUrl = productItem.PictureUrl,
+                        Color = item.Color,
+                        Size = item.Size
                     };
 
                     var orderItem = new OrderItem

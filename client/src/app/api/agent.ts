@@ -103,11 +103,13 @@ const Catalog = {
     details: (id: number) => requests.get(`products/${id}`),
     fetchFilter: () => requests.get('products/filters'),
     getProductCount: () => requests.get('products/get-product-count'),
+    getColors: () => requests.get('products/get-colors'),
+    getSizes: () => requests.get('products/get-sizes'),
 }
 
 const Basket = {
     get: () => requests.get('basket'),
-    addItem: (productId: number, quantity = 1) => requests.post(`basket?productId=${productId}&quantity=${quantity}`, {}),
+    addItem: (productId: number, quantity = 1, color: string, size: string) => requests.post(`basket?productId=${productId}&quantity=${quantity}&color=${color}&size=${size}`, {}),
     removeItem: (productId: number, quantity = 1) => requests.delete(`basket?productId=${productId}&quantity=${quantity}`),
 }
 
