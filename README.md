@@ -13,14 +13,14 @@
       + tồn kho x
       + khuyễn mãi x
       + xác nhận đơn hàng
+      + xác nhận bình luận
+      + hiển thị thông báo
       + thống kê
             - doanh số theo d/m/y
             - số lượng sản phẩm bán chạy
             - đánh giá sản phẩm
-      + hiển thị thông báo
+      + hủy đơn hàng momo - hoàn tiền momo
       + like sản phẩm
-      + lọc bình luận
       + blog
       + đăng nhập gmail
-      + hủy đơn hàng momo - hoàn tiền momo
  -->
