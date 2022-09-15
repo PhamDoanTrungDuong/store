@@ -19,7 +19,6 @@ import MemberForm from "./MemberForm";
 import AppPagination from "../../app/components/AppPagination";
 import { removeMember, setPageNumber } from "../account/accountSlice";
 import { useAppDispatch } from "../../app/store/configureStore";
-import AppSwitch from "../../app/components/AppSwitch";
 import MemberSearch from "../../app/components/MemberSearch";
 
 const AdminMembers: React.FC = () => {

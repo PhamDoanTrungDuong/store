@@ -11,6 +11,19 @@ export interface IProduct {
   size: string;
 }
 
+export interface IProductDiscount {
+  id: number;
+  productId: number;
+  productName: string;
+  price: number;
+  pictureUrl: string;
+  type?: string;
+  brand: string;
+  quantityInStock: number;
+  dateCreate: string;
+  discountValue: number;
+}
+
 export interface ProductParams {
   orderBy: string;
   searchTerm?: string;

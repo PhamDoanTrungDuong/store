@@ -25,7 +25,8 @@ namespace API.Extensions
                     Brand = item.Product.Brand,
                     Quantity = item.Quantity,
                     Color = item.Color,
-                    Size = item.Size
+                    Size = item.Size,
+                    SalePrice = item.SalePrice
                 }).ToList()
             };
         }

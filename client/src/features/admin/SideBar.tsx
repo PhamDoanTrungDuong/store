@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { RiBarChartBoxFill, RiTableFill, RiAccountCircleFill } from "react-icons/ri";
+import { RiBarChartBoxFill, RiTableFill, RiAccountCircleFill, RiPriceTag3Fill } from "react-icons/ri";
 import { MdManageAccounts, MdInsertComment, MdOutlineCardGiftcard } from "react-icons/md";
 
 const SideBar: React.FC = () => {
@@ -12,6 +12,16 @@ const SideBar: React.FC = () => {
 			to: "/inventory",
 			icon: (
 				<RiBarChartBoxFill
+					size={30}
+					className="rounded-lg fill-white group-hover:fill-indigo-600"
+				/>
+			),
+		},
+		{
+			title: "Sales",
+			to: "/admin-sales",
+			icon: (
+				<RiPriceTag3Fill
 					size={30}
 					className="rounded-lg fill-white group-hover:fill-indigo-600"
 				/>

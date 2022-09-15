@@ -47,9 +47,13 @@ namespace API.Controllers
             else
             {
                 var product = await _context.Products.FindAsync(productId);
+                var discount = await _context.ProductDiscounts.FirstOrDefaultAsync(x => x.productId == productId);
+
+                var salesPrice = discount != null ? (long)(discount.Price - (discount.Price * discount.DiscountValue / 100)) : product.Price;
+
                 if(product == null) return BadRequest(new ProblemDetails{Title = "Product not found"});
 
-                basket.AddItem(product, quantity, color, size);
+                basket.AddItem(product, quantity, color, size, salesPrice);
 
                 var result = await _context.SaveChangesAsync() > 0;
                 if(result) return CreatedAtRoute("GetBasket", basket.MapBasketToDto());

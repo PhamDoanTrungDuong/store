@@ -5,12 +5,14 @@ import NotFound from "../../app/errors/NotFound";
 import Loading from "../../app/layout/Loading";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { addBasketItemAsync, removeBasketItemAsync, setStateBasket } from "../basket/basketSlice";
-import { fetchProductAsync, productSelector } from "./catalogSlice";
+import { fetchProductAsync, fetchProductsDiscountAsync, productSelector } from "./catalogSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
 import CommentThread from "./CommentThread";
 import agent from "../../app/api/agent";
 import Swal from "sweetalert2";
-import { IoIosArrowDown } from "react-icons/io"
+import { IoIosArrowDown } from "react-icons/io";
+import useProducts from "../../app/hooks/useProducts";
+import { IProductDiscount } from "../../app/interfaces/IProduct";
 
 interface Inputs {
 	productId: string;
@@ -18,12 +20,15 @@ interface Inputs {
 }
 
 const ProductDetails: React.FC = () => {
+	const { productDiscount, productsLoaded } = useAppSelector((state) => state.catalog);
+	const [Sales, setSales] = useState<IProductDiscount>();
+
 	const { register, handleSubmit } = useForm<Inputs>();
 	const [valuesStar, setValuesStar] = useState<number | null>(0);
-	const [colors , setColors] = useState([]);
-	const [sizes , setSizes] = useState([]);
-	const [selectedColor , setSelectedColor] = useState("white");
-	const [selectedSize , setSelectedSize] = useState("S");
+	const [colors, setColors] = useState([]);
+	const [sizes, setSizes] = useState([]);
+	const [selectedColor, setSelectedColor] = useState("white");
+	const [selectedSize, setSelectedSize] = useState("S");
 	const [avg, setAvg] = useState<number>(0);
 	const { basket } = useAppSelector((state) => state.basket);
 	const { status: productStatus } = useAppSelector((state) => state.catalog);
@@ -69,13 +74,21 @@ const ProductDetails: React.FC = () => {
 	}, [avg, id]);
 
 	useEffect(() => {
+		if (!productsLoaded) dispatch(fetchProductsDiscountAsync());
+	}, [dispatch, productsLoaded]);
+
+	useEffect(() => {
+		setSales(productDiscount.find((item) => +item.productId === +id));
+	}, [productDiscount, id]);
+
+	useEffect(() => {
 		if (id !== undefined)
 			agent.Catalog.getColors()
 				.then((res) => setColors(res))
 				.catch((error) => console.log(error));
-			agent.Catalog.getSizes()
-				.then((res) => setSizes(res))
-				.catch((error) => console.log(error));
+		agent.Catalog.getSizes()
+			.then((res) => setSizes(res))
+			.catch((error) => console.log(error));
 	}, [id]);
 
 	const [quantity, setQuantity] = useState(0);
@@ -101,7 +114,7 @@ const ProductDetails: React.FC = () => {
 					productId: product?.id!,
 					quantity: updatedQty,
 					color: selectedColor,
-					size: selectedSize
+					size: selectedSize,
 				})
 			);
 		} else {
@@ -130,10 +143,10 @@ const ProductDetails: React.FC = () => {
 
 	const handleColor = (value: string) => {
 		setSelectedColor(value);
-	}
+	};
 	const handleSize = (value: string) => {
-		setSelectedSize(value)
-	}
+		setSelectedSize(value);
+	};
 
 	return (
 		<div className="mt-5 p-5">
@@ -150,6 +163,20 @@ const ProductDetails: React.FC = () => {
 							alt={product.name}
 							className="absolute top-0 left-3 w-[15%]"
 						/>
+					) : (
+						""
+					)}
+					{Sales?.discountValue ? (
+						<>
+							<img
+								src="/images/discount.png"
+								alt={Sales.productName}
+								className="absolute top-[-1px] right-28 w-[20%]"
+							/>
+							<p className="text-white rotate-6 font-bold text-2xl absolute top-[36px] right-[163px] z-10">
+								{Sales?.discountValue}
+							</p>
+						</>
 					) : (
 						""
 					)}
@@ -196,9 +223,34 @@ const ProductDetails: React.FC = () => {
 								onChange={hanldeInputChange}
 							/>
 						</div>
-						<h4 className="font-bold text-2xl md:text-3xl">
-							${(product.price / 100).toFixed(2)}
-						</h4>
+						{Sales?.discountValue ? (
+							<>
+								<div className="gap-2 text-2xl md:text-3xl font-bold">
+									<h5 className="text-gray-400 font-bold line-through">
+										$
+										{(
+											product.price /
+											100
+										).toFixed(2)}
+									</h5>
+									<h5 className="font-bold">
+										$
+										{(
+											Sales.price /
+												100 -
+											(Sales.price *
+												(Sales.discountValue /
+													100)) /
+												100
+										).toFixed(2)}
+									</h5>
+								</div>
+							</>
+						) : (
+							<h5 className="text-2xl md:text-3xl font-bold">
+								${(product.price / 100).toFixed(2)}
+							</h5>
+						)}
 					</div>
 					{/* <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
 						<div className="flex items-center">
