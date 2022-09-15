@@ -15,7 +15,7 @@ namespace API.Entities
 
         public string ClientSecret { get; set; }
 
-        public void AddItem(Product product, int quantity, string color, string size)
+        public void AddItem(Product product, int quantity, string color, string size, long salesPrice)
         {
             // if(Items.All(item => item.ProductId != product.Id))
             // {
@@ -27,7 +27,7 @@ namespace API.Entities
             {
                 existingItem.Quantity += quantity;
             }else{
-                Items.Add(new BasketItem{Product = product, Quantity = quantity, Color = color, Size = size});
+                Items.Add(new BasketItem{Product = product, Quantity = quantity, Color = color, Size = size, SalePrice = salesPrice});
             }
         }
 

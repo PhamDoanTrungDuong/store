@@ -1,4 +1,4 @@
-import { IProduct } from "../../app/interfaces/IProduct";
+import { IProduct, IProductDiscount } from "../../app/interfaces/IProduct";
 import { useAppDispatch } from "../../app/store/configureStore";
 import { addBasketItemAsync } from "../basket/basketSlice";
 import { Link } from "react-router-dom";
@@ -7,12 +7,16 @@ import { FaHeart } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import agent from "../../app/api/agent";
 import { Rating, Tooltip } from "@mui/material";
+import useProducts from "../../app/hooks/useProducts";
 
 interface IProps {
 	product: IProduct;
 }
 
 const ProductCard: React.FC<IProps> = ({ product }) => {
+	const { productDiscount } = useProducts();
+	const [productSales, setProductSales] = useState<IProductDiscount>();
+
 	const dispatch = useAppDispatch();
 	const [avg, setAvg] = useState<number>(0);
 	useEffect(() => {
@@ -22,6 +26,15 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 				.catch((error) => console.log(error));
 		// console.log("[AvgStarRating]: ", avg);
 	}, [avg, product.id]);
+
+	useEffect(() => {
+		productDiscount.filter((e: any) => {
+			if (product.id && e.productId === product.id) {
+				setProductSales(e);
+			}
+			return product.id;
+		});
+	}, [productDiscount, product.id]);
 
 	return (
 		<div className="border rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 duration-300">
@@ -39,6 +52,20 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 								alt={product.name}
 								className="absolute top-0 left-3 w-[22%]"
 							/>
+						) : (
+							""
+						)}
+						{productSales?.discountValue ? (
+							<>
+								<img
+									src="./images/discount.png"
+									alt={productSales.productName}
+									className="absolute top-[-1px] right-3 w-[30%]"
+								/>
+								<p className="text-white rotate-6 font-bold text-xl absolute top-[26px] right-[50px] z-10">
+									{productSales?.discountValue}
+								</p>
+							</>
 						) : (
 							""
 						)}
@@ -67,11 +94,36 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 						</p>
 					</div>
 					<div className="flex justify-between items-center">
-						<h5 className="text-xl font-bold">
-							${(product.price / 100).toFixed(2)}
-						</h5>
+						{productSales?.discountValue ? (
+							<>
+								<div className="flex gap-2 text-lg font-bold">
+									<h5 className="text-gray-400 font-bold line-through">
+										$
+										{(
+											product.price /
+											100
+										).toFixed(2)}
+									</h5>
+									<h5 className="font-bold">
+										$
+										{(
+											productSales.price /
+												100 -
+											(productSales.price *
+												(productSales.discountValue /
+													100)) /
+												100
+										).toFixed(2)}
+									</h5>
+								</div>
+							</>
+						) : (
+							<h5 className="text-lg font-bold">
+								${(product.price / 100).toFixed(2)}
+							</h5>
+						)}
 						<div className="flex items-center">
-							<button className="mr-3">
+							<button className="mr-1">
 								<FaHeart
 									size="20"
 									className="text-gray-600 hover:text-red-600 duration-300"
@@ -86,7 +138,7 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 												{
 													productId: product.id,
 													color: "white",
-													size: "S"
+													size: "S",
 												}
 											)
 										)

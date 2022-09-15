@@ -59,6 +59,9 @@ namespace API.Data.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
+                    b.Property<long>("SalePrice")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Size")
                         .HasColumnType("text");
 
@@ -256,6 +259,47 @@ namespace API.Data.Migrations
                     b.ToTable("ProductColour");
                 });
 
+            modelBuilder.Entity("API.Entities.ProductDiscount", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Brand")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateCreate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<double>("DiscountValue")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("PictureUrl")
+                        .HasColumnType("text");
+
+                    b.Property<long>("Price")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("QuantityInStock")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("text");
+
+                    b.Property<int>("productId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("productName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("productId");
+
+                    b.ToTable("ProductDiscounts");
+                });
+
             modelBuilder.Entity("API.Entities.ProductSize", b =>
                 {
                     b.Property<int>("SizeId")
@@ -302,14 +346,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "87face74-74a1-4db2-aa4b-246d8aaf8c4a",
+                            ConcurrencyStamp = "96c214c4-c588-407c-a158-d8b00df97a03",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "604d9ce0-6544-4f3e-b177-f689494432f8",
+                            ConcurrencyStamp = "ff2a5ef9-630b-4b65-9238-a89c58e97325",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -697,6 +741,17 @@ namespace API.Data.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("API.Entities.ProductDiscount", b =>
+                {
+                    b.HasOne("API.Entities.Product", "Product")
+                        .WithMany("ProductDiscounts")
+                        .HasForeignKey("productId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("API.Entities.ProductSize", b =>
                 {
                     b.HasOne("API.Entities.Product", "Product")
@@ -826,6 +881,8 @@ namespace API.Data.Migrations
                     b.Navigation("LikedByUsers");
 
                     b.Navigation("ProductColours");
+
+                    b.Navigation("ProductDiscounts");
 
                     b.Navigation("ProductSizes");
                 });

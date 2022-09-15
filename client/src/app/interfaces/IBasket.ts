@@ -8,6 +8,7 @@ export interface BasketItem {
   quantity: number;
   color: string;
   size: string;
+  salePrice: number;
 }
 
 export interface IBasket {

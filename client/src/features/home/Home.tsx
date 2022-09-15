@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import Slider from "react-slick";
 import Swal from "sweetalert2";
+import useProducts from "../../app/hooks/useProducts";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import About from "../about/About";
 import { setStateUser } from "../account/accountSlice";
 import Advertise from "../Advertise/Advertise";
 import Contact from "../contact/Contact";
+import ProductDiscount from "./ProductDiscount";
 
 const Home: React.FC = () => {
 	var settings = {
@@ -19,6 +21,10 @@ const Home: React.FC = () => {
 	};
 	const { status } = useAppSelector((state) => state.account);
 	const dispatch = useAppDispatch();
+
+	const { productDiscount } = useProducts(); 
+	console.log(productDiscount.length)
+
 	useEffect(() => {
 		if (status === "loginSuccess") {
 			Swal.fire({
@@ -102,6 +108,10 @@ const Home: React.FC = () => {
 					</div>
 				</Slider>
 				<div className="mt-3 text-center p-4">
+					{productDiscount.length !== 0 &&
+						<ProductDiscount />
+					}
+
 					{/* About */}
 					<About />
 					<hr />

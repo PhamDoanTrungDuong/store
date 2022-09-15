@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
-import { productSelector, fetchProductsAsync, fetchFiltersAsync, fetchCategoriesAsync } from '../../features/catalog/catalogSlice';
+import { productSelector, fetchProductsAsync, fetchFiltersAsync, fetchCategoriesAsync, fetchProductsDiscountAsync } from '../../features/catalog/catalogSlice';
 import { useAppSelector, useAppDispatch } from '../store/configureStore';
 
 const useProducts = () => {
       const products = useAppSelector(productSelector.selectAll);
-      const { productsLoaded, filtersLoaded, brands, types, categories, productParams, pagination } =
+      const { productsLoaded, productDiscount, filtersLoaded, brands, types, categories, productParams, pagination } =
         useAppSelector((state) => state.catalog);
 
       const dispatch = useAppDispatch();
@@ -21,6 +21,10 @@ const useProducts = () => {
         if (!filtersLoaded) dispatch(fetchCategoriesAsync());
       }, [dispatch, filtersLoaded]);
 
+      useEffect(() => {
+        if (!productsLoaded) dispatch(fetchProductsDiscountAsync());
+      }, [dispatch, productsLoaded]);
+
       return {
             products,
             productsLoaded,
@@ -29,7 +33,8 @@ const useProducts = () => {
             types,
             categories,
             productParams,
-            pagination
+            pagination,
+            productDiscount,
       }
 }
 

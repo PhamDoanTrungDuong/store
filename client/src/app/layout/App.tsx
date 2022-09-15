@@ -33,6 +33,7 @@ import SideBar from "../../features/admin/SideBar";
 import SignedInMenu from "./SignedInMenu";
 import ChangePassword from "../../features/account/ChangePassword";
 import MoMoPaymentSucceeded from "../../features/checkout/MoMoPaymentSucceeded";
+import AdminSales from "../../features/admin/AdminSales";
 
 const App: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -91,6 +92,15 @@ const App: React.FC = () => {
 									<PrivateRoute
 										roles={["Admin"]}>
 										<Inventory />
+									</PrivateRoute>
+								}
+							/>
+							<Route
+								path="/admin-sales"
+								element={
+									<PrivateRoute
+										roles={["Admin"]}>
+										<AdminSales />
 									</PrivateRoute>
 								}
 							/>

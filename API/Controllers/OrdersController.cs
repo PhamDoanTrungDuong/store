@@ -111,7 +111,7 @@ namespace API.Controllers
                     var orderItem = new OrderItem
                     {
                         ItemOrdered = itemOrdered,
-                        Price = productItem.Price,
+                        Price = item.SalePrice,
                         Quantity = item.Quantity
                     };
 

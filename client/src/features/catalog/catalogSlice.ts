@@ -1,4 +1,4 @@
-import { IProduct, ProductParams } from "./../../app/interfaces/IProduct";
+import { IProduct, IProductDiscount, ProductParams } from "./../../app/interfaces/IProduct";
 import {
   createAsyncThunk,
   createEntityAdapter,
@@ -21,6 +21,7 @@ interface CatalogState {
   productParams: ProductParams;
   pagination: IPagination | null;
   productCount: number;
+  productDiscount: IProductDiscount[];
 }
 
 const productsAdapter = createEntityAdapter<IProduct>();
@@ -44,6 +45,18 @@ export const fetchProductsAsync = createAsyncThunk<IProduct[], void, {state: Roo
       const response = await agent.Catalog.list(params);
       thunkAPI.dispatch(setPagination(response.pagination));
       return response.items;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({ error: error.data });
+    }
+  }
+);
+
+export const fetchProductsDiscountAsync = createAsyncThunk<IProductDiscount[], void, {state: RootState}>(
+  "catalog/fetchProductsDiscountAsync",
+  async (_, thunkAPI) => {
+    try {
+      const response = await agent.Catalog.getProductDiscount();
+      return response;
     } catch (error: any) {
       return thunkAPI.rejectWithValue({ error: error.data });
     }
@@ -128,6 +141,7 @@ export const catalogSlice = createSlice({
     productParams: initParams(),
     pagination: null,
     productCount: 0,
+    productDiscount: []
   }),
   reducers: {
       setComments: (state, action) => {
@@ -154,6 +168,9 @@ export const catalogSlice = createSlice({
       removeProduct: (state, action) => {
           productsAdapter.removeOne(state, action.payload);
           state.productsLoaded = false;
+      },
+      setProductState: (state) => {
+        state.productsLoaded = true
       }
   },
   extraReducers: (builder) => {
@@ -176,9 +193,21 @@ export const catalogSlice = createSlice({
     });
     builder.addCase(fetchProductAsync.fulfilled, (state, action) => {
       productsAdapter.upsertOne(state, action.payload);
+      state.productsLoaded = true;
       state.status = "idle";
     });
     builder.addCase(fetchProductAsync.rejected, (state, action) => {
+      state.status = "idle";
+    });
+    //Product Discount
+    builder.addCase(fetchProductsDiscountAsync.pending, (state) => {
+      state.status = "fetchProductsDiscountAsync";
+    });
+    builder.addCase(fetchProductsDiscountAsync.fulfilled, (state, action) => {
+        state.productDiscount = action.payload;
+        state.productsLoaded = true;
+    });
+    builder.addCase(fetchProductsDiscountAsync.rejected, (state) => {
       state.status = "idle";
     });
 
@@ -218,7 +247,7 @@ export const catalogSlice = createSlice({
   },
 });
 
-export const { setProductParams, resetProductParams, setPagination, setPageNumber, setProduct, removeProduct, setComments} = catalogSlice.actions;
+export const { setProductParams, resetProductParams, setPagination, setPageNumber, setProduct, removeProduct, setComments, setProductState} = catalogSlice.actions;
 export const productSelector = productsAdapter.getSelectors(
   (state: RootState) => state.catalog
 );

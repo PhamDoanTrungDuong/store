@@ -19,5 +19,8 @@ namespace API.DTOs
         public string Color { get; set; }
 
         public string Size { get; set; }
+
+        public long? SalePrice { get; set; }
+
     }
 }

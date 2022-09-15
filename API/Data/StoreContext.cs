@@ -17,6 +17,7 @@ namespace API.Data
           public DbSet<Order> Orders { get; set; }
           public DbSet<Comment> Comments { get; set; }
           public DbSet<Category> Categories { get; set; }
+          public DbSet<ProductDiscount> ProductDiscounts { get; set; }
           public DbSet<UserLike> Likes { get; set; }
           public DbSet<Entities.Size> Sizes { get; set; }
           public DbSet<Colour> Colours { get; set; }

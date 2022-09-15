@@ -42,6 +42,11 @@ namespace API.Controllers
 
                   return products;
             }
+            [HttpGet("get-select-product")]
+            public async Task<ActionResult<List<Product>>> GetSelectProduct()
+            {
+                  return await _context.Products.ToListAsync();
+            }
 
             [HttpGet("get-product-count")]
             public async Task<int> GetCounterProduct()

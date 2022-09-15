@@ -8,8 +8,9 @@ interface IProps {
 
 const BasketSumary: React.FC<IProps> = ({subtotal}) => {
   const {basket} = useAppSelector(state => state.basket);
+
     if (subtotal === undefined)
-       subtotal = basket?.items.reduce((sum, item) => sum + (item.quantity * item.price), 0) ?? 0;
+       subtotal = basket?.items.reduce((sum, item) => sum + (item.quantity * item.salePrice), 0) ?? 0;
     const deliveryFee = subtotal > 10000 ? 0 : 500;
 
     return (
