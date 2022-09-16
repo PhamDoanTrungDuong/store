@@ -24,6 +24,10 @@ import { IProduct } from "../../app/interfaces/IProduct";
 import useProducts from "../../app/hooks/useProducts";
 import ProductSearch from "../catalog/ProductSearch";
 import { HiDotsVertical } from "react-icons/hi"
+import { Link } from "react-router-dom";
+import { AiOutlineHome } from "react-icons/ai";
+import { IoIosArrowForward } from "react-icons/io";
+import { RiBarChartBoxFill } from "react-icons/ri";
 
 const Inventory: React.FC = () => {
 	const { products, pagination } = useProducts();
@@ -63,8 +67,25 @@ const Inventory: React.FC = () => {
 	if (editMode) return <ProductForm product={selectedProduct} cancelEdit={cancelEdit} />;
 	return (
 		<div className="mt-5 p-5 ">
+			<div className="flex items-center ml-2 mb-5">
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<AiOutlineHome size={20} />
+						Home
+					</h1>
+				</Link>
+				<div className="mx-2">
+					<IoIosArrowForward size={15} />
+				</div>
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<RiBarChartBoxFill size={20} />
+						Orders
+					</h1>
+				</Link>
+			</div>
 			<div className="flex justify-between items-center mb-3">
-				<h4 className="text-2xl font-bold my-4">Inventory</h4>
+				<div></div>
 				<div className="w-[60%]">
 					<ProductSearch />
 				</div>

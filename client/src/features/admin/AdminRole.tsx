@@ -8,10 +8,14 @@ import {
 	TableBody,
 } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
+import { AiOutlineHome } from "react-icons/ai";
+import { IoIosArrowForward } from "react-icons/io";
+import { MdManageAccounts } from "react-icons/md";
 import { IUsers } from "../../app/interfaces/IUsers";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { fetchUsers } from "../account/accountSlice";
 import EditRoleForm from "./EditRoleForm";
+import { Link } from "react-router-dom";
 
 const AdminRole: React.FC = () => {
 	const { users } = useAppSelector((state) => state.account);
@@ -45,7 +49,23 @@ const AdminRole: React.FC = () => {
 
 	return (
 		<div className=" mt-5 p-5">
-			<h4 className="text-2xl font-bold my-4">Roles</h4>
+			<div className="flex items-center ml-2 mb-5">
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<AiOutlineHome size={20} />
+						Home
+					</h1>
+				</Link>
+				<div className="mx-2">
+					<IoIosArrowForward size={15} />
+				</div>
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<MdManageAccounts size={20} />
+						Roles
+					</h1>
+				</Link>
+			</div>
 			<div className="h-[600px] overflow-y-scroll">
 				<TableContainer component={Paper}>
 					<Table>

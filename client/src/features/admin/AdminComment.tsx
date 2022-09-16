@@ -14,6 +14,9 @@ import moment from "moment";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { fetchCommentsAsync, setComLoad } from "./adminSlice";
 import CommentSearch from "../../app/components/CommentSearch";
+import { AiOutlineHome, AiOutlineComment } from "react-icons/ai";
+import { IoIosArrowForward } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const AdminComment: React.FC = () => {
 	const { comments, loadComment } = useAppSelector((state) => state.admin);
@@ -31,11 +34,29 @@ const AdminComment: React.FC = () => {
 
 	return (
 		<div className=" mt-5 p-5">
-			<div className="flex gap-2 justify-start items-center mb-5">
-				<h4 className=" basis-1/4 text-2xl font-bold my-4">Comments</h4>
+			<div className="flex items-center ml-2 mb-5">
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<AiOutlineHome size={20} />
+						Home
+					</h1>
+				</Link>
+				<div className="mx-2">
+					<IoIosArrowForward size={15} />
+				</div>
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<AiOutlineComment size={20} />
+						Comments
+					</h1>
+				</Link>
+			</div>
+			<div className="flex gap-2 justify-between items-center mb-5">
+				<div></div>
 				<div className="basis-3/4 w-[40%]">
 					<CommentSearch />
 				</div>
+				<div></div>
 			</div>
 			<div className="h-[600px] overflow-y-scroll">
 				<TableContainer component={Paper}>

@@ -5,6 +5,10 @@ import BasketSumary from "../basket/BasketSumary";
 import BasketTable from "../basket/BasketTable";
 import { TbGift, TbHome2 } from "react-icons/tb";
 import { RiTruckLine } from "react-icons/ri";
+import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
+import { IoIosArrowForward } from "react-icons/io";
+import { FaHashtag } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 interface IProps {
 	order: IOrder;
@@ -17,6 +21,32 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder }) => {
 	const steps = ["Order Placed", "On The Way", "Product Delivered"];
 	return (
 		<div className=" mt-5 p-5">
+			<div className="flex items-center ml-2 mt-3 mb-5">
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<AiOutlineHome size={20} />
+						Home
+					</h1>
+				</Link>
+				<div className="mx-2">
+					<IoIosArrowForward size={15} />
+				</div>
+				<Link to="/orders">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<AiOutlineShoppingCart size={20} />
+						Orders
+					</h1>
+				</Link>
+				<div className="mx-2">
+					<IoIosArrowForward size={15} />
+				</div>
+				<Link to="/orders">
+					<h1 className="flex items-center hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<FaHashtag size={15} />
+						{order.id}
+					</h1>
+				</Link>
+			</div>
 			<div className="flex justify-between items-center mb-5">
 				<div>
 					<h4 className="hidden md:block text-2xl font-bold uppercase">

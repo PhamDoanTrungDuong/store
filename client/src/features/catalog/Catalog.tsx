@@ -12,6 +12,10 @@ import { FiFilter } from "react-icons/fi";
 import { RiBookmark3Line } from "react-icons/ri";
 import Swal from "sweetalert2";
 import { setStateBasket } from "../basket/basketSlice";
+import { Link } from "react-router-dom";
+import { IoIosArrowForward } from "react-icons/io";
+import { AiOutlineHome } from "react-icons/ai";
+import { BiCategoryAlt } from "react-icons/bi";
 
 const sortOptions = [
 	{ value: "latest", label: "Latest Product" },
@@ -23,7 +27,9 @@ const sortOptions = [
 const Catalog: React.FC = () => {
 	const { products, filtersLoaded, brands, categories, pagination } = useProducts();
 
-	var cate = categories.map((item: any) => {return item.name});
+	var cate = categories.map((item: any) => {
+		return item.name;
+	});
 
 	const { productParams } = useAppSelector((state) => state.catalog);
 	const { status } = useAppSelector((state) => state.basket);
@@ -31,19 +37,18 @@ const Catalog: React.FC = () => {
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		if(status === "addSuccess"){
+		if (status === "addSuccess") {
 			Swal.fire({
-				icon: 'success',
-				title: 'Added Product Successful',
+				icon: "success",
+				title: "Added Product Successful",
 				showConfirmButton: false,
-				timer: 1500
-			    })
-			}
+				timer: 1500,
+			});
+		}
 		return () => {
 			dispatch(setStateBasket());
-		}
-	}, [dispatch, status])
-
+		};
+	}, [dispatch, status]);
 
 	if (!filtersLoaded) return <Loading message="Loading Catalog..." />;
 
@@ -129,6 +134,23 @@ const Catalog: React.FC = () => {
 						</div>
 					</div>
 					<div className="basis md:basis-4/5">
+						<div className="flex items-center ml-2 mt-3 my-4">
+							<Link to="/">
+								<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+								<AiOutlineHome size={20} />
+									Home
+								</h1>
+							</Link>
+							<div className="mx-2">
+								<IoIosArrowForward size={15} />
+							</div>
+							<Link to="/catalog">
+							<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+								<BiCategoryAlt size={20} />
+									Catalog
+								</h1>
+							</Link>
+						</div>
 						<ProductSearch />
 						<ProductList products={products} />
 					</div>

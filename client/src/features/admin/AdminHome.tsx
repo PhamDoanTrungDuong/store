@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { BsThreeDots, BsPeople, BsCart4 } from "react-icons/bs";
-import { IoMdArrowDropup } from "react-icons/io";
+import { IoIosArrowForward, IoMdArrowDropup } from "react-icons/io";
 import { MdAttachMoney } from "react-icons/md";
 import useMembers from "../../app/hooks/useMembers";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
@@ -19,6 +19,9 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
+import { AiOutlineHome } from "react-icons/ai";
+import { IoIosStats } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -63,7 +66,23 @@ const AdminHome: React.FC = () => {
 
 	return (
 		<>
-			<div className="text-2xl font-bold my-4">Statistics</div>
+			<div className="flex items-center ml-2 mb-5">
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<AiOutlineHome size={20} />
+						Home
+					</h1>
+				</Link>
+				<div className="mx-2">
+					<IoIosArrowForward size={15} />
+				</div>
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<IoIosStats size={20} />
+						Statistic
+					</h1>
+				</Link>
+			</div>
 			<div className="flex justify-center gap-4">
 				<div className="text-white bg-gradient-to-r from-indigo-600 to-indigo-400 px-8 py-6 rounded-[30px] w-[30%] mb-4">
 					<div className="flex justify-between mb-3">

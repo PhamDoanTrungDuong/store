@@ -19,8 +19,6 @@ const BasketTableItem: React.FC<IProps> = ({ item, isBasket }) => {
 	const { productDiscount } = useProducts();
 	const [itemSales, setItemSales] = useState<IProductDiscount>();
 
-	console.log(itemSales)
-
 	useEffect(() => {
 		productDiscount.filter((e: any) => {
 			if (item.productId && e.productId === item.productId) {

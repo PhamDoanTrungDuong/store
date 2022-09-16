@@ -20,6 +20,10 @@ import AppPagination from "../../app/components/AppPagination";
 import { removeMember, setPageNumber } from "../account/accountSlice";
 import { useAppDispatch } from "../../app/store/configureStore";
 import MemberSearch from "../../app/components/MemberSearch";
+import { AiOutlineHome } from "react-icons/ai";
+import { HiOutlineUsers } from "react-icons/hi";
+import { IoIosArrowForward } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const AdminMembers: React.FC = () => {
 	const { members, pagination } = useMembers();
@@ -51,8 +55,25 @@ const AdminMembers: React.FC = () => {
 
 	return (
 		<div className="mt-5 p-5">
+			<div className="flex items-center ml-2 mb-5">
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<AiOutlineHome size={20} />
+						Home
+					</h1>
+				</Link>
+				<div className="mx-2">
+					<IoIosArrowForward size={15} />
+				</div>
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<HiOutlineUsers size={20} />
+						Users
+					</h1>
+				</Link>
+			</div>
 			<div className="flex justify-between items-center">
-				<h4 className="text-2xl font-bold my-4">Members</h4>
+				<div></div>
 				<div className="w-[60%]">
 					<MemberSearch />
 				</div>

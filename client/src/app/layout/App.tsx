@@ -34,6 +34,7 @@ import SignedInMenu from "./SignedInMenu";
 import ChangePassword from "../../features/account/ChangePassword";
 import MoMoPaymentSucceeded from "../../features/checkout/MoMoPaymentSucceeded";
 import AdminSales from "../../features/admin/AdminSales";
+import Notifications from "../components/Notifications";
 
 const App: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -42,8 +43,7 @@ const App: React.FC = () => {
 
 	const initApp = useCallback(async () => {
 		try {
-			if(loading)
-				await dispatch(fetchCurrentUser());
+			if (loading) await dispatch(fetchCurrentUser());
 			await dispatch(fetchBasketAsync());
 		} catch (error) {
 			console.log(error);
@@ -66,7 +66,12 @@ const App: React.FC = () => {
 					<div className="h-screen flex-1 p-4 overflow-y-scroll">
 						<div className="flex justify-end items-end">
 							{user ? (
-								<SignedInMenu />
+								<>
+								<div className="flex jutify-between items-center gap-2">
+									<SignedInMenu />
+									<Notifications />
+								</div>
+								</>
 							) : (
 								<div className="flex justify-evenly">
 									<Link
@@ -225,9 +230,7 @@ const App: React.FC = () => {
 							/>
 							<Route
 								path="/returnUrl"
-								element={
-									<MoMoPaymentSucceeded />
-								}
+								element={<MoMoPaymentSucceeded />}
 							/>
 							<Route path="*" element={<NotFound />} />
 						</Routes>

@@ -17,10 +17,14 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { TbGift, TbHome2 } from "react-icons/tb";
+import { AiOutlineHome } from "react-icons/ai";
 import { RiTruckLine } from "react-icons/ri";
+import { IoIosArrowForward } from "react-icons/io";
+import { MdOutlineCardGiftcard } from "react-icons/md";
 import { useAppSelector, useAppDispatch } from "../../app/store/configureStore";
 import { fetchOrdersAsync, setOrdLoad } from "./adminSlice";
 import OrderSearch from "../../app/components/OrderSearch";
+import { Link } from "react-router-dom";
 
 const style = {
 	position: "absolute" as "absolute",
@@ -68,8 +72,25 @@ const AdminOrders: React.FC = () => {
 
 	return (
 		<div className="mt-5 p-5">
-			<div className="flex gap-2 justify-start items-center mb-5">
-				<h4 className=" basis-1/4 text-2xl font-bold my-4">Orders</h4>
+			<div className="flex items-center ml-2 mb-5">
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<AiOutlineHome size={20} />
+						Home
+					</h1>
+				</Link>
+				<div className="mx-2">
+					<IoIosArrowForward size={15} />
+				</div>
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<MdOutlineCardGiftcard size={20} />
+						Orders
+					</h1>
+				</Link>
+			</div>
+			<div className="flex gap-2 justify-between items-center mb-5">
+				<div></div>
 				<div className="basis-3/4 w-[40%]">
 					<OrderSearch />
 				</div>

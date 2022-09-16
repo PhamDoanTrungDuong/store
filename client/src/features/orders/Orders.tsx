@@ -8,9 +8,11 @@ import OrderDetailed from "./OrderDetailed";
 import { fetchMemberTotal } from "./orderSlice";
 import { BiPurchaseTag } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
-import { IoMdArrowDropup } from "react-icons/io";
+import { IoIosArrowForward, IoMdArrowDropup } from "react-icons/io";
 import { TbGift, TbHome2 } from "react-icons/tb";
 import { RiTruckLine } from "react-icons/ri";
+import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 
 const Order: React.FC = () => {
@@ -41,6 +43,23 @@ const Order: React.FC = () => {
 
 	return (
 		<div className=" mt-5 p-5">
+			<div className="flex items-center ml-2 mt-3 mb-5">
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<AiOutlineHome size={20} />
+						Home
+					</h1>
+				</Link>
+				<div className="mx-2">
+					<IoIosArrowForward size={15} />
+				</div>
+				<Link to="/orders">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<AiOutlineShoppingCart size={20} />
+						Orders
+					</h1>
+				</Link>
+			</div>
 			<div className="text-white bg-gradient-to-r from-indigo-600 to-indigo-400 px-8 py-6 rounded-[30px] w-[100%] md:w-[30%] mb-4">
 				<div className="flex justify-between mb-3">
 					<div className="p-3 bg-white text-indigo-600 rounded-2xl inline-block">

@@ -1,6 +1,6 @@
 import { Box, Rating, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import NotFound from "../../app/errors/NotFound";
 import Loading from "../../app/layout/Loading";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
@@ -10,9 +10,12 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import CommentThread from "./CommentThread";
 import agent from "../../app/api/agent";
 import Swal from "sweetalert2";
-import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import useProducts from "../../app/hooks/useProducts";
 import { IProductDiscount } from "../../app/interfaces/IProduct";
+import { AiOutlineHome } from "react-icons/ai";
+import { BiCategoryAlt } from "react-icons/bi";
+import { FaHashtag } from "react-icons/fa";
 
 interface Inputs {
 	productId: string;
@@ -150,6 +153,32 @@ const ProductDetails: React.FC = () => {
 
 	return (
 		<div className="mt-5 p-5">
+			<div className="flex items-center ml-3 mt-3 mb-4">
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<AiOutlineHome size={20} />
+						Home
+					</h1>
+				</Link>
+				<div className="mx-2">
+					<IoIosArrowForward size={15} />
+				</div>
+				<Link to="/catalog">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<BiCategoryAlt size={20} />
+						Catalog
+					</h1>
+				</Link>
+				<div className="mx-2">
+					<IoIosArrowForward size={15} />
+				</div>
+				<Link to={`/catalog/${id}`}>
+					<h1 className="flex items-center hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<FaHashtag size={15} />
+						{id}
+					</h1>
+				</Link>
+			</div>
 			<div className="grid md:grid-cols-2 ml-4">
 				<div className="relative">
 					<img

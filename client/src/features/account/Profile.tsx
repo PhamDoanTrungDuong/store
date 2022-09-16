@@ -1,5 +1,9 @@
 import React, { useEffect } from "react";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
+import { AiOutlineHome } from "react-icons/ai";
+import { IoIosArrowForward } from "react-icons/io";
+import { BiUser } from "react-icons/bi";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import agent from "../../app/api/agent";
 import { useAppSelector } from "../../app/store/configureStore";
@@ -51,6 +55,23 @@ const Profile: React.FC = () => {
 
 	return (
 		<div className="h-[800px] my-5 p-5">
+			<div className="flex items-center ml-2 mt-3 mb-5">
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<AiOutlineHome size={20} />
+						Home
+					</h1>
+				</Link>
+				<div className="mx-2">
+					<IoIosArrowForward size={15} />
+				</div>
+				<Link to="/profile">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<BiUser size={20} />
+						Profile
+					</h1>
+				</Link>
+			</div>
 			<div className="">
 				<img
 					className="w-[15%] mx-auto hover:scale-105 duration-200 border border-gray-300 cursor-pointer rounded-full"

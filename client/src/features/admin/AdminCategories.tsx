@@ -10,12 +10,16 @@ import {
 	TableBody,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { AiOutlineHome } from "react-icons/ai";
+import { IoIosArrowForward } from "react-icons/io";
+import { BiCategoryAlt } from "react-icons/bi";
 import agent from "../../app/api/agent";
 import CategorySearch from "../../app/components/CategorySearch";
 import { ICategory } from "../../app/interfaces/ICategory";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { fetchCategories, setCateLoad } from "./adminSlice";
 import CategoryForm from "./CategoryForm";
+import { Link } from "react-router-dom";
 
 const AdminCategories: React.FC = () => {
 	const { categories, load } = useAppSelector((state) => state.admin);
@@ -49,8 +53,25 @@ const AdminCategories: React.FC = () => {
 
 	return (
 		<div className="mt-5 p-5">
+			<div className="flex items-center ml-2 mb-5">
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<AiOutlineHome size={20} />
+						Home
+					</h1>
+				</Link>
+				<div className="mx-2">
+					<IoIosArrowForward size={15} />
+				</div>
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<BiCategoryAlt size={20} />
+						Categories
+					</h1>
+				</Link>
+			</div>
 			<div className="flex justify-between items-center">
-				<h4 className="text-2xl font-bold my-4">Category</h4>
+				<div></div>
 				<div className="w-[60%]">
 					<CategorySearch />
 				</div>

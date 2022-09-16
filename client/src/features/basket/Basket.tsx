@@ -2,20 +2,23 @@ import BasketSumary from "./BasketSumary";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../app/store/configureStore";
 import BasketTable from "./BasketTable";
-import { GrStripe } from "react-icons/gr"
+import { GrStripe } from "react-icons/gr";
 import agent from "../../app/api/agent";
+import { AiOutlineHome } from "react-icons/ai";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { IoIosArrowForward } from "react-icons/io";
 
 const Basket: React.FC = () => {
 	const { basket } = useAppSelector((state) => state.basket);
 	//=====================MOMO=============================
 	// App - Basket - MoMopayment - agent - appsettings
-      const {user} = useAppSelector(state => state.account);
-      let navigate = useNavigate();
+	const { user } = useAppSelector((state) => state.account);
+	let navigate = useNavigate();
 
 	const handlePayment = () => {
 		if (!user) {
 			return navigate("/login");
-		}else{
+		} else {
 			agent.Payments.momoPayment().then((res: any) => {
 				window.location.replace(res.payUrl);
 			});
@@ -25,7 +28,7 @@ const Basket: React.FC = () => {
 
 	if (!basket)
 		return (
-			<div className=" mt-20 h-screen p-4 flex flex-col justify-start items-center mt-">
+			<div className=" mt-20 h-screen p-4 flex flex-col justify-start items-center">
 				<div className="w-[50%]">
 					<img src="/images/empty_cart.png" alt="" />
 				</div>
@@ -45,6 +48,23 @@ const Basket: React.FC = () => {
 
 	return (
 		<div className=" mt-5 p-4">
+			<div className="flex items-center ml-2 mt-3 mb-5">
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<AiOutlineHome size={20} />
+						Home
+					</h1>
+				</Link>
+				<div className="mx-2">
+					<IoIosArrowForward size={15} />
+				</div>
+				<Link to="/basket">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<AiOutlineShoppingCart size={20} />
+						Cart
+					</h1>
+				</Link>
+			</div>
 			<div className="flex flex-col md:flex-row gap-3">
 				<div className="md:basis-[70%] overflow-y-scroll scroll-smooth h-[500px]">
 					<BasketTable items={basket.items} />
@@ -65,11 +85,14 @@ const Basket: React.FC = () => {
 							</div>
 							stripe
 						</div> */}
-							<Link to="/checkout" className="w-full">
-								<button className="bg-indigo-600 border border-indigo-600 text-white p-2 w-full rounded-lg shadow-lg my-2 hover:scale-105 hover:shadow-xl duration-200 flex justify-center items-center gap-2">
-									<GrStripe size={20} /> <p className="pt-1 font-bold italic">Stripe</p>
-								</button>
-							</Link>
+						<Link to="/checkout" className="w-full">
+							<button className="bg-indigo-600 border border-indigo-600 text-white p-2 w-full rounded-lg shadow-lg my-2 hover:scale-105 hover:shadow-xl duration-200 flex justify-center items-center gap-2">
+								<GrStripe size={20} />{" "}
+								<p className="pt-1 font-bold italic">
+									Stripe
+								</p>
+							</button>
+						</Link>
 					</div>
 				</div>
 			</div>

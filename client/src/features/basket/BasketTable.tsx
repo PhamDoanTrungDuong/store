@@ -12,7 +12,6 @@ interface IProps {
 const BasketTable: React.FC<IProps> = ({ items, isBasket = true }) => {
 	const { status } = useAppSelector((state) => state.basket);
 	const dispatch = useAppDispatch();
-	console.log(items)
 
 	useEffect(() => {
 		if (status === "addSuccess") dispatch(setStateBasket());
