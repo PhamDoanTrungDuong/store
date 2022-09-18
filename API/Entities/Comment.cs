@@ -16,6 +16,8 @@ namespace API.Entities
         public int Rate { get; set; }
         public DateTime CommentSent { get; set; } = DateTime.Now;
         public bool userDeleted { get; set; }
+        public bool isAccept { get; set; }
+        public bool isNoftify { get; set; }
 
     }
 }

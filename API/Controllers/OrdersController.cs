@@ -72,7 +72,7 @@ namespace API.Controllers
                     var order = await _context.Orders.FirstOrDefaultAsync(x =>
                               x.Id == deliveryDto.Id);
 
-                    if(deliveryDto.DeliveryStatus == "OrderPlaced") order.DeliveryStatus = DeliveryStatus.OrderPlaced;
+                    // if(deliveryDto.DeliveryStatus == "PendingConfirm") order.DeliveryStatus = DeliveryStatus.PendingConfirm;
 
                     if(deliveryDto.DeliveryStatus == "OnTheWay") order.DeliveryStatus = DeliveryStatus.OnTheWay;
 

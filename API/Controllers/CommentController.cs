@@ -47,7 +47,9 @@ namespace API.Controllers
                         productName = product.Name,
                         Content = createCommentDto.Content,
                         Rate = createCommentDto.Rate,
-                        PictureUrl = user.PictureUrl
+                        PictureUrl = user.PictureUrl,
+                        isAccept = false,
+                        isNoftify = true,
                   };
 
                   _commentService.AddComment(comment);
@@ -140,6 +142,37 @@ namespace API.Controllers
                   if(await _commentService.SaveAllAsync()) return Ok();
 
                   return BadRequest(new ProblemDetails{Title = "Problem deleting the comment"});
+
+            }
+            [Authorize(Roles = "Admin")]
+            [HttpPost("{id}")]
+            public async Task<ActionResult> ApproveComment(int id)
+            {
+                  var comment = await _commentService.GetComment(id);
+
+                  if(comment != null) {
+                        comment.isAccept = true;
+                  }
+
+                  if(await _commentService.SaveAllAsync()) return Ok();
+
+                  return BadRequest(new ProblemDetails{Title = "Problem approve the comment"});
+
+            }
+
+            [Authorize(Roles = "Admin")]
+            [HttpPost("notify/{id}")]
+            public async Task<ActionResult> NotifyComment(int id)
+            {
+                  var comment = await _commentService.GetComment(id);
+
+                  if(comment != null) {
+                        comment.isNoftify = false;
+                  }
+
+                  if(await _commentService.SaveAllAsync()) return Ok();
+
+                  return BadRequest(new ProblemDetails{Title = "Problem apply the comment"});
 
             }
 

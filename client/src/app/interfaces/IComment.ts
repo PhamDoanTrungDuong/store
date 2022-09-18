@@ -9,4 +9,6 @@ export interface IComment {
       commentSent: string
       rate: number
       items: any
+      isAccept: boolean
+      isNoftify: boolean
 }

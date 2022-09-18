@@ -23,7 +23,6 @@ const Home: React.FC = () => {
 	const dispatch = useAppDispatch();
 
 	const { productDiscount } = useProducts(); 
-	console.log(productDiscount.length)
 
 	useEffect(() => {
 		if (status === "loginSuccess") {

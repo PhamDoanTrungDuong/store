@@ -14,7 +14,7 @@ const firebaseConfig = {
   appId: "1:544027462885:web:cfa097dde145aec6d0d80c"
 };
 
-export const logOut = () => {
+export const googleSignOut = () => {
     signOut(auth);
 }
 

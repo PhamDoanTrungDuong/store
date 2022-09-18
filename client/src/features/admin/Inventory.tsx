@@ -80,7 +80,7 @@ const Inventory: React.FC = () => {
 				<Link to="/">
 					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
 						<RiBarChartBoxFill size={20} />
-						Orders
+						Inventory
 					</h1>
 				</Link>
 			</div>

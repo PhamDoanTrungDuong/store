@@ -25,6 +25,40 @@ import { useAppSelector, useAppDispatch } from "../../app/store/configureStore";
 import { fetchOrdersAsync, setOrdLoad } from "./adminSlice";
 import OrderSearch from "../../app/components/OrderSearch";
 import { Link } from "react-router-dom";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+
+interface TabPanelProps {
+	children?: React.ReactNode;
+	index: number;
+	value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+	const { children, value, index, ...other } = props;
+
+	return (
+		<div
+			role="tabpanel"
+			hidden={value !== index}
+			id={`simple-tabpanel-${index}`}
+			aria-labelledby={`simple-tab-${index}`}
+			{...other}>
+			{value === index && (
+				<Box sx={{ p: 3 }}>
+					{children}
+				</Box>
+			)}
+		</div>
+	);
+}
+
+function a11yProps(index: number) {
+	return {
+		id: `simple-tab-${index}`,
+		"aria-controls": `simple-tabpanel-${index}`,
+	};
+}
 
 const style = {
 	position: "absolute" as "absolute",
@@ -39,7 +73,7 @@ const style = {
 };
 
 const AdminOrders: React.FC = () => {
-	const {orders, loadOrder} = useAppSelector(state => state.admin)
+	const { orders, loadOrder } = useAppSelector((state) => state.admin);
 	const dispatch = useAppDispatch();
 	// const [loading, setLoading] = useState(true);
 	const [selectedOrderNumber, setSelectedOrderNumber] = useState(0);
@@ -49,9 +83,15 @@ const AdminOrders: React.FC = () => {
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 
+	const [value, setValue] = React.useState(0);
+
+	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+		setValue(newValue);
+	};
+
 	useEffect(() => {
 		!loadOrder ? dispatch(fetchOrdersAsync()) : dispatch(fetchOrdersAsync());
-	}, [dispatch, loadOrder])
+	}, [dispatch, loadOrder]);
 
 	if (selectedOrderNumber > 0)
 		return (
@@ -64,7 +104,7 @@ const AdminOrders: React.FC = () => {
 	const onSubmit = (data: any) => {
 		data = { id: selectedDeli, ...data };
 		agent.Orders.statusDelivery(data).then(() => {
-			dispatch(setOrdLoad())
+			dispatch(setOrdLoad());
 			setSelectedDeli(0);
 			handleClose();
 		});
@@ -94,60 +134,113 @@ const AdminOrders: React.FC = () => {
 				<div className="basis-3/4 w-[40%]">
 					<OrderSearch />
 				</div>
+				<div></div>
 			</div>
 			<div className="h-[500px] overflow-y-scroll">
-				<TableContainer component={Paper}>
-					<Table sx={{ minWidth: 650 }} aria-label="simple table">
-						<TableHead>
-							<TableRow>
-								<TableCell>Order number</TableCell>
-								<TableCell>Fullname</TableCell>
-								{/* <TableCell>City</TableCell>
+				<div>
+					<Box sx={{ width: "100%" }}>
+						<Box
+							sx={{
+								borderBottom: 1,
+								borderColor: "divider",
+							}}>
+							<Tabs
+								value={value}
+								onChange={handleChange}
+								aria-label="basic tabs example">
+								<Tab
+									label="Pending Orders"
+									{...a11yProps(0)}
+								/>
+								<Tab
+									label="Confirmed"
+									{...a11yProps(1)}
+								/>
+								<Tab
+									label="Delivered"
+									{...a11yProps(1)}
+								/>
+							</Tabs>
+						</Box>
+						<TabPanel value={value} index={0}>
+							<TableContainer component={Paper}>
+								<Table
+									sx={{ minWidth: 650 }}
+									aria-label="simple table">
+									<TableHead>
+										<TableRow>
+											<TableCell>
+												Order
+												number
+											</TableCell>
+											<TableCell>
+												Fullname
+											</TableCell>
+											{/* <TableCell>City</TableCell>
 								<TableCell>Address</TableCell> */}
-								<TableCell align="center">
-									Total
-								</TableCell>
-								<TableCell align="center">
-									Order Date
-								</TableCell>
-								<TableCell align="center">
-									Order Status
-								</TableCell>
-								<TableCell align="center">
-									Delivery Status
-								</TableCell>
-								<TableCell align="center"></TableCell>
-								<TableCell align="center"></TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							{orders?.map((order) => (
-								<TableRow
-									key={order.id}
-									sx={{
-										"&:last-child td, &:last-child th":
-											{
-												border: 0,
-											},
-									}}>
-									<TableCell
-										sx={{
-											pl: 6,
-										}}
-										component="th"
-										scope="row">
-										# {order.id}
-									</TableCell>
-									<TableCell>
-										<span className="font-bold text-lg capitalize">
-											{
-												order
-													.shippingAddress
-													.fullName
-											}
-										</span>
-									</TableCell>
-									{/* <TableCell>
+											<TableCell align="center">
+												Total
+											</TableCell>
+											<TableCell align="center">
+												Order
+												Date
+											</TableCell>
+											<TableCell align="center">
+												Order
+												Status
+											</TableCell>
+											<TableCell align="center">
+												Delivery
+												Status
+											</TableCell>
+											<TableCell align="center"></TableCell>
+											<TableCell align="center"></TableCell>
+										</TableRow>
+									</TableHead>
+									<TableBody>
+										{orders
+											?.filter(
+												(
+													item
+												) =>
+													item.deliveryStatus ===
+													"PendingConfirm"
+											)
+											?.map(
+												(
+													order
+												) => (
+													<TableRow
+														key={
+															order.id
+														}
+														sx={{
+															"&:last-child td, &:last-child th":
+																{
+																	border: 0,
+																},
+														}}>
+														<TableCell
+															sx={{
+																pl: 6,
+															}}
+															component="th"
+															scope="row">
+															#{" "}
+															{
+																order.id
+															}
+														</TableCell>
+														<TableCell>
+															<span className="font-bold text-lg capitalize">
+																{
+																	order
+																		.shippingAddress
+																		.fullName
+																}
+															</span>
+														</TableCell>
+														{/* <TableCell>
 										{
 											order
 												.shippingAddress
@@ -161,88 +254,276 @@ const AdminOrders: React.FC = () => {
 												.address1
 										}
 									</TableCell> */}
-									<TableCell align="center">
-										{currencyFormat(
-											order.total
-										)}
-									</TableCell>
-									<TableCell align="center">
+														<TableCell align="center">
+															{currencyFormat(
+																order.total
+															)}
+														</TableCell>
+														<TableCell align="center">
+															{
+																order.orderDate.split(
+																	"T"
+																)[0]
+															}
+														</TableCell>
+														<TableCell align="center">
+															{
+																order.orderStatus
+															}
+														</TableCell>
+														<TableCell align="center">
+															{order.deliveryStatus ===
+															"PendingConfirm" ? (
+																<div className="flex justify-center items-center">
+																	<TbGift
+																		size={
+																			25
+																		}
+																		className="mr-3 text-indigo-600"
+																	/>{" "}
+																	Pending
+																	Confirm
+																</div>
+															) : order.deliveryStatus ===
+															  "OnTheWay" ? (
+																<div className="flex justify-center items-center">
+																	<RiTruckLine
+																		size={
+																			25
+																		}
+																		className="mr-3 fill-red-600"
+																	/>{" "}
+																	On
+																	The
+																	Way
+																</div>
+															) : order.deliveryStatus ===
+															  "ProductDelivered" ? (
+																<div className="flex justify-center items-center">
+																	<TbHome2
+																		size={
+																			25
+																		}
+																		className="mr-3 text-green-600"
+																	/>{" "}
+																	Delivered
+																</div>
+															) : (
+																"Order Placed"
+															)}
+														</TableCell>
+														<TableCell align="center">
+															<button
+																className="bg-yellow-400 border border-yellow-400 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-yellow-400 duration-200 mr-3"
+																onClick={() => {
+																	handleOpen();
+																	setSelectedDeli(
+																		order.id
+																	);
+																}}>
+																Delivery
+															</button>
+															<button
+																className="c-btn"
+																onClick={() =>
+																	setSelectedOrderNumber(
+																		order.id
+																	)
+																}>
+																View
+															</button>
+														</TableCell>
+													</TableRow>
+												)
+											)}
+									</TableBody>
+								</Table>
+							</TableContainer>
+						</TabPanel>
+						<TabPanel value={value} index={1}>
+							<TableContainer component={Paper}>
+								<Table
+									sx={{ minWidth: 650 }}
+									aria-label="simple table">
+									<TableHead>
+										<TableRow>
+											<TableCell>
+												Order
+												number
+											</TableCell>
+											<TableCell>
+												Fullname
+											</TableCell>
+											{/* <TableCell>City</TableCell>
+								<TableCell>Address</TableCell> */}
+											<TableCell align="center">
+												Total
+											</TableCell>
+											<TableCell align="center">
+												Order
+												Date
+											</TableCell>
+											<TableCell align="center">
+												Order
+												Status
+											</TableCell>
+											<TableCell align="center">
+												Delivery
+												Status
+											</TableCell>
+											<TableCell align="center"></TableCell>
+											<TableCell align="center"></TableCell>
+										</TableRow>
+									</TableHead>
+									<TableBody>
+										{orders
+											?.filter(
+												(
+													item
+												) =>
+													item.deliveryStatus ===
+													"OnTheWay"
+											)
+											?.map(
+												(
+													order
+												) => (
+													<TableRow
+														key={
+															order.id
+														}
+														sx={{
+															"&:last-child td, &:last-child th":
+																{
+																	border: 0,
+																},
+														}}>
+														<TableCell
+															sx={{
+																pl: 6,
+															}}
+															component="th"
+															scope="row">
+															#{" "}
+															{
+																order.id
+															}
+														</TableCell>
+														<TableCell>
+															<span className="font-bold text-lg capitalize">
+																{
+																	order
+																		.shippingAddress
+																		.fullName
+																}
+															</span>
+														</TableCell>
+														{/* <TableCell>
 										{
-											order.orderDate.split(
-												"T"
-											)[0]
+											order
+												.shippingAddress
+												.city
 										}
 									</TableCell>
-									<TableCell align="center">
-										{order.orderStatus}
-									</TableCell>
-									<TableCell align="center">
-										{order.deliveryStatus ===
-										"OrderPlaced" ? (
-											<div className="flex justify-center items-center">
-												<TbGift
-													size={
-														25
-													}
-													className="mr-3 text-indigo-600"
-												/>{" "}
-												Order
-												Placed
-											</div>
-										) : order.deliveryStatus ===
-										  "OnTheWay" ? (
-											<div className="flex justify-center items-center">
-												<RiTruckLine
-													size={
-														25
-													}
-													className="mr-3 fill-red-600"
-												/>{" "}
-												On
-												The
-												Way
-											</div>
-										) : order.deliveryStatus ===
-										  "ProductDelivered" ? (
-											<div className="flex justify-center items-center">
-												<TbHome2
-													size={
-														25
-													}
-													className="mr-3 text-green-600"
-												/>{" "}
-												Delivered
-											</div>
-										) : (
-											"Order Placed"
-										)}
-									</TableCell>
-									<TableCell align="center">
-										<button
-											className="bg-yellow-400 border border-yellow-400 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-yellow-400 duration-200 mr-3"
-											onClick={() => {
-												handleOpen();
-												setSelectedDeli(
-													order.id
-												);
-											}}>
-											Delivery
-										</button>
-										<button
-											className="c-btn"
-											onClick={() =>
-												setSelectedOrderNumber(
-													order.id
+									<TableCell>
+										{
+											order
+												.shippingAddress
+												.address1
+										}
+									</TableCell> */}
+														<TableCell align="center">
+															{currencyFormat(
+																order.total
+															)}
+														</TableCell>
+														<TableCell align="center">
+															{
+																order.orderDate.split(
+																	"T"
+																)[0]
+															}
+														</TableCell>
+														<TableCell align="center">
+															{
+																order.orderStatus
+															}
+														</TableCell>
+														<TableCell align="center">
+															{order.deliveryStatus ===
+															"PendingConfirm" ? (
+																<div className="flex justify-center items-center">
+																	<TbGift
+																		size={
+																			25
+																		}
+																		className="mr-3 text-indigo-600"
+																	/>{" "}
+																	Pending
+																	Confirm
+																</div>
+															) : order.deliveryStatus ===
+															  "OnTheWay" ? (
+																<div className="flex justify-center items-center">
+																	<RiTruckLine
+																		size={
+																			25
+																		}
+																		className="mr-3 fill-red-600"
+																	/>{" "}
+																	On
+																	The
+																	Way
+																</div>
+															) : order.deliveryStatus ===
+															  "ProductDelivered" ? (
+																<div className="flex justify-center items-center">
+																	<TbHome2
+																		size={
+																			25
+																		}
+																		className="mr-3 text-green-600"
+																	/>{" "}
+																	Delivered
+																</div>
+															) : (
+																"Order Placed"
+															)}
+														</TableCell>
+														<TableCell align="center">
+															{/* <button
+																className="bg-yellow-400 border border-yellow-400 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-yellow-400 duration-200 mr-3"
+																onClick={() => {
+																	handleOpen();
+																	setSelectedDeli(
+																		order.id
+																	);
+																}}>
+																Delivery
+															</button> */}
+															<button
+																className="c-btn"
+																onClick={() =>
+																	setSelectedOrderNumber(
+																		order.id
+																	)
+																}>
+																View
+															</button>
+														</TableCell>
+													</TableRow>
 												)
-											}>
-											View
-										</button>
-									</TableCell>
-								</TableRow>
-							))}
-						</TableBody>
-					</Table>
-				</TableContainer>
+											)}
+									</TableBody>
+								</Table>
+							</TableContainer>
+						</TabPanel>
+						<TabPanel value={value} index={2}>
+							
+						</TabPanel>
+					</Box>
+				</div>
+
 				<Modal
 					open={open}
 					onClose={handleClose}
@@ -265,15 +546,16 @@ const AdminOrders: React.FC = () => {
 										"deliveryStatus"
 									)}
 									name="deliveryStatus">
-									<option value="OrderPlaced">
-										Order Placed
+									<option value="choose-status">
+										--- Confirm Delivery
+										Status ---
 									</option>
 									<option value="OnTheWay">
-										OnTheWay
+										On The Way
 									</option>
-									<option value="ProductDelivered">
+									{/* <option value="ProductDelivered">
 										Product Delivered
-									</option>
+									</option> */}
 								</select>
 								<input
 									className="c-btn mt-5 cursor-pointer"

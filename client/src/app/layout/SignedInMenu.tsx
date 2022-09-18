@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../store/configureStore";
 import { signOut } from "../../features/account/accountSlice";
 import { clearBasket } from "../../features/basket/basketSlice";
 import { NavLink } from "react-router-dom";
+import { googleSignOut } from "../firebase/firebase";
 
 const SignedInMenu: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -21,7 +22,7 @@ const SignedInMenu: React.FC = () => {
 	};
 
 	return (
-		<div className="flex items-center max-w-[200px]">
+		<div className="flex gap-1 items-center max-w-[200px]">
 			{user?.roles?.includes("Admin") ? (
 				<img
 					className="w-[20%] hover:scale-105 duration-200 mx-2 border border-gray-300 cursor-pointer rounded-full"
@@ -63,6 +64,7 @@ const SignedInMenu: React.FC = () => {
 					onClick={() => {
 						dispatch(signOut());
 						dispatch(clearBasket());
+						googleSignOut()
 					}}>
 					Logout
 				</MenuItem>

@@ -13,5 +13,8 @@ namespace API.DTOs
         public int Rate { get; set; }
         public DateTime CommentSent { get; set; }
         public string PictureUrl { get; set; }
+        public bool isAccept { get; set; }
+        public bool isNoftify { get; set; }
+
     }
 }

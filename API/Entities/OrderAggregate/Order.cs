@@ -20,7 +20,7 @@ namespace API.Entities.OrderAggregate
         public long DeliveryFee { get; set; }
 
         public OrderStatus OrderStatus { get; set; } = OrderStatus.Pending;
-        public DeliveryStatus DeliveryStatus { get; set; } = DeliveryStatus.OrderPlaced;
+        public DeliveryStatus DeliveryStatus { get; set; } = DeliveryStatus.PendingConfirm;
 
         public string PaymentIntentId { get; set; }
 

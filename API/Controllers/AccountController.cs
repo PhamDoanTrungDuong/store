@@ -230,7 +230,7 @@ namespace API.Controllers
                   return BadRequest(new ProblemDetails { Title = "Problem updating user" });
             }
 
-            [Authorize(Roles = "Admin")]
+            // [Authorize(Roles = "Admin")]
             [HttpGet("all-members")]
             public async Task<ActionResult<PagedList<User>>> GetMembers([FromQuery] MemberDto memberDto)
             {

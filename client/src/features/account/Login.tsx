@@ -4,8 +4,14 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 import { FieldValues, useForm } from "react-hook-form";
 import { useAppDispatch } from "../../app/store/configureStore";
-import { signInUser } from "./accountSlice";
+import { googleSignIn, signInUser } from "./accountSlice";
 import { history } from "../..";
+import { onAuthStateChanged } from "firebase/auth";
+import { useEffect, useState } from "react";
+import GoogleButton from "react-google-button";
+import { auth } from "../../app/firebase/firebase";
+import agent from "../../app/api/agent";
+import useMembers from "../../app/hooks/useMembers";
 
 const Login = () => {
 	type FormData = {
@@ -18,8 +24,9 @@ const Login = () => {
 			from: Location;
 		};
 	};
+	const { members } = useMembers();
 
-	// const [googleUser, setGoogleUser] = useState({});
+	const [googleUser, setGoogleUser] = useState<any>();
 	const dispatch = useAppDispatch();
 
 	const location = useLocation() as unknown as LocationProps;
@@ -42,24 +49,43 @@ const Login = () => {
 		}
 	};
 
-	// const handleGoogleSignIn = async () => {
-	// 	try {
-	// 		await googleSignIn();
-	// 	}catch(error) {
-	// 		console.log(error)
-	// 	}
-	// }
+	const handleGoogleSignIn = async () => {
+		try {
+			await googleSignIn();
+		}catch(error) {
+			console.log(error)
+		}
+	}
 
-	// useEffect(() => {
-	// 	const unsubcribe = onAuthStateChanged(auth, (currentUser: any) => {
-	// 		setGoogleUser(currentUser);
-	// 		console.log("[googleUser]: ", currentUser);
-	// 	});
+	useEffect(() => {
+		const unsubcribe = onAuthStateChanged(auth, (currentUser: any) => {
+			setGoogleUser(currentUser);
+		});
 
-	// 	return () => {
-	// 		unsubcribe();
-	// 	}
-	// }, [])
+		return () => {
+			unsubcribe();
+		}
+	}, [])
+
+	useEffect(() => {
+		if(googleUser){
+			const dataRegister = {email: googleUser.email, password: googleUser.uid, username: googleUser.email}
+			const dataLogin = {password: googleUser.uid, username: googleUser.email}
+
+			let userLogin = members.find((item) => item.email === googleUser.email)
+			if(userLogin === undefined)
+			{
+				agent.Account.register(dataRegister).then(() => {
+					dispatch(signInUser(dataLogin));
+					history.push(from);
+				})
+			}else{
+				dispatch(signInUser(dataLogin));
+				history.push(from);
+			}
+		}
+	}, [googleUser, members, dispatch, from])
+
 	return (
 		<div className="mt-5">
 			<div className="max-w-[350px] md:max-w-[400px] border h-auto border-slate-300 rounded-2xl px-4 py-10 my-[100px] mx-auto">

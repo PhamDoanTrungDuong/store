@@ -20,8 +20,7 @@ const CommentThread: React.FC<IProps> = ({ idProduct }) => {
 			agent.Comment.getComment(Number(idProduct))
 				.then((res) => setComments(res.items))
 				.catch((error) => console.log(error));
-		// console.log("[commentthread]: ", comments);
-	}, [comments, idProduct]);
+	}, [idProduct]);
 
 	const capitalize = (str: string) => {
 		return str.charAt(0).toUpperCase() + str.slice(1);
@@ -29,7 +28,7 @@ const CommentThread: React.FC<IProps> = ({ idProduct }) => {
 
 	return (
 		<div className={comments.length !== 0 ? "h-[500px]" : ""}>
-			{comments.map((comment) => {
+			{comments?.filter((item) => item.isAccept === true).map((comment) => {
 				return (
 					<div key={comment.id}>
 						<section className="relative w-full flex items-center justify-center bg-white my-2">

@@ -58,7 +58,7 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder }) => {
 						<Stepper
 							activeStep={
 								order.deliveryStatus ===
-								"OrderPlaced"
+								"PendingConfirm"
 									? 0
 									: order.deliveryStatus ===
 									  "OnTheWay"

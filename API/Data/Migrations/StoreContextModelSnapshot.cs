@@ -126,6 +126,12 @@ namespace API.Data.Migrations
                     b.Property<string>("Username")
                         .HasColumnType("text");
 
+                    b.Property<bool>("isAccept")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("isNoftify")
+                        .HasColumnType("boolean");
+
                     b.Property<int>("productId")
                         .HasColumnType("integer");
 
@@ -346,14 +352,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "96c214c4-c588-407c-a158-d8b00df97a03",
+                            ConcurrencyStamp = "78bcb4d0-bf54-400f-b181-2cb885285794",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "ff2a5ef9-630b-4b65-9238-a89c58e97325",
+                            ConcurrencyStamp = "e899052c-e7f5-40d2-bf06-90d9dcf6d0b4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -479,15 +485,22 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.UserLike", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("LikedProductId")
                         .HasColumnType("integer");
 
-                    b.HasKey("UserId", "LikedProductId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("LikedProductId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Likes");
                 });

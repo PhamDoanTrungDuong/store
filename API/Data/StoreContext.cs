@@ -99,20 +99,20 @@ namespace API.Data
                //      .HasForeignKey(fk => fk.ProductId);
 
                //USER LIKE
-               builder.Entity<UserLike>()
-                    .HasKey(k => new {k.UserId, k.LikedProductId});
+               // builder.Entity<UserLike>()
+               //      .HasKey(k => new {k.UserId, k.LikedProductId});
 
-               builder.Entity<UserLike>()
-                    .HasOne(u => u.User)
-                    .WithMany(p => p.LikedProducts)
-                    .HasForeignKey(s => s.UserId)
-                    .OnDelete(DeleteBehavior.Cascade);
+               // builder.Entity<UserLike>()
+               //      .HasOne(u => u.User)
+               //      .WithMany(p => p.LikedProducts)
+               //      .HasForeignKey(s => s.UserId)
+               //      .OnDelete(DeleteBehavior.Cascade);
 
-               builder.Entity<UserLike>()
-                    .HasOne(u => u.LikedProduct)
-                    .WithMany(p => p.LikedByUsers)
-                    .HasForeignKey(s => s.LikedProductId)
-                    .OnDelete(DeleteBehavior.Cascade);
+               // builder.Entity<UserLike>()
+               //      .HasOne(u => u.LikedProduct)
+               //      .WithMany(p => p.LikedByUsers)
+               //      .HasForeignKey(s => s.LikedProductId)
+               //      .OnDelete(DeleteBehavior.Cascade);
           }
      }
 }

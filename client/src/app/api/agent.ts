@@ -120,6 +120,7 @@ const Account = {
     login: (values: any) => requests.post('account/login', values),
     changePwd: (values: any) => requests.post('account/change-password', values),
     register: (values: any) => requests.post('account/register', values),
+    googleAccount: (values: any) => requests.post('account/googleAccount', values),
     currentUser: () => requests.get('account/currentUser'),
     fetchAddress: () => requests.get('account/savedAddress')
 }
@@ -156,6 +157,8 @@ const Admin = {
     deleteMember: (id: string) => requests.delete(`account/delete-member/${id}`),
     getComments: (params: URLSearchParams) => requests.get('comment/get-all-comments', params),
     deleteComment: (id: number) => requests.delete(`comment/${id}`),
+    approveComment: (id: number) => requests.post(`comment/${id}`, {}),
+    checkNotifyComment: (id: number) => requests.post(`comment/notify/${id}`, {}),
     getCategories: () => requests.get('category/get-category-client'),
     getAdminCategories: (params: URLSearchParams) => requests.get('category', params),
     createCategory: (name: string) => requests.post('category', name),

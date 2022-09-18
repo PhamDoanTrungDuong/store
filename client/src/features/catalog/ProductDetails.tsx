@@ -10,13 +10,47 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import CommentThread from "./CommentThread";
 import agent from "../../app/api/agent";
 import Swal from "sweetalert2";
-import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import useProducts from "../../app/hooks/useProducts";
 import { IProductDiscount } from "../../app/interfaces/IProduct";
 import { AiOutlineHome } from "react-icons/ai";
 import { BiCategoryAlt } from "react-icons/bi";
 import { FaHashtag } from "react-icons/fa";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Tabs from "@mui/material/Tabs";
 
+interface TabPanelProps {
+	children?: React.ReactNode;
+	index: number;
+	value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+	const { children, value, index, ...other } = props;
+
+	return (
+		<div
+			role="tabpanel"
+			hidden={value !== index}
+			id={`simple-tabpanel-${index}`}
+			aria-labelledby={`simple-tab-${index}`}
+			{...other}>
+			{value === index && (
+				<Box sx={{ p: 3 }}>
+					{children}
+				</Box>
+			)}
+		</div>
+	);
+}
+
+function a11yProps(index: number) {
+	return {
+		id: `simple-tab-${index}`,
+		"aria-controls": `simple-tabpanel-${index}`,
+	};
+}
 interface Inputs {
 	productId: string;
 	content: string;
@@ -25,6 +59,11 @@ interface Inputs {
 const ProductDetails: React.FC = () => {
 	const { productDiscount, productsLoaded } = useAppSelector((state) => state.catalog);
 	const [Sales, setSales] = useState<IProductDiscount>();
+
+	const [value, setValue] = React.useState(0);
+	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+		setValue(newValue);
+	};
 
 	const { register, handleSubmit } = useForm<Inputs>();
 	const [valuesStar, setValuesStar] = useState<number | null>(0);
@@ -103,9 +142,14 @@ const ProductDetails: React.FC = () => {
 		if (!product) dispatch(fetchProductAsync(+id));
 	}, [id, item, dispatch, product]);
 
-	const hanldeInputChange = (e: any) => {
-		if (+e.target.value > 0 && +e.target.value <= 10) {
-			setQuantity(+e.target.value);
+	const handlePlus = () => {
+		if (quantity <= 9) {
+			setQuantity(+quantity + 1);
+		}
+	};
+	const handleMinus = () => {
+		if (quantity > 0) {
+			setQuantity(+quantity - 1);
 		}
 	};
 
@@ -140,7 +184,14 @@ const ProductDetails: React.FC = () => {
 		setValuesStar(0);
 		data = { ...data, rate: valuesStar, productId: idProduct };
 		if (data) {
-			agent.Comment.postComment(data);
+			agent.Comment.postComment(data).then(() => {
+				Swal.fire({
+					icon: "success",
+					title: "Your comments had been record",
+					showConfirmButton: false,
+					timer: 1500,
+				});
+			});
 		}
 	};
 
@@ -231,55 +282,62 @@ const ProductDetails: React.FC = () => {
 						<h4 className="text-3xl font-bold">
 							{product.name}
 						</h4>
+						<div className="my-4">
+							{Sales?.discountValue ? (
+								<>
+									<div className="gap-2 md:text-3xl font-bold">
+										<h5 className="text-gray-400 font-bold line-through">
+											$
+											{(
+												product.price /
+												100
+											).toFixed(2)}
+										</h5>
+										<h5 className="font-bold text-2xl text-indigo-600">
+											$
+											{(
+												Sales.price /
+													100 -
+												(Sales.price *
+													(Sales.discountValue /
+														100)) /
+													100
+											).toFixed(2)}
+										</h5>
+									</div>
+								</>
+							) : (
+								<h5 className="text-2xl md:text-3xl font-bold text-indigo-600">
+									${(product.price / 100).toFixed(2)}
+								</h5>
+							)}
+						</div>
 					</div>
-					<div className="mt-5 text-[#C1C4C7]">
+					<div className="text-[#C1C4C7]">
 						<h4>SKU: #{product.id}</h4>
 					</div>
 					<div className="mt-5 text-gray-400">
 						<p>{product.description}</p>
 					</div>
 					<div className="my-8 flex justify-between items-center">
-						<div>
-							<TextField
-								variant="outlined"
-								type="number"
-								label="Quatity in Cart"
-								fullWidth
-								minRows={1}
-								maxRows={11}
-								// InputProps={{ inputProps: { min: "1", max: "10", step: "1" } }}
-								value={quantity}
-								onChange={hanldeInputChange}
-							/>
+						<div className="flex items-center gap-4 ">
+								<h2>Quantity</h2>
+								<button
+									className="hover:text-red-600 p-3 border rounded-full"
+									onClick={handleMinus}>
+									<IoIosArrowBack />
+								</button>
+								<span className="text-xl ">{quantity}</span>
+								<button
+									className="hover:text-green-600 p-3 border rounded-full"
+									onClick={handlePlus}>
+									<IoIosArrowForward />
+								</button>
 						</div>
-						{Sales?.discountValue ? (
-							<>
-								<div className="gap-2 text-2xl md:text-3xl font-bold">
-									<h5 className="text-gray-400 font-bold line-through">
-										$
-										{(
-											product.price /
-											100
-										).toFixed(2)}
-									</h5>
-									<h5 className="font-bold">
-										$
-										{(
-											Sales.price /
-												100 -
-											(Sales.price *
-												(Sales.discountValue /
-													100)) /
-												100
-										).toFixed(2)}
-									</h5>
-								</div>
-							</>
-						) : (
-							<h5 className="text-2xl md:text-3xl font-bold">
-								${(product.price / 100).toFixed(2)}
-							</h5>
-						)}
+						<div className="text-lg text-gray-500">
+								{product.quantityInStock} product in stock
+						</div>
+						
 					</div>
 					{/* <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
 						<div className="flex items-center">
@@ -326,94 +384,132 @@ const ProductDetails: React.FC = () => {
 					</div>
 				</div>
 			</div>
-			<div className="mt-10">
-				<h1 className="text-3xl font-bold">Comment and Evaluate</h1>
 
-				<div>
-					<form
-						onSubmit={handleSubmit(submitComment)}
-						className="w-full bg-white rounded-xl pt-2">
-						<h2 className="px-4 pt-3 pb-2 text-black text-lg font-medium">
-							Add a new comment
-						</h2>
-						<div className="flex flex-col md:flex-row justify-between mx-3 mb-6">
-							<div className="w-full md:w-full px-2 mb-2 mt-2">
-								<div className="flex justify-start items-center my-2">
-									<span className="mr-3 font-medium">
-										Evaluate:
-									</span>
-									<div className="flex gap-1">
-										<Rating
-											name="simple-controlled"
-											value={
-												valuesStar
-											}
-											getLabelText={
-												getLabelText
-											}
-											onChange={(
-												event,
-												newValue
-											) => {
-												setValuesStar(
-													newValue
-												);
-											}}
-											onChangeActive={(
-												event,
-												newHover
-											) => {
-												setHover(
-													newHover
-												);
-											}}
-										/>
-										<span>
-											{valuesStar !==
-												null && (
-												<Box
-													sx={{
-														ml: 2,
-													}}>
-													{
-														labels[
-															hover !==
-															-1
-																? hover
-																: valuesStar
-														]
+			<div className="mt-10 mx-auto">
+				<Box sx={{ width: "100%" }}>
+					<Box>
+						<Tabs
+							value={value}
+							onChange={handleChange}
+							aria-label="basic tabs example">
+							<Tab
+								label="Description"
+								{...a11yProps(0)}
+							/>
+							<Tab
+								label="Shipping and Return"
+								{...a11yProps(1)}
+							/>
+							<Tab label="Review" {...a11yProps(2)} />
+						</Tabs>
+					</Box>
+					<TabPanel value={value} index={0}>
+						<h2 className="text-lg text-gray-400">{product.description}</h2>
+					</TabPanel>
+					<TabPanel value={value} index={1}>
+						<h1 className='text-xl font-bold italic'>
+						Returns Policy
+						</h1>
+						<p className="text-md text-gray-400 my-2">+ You may return most new, unopened items within 30 days of delivery for a full refund. We'll also pay the return shipping costs if the return is a result of our error (you received an incorrect or defective item, etc.).</p>
+						<p className="text-md text-gray-400 my-2">+ You should expect to receive your refund within four weeks of giving your package to the return shipper, however, in many cases you will receive a refund more quickly. This time period includes the transit time for us to receive your return from the shipper (5 to 10 business days), the time it takes us to process your return once we receive it (3 to 5 business days), and the time it takes your bank to process our refund request (5 to 10 business days).</p>
+						<p className="text-md text-gray-400 my-2">+ If you need to return an item, simply login to your account, view the order using the 'Complete Orders' link under the My Account menu and click the Return Item(s) button. We'll notify you via e-mail of your refund once we've received and processed the returned item.</p>
+						<h1 className='text-xl font-bold italic'>
+						Shipping
+						</h1>
+						<p className="text-md text-gray-400 my-2">+ We can ship to virtually any address in the world. Note that there are restrictions on some products, and some products cannot be shipped to international destinations.</p>
+						<p className="text-md text-gray-400 my-2">+ When you place an order, we will estimate shipping and delivery dates for you based on the availability of your items and the shipping options you choose. Depending on the shipping provider you choose, shipping date estimates may appear on the shipping quotes page.</p>
+						<p className="text-md text-gray-400 my-2">+ Please also note that the shipping rates for many items we sell are weight-based. The weight of any such item can be found on its detail page. To reflect the policies of the shipping companies we use, all weights will be rounded up to the next full pound.</p>
+					</TabPanel>
+					<TabPanel value={value} index={2}>
+						<div>
+							<form
+								onSubmit={handleSubmit(
+									submitComment
+								)}
+								className="w-full bg-white rounded-xl pt-2">
+								<h2 className="px-4 pt-3 pb-2 text-black text-lg font-medium">
+									Add a new comment
+								</h2>
+								<div className="flex flex-col md:flex-row justify-between mx-3 mb-6">
+									<div className="w-full md:w-full px-2 mb-2 mt-2">
+										<div className="flex justify-start items-center my-2">
+											<span className="mr-3 font-medium">
+												Evaluate:
+											</span>
+											<div className="flex gap-1">
+												<Rating
+													name="simple-controlled"
+													value={
+														valuesStar
 													}
-												</Box>
-											)}
-										</span>
+													getLabelText={
+														getLabelText
+													}
+													onChange={(
+														event,
+														newValue
+													) => {
+														setValuesStar(
+															newValue
+														);
+													}}
+													onChangeActive={(
+														event,
+														newHover
+													) => {
+														setHover(
+															newHover
+														);
+													}}
+												/>
+												<span>
+													{valuesStar !==
+														null && (
+														<Box
+															sx={{
+																ml: 2,
+															}}>
+															{
+																labels[
+																	hover !==
+																	-1
+																		? hover
+																		: valuesStar
+																]
+															}
+														</Box>
+													)}
+												</span>
+											</div>
+										</div>
+										<div>
+											<input
+												{...register(
+													"content"
+												)}
+												className=" rounded border border-gray-300 leading-normal resize-none w-full px-5 py-3 focus:outline-none focus:bg-white"
+												name="content"
+												placeholder="Type Your Comment"
+											/>
+										</div>
+									</div>
+									<div className="w-full md:w-full flex flex-row justify-end md:justify-start px-1 md:m-2 items-end">
+										<div className="mr-1">
+											<button
+												type="submit"
+												className="bg-indigo-600 border text-sm md:text-base border-indigo-600 text-white p-3 w-full rounded-lg shadow-xl hover:shadow-2xl hover:bg-transparent hover:text-indigo-600 duration-200">
+												Submit
+											</button>
+										</div>
 									</div>
 								</div>
-								<div>
-									<input
-										{...register(
-											"content"
-										)}
-										className=" rounded border border-gray-300 leading-normal resize-none w-full px-5 py-3 focus:outline-none focus:bg-white"
-										name="content"
-										placeholder="Type Your Comment"
-									/>
-								</div>
-							</div>
-							<div className="w-full md:w-full flex flex-row justify-end md:justify-start px-1 md:m-2 items-end">
-								<div className="mr-1">
-									<button
-										type="submit"
-										className="bg-indigo-600 border text-sm md:text-base border-indigo-600 text-white p-3 w-full rounded-lg shadow-xl hover:shadow-2xl hover:bg-transparent hover:text-indigo-600 duration-200">
-										Submit
-									</button>
-								</div>
-							</div>
+							</form>
 						</div>
-					</form>
-				</div>
-				<div className="my-5 w-full md:w-4/6 h-auto overflow-y-scroll scrollbar-hide">
-					<CommentThread idProduct={idProduct} />
-				</div>
+						<div className="my-5 w-full md:w-4/6 h-auto overflow-y-scroll scrollbar-hide">
+							<CommentThread idProduct={idProduct} />
+						</div>
+					</TabPanel>
+				</Box>
 			</div>
 		</div>
 	);

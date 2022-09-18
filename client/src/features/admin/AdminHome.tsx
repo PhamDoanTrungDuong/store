@@ -138,11 +138,11 @@ const AdminHome: React.FC = () => {
 					<div className="relative mt-5">
 						<div className=" flex gap-x-6 text-3xl font-bold">
 							<div className="flex mb-5 -space-x-4">
-								{members.slice(0, 3).map((i) => {
+								{members.slice(0, 3).map((i, idx) => {
 									return (
 										<img
 											key={
-												i.pictureUrl
+												idx
 											}
 											className="w-10 h-10 rounded-full border-2 border-white dark:border-gray-800"
 											src={
