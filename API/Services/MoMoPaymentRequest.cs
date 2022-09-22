@@ -50,7 +50,8 @@ namespace API.Services
             }
             catch (WebException e)
             {
-                return e.Message;
+                var response = e.Response.GetResponseStream();
+                return response == null ? null : new StreamReader(response).ReadToEnd();
             }
         }
     }

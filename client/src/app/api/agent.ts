@@ -129,13 +129,15 @@ const Orders = {
     list: () => requests.get('orders'),
     fetch: (id: number) => requests.get(`orders/${id}`),
     create: (values: any) => requests.post('orders', values),
-    Momocreate: () => requests.get('orders/momo-order'),
+    Momocreate: (data: any) => requests.get(`orders/momo-order?orderId=${data.orderId}&requestId=${data.requestId}&transId=${data.transId}`),
     statusDelivery: (values: any) => requests.post('orders/delivery-status', values)
 }
 
 const Payments = {
     createPaymentIntent: () => requests.post('payments', {}),
-    momoPayment: () => requests.post('payments/Momo-payment', {})
+    momoPayment: () => requests.post('payments/Momo-payment', {}),
+    momoQuery: (orderId: number) => requests.post(`payments/Momo-query?Id=${orderId}`, {}),
+    momoRefund: (orderId: number) => requests.post(`payments/Momo-refund?Id=${orderId}`, {})
 }
 
 function createFormData(item: any) {
@@ -177,6 +179,12 @@ const Comment = {
     postComment: (content: string) => requests.post('comment', content),
 }
 
+const Like = {
+    addLike: (id: number) => requests.post(`likes?productId=${id}`, {}),
+    getAllLike: () => requests.get('likes/get-all-like'),
+    getCurrentLike: () => requests.get('likes/get-current-like'),
+}
+
 const Statistisc = {
     getTotal: () => requests.get('orders/get-total-order'),
     getAllTotal: () => requests.get('orders/getAll-total-order'),
@@ -203,6 +211,7 @@ const agent = {
     Comment,
     Profile,
     Statistisc,
+    Like,
 }
 
 export default agent;

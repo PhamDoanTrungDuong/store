@@ -1,6 +1,7 @@
 ##https://store-unavailable.herokuapp.com/
 <!-- hot fix
       + chi tiết sản phẩm x
+      + like useEffect x
  -->
 <!--
       - [Basket(Momo) + ProfileForm(textwarn)]
@@ -21,11 +22,13 @@
       + xác nhận bình luận x
       + hiển thị thông báo x
       + đăng nhập gmail x
-      + like sản phẩm
-      + blog
+      + like sản phẩm x
+      + hủy đơn hàng momo - hoàn tiền momo x
       + thống kê
             - doanh số theo d/m/y
             - số lượng sản phẩm bán chạy
             - đánh giá sản phẩm
-      + hủy đơn hàng momo - hoàn tiền momo
+      + blog
+      + paypal
+      + vnpay
  -->

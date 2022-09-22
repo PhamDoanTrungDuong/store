@@ -7,6 +7,7 @@ using API.DTOs;
 using API.Entities;
 using API.Entities.OrderAggregate;
 using API.Extensions;
+using API.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -129,7 +130,8 @@ namespace API.Controllers
                     ShippingAddress = orderDto.ShippingAddress,
                     Subtotal = subtotal,
                     DeliveryFee = deliveryFee,
-                    PaymentIntentId = basket.PaymentIntentId
+                    PaymentIntentId = basket.PaymentIntentId,
+                    isRefund = false,
                 };
 
                 _context.Orders.Add(order);
@@ -162,7 +164,7 @@ namespace API.Controllers
             }
 
             [HttpGet("momo-order")]
-            public async Task<ActionResult<int>> CreateMoMoOrder()
+            public async Task<ActionResult<int>> CreateMoMoOrder([FromQuery] ParamsTrans paramsTrans)
             {
                 var basket = await _context.Baskets
                         .RetrieveBasketWithItems(User.Identity.Name)
@@ -227,6 +229,10 @@ namespace API.Controllers
                     ShippingAddress = shipadr,
                     Subtotal = subtotal,
                     DeliveryFee = deliveryFee,
+                    orderId = paramsTrans.orderId,
+                    requestId = paramsTrans.requestId,
+                    transId = paramsTrans.transId,
+                    isRefund = false,
                 };
 
                 _context.Orders.Add(order);

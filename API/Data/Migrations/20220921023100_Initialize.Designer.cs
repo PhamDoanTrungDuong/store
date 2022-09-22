@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20220918122813_Initialize")]
+    [Migration("20220921023100_Initialize")]
     partial class Initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -183,6 +183,15 @@ namespace API.Data.Migrations
                     b.Property<long>("Subtotal")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("orderId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("requestId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("transId")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
@@ -354,14 +363,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "78bcb4d0-bf54-400f-b181-2cb885285794",
+                            ConcurrencyStamp = "f00ae6b1-951b-40b4-8bde-4c13ac8bb254",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "e899052c-e7f5-40d2-bf06-90d9dcf6d0b4",
+                            ConcurrencyStamp = "3af21f93-e6ef-474a-8d2f-d1205032f03d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -492,11 +501,26 @@ namespace API.Data.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<DateTime>("LikeAt")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<int>("LikedProductId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("PictureUrl")
+                        .HasColumnType("text");
+
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("isLike")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("productName")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

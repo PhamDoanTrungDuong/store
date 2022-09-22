@@ -12,6 +12,7 @@ namespace API.ViewModel
             CreateMap<UpdateProductDto, Product>();
             CreateMap<MemberUpdateDto, Address>();
             CreateMap<Comment, CommentDto>();
+            CreateMap<UserLike, LikeDto>();
             CreateMap<ProductDiscount, DiscountDto>();
         }
     }

@@ -29,6 +29,8 @@ export interface IOrder {
   orderStatus: string;
   deliveryStatus: string;
   total: number;
+  isRefund: boolean;
+  orderId: string;
 }
 
 export interface OrdersParams {

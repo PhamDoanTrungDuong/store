@@ -41,13 +41,6 @@ namespace API.Controllers
 
                   if (basket == null) return NotFound();
 
-                  // foreach (var item in basket.Items)
-                  // {
-                  //       var productItem = await _context.Products.FindAsync(item.ProductId);
-                  //       if(productItem == null) return NotFound();
-                  //       if(productItem.QuantityInStock < 1) return BadRequest(new ProblemDetails{Title = $"Product {productItem.Name} is out of stock"});
-                  // }
-
                   var intent = await _paymentService.CreateOrUpdatePaymentIntent(basket);
 
                   if (intent == null) return BadRequest(new ProblemDetails { Title = " Problem creating payment intent" });
@@ -154,8 +147,9 @@ namespace API.Controllers
 
                   string amount = (subtotal).ToString();
                   // string amount = (subtotal * 234.180).ToString();
-                  string orderId = Guid.NewGuid().ToString();
-                  string requestId = Guid.NewGuid().ToString();
+
+                  string orderId = Guid.NewGuid().ToString("N");
+                  string requestId = Guid.NewGuid().ToString("N");
                   string extraData = data;
 
                   //Before sign HMAC SHA256 signature
@@ -215,10 +209,125 @@ namespace API.Controllers
                   return Ok(obj);
             }
 
+
+            [Authorize]
+            [HttpPost("Momo-query")]
+            public async Task<ActionResult> MoMoQuery(int Id)
+            {
+                  var order = await _context.Orders.FindAsync(Id);
+                  //request params need to request to MoMo system
+                  string endpoint = _config["MoMoSettings:endpointQuery"].ToString() == "" ? "https://test-payment.momo.vn/v2/gateway/api/query" : _config["MoMoSettings:endpointQuery"].ToString();
+                  string partnerCode = _config["MoMoSettings:partnerCode"].ToString();
+                  string accessKey = _config["MoMoSettings:accessKey"].ToString();
+                  string serectkey = _config["MoMoSettings:serectKey"].ToString();
+                  string requestId = order.requestId;
+                  string orderId = order.orderId;
+
+                  //Before sign HMAC SHA256 signature
+                  string rawHash = "accessKey=" + accessKey +
+                        "&orderId=" + orderId +
+                        "&partnerCode=" + partnerCode +
+                        "&requestId=" + requestId
+                        ;
+
+
+                  MoMoSecurity crypto = new MoMoSecurity();
+                  //sign signature SHA256
+                  string signature = crypto.signSHA256(rawHash, serectkey);
+
+                  //build body json request
+                  JObject message = new JObject
+                  {
+                        { "partnerCode", partnerCode },
+                        { "partnerName", "Test" },
+                        { "storeId", "MomoTestStore" },
+                        { "requestId", requestId },
+                        { "orderId", orderId },
+                        { "lang", "en" },
+                        { "signature", signature }
+                  };
+
+                  string responseFromMomo = MoMoPaymentRequest.sendPaymentRequest(endpoint, message.ToString());
+
+                  if(responseFromMomo == null)
+                  {
+                        return BadRequest(new ProblemDetails { Title = "Problem query with MoMo" });
+                  }
+                  return Ok(responseFromMomo);
+            }
+
+            [Authorize]
+            [HttpPost("Momo-refund")]
+            public async Task<ActionResult> MoMoRefund(int Id)
+            {
+                  var order = await _context.Orders.FindAsync(Id);
+                  if(order.DeliveryStatus == DeliveryStatus.OnTheWay)
+                  {
+                        return BadRequest(new ProblemDetails{Title = "Order has been confirm can't refund"});
+                  }
+                  //request params need to request to MoMo system
+                  string endpoint = _config["MoMoSettings:endpointRefund"].ToString() == "" ? "https://test-payment.momo.vn/v2/gateway/api/refund" : _config["MoMoSettings:endpointRefund"].ToString();
+                  string partnerCode = _config["MoMoSettings:partnerCode"].ToString();
+                  string accessKey = _config["MoMoSettings:accessKey"].ToString();
+                  string serectkey = _config["MoMoSettings:serectKey"].ToString();
+
+                  string description = "";
+                  var transId = long.Parse(order.transId);
+                  var amount = order.Subtotal + order.DeliveryFee;
+                  string orderId = Guid.NewGuid().ToString("N");
+                  string requestId = Guid.NewGuid().ToString("N");
+
+
+                  //Before sign HMAC SHA256 signature
+                  string rawHash = "accessKey=" + accessKey +
+                        "&amount=" + amount +
+                        "&description=" + description +
+                        "&orderId=" + orderId +
+                        "&partnerCode=" + partnerCode +
+                        "&requestId=" + requestId +
+                        "&transId=" + transId
+                        ;
+
+
+                  MoMoSecurity crypto = new MoMoSecurity();
+                  //sign signature SHA256
+                  string signature = crypto.signSHA256(rawHash, serectkey);
+
+                  //build body json request
+                  JObject message = new JObject
+                  {
+                        { "partnerCode", partnerCode },
+                        { "orderId", orderId },
+                        { "requestId", requestId },
+                        { "amount", amount },
+                        { "transId", transId },
+                        { "lang", "en" },
+                        { "description", description },
+                        { "signature", signature }
+                  };
+
+                  string responseFromMomo = MoMoPaymentRequest.sendPaymentRequest(endpoint, message.ToString());
+
+                  if(responseFromMomo == null)
+                  {
+                        return BadRequest(new ProblemDetails { Title = "Problem refund with MoMo" });
+                  }
+
+                  order.isRefund = true;
+                  await _context.SaveChangesAsync();
+
+                  return Ok(responseFromMomo);
+            }
+
             public static string Base64EncodeObject(object obj)
             {
-            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(obj));
-            return System.Convert.ToBase64String(plainTextBytes);
+                  var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(obj));
+                  return System.Convert.ToBase64String(plainTextBytes);
             }
+
       }
 }
+
+// "partnerCode": "MOMO5RGX20191128",
+// "accessKey": "M8brj9K6E22vXoDB",
+// "serectKey": "nqQiVSgDMy809JoPF6OzP5OdBUB550Y4",

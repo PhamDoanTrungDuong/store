@@ -13,6 +13,9 @@ const MoMoPaymentSucceeded: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const message = new URLSearchParams(search).get("message");
 	const resultCode = new URLSearchParams(search).get("resultCode");
+	const orderId = new URLSearchParams(search).get("orderId");
+	const requestId = new URLSearchParams(search).get("requestId");
+	const transId = new URLSearchParams(search).get("transId");
 	// const extraData = new URLSearchParams(search).get("extraData");
 
 	//   if(extraData !== null){
@@ -23,7 +26,8 @@ const MoMoPaymentSucceeded: React.FC = () => {
 
 	if (search) {
 		if (message === "Successful." && resultCode === "0") {
-			agent.Orders.Momocreate().then(() => {
+			const data = {orderId: orderId?.toString(), requestId: requestId?.toString(), transId: transId?.toString()}
+			agent.Orders.Momocreate(data).then(() => {
 				dispatch(clearBasket());
         			window.history.pushState({}, "", "/returnUrl");
 			});

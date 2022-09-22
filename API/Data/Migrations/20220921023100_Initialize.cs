@@ -68,7 +68,10 @@ namespace API.Data.Migrations
                     DeliveryFee = table.Column<long>(type: "bigint", nullable: false),
                     OrderStatus = table.Column<int>(type: "integer", nullable: false),
                     DeliveryStatus = table.Column<int>(type: "integer", nullable: false),
-                    PaymentIntentId = table.Column<string>(type: "text", nullable: true)
+                    PaymentIntentId = table.Column<string>(type: "text", nullable: true),
+                    orderId = table.Column<string>(type: "text", nullable: true),
+                    requestId = table.Column<string>(type: "text", nullable: true),
+                    transId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -386,7 +389,12 @@ namespace API.Data.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: false),
-                    LikedProductId = table.Column<int>(type: "integer", nullable: false)
+                    LikedProductId = table.Column<int>(type: "integer", nullable: false),
+                    isLike = table.Column<bool>(type: "boolean", nullable: false),
+                    LikeAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    PictureUrl = table.Column<string>(type: "text", nullable: true),
+                    productName = table.Column<string>(type: "text", nullable: true),
+                    Username = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -485,8 +493,8 @@ namespace API.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "78bcb4d0-bf54-400f-b181-2cb885285794", "Member", "MEMBER" },
-                    { 2, "e899052c-e7f5-40d2-bf06-90d9dcf6d0b4", "Admin", "ADMIN" }
+                    { 1, "f00ae6b1-951b-40b4-8bde-4c13ac8bb254", "Member", "MEMBER" },
+                    { 2, "3af21f93-e6ef-474a-8d2f-d1205032f03d", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(

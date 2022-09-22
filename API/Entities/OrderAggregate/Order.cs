@@ -23,6 +23,11 @@ namespace API.Entities.OrderAggregate
         public DeliveryStatus DeliveryStatus { get; set; } = DeliveryStatus.PendingConfirm;
 
         public string PaymentIntentId { get; set; }
+        #nullable enable
+        public string? orderId { get; set; }
+        public string? requestId { get; set; }
+        public string? transId { get; set; }
+        public bool isRefund { get; set; }
 
         public long GetTotal()
         {

@@ -15,7 +15,10 @@ interface IProps {
 
 const ProductCard: React.FC<IProps> = ({ product }) => {
 	const { productDiscount } = useProducts();
+
 	const [productSales, setProductSales] = useState<IProductDiscount>();
+	const [currentLike, setCurrentLike] = useState<any>();
+	const [likeStatus, setLikeStatus] = useState<boolean>();
 
 	const dispatch = useAppDispatch();
 	const [avg, setAvg] = useState<number>(0);
@@ -24,8 +27,17 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 			agent.Comment.getRatings(Number(product.id))
 				.then((res) => setAvg(res))
 				.catch((error) => console.log(error));
-		// console.log("[AvgStarRating]: ", avg);
 	}, [avg, product.id]);
+
+	useEffect(() => {
+		if(product !== null){
+			agent.Like.getCurrentLike().then((res: any) => {
+					setCurrentLike(res);
+				}).finally(() => {
+				  setLikeStatus(false);
+			  })
+		}
+	}, [product, likeStatus]);
 
 	useEffect(() => {
 		productDiscount.filter((e: any) => {
@@ -35,6 +47,10 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 			return product.id;
 		});
 	}, [productDiscount, product.id]);
+
+	const handleLike = async (productId: number) => {
+		await agent.Like.addLike(productId);
+	};
 
 	return (
 		<div className="border rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 duration-300">
@@ -59,11 +75,15 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 							<>
 								<img
 									src="./images/discount.png"
-									alt={productSales.productName}
+									alt={
+										productSales.productName
+									}
 									className="absolute top-[-1px] right-3 w-[30%]"
 								/>
 								<p className="text-white rotate-6 font-bold text-xl absolute top-[26px] right-[50px] z-10">
-									{productSales?.discountValue}
+									{
+										productSales?.discountValue
+									}
 								</p>
 							</>
 						) : (
@@ -123,15 +143,33 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 							</h5>
 						)}
 						<div className="flex items-center">
-							<button className="mr-1">
+							<button
+								onClick={() => {
+										handleLike(product.id)
+										setLikeStatus(true)
+									}
+								}
+								className="p-2 hover:bg-red-100 rounded-full duration-300">
 								<FaHeart
 									size="20"
-									className="text-gray-600 hover:text-red-600 duration-300"
+									className={
+										currentLike?.find(
+											(
+												item: any
+											) =>
+												item.likedProductId ===
+													product.id &&
+												item.isLike ===
+													true
+										)
+											? "text-red-600 duration-300"
+											: "text-gray-600 hover:text-red-600 duration-300"
+									}
 								/>
 							</button>
 							{!(product?.quantityInStock! < 1) ? (
 								<button
-									className="p-2 rounded-full text-gray-600 hover:text-indigo-600 duration-300 hover:bg-indigo-100"
+									className="p-1 rounded-full text-gray-600 hover:text-indigo-600 duration-300 hover:bg-indigo-100"
 									onClick={() =>
 										dispatch(
 											addBasketItemAsync(
@@ -149,7 +187,7 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 								<Tooltip
 									title="Out of stock"
 									placement="top">
-									<button className="p-2 cursor-default text-gray-600">
+									<button className="p-1 cursor-default text-gray-600">
 										<IoIosCart size="30" />
 									</button>
 								</Tooltip>

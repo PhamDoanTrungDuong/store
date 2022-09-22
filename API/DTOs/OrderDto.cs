@@ -23,5 +23,8 @@ namespace API.DTOs
         public string OrderStatus { get; set; }
         public string DeliveryStatus { get; set; }
         public long Total { get; set; }
+
+        public bool isRefund { get; set; }
+        public string orderId { get; set; }
     }
 }
