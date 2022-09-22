@@ -23,7 +23,7 @@ import { currencyFormat } from "../../app/utilities/util";
 import { IProduct } from "../../app/interfaces/IProduct";
 import useProducts from "../../app/hooks/useProducts";
 import ProductSearch from "../catalog/ProductSearch";
-import { HiDotsVertical } from "react-icons/hi"
+import { HiDotsVertical } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
@@ -109,7 +109,9 @@ const Inventory: React.FC = () => {
 							<TableCell align="center">
 								Quantity
 							</TableCell>
-							<TableCell align="center">Options</TableCell>
+							<TableCell align="center">
+								Options
+							</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
@@ -162,11 +164,37 @@ const Inventory: React.FC = () => {
 									{product.brand}
 								</TableCell>
 								<TableCell align="center">
-									{product.quantityInStock < 0 ? 0 : product.quantityInStock }
+									{product.quantityInStock < 0
+										? 0
+										: product.quantityInStock}
 								</TableCell>
 								<TableCell align="center">
 									<div>
 										<Button
+											onClick={() =>
+												handleSelectProduct(
+													product
+												)
+											}
+											startIcon={
+												<Edit />
+											}></Button>
+										<LoadingButton
+											loading={
+												loading &&
+												target ===
+													product.id
+											}
+											startIcon={
+												<Delete />
+											}
+											color="error"
+											onClick={() =>
+												handleDeleteProduct(
+													product.id
+												)
+											}></LoadingButton>
+										{/* <Button
 											id="basic-button"
 											aria-controls={
 												open
@@ -233,7 +261,7 @@ const Inventory: React.FC = () => {
 													}
 												>Delete</LoadingButton>
 											</MenuItem>
-										</Menu>
+										</Menu> */}
 									</div>
 								</TableCell>
 							</TableRow>

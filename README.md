@@ -1,12 +1,15 @@
 ##https://store-unavailable.herokuapp.com/
-<!-- hot fix
-      + chi tiết sản phẩm x
-      + like useEffect x
+<!-- demo 
+      - ProductCard (likeProduct)
+      - ProductDetails (Comment and Ratings)
+      - Basket (Stripe checkout)
+      - SideBar (management categories)
+      - AdminHome (Statistic)
  -->
 <!--
       - [Basket(Momo) + ProfileForm(textwarn)]
-      - SignedInMenu(ChangePwd)
-      - AdminMember(lockout)
+      - [SignedInMenu(ChangePwd)]
+      - [AdminMember(lockout)]
       - [ProductDetail(productAttribute) + BasketTable(displayProAttr)]
       - [App(<Notifications />)]
       - [Login(google-login)]

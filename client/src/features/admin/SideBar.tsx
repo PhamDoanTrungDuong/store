@@ -17,16 +17,16 @@ const SideBar: React.FC = () => {
 				/>
 			),
 		},
-		{
-			title: "Sales",
-			to: "/admin-sales",
-			icon: (
-				<RiPriceTag3Fill
-					size={30}
-					className="rounded-lg fill-white group-hover:fill-indigo-600"
-				/>
-			),
-		},
+		// {
+		// 	title: "Sales",
+		// 	to: "/admin-sales",
+		// 	icon: (
+		// 		<RiPriceTag3Fill
+		// 			size={30}
+		// 			className="rounded-lg fill-white group-hover:fill-indigo-600"
+		// 		/>
+		// 	),
+		// },
 		{ title: "Categories", to: "/admin-categories", icon: (
                   <RiTableFill
                         size={30}
@@ -38,21 +38,21 @@ const SideBar: React.FC = () => {
                         size={30}
                         className="rounded-lg fill-white group-hover:fill-indigo-600"
                   />), },
-		{ title: "Role", to: "/admin-role", icon: (
-                  <MdManageAccounts
-                        size={30}
-                        className="rounded-lg fill-white group-hover:fill-indigo-600"
-                  />), },
-		{ title: "Comments", to: "/admin-comments", icon: (
-                  <MdInsertComment
-                        size={30}
-                        className="rounded-lg fill-white group-hover:fill-indigo-600"
-                  />), },
-		{ title: "Orders", to: "/admin-orders", icon: (
-                  <MdOutlineCardGiftcard
-                        size={30}
-                        className="rounded-lg fill-white group-hover:fill-indigo-600"
-                  />), },
+		// { title: "Role", to: "/admin-role", icon: (
+      //             <MdManageAccounts
+      //                   size={30}
+      //                   className="rounded-lg fill-white group-hover:fill-indigo-600"
+      //             />), },
+		// { title: "Comments", to: "/admin-comments", icon: (
+      //             <MdInsertComment
+      //                   size={30}
+      //                   className="rounded-lg fill-white group-hover:fill-indigo-600"
+      //             />), },
+		// { title: "Orders", to: "/admin-orders", icon: (
+      //             <MdOutlineCardGiftcard
+      //                   size={30}
+      //                   className="rounded-lg fill-white group-hover:fill-indigo-600"
+      //             />), },
 	];
 	return (
 		<div

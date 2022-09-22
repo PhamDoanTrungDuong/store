@@ -187,7 +187,7 @@ const ProductDetails: React.FC = () => {
 			agent.Comment.postComment(data).then(() => {
 				Swal.fire({
 					icon: "success",
-					title: "Your comments had been record",
+					title: "Your comments had been recorded",
 					showConfirmButton: false,
 					timer: 1500,
 				});
@@ -496,6 +496,7 @@ const ProductDetails: React.FC = () => {
 									<div className="w-full md:w-full flex flex-row justify-end md:justify-start px-1 md:m-2 items-end">
 										<div className="mr-1">
 											<button
+											 	disabled
 												type="submit"
 												className="bg-indigo-600 border text-sm md:text-base border-indigo-600 text-white p-3 w-full rounded-lg shadow-xl hover:shadow-2xl hover:bg-transparent hover:text-indigo-600 duration-200">
 												Submit
