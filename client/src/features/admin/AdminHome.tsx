@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BsThreeDots, BsPeople, BsCart4 } from "react-icons/bs";
 import { IoIosArrowForward, IoMdArrowDropup } from "react-icons/io";
 import { MdAttachMoney } from "react-icons/md";
@@ -8,37 +8,11 @@ import { currencyFormat } from "../../app/utilities/util";
 import { fetchMemberCount } from "../account/accountSlice";
 import { getProductCounterAsync } from "../catalog/catalogSlice";
 import { fetchAllTotal } from "../orders/orderSlice";
-import {
-	Chart as ChartJS,
-	CategoryScale,
-	LinearScale,
-	BarElement,
-	Title,
-	Tooltip,
-	Legend,
-} from "chart.js";
-import { Bar } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
 import { AiOutlineHome } from "react-icons/ai";
 import { IoIosStats } from "react-icons/io";
 import { Link } from "react-router-dom";
+import ViewDatePicker from "../../app/components/ViewDatePicker";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-
-export const options = {
-	responsive: true,
-	plugins: {
-		legend: {
-			position: "top" as const,
-		},
-		title: {
-			display: true,
-			// text: "Chart.js Bar Chart",
-		},
-	},
-};
-
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
 
 const AdminHome: React.FC = () => {
 	const { members } = useMembers();
@@ -46,18 +20,7 @@ const AdminHome: React.FC = () => {
 	const { allTotal } = useAppSelector((state) => state.order);
 	const { count } = useAppSelector((state) => state.account);
 	const { productCount } = useAppSelector((state) => state.catalog);
-	const data = {
-		labels,
-		datasets: [
-			{
-				label: "Total Money Per Month",
-				data: labels.map(() =>
-					faker.datatype.number({ min: 0, max: +(allTotal / 100) })
-				),
-				backgroundColor: "rgba(255, 99, 132, 0.5)",
-			},
-		],
-	};
+
 	useEffect(() => {
 		dispatch(fetchAllTotal());
 		dispatch(fetchMemberCount());
@@ -184,7 +147,7 @@ const AdminHome: React.FC = () => {
 				</div>
 			</div>
 			<div className="mt-5">
-				<Bar options={options} data={data} />
+				<ViewDatePicker />
 			</div>
 		</>
 	);

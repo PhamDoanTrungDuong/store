@@ -27,6 +27,7 @@ import OrderSearch from "../../app/components/OrderSearch";
 import { Link } from "react-router-dom";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
+import moment from "moment";
 
 interface TabPanelProps {
 	children?: React.ReactNode;
@@ -250,11 +251,11 @@ const AdminOrders: React.FC = () => {
 															)}
 														</TableCell>
 														<TableCell align="center">
-															{
-																order.orderDate.split(
-																	"T"
-																)[0]
-															}
+															{moment(
+																order.orderDate
+															).format(
+																"MMM Do YY, h:mm a"
+															)}
 														</TableCell>
 														<TableCell align="center">
 															{
@@ -372,7 +373,7 @@ const AdminOrders: React.FC = () => {
 													item
 												) =>
 													item.deliveryStatus ===
-													"OnTheWay" &&
+														"OnTheWay" &&
 													item.isRefund ===
 														false
 											)
@@ -430,11 +431,11 @@ const AdminOrders: React.FC = () => {
 															)}
 														</TableCell>
 														<TableCell align="center">
-															{
-																order.orderDate.split(
-																	"T"
-																)[0]
-															}
+															{moment(
+																order.orderDate
+															).format(
+																"MMM Do YY, h:mm a"
+															)}
 														</TableCell>
 														<TableCell align="center">
 															{
@@ -511,7 +512,7 @@ const AdminOrders: React.FC = () => {
 							</TableContainer>
 						</TabPanel>
 						<TabPanel value={value} index={2}>
-						<TableContainer component={Paper}>
+							<TableContainer component={Paper}>
 								<Table
 									sx={{ minWidth: 650 }}
 									aria-label="simple table">
@@ -552,7 +553,7 @@ const AdminOrders: React.FC = () => {
 													item
 												) =>
 													item.deliveryStatus ===
-													"ProductDelivered" &&
+														"ProductDelivered" &&
 													item.isRefund ===
 														false
 											)
@@ -610,11 +611,11 @@ const AdminOrders: React.FC = () => {
 															)}
 														</TableCell>
 														<TableCell align="center">
-															{
-																order.orderDate.split(
-																	"T"
-																)[0]
-															}
+															{moment(
+																order.orderDate
+															).format(
+																"MMM Do YY, h:mm a"
+															)}
 														</TableCell>
 														<TableCell align="center">
 															{
@@ -748,11 +749,11 @@ const AdminOrders: React.FC = () => {
 													)}
 												</td>
 												<td align="center">
-													{
-														order.orderDate.split(
-															"T"
-														)[0]
-													}
+													{moment(
+														order.orderDate
+													).format(
+														"MMM Do YY, h:mm a"
+													)}
 												</td>
 												<td align="center">
 													{

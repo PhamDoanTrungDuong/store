@@ -24,6 +24,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Swal from "sweetalert2";
+import moment from "moment";
 interface TabPanelProps {
 	children?: React.ReactNode;
 	index: number;
@@ -235,11 +236,11 @@ const Order: React.FC = () => {
 												)}
 											</td>
 											<td align="center">
-												{
-													order.orderDate.split(
-														"T"
-													)[0]
-												}
+												{moment(
+													order.orderDate
+												).format(
+													"MMM Do YY, h:mm a"
+												)}
 											</td>
 											<td align="center">
 												{
@@ -288,7 +289,7 @@ const Order: React.FC = () => {
 												)}
 											</td>
 											<td align="right">
-												{order.orderId &&
+												{order.orderId && (
 													<button
 														className="bg-[#A50064] border border-[#A50064] text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-[#A50064] duration-200 mr-3"
 														onClick={() => {
@@ -302,7 +303,7 @@ const Order: React.FC = () => {
 														}}>
 														Refund
 													</button>
-												}
+												)}
 												<button
 													className="c-btn"
 													onClick={() =>
@@ -377,11 +378,11 @@ const Order: React.FC = () => {
 												)}
 											</td>
 											<td align="center">
-												{
-													order.orderDate.split(
-														"T"
-													)[0]
-												}
+												{moment(
+													order.orderDate
+												).format(
+													"MMM Do YY, h:mm a"
+												)}
 											</td>
 											<td align="center">
 												{
@@ -504,11 +505,11 @@ const Order: React.FC = () => {
 												)}
 											</td>
 											<td align="center">
-												{
-													order.orderDate.split(
-														"T"
-													)[0]
-												}
+												{moment(
+													order.orderDate
+												).format(
+													"MMM Do YY, h:mm a"
+												)}
 											</td>
 											<td align="center">
 												{
@@ -629,11 +630,11 @@ const Order: React.FC = () => {
 												)}
 											</td>
 											<td align="center">
-												{
-													order.orderDate.split(
-														"T"
-													)[0]
-												}
+												{moment(
+													order.orderDate
+												).format(
+													"MMM Do YY, h:mm a"
+												)}
 											</td>
 											<td align="center">
 												{
@@ -709,81 +710,80 @@ const Order: React.FC = () => {
 						{`Transaction Refund #${momoOrderQuery?.transId}`}
 					</DialogTitle>
 					<DialogContent>
-							<table className="max-w-[400px] sm:max-w-[500px] md:max-w-[600px]">
-								<thead>
-									<tr>
-										<th
-											align="left"
-											className="px-5 md:px-20 pb-5">
-											Product
-										</th>
-										<th
-											align="center"
-											className="px-5 md:px-10 pb-5">
-											Quantity
-										</th>
-										<th
-											align="center"
-											className="px-5 md:px-10 pb-5">
-											Subtotal
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									{currentOrder.orderItems.map(
-										(item: any) => (
-											<tr
-												key={
-													item.productId
-												}>
-												<td className="py-4">
-													<Link
-														to={`/catalog/${item.productId}`}>
-														<div className="flex items-center">
-															<img
-																className="rounded-xl"
-																src={
-																	item.pictureUrl
-																}
-																alt={
-																	item.name
-																}
-																style={{
-																	height: 80,
-																	marginRight: 20,
-																}}
-															/>
-															<span className="hidden md:block">
-																{
-																	item.name
-																}
-															</span>
-														</div>
-													</Link>
-												</td>
-												<td align="center">
-													{
-														item.quantity
-													}
-												</td>
-												<td align="center">
-													<h5 className="text-lg font-bold">
-														$
-														{(
-															item.price /
-															100
-														).toFixed(
-															2
-														)}
-													</h5>
-												</td>
-											</tr>
-										)
-									)}
-								</tbody>
-							</table>
-							Price:{" "}
-							{currencyFormat(momoOrderQuery.amount)}
+						<table className="max-w-[400px] sm:max-w-[500px] md:max-w-[600px]">
+							<thead>
+								<tr>
+									<th
+										align="left"
+										className="px-5 md:px-20 pb-5">
+										Product
+									</th>
+									<th
+										align="center"
+										className="px-5 md:px-10 pb-5">
+										Quantity
+									</th>
+									<th
+										align="center"
+										className="px-5 md:px-10 pb-5">
+										Subtotal
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								{currentOrder.orderItems.map(
+									(item: any) => (
+										<tr
+											key={
+												item.productId
+											}>
+											<td className="py-4">
+												<Link
+													to={`/catalog/${item.productId}`}>
+													<div className="flex items-center">
+														<img
+															className="rounded-xl"
+															src={
+																item.pictureUrl
+															}
+															alt={
+																item.name
+															}
+															style={{
+																height: 80,
+																marginRight: 20,
+															}}
+														/>
+														<span className="hidden md:block">
+															{
+																item.name
+															}
+														</span>
+													</div>
+												</Link>
+											</td>
+											<td align="center">
+												{
+													item.quantity
+												}
+											</td>
+											<td align="center">
+												<h5 className="text-lg font-bold">
+													$
+													{(
+														item.price /
+														100
+													).toFixed(
+														2
+													)}
+												</h5>
+											</td>
+										</tr>
+									)
+								)}
+							</tbody>
+						</table>
+						Price: {currencyFormat(momoOrderQuery.amount)}
 					</DialogContent>
 					<DialogActions>
 						<Button onClick={handleClose}>Disagree</Button>

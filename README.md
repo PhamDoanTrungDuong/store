@@ -25,9 +25,8 @@
       + like sản phẩm x
       + hủy đơn hàng momo - hoàn tiền momo x
       + thống kê
-            - doanh số theo d/m/y
-            - số lượng sản phẩm bán chạy
-            - đánh giá sản phẩm
+            - doanh số theo d/m/y x
+      + chọn địa chỉ 
       + blog
       + paypal
       + vnpay

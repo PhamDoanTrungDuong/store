@@ -71,7 +71,8 @@ namespace API.Data.Migrations
                     PaymentIntentId = table.Column<string>(type: "text", nullable: true),
                     orderId = table.Column<string>(type: "text", nullable: true),
                     requestId = table.Column<string>(type: "text", nullable: true),
-                    transId = table.Column<string>(type: "text", nullable: true)
+                    transId = table.Column<string>(type: "text", nullable: true),
+                    isRefund = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -493,8 +494,8 @@ namespace API.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "f00ae6b1-951b-40b4-8bde-4c13ac8bb254", "Member", "MEMBER" },
-                    { 2, "3af21f93-e6ef-474a-8d2f-d1205032f03d", "Admin", "ADMIN" }
+                    { 1, "aaefe767-7286-4b6d-b0c8-e49708d4c23d", "Member", "MEMBER" },
+                    { 2, "638ac8e0-0317-4645-a156-33462cb67d49", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(

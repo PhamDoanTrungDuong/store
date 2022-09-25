@@ -167,6 +167,8 @@ const Admin = {
     deleteCategory: (id: number) => requests.delete(`category/${id}`),
     lockUser: (id: string) => requests.post(`account/lock-user/${id}`, {}),
     unlockUser: (id: string) => requests.post(`account/unlock-user/${id}`, {}),
+    statisticCurrentDay: (data: any) => requests.get(`admin/statistic-dmy?d=${data.d}&m=${data.m}&y=${data.y}`),
+    statisticMonth: () => requests.get(`admin/statistic-month`),
 }
 
 const Profile = {

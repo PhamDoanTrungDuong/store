@@ -230,6 +230,39 @@ namespace API.Controllers
                   return BadRequest(new ProblemDetails { Title = "Problem updating user" });
             }
 
+            // [HttpGet("get-addresses")]
+            // public async Task<User> GetAddresses()
+            // {
+            //       return await _context.Users
+            //             .Include(a => a.Address)
+            //             .FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
+            // }
+
+            // [HttpPost("new-address")]
+            // public async Task<ActionResult> AddAddress([FromForm] MemberUpdateDto newAddressVm)
+            // {
+            //       var user = await _context.Users
+            //             .Include(a => a.Address)
+            //             .FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
+
+            //       var newAddress = new UserAddress {
+            //             FullName = newAddressVm.FullName,
+            //             Address1 = newAddressVm.Address1,
+            //             Address2 = newAddressVm.Address2,
+            //             City = newAddressVm.City,
+            //             Zip = newAddressVm.Zip,
+            //             State = newAddressVm.State,
+            //             Country = newAddressVm.City,
+            //       };
+            //       await _context.UserAddresses.AddAsync(newAddress);
+
+            //       var result = await _context.SaveChangesAsync() > 0;
+
+            //       if (result) return Ok(result);
+
+            //       return BadRequest(new ProblemDetails { Title = "Problem updating user" });
+            // }
+
             // [Authorize(Roles = "Admin")]
             [HttpGet("all-members")]
             public async Task<ActionResult<PagedList<User>>> GetMembers([FromQuery] MemberDto memberDto)

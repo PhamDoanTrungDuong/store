@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20220921023100_Initialize")]
+    [Migration("20220925085517_Initialize")]
     partial class Initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -182,6 +182,9 @@ namespace API.Data.Migrations
 
                     b.Property<long>("Subtotal")
                         .HasColumnType("bigint");
+
+                    b.Property<bool>("isRefund")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("orderId")
                         .HasColumnType("text");
@@ -363,14 +366,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "f00ae6b1-951b-40b4-8bde-4c13ac8bb254",
+                            ConcurrencyStamp = "aaefe767-7286-4b6d-b0c8-e49708d4c23d",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "3af21f93-e6ef-474a-8d2f-d1205032f03d",
+                            ConcurrencyStamp = "638ac8e0-0317-4645-a156-33462cb67d49",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
