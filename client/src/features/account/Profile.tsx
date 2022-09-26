@@ -60,7 +60,7 @@ const Profile: React.FC = () => {
 	if (loading) return <Loading message="Updating user..." />;
 
 	return (
-		<div className="h-[800px] my-5 p-5">
+		<div className="my-5 p-5">
 			<div className="flex items-center ml-2 mt-3 mb-5">
 				<Link to="/">
 					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
