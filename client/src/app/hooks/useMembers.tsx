@@ -10,6 +10,7 @@ const useMembers = () => {
 
       useEffect(() => {
          !membersLoaded ? dispatch(fetchMembersAsync()) : dispatch(fetchMembersAsync());
+            // dispatch(fetchMembersAsync())
       }, [dispatch, membersLoaded]);
 
   return {

@@ -37,7 +37,7 @@ const PaymentForm: React.FC<IProps> = ({ cardState, onCardInputChange }) => {
 							label="Card number"
 							fullWidth
 							autoComplete="cc-number"
-							variant="standard"
+							// variant="standard"
 							InputLabelProps={{ shrink: true }}
 							InputProps={{
 								inputComponent: StripeInput,
@@ -60,7 +60,7 @@ const PaymentForm: React.FC<IProps> = ({ cardState, onCardInputChange }) => {
 							label="Expiry date"
 							fullWidth
 							autoComplete="cc-exp"
-							variant="standard"
+							// variant="standard"
 							InputLabelProps={{ shrink: true }}
 							InputProps={{
 								inputComponent: StripeInput,
@@ -79,7 +79,7 @@ const PaymentForm: React.FC<IProps> = ({ cardState, onCardInputChange }) => {
 							label="CVV"
 							fullWidth
 							autoComplete="cc-csc"
-							variant="standard"
+							// variant="standard"
 							InputLabelProps={{ shrink: true }}
 							InputProps={{
 								inputComponent: StripeInput,

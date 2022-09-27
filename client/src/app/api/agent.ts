@@ -122,7 +122,11 @@ const Account = {
     register: (values: any) => requests.post('account/register', values),
     googleAccount: (values: any) => requests.post('account/googleAccount', values),
     currentUser: () => requests.get('account/currentUser'),
-    fetchAddress: () => requests.get('account/savedAddress')
+    fetchAddress: () => requests.get('account/savedAddress'),
+    userAddresses: () => requests.get('account/get-addresses'),
+    newAddress: (values: any) => requests.post('account/new-address', values),
+    updateAddress: (values: any) => requests.post('account/update-address', values),
+    deleteAddress: (id: number) => requests.delete(`account/delete-address/${id}`),
 }
 
 const Orders = {

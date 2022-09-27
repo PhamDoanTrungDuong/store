@@ -12,6 +12,7 @@ interface IProps extends UseControllerProps{
 const AppTextInput: React.FC<IProps> = (props) => {
 
 const {fieldState, field} = useController({...props, defaultValue: ''});
+// console.log("[field]: ", field)
   return (
     <>
       <TextField
@@ -21,7 +22,7 @@ const {fieldState, field} = useController({...props, defaultValue: ''});
             rows={props.rows}
             type={props.type}
             fullWidth
-            variant='standard'
+            // variant='standard'
             error={!!fieldState.error}
             helperText={fieldState.error?.message}
         />

@@ -187,6 +187,11 @@ const Order: React.FC = () => {
 									<td
 										className="px-4 py-3"
 										align="center">
+										Address
+									</td>
+									<td
+										className="px-4 py-3"
+										align="center">
 										Total
 									</td>
 									<td
@@ -229,6 +234,9 @@ const Order: React.FC = () => {
 												{
 													order.id
 												}
+											</td>
+											<td align="center">
+												{order.shippingAddress.address1}
 											</td>
 											<td align="center">
 												{currencyFormat(
@@ -329,6 +337,11 @@ const Order: React.FC = () => {
 									<td
 										className="px-4 py-3"
 										align="center">
+										Address
+									</td>
+									<td
+										className="px-4 py-3"
+										align="center">
 										Total
 									</td>
 									<td
@@ -371,6 +384,9 @@ const Order: React.FC = () => {
 												{
 													order.id
 												}
+											</td>
+											<td align="center">
+												{order.shippingAddress.address1}
 											</td>
 											<td align="center">
 												{currencyFormat(
@@ -456,6 +472,11 @@ const Order: React.FC = () => {
 									<td
 										className="px-4 py-3"
 										align="center">
+										Address
+									</td>
+									<td
+										className="px-4 py-3"
+										align="center">
 										Total
 									</td>
 									<td
@@ -498,6 +519,9 @@ const Order: React.FC = () => {
 												{
 													order.id
 												}
+											</td>
+											<td align="center">
+												{order.shippingAddress.address1}
 											</td>
 											<td align="center">
 												{currencyFormat(

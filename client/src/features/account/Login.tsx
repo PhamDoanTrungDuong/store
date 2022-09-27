@@ -3,8 +3,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 import { FieldValues, useForm } from "react-hook-form";
-import { useAppDispatch } from "../../app/store/configureStore";
-import { googleSignIn, signInUser } from "./accountSlice";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import { googleSignIn, membersSelector, signInUser } from "./accountSlice";
 import { history } from "../..";
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
@@ -24,7 +24,10 @@ const Login = () => {
 			from: Location;
 		};
 	};
+	// const members = useAppSelector(membersSelector.selectAll);
+	
 	const { members } = useMembers();
+
 
 	const [googleUser, setGoogleUser] = useState<any>();
 	const dispatch = useAppDispatch();

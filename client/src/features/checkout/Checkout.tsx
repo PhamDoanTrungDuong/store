@@ -41,6 +41,14 @@ const Checkout: React.FC = () => {
 	});
 	const [paymentMessage, setPaymentMessage] = useState("");
 	const [paymentSucceeded, setPaymentSucceeded] = useState(false);
+	const [selectedAddress, setSelectedAddress] = useState<any>();
+
+	const currentValidationSchema = validationSchema[activeStep];
+	const methods = useForm({
+		mode: "all",
+		resolver: yupResolver(currentValidationSchema),
+	});
+
 	const { basket } = useAppSelector((state) => state.basket);
 	const stripe = useStripe();
 	const elements = useElements();
@@ -74,10 +82,22 @@ const Checkout: React.FC = () => {
 		});
 	};
 
+
+	const [addresses, setAddresses] = useState<any>([]);
+	useEffect(() => {
+		agent.Account.userAddresses().then((res) => {
+			setAddresses(res)
+		})
+	}, [])
+
+	const handleSelected = (address: any): void => {
+		setSelectedAddress(address)
+	}
+
 	function getStepContent(step: number) {
 		switch (step) {
 			case 0:
-				return <AddressForm />;
+				return <AddressForm addresses={addresses} handleSelected={handleSelected} selectedAddress={selectedAddress}/>;
 			case 1:
 				return <Review />;
 			case 2:
@@ -92,23 +112,25 @@ const Checkout: React.FC = () => {
 		}
 	}
 
-	const currentValidationSchema = validationSchema[activeStep];
-	const methods = useForm({
-		mode: "all",
-		resolver: yupResolver(currentValidationSchema),
-	});
-
 	useEffect(() => {
-		agent.Account.fetchAddress().then((res) => {
+		if(selectedAddress === undefined){
+			agent.Account.fetchAddress().then((res) => {
 			if (res) {
 				methods.reset({
 					...methods.getValues(),
 					...res,
-					saveAddress: false,
-				});
-			}
-		});
-	}, [methods]);
+						saveAddress: false,
+					});
+				}
+			});
+		}else{
+			methods.reset({
+				...methods.getValues(),
+				...selectedAddress,
+				saveAddress: false,
+			});
+		}
+	}, [methods, selectedAddress]);
 
 	const submitOrder = async (data: FieldValues) => {
 		setLoading(true);

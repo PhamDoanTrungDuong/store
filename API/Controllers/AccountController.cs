@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
@@ -230,38 +231,128 @@ namespace API.Controllers
                   return BadRequest(new ProblemDetails { Title = "Problem updating user" });
             }
 
-            // [HttpGet("get-addresses")]
-            // public async Task<User> GetAddresses()
-            // {
-            //       return await _context.Users
-            //             .Include(a => a.Address)
-            //             .FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
-            // }
+            [Authorize]
+            [HttpGet("get-addresses")]
+            public async Task<ActionResult<List<SelectedAddressDto>>> GetAddresses()
+            {
+                  var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                  var addresses = await _context.SelectedAddresses
+                              .Where(x => x.UserId == user.Id)
+                              .ToListAsync();
+                  if(addresses == null) return BadRequest(new ProblemDetails { Title = "Problem load addresses" });
+                  var addressDefault = await _userManager.Users
+                        .Where(x => x.UserName == User.Identity.Name)
+                        .Select(u => u.Address)
+                        .FirstOrDefaultAsync();
+                  var items = new List<SelectedAddressDto>();
 
-            // [HttpPost("new-address")]
-            // public async Task<ActionResult> AddAddress([FromForm] MemberUpdateDto newAddressVm)
-            // {
-            //       var user = await _context.Users
-            //             .Include(a => a.Address)
-            //             .FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
+                  if(addressDefault != null)
+                  {
+                        var addrDefaul = new SelectedAddressDto
+                        {
+                              Id = 0,
+                              FullName = addressDefault.FullName,
+                              Address1 = addressDefault.Address1,
+                              Address2 = addressDefault.Address2,
+                              Country = addressDefault.Country,
+                              City = addressDefault.City,
+                              State = addressDefault.State,
+                              Zip = addressDefault.Zip,
+                              UserId = 0
+                        };
+                        items.Add(addrDefaul);
+                  }
 
-            //       var newAddress = new UserAddress {
-            //             FullName = newAddressVm.FullName,
-            //             Address1 = newAddressVm.Address1,
-            //             Address2 = newAddressVm.Address2,
-            //             City = newAddressVm.City,
-            //             Zip = newAddressVm.Zip,
-            //             State = newAddressVm.State,
-            //             Country = newAddressVm.City,
-            //       };
-            //       await _context.UserAddresses.AddAsync(newAddress);
 
-            //       var result = await _context.SaveChangesAsync() > 0;
+                  foreach(var address in addresses)
+                  {
+                        var addr = new SelectedAddressDto
+                        {
+                              Id = address.Id,
+                              FullName = address.FullName,
+                              Address1 = address.Address1,
+                              Address2 = address.Address2,
+                              Country = address.Country,
+                              City = address.City,
+                              State = address.State,
+                              Zip = address.Zip,
+                              UserId = address.User.Id
+                        };
+                        items.Add(addr);
+                  }
+                  return items;
+            }
 
-            //       if (result) return Ok(result);
+            [HttpPost("new-address")]
+            public async Task<ActionResult> AddAddress(MemberUpdateDto newAddressVm)
+            {
+                  var user = await _context.Users
+                        .FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
 
-            //       return BadRequest(new ProblemDetails { Title = "Problem updating user" });
-            // }
+                  if(newAddressVm == null) return BadRequest();
+
+                  var newAddress = new SelectedAddress {
+                        FullName = newAddressVm.FullName,
+                        Address1 = newAddressVm.Address1,
+                        Address2 = newAddressVm.Address2,
+                        City = newAddressVm.City,
+                        Zip = newAddressVm.Zip,
+                        State = newAddressVm.State,
+                        Country = newAddressVm.City,
+                        UserId = user.Id
+                  };
+
+                  await _context.SelectedAddresses.AddAsync(newAddress);
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if (result) return Ok(result);
+
+                  return BadRequest(new ProblemDetails { Title = "Problem add new address" });
+            }
+            [HttpPost("update-address")]
+            public async Task<ActionResult> UpdateAddress(AddressUpdate updateAddressVm)
+            {
+                  var address = await _context.SelectedAddresses
+                        .FindAsync(updateAddressVm.Id);
+                  var user = await _context.Users
+                        .FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
+
+                  if(address == null) return BadRequest();
+
+                  address.FullName = updateAddressVm.FullName;
+                  address.Address1 = updateAddressVm.Address1;
+                  address.Address2 = updateAddressVm.Address2;
+                  address.City = updateAddressVm.City;
+                  address.Zip = updateAddressVm.Zip;
+                  address.State = updateAddressVm.State;
+                  address.Country = updateAddressVm.City;
+                  address.UserId = user.Id;
+
+                  // _context.SelectedAddresses.Update(newAddress);
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if (result) return Ok(result);
+
+                  return BadRequest(new ProblemDetails { Title = "Problem add new address" });
+            }
+
+            [HttpDelete("delete-address/{id}")]
+            public async Task<ActionResult> DeleteAddress(int id)
+            {
+                  var address = await _context.SelectedAddresses.FindAsync(id);
+
+                  if(address == null) return BadRequest();
+
+                  _context.SelectedAddresses.Remove(address);
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if (result) return Ok(result);
+
+                  return BadRequest(new ProblemDetails { Title = "Problem delete address" });
+            }
 
             // [Authorize(Roles = "Admin")]
             [HttpGet("all-members")]

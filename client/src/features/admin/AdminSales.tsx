@@ -92,9 +92,7 @@ const AdminSales: React.FC = () => {
 				</Link>
 			</div>
 			<div className="flex justify-between items-center mb-3">
-                        <div>
-                              
-                        </div>
+				<div></div>
 				<div className="w-[60%]">
 					<ProductSearch />
 				</div>

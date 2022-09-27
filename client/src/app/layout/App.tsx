@@ -35,6 +35,7 @@ import ChangePassword from "../../features/account/ChangePassword";
 import MoMoPaymentSucceeded from "../../features/checkout/MoMoPaymentSucceeded";
 import AdminSales from "../../features/admin/AdminSales";
 import Notifications from "../components/Notifications";
+import ShippingAddress from "../../features/account/ShippingAddress";
 
 const App: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -225,6 +226,14 @@ const App: React.FC = () => {
 								element={
 									<PrivateRoute>
 										<Profile />
+									</PrivateRoute>
+								}
+							/>
+							<Route
+								path="/shipping-address"
+								element={
+									<PrivateRoute>
+										<ShippingAddress />
 									</PrivateRoute>
 								}
 							/>

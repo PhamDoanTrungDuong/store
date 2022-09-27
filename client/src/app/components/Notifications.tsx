@@ -46,6 +46,7 @@ const Notifications: React.FC = () => {
 					{comments?.filter((item) => item.isNoftify === true).map((comment) => {
 						return(
 							<div
+							key={comment.id}
 							onClick={() => handleDeleteComment(comment.id)}
 							className="flex py-3 px-4 hover:bg-gray-200 duration-200 cursor-pointer">
 							<div className="flex-shrink-0">
