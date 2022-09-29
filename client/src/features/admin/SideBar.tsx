@@ -19,17 +19,17 @@ const SideBar: React.FC = () => {
 				/>
 			),
 		},
-		{
-			id: 1,
-			title: "Sales",
-			to: "/admin-sales",
-			icon: (
-				<RiPriceTag3Fill
-					size={30}
-					className="rounded-lg fill-[#637381]"
-				/>
-			),
-		},
+		// {
+		// 	id: 1,
+		// 	title: "Sales",
+		// 	to: "/admin-sales",
+		// 	icon: (
+		// 		<RiPriceTag3Fill
+		// 			size={30}
+		// 			className="rounded-lg fill-[#637381]"
+		// 		/>
+		// 	),
+		// },
 		{ id: 2, title: "Categories", to: "/admin-categories", icon: (
                   <RiTableFill
                         size={30}
@@ -41,21 +41,21 @@ const SideBar: React.FC = () => {
                         size={30}
                         className="rounded-lg fill-[#637381]"
                   />), },
-		{ id: 4, title: "Role", to: "/admin-role", icon: (
-                  <MdManageAccounts
-                        size={30}
-                        className="rounded-lg fill-[#637381]"
-                  />), },
-		{ id: 5, title: "Comments", to: "/admin-comments", icon: (
-                  <MdInsertComment
-                        size={30}
-                        className="rounded-lg fill-[#637381]"
-                  />), },
-		{ id: 6, title: "Orders", to: "/admin-orders", icon: (
-                  <MdOutlineCardGiftcard
-                        size={30}
-                        className="rounded-lg fill-[#637381]"
-                  />), },
+		// { id: 4, title: "Role", to: "/admin-role", icon: (
+      //             <MdManageAccounts
+      //                   size={30}
+      //                   className="rounded-lg fill-[#637381]"
+      //             />), },
+		// // { id: 5, title: "Comments", to: "/admin-comments", icon: (
+      // //             <MdInsertComment
+      // //                   size={30}
+      // //                   className="rounded-lg fill-[#637381]"
+      // //             />), },
+		// // { id: 6, title: "Orders", to: "/admin-orders", icon: (
+      // //             <MdOutlineCardGiftcard
+      // //                   size={30}
+      // //                   className="rounded-lg fill-[#637381]"
+      // //             />), },
 	];
 	return (
 		<div

@@ -145,8 +145,8 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 						<div className="flex items-center">
 							<button
 								onClick={() => {
-										handleLike(product.id)
-										setLikeStatus(true)
+										// handleLike(product.id)
+										// setLikeStatus(true)
 									}
 								}
 								className="p-2 hover:bg-red-100 rounded-full duration-300">

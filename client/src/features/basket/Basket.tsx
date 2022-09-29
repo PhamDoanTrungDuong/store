@@ -85,14 +85,14 @@ const Basket: React.FC = () => {
 							</div>
 							stripe */}
 						</div>
-						<Link to="/checkout" className="w-full">
-							<button className="bg-indigo-600 border border-indigo-600 text-white p-2 w-full rounded-lg shadow-lg my-2 hover:scale-105 hover:shadow-xl duration-200 flex justify-center items-center gap-2">
+						{/* <Link to="/checkout" className="w-full"> */}
+							<button disabled className="bg-gray-600 border border-gray-600 text-white p-2 w-full rounded-lg shadow-lg my-2 hover:scale-105 hover:shadow-xl duration-200 flex justify-center items-center gap-2">
 								<GrStripe size={20} />{" "}
 								<p className="pt-1 font-bold italic">
 									Stripe
 								</p>
 							</button>
-						</Link>
+						{/* </Link> */}
 					</div>
 				</div>
 			</div>

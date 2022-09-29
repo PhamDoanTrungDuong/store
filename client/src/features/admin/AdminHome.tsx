@@ -46,7 +46,7 @@ const AdminHome: React.FC = () => {
 					</h1>
 				</Link>
 			</div>
-			<div className="flex justify-center gap-4">
+			<div className="flex justify-start gap-4">
 				<div className="text-white bg-gradient-to-r from-indigo-600 to-indigo-400 px-8 py-6 rounded-[30px] w-[30%] mb-4 shadow-xl">
 					<div className="flex justify-between mb-3">
 						<div className="p-3 bg-white text-indigo-600 rounded-2xl inline-block">
@@ -56,7 +56,7 @@ const AdminHome: React.FC = () => {
 					</div>
 					<div className="relative mt-5">
 						<div className="text-3xl font-bold">
-							<p>{currencyFormat(allTotal)}</p>
+							<p>$1000.00</p>
 						</div>
 						<div className="flex font-medium justify-between items-center mt-1">
 							<h1 className="text-xl font-bold">
@@ -69,7 +69,7 @@ const AdminHome: React.FC = () => {
 					</div>
 				</div>
 
-				<div className="text-white bg-gradient-to-r from-cyan-600 to-cyan-400 px-8 py-6 rounded-[30px] w-[30%] mb-4 shadow-xl">
+				{/* <div className="text-white bg-gradient-to-r from-cyan-600 to-cyan-400 px-8 py-6 rounded-[30px] w-[30%] mb-4 shadow-xl">
 					<div className="flex justify-between mb-3">
 						<div className="p-3 bg-white text-cyan-600 rounded-2xl inline-block">
 							<BsCart4 size={25} />
@@ -144,11 +144,11 @@ const AdminHome: React.FC = () => {
 							</button>
 						</div>
 					</div>
-				</div>
+				</div> */}
 			</div>
-			<div className="rounded-div2 mt-10">
+			{/* <div className="rounded-div2 mt-10">
 				<ViewDatePicker />
-			</div>
+			</div> */}
 		</>
 	);
 };

@@ -423,9 +423,9 @@ const ProductDetails: React.FC = () => {
 					<TabPanel value={value} index={2}>
 						<div>
 							<form
-								onSubmit={handleSubmit(
-									submitComment
-								)}
+								// onSubmit={handleSubmit(
+								// 	submitComment
+								// )}
 								className="w-full bg-white rounded-xl pt-2">
 								<h2 className="px-4 pt-3 pb-2 text-black text-lg font-medium">
 									Add a new comment
@@ -496,8 +496,9 @@ const ProductDetails: React.FC = () => {
 									<div className="w-full md:w-full flex flex-row justify-end md:justify-start px-1 md:m-2 items-end">
 										<div className="mr-1">
 											<button
+												disabled
 												type="submit"
-												className="bg-indigo-600 border text-sm md:text-base border-indigo-600 text-white p-3 w-full rounded-lg shadow-xl hover:shadow-2xl hover:bg-transparent hover:text-indigo-600 duration-200">
+												className="bg-gray-600 border text-sm md:text-base border-gray-600 text-white p-3 w-full rounded-lg shadow-xl duration-200">
 												Submit
 											</button>
 										</div>
