@@ -10,7 +10,8 @@ export interface AdminState {
       load: boolean;
       loadComment: boolean;
       loadOrder: boolean;
-      categories: ICategory[] | null;
+      // categories: ICategory[] | null;
+      categories: string[];
       comments: IComment[] | null;
       orders: IOrder[] | null;
       categoriesParams: CategoriesParams;
@@ -54,7 +55,7 @@ const getOrdersAxiosParams = (ordersParams: OrdersParams) => {
       return params;
 }
 
-export const fetchCategories = createAsyncThunk<ICategory[], void, {state: RootState}>(
+export const fetchCategories = createAsyncThunk<string[], void, {state: RootState}>(
       "admin/fetchCategories",
       async (_, thunkAPI) => {
             const params = getCategoriesAxiosParams(thunkAPI.getState().admin.categoriesParams);

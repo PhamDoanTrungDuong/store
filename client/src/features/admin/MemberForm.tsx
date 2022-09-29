@@ -5,7 +5,10 @@ import agent from "../../app/api/agent";
 import { IUser } from "../../app/interfaces/IUser";
 import { useAppDispatch } from "../../app/store/configureStore";
 import { setMember } from "../account/accountSlice";
-
+import { Link } from "react-router-dom";
+import { AiOutlineHome } from "react-icons/ai";
+import { IoIosArrowForward } from "react-icons/io";
+import { HiOutlineUsers } from "react-icons/hi";
 interface Props {
 	member?: IUser;
 	cancelEdit: () => void;
@@ -57,10 +60,25 @@ const MemberForm: React.FC<Props> = ({ member, cancelEdit }) => {
         }
 
 	return (
-		<div className=" mt-5 p-5">
-			<Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
-				Create Member
-			</Typography>
+		<div className="mt-24 p-5 rounded-div2">
+
+			<div className="flex items-center ml-2 mt-4 mb-8">
+					<Link to="/">
+						<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+							<AiOutlineHome size={20} />
+							Home
+						</h1>
+					</Link>
+					<div className="mx-2">
+						<IoIosArrowForward size={15} />
+					</div>
+					<Link to="/">
+						<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+							<HiOutlineUsers size={20} />
+							New Member
+						</h1>
+					</Link>
+				</div>
 			<form onSubmit={handleSubmit(handleSubmitData)}>
 				<TextField
 					margin="normal"

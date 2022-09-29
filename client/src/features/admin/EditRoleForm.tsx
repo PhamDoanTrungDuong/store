@@ -4,7 +4,10 @@ import { Button } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import agent from '../../app/api/agent';
 import { useForm, } from 'react-hook-form';
-
+import { Link } from "react-router-dom";
+import { AiOutlineHome } from "react-icons/ai";
+import { IoIosArrowForward } from "react-icons/io";
+import { MdManageAccounts } from "react-icons/md";
 
 
 interface IProps {
@@ -39,8 +42,24 @@ const EditRoleForm: React.FC<IProps> = ({user, cancelEdit}) => {
 		return item ? true : false
 	}
   return (
-    <div className='h-[300px] mt-5 p-5'>
-      <div><h1 className='text-2xl font-bold'>Edit roles for {user?.username}</h1></div>
+    <div className='h-[300px] mt-24 p-5'>
+      <div className="flex items-center ml-2 mb-5">
+					<Link to="/">
+						<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+							<AiOutlineHome size={20} />
+							Home
+						</h1>
+					</Link>
+					<div className="mx-2">
+						<IoIosArrowForward size={15} />
+					</div>
+					<Link to="/">
+						<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+							<MdManageAccounts size={20} />
+							Edit Role for {user?.username}
+						</h1>
+					</Link>
+        </div>
       <div className="mx-auto p-5 w-full h-full flex flex-col justify-center items-center">
         <div>
           <form onSubmit={handleSubmit(handleSubmitData)}>

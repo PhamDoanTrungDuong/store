@@ -5,7 +5,10 @@ import agent from "../../app/api/agent";
 import { ICategory } from "../../app/interfaces/ICategory";
 import { useAppDispatch } from "../../app/store/configureStore";
 import { setCateLoad } from "./adminSlice";
-
+import { Link } from "react-router-dom";
+import { AiOutlineHome } from "react-icons/ai";
+import { BiCategoryAlt } from "react-icons/bi";
+import { IoIosArrowForward } from "react-icons/io";
 interface Props {
 	category?: ICategory;
 	cancelEdit: () => void;
@@ -35,10 +38,24 @@ const CategoryForm: React.FC<Props> = ({ category, cancelEdit }) => {
 		}
 	}
 	return (
-		<div className=" mt-5 p-5">
-			<Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
-				Create Category
-			</Typography>
+		<div className="mt-24 p-5 rounded-div2">
+			<div className="flex items-center ml-2 mt-4 mb-8">
+					<Link to="/">
+						<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+							<AiOutlineHome size={20} />
+							Home
+						</h1>
+					</Link>
+					<div className="mx-2">
+						<IoIosArrowForward size={15} />
+					</div>
+					<Link to="/">
+						<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+							<BiCategoryAlt size={20} />
+							New Category
+						</h1>
+					</Link>
+				</div>
 			<form onSubmit={handleSubmit(handleSubmitData)}>
 				<TextField
 					margin="normal"

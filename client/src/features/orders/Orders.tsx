@@ -161,7 +161,7 @@ const Order: React.FC = () => {
 					</div>
 				</div>
 			</div>
-			<div className="h-[600px] overflow-y-scroll">
+			<div className="h-[600px] overflow-y-scroll p-0">
 				<Box sx={{ width: "100%" }}>
 					<Box sx={{ borderBottom: 1, borderColor: "divider" }}>
 						<Tabs
@@ -180,14 +180,19 @@ const Order: React.FC = () => {
 					<TabPanel value={value} index={0}>
 						<table className="table-auto w-full text-xs sm:text-sm md:text-base">
 							<thead>
-								<tr className="border-b-2">
-									<td className="px-0 md:px-4 py-3">
+								<tr className="border-b border-gray-200">
+									<td className="px-0 md:px-4 py-3" align="center">
 										Order number
 									</td>
 									<td
 										className="px-4 py-3"
 										align="center">
 										Address
+									</td>
+									<td
+										className="px-4 py-3"
+										align="center">
+										City
 									</td>
 									<td
 										className="px-4 py-3"
@@ -228,15 +233,22 @@ const Order: React.FC = () => {
 											key={
 												order.id
 											}
-											className="border-b-2">
-											<td className="py-5">
+											className="border-b border-gray-200">
+											<td align="center" className="py-5">
 												#{" "}
 												{
 													order.id
 												}
 											</td>
-											<td align="center">
+											<td align="left">
 												{order.shippingAddress.address1}
+											</td>
+											<td>
+											{
+												order
+													.shippingAddress
+													.city
+											}
 											</td>
 											<td align="center">
 												{currencyFormat(
@@ -313,7 +325,7 @@ const Order: React.FC = () => {
 													</button>
 												)}
 												<button
-													className="c-btn"
+													className="c-btn px-2 py-1 w-[80px]"
 													onClick={() =>
 														setSelectedOrderNumber(
 															order.id
@@ -330,14 +342,19 @@ const Order: React.FC = () => {
 					<TabPanel value={value} index={1}>
 						<table className="table-auto w-full text-xs sm:text-sm md:text-base">
 							<thead>
-								<tr className="border-b-2">
-									<td className="px-0 md:px-4 py-3">
+								<tr className="border-b border-gray-200">
+									<td className="px-0 md:px-4 py-3" align="center">
 										Order number
 									</td>
 									<td
 										className="px-4 py-3"
 										align="center">
 										Address
+									</td>
+									<td
+										className="px-4 py-3"
+										align="center">
+										City
 									</td>
 									<td
 										className="px-4 py-3"
@@ -378,15 +395,22 @@ const Order: React.FC = () => {
 											key={
 												order.id
 											}
-											className="border-b-2">
-											<td className="py-5">
+											className="border-b border-gray-200">
+											<td align="center" className="py-5">
 												#{" "}
 												{
 													order.id
 												}
 											</td>
-											<td align="center">
+											<td align="left">
 												{order.shippingAddress.address1}
+											</td>
+											<td>
+											{
+												order
+													.shippingAddress
+													.city
+											}
 											</td>
 											<td align="center">
 												{currencyFormat(
@@ -448,7 +472,7 @@ const Order: React.FC = () => {
 											</td>
 											<td align="center">
 												<button
-													className="c-btn"
+													className="c-btn px-2 py-1 w-[80px]"
 													onClick={() =>
 														setSelectedOrderNumber(
 															order.id
@@ -465,7 +489,7 @@ const Order: React.FC = () => {
 					<TabPanel value={value} index={2}>
 						<table className="table-auto w-full text-xs sm:text-sm md:text-base">
 							<thead>
-								<tr className="border-b-2">
+								<tr className="border-b border-gray-200">
 									<td className="px-0 md:px-4 py-3">
 										Order number
 									</td>
@@ -513,8 +537,8 @@ const Order: React.FC = () => {
 											key={
 												order.id
 											}
-											className="border-b-2">
-											<td className="py-5">
+											className="border-b border-gray-200">
+											<td align="center" className="py-5">
 												#{" "}
 												{
 													order.id
@@ -600,7 +624,7 @@ const Order: React.FC = () => {
 					<TabPanel value={value} index={3}>
 						<table className="table-auto w-full text-xs sm:text-sm md:text-base">
 							<thead>
-								<tr className="border-b-2">
+								<tr className="border-b border-gray-200">
 									<td className="px-0 md:px-4 py-3">
 										Order number
 									</td>
@@ -641,8 +665,8 @@ const Order: React.FC = () => {
 											key={
 												order.id
 											}
-											className="border-b-2">
-											<td className="py-5">
+											className="border-b border-gray-200">
+											<td align="center" className="py-5">
 												#{" "}
 												{
 													order.id

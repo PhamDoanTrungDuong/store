@@ -6,13 +6,16 @@ import useProducts from "../../app/hooks/useProducts";
 import {yupResolver} from '@hookform/resolvers/yup';
 import { validationSchema } from "./productValidation";
 import agent from "../../app/api/agent";
-import { useAppDispatch } from "../../app/store/configureStore";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { LoadingButton } from "@mui/lab";
 import { IProduct } from "../../app/interfaces/IProduct";
 import AppSelectList from "../../app/components/AppSelectList";
 import AppDropzone from "../../app/components/AppDropzone";
 import { setProduct } from "../catalog/catalogSlice";
-
+import { Link } from "react-router-dom";
+import { AiOutlineHome } from "react-icons/ai";
+import { IoIosArrowForward } from "react-icons/io";
+import { RiBarChartBoxFill } from "react-icons/ri";
 interface IProps {
     product?: IProduct;
     cancelEdit: () => void;
@@ -24,7 +27,8 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
             resolver: yupResolver<any>(validationSchema)
       });
 
-        const { brands, categories } = useProducts();
+        const { brands } = useProducts();
+	    const { categories } = useAppSelector((state) => state.admin);
 
         var cate = categories.map((item: any) => {return item.name});
 
@@ -56,10 +60,24 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
         }
 
         return (
-            <div className="rmt-5 p-5">
-                <Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
-                    Product Details
-                </Typography>
+            <div className="mt-24 p-5 rounded-div2">
+                <div className="flex items-center ml-2 mt-4 mb-8">
+					<Link to="/">
+						<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+							<AiOutlineHome size={20} />
+							Home
+						</h1>
+					</Link>
+					<div className="mx-2">
+						<IoIosArrowForward size={15} />
+					</div>
+					<Link to="/">
+						<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+							<RiBarChartBoxFill size={20} />
+							Product Details
+						</h1>
+					</Link>
+				</div>
                 <form onSubmit={handleSubmit(handleSubmitData)}>
                     <Grid container spacing={3}>
                         <Grid item xs={12} sm={12}>

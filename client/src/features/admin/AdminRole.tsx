@@ -1,12 +1,3 @@
-import {
-	TableContainer,
-	Paper,
-	Table,
-	TableHead,
-	TableRow,
-	TableCell,
-	TableBody,
-} from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { AiOutlineHome } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
@@ -16,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { fetchUsers } from "../account/accountSlice";
 import EditRoleForm from "./EditRoleForm";
 import { Link } from "react-router-dom";
+import { FiEdit3 } from "react-icons/fi";
 
 const AdminRole: React.FC = () => {
 	const { users } = useAppSelector((state) => state.account);
@@ -48,7 +40,7 @@ const AdminRole: React.FC = () => {
 	if (editMode) return <EditRoleForm user={selectedUser} cancelEdit={cancelEdit} />;
 
 	return (
-		<div className=" mt-5 p-5">
+		<div className=" mt-24 p-5">
 			<div className="flex items-center ml-2 mb-5">
 				<Link to="/">
 					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
@@ -66,31 +58,43 @@ const AdminRole: React.FC = () => {
 					</h1>
 				</Link>
 			</div>
-			<div className="h-[600px] overflow-y-scroll">
-				<TableContainer component={Paper}>
-					<Table>
-						<TableHead>
-							<TableRow>
-								<TableCell>#</TableCell>
-								<TableCell align="left">
+			<div className="rounded-div2 p-0">
+				<div className="h-[600px] overflow-y-scroll mt-5">
+					<table className="table-auto w-full text-xs sm:text-sm md:text-base">
+						<thead>
+							<tr className="border-b border-gray-200">
+								<td
+									className="px-4 py-3"
+									align="center">
+									#
+								</td>
+								<td
+									className="px-4 py-3"
+									align="left">
 									Username
-								</TableCell>
-								<TableCell align="left">
+								</td>
+								<td
+									className="px-4 py-3"
+									align="left">
 									Role
-								</TableCell>
-								<TableCell align="left">
-									Edit
-								</TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>
+								</td>
+								<td
+									className="px-4 py-3"
+									align="left"></td>
+							</tr>
+						</thead>
+						<tbody>
 							{users?.map((item: any) => {
 								return (
-									<TableRow key={item.id}>
-										<TableCell>
+									<tr
+										key={item.id}
+										className="border-b border-gray-200">
+										<td
+											className="py-7"
+											align="center">
 											{item.id}
-										</TableCell>
-										<TableCell>
+										</td>
+										<td>
 											<div className="flex text-lg font-bold">
 												<img
 													src={
@@ -107,21 +111,21 @@ const AdminRole: React.FC = () => {
 													}}
 													className="rounded-full"
 												/>
-												<span className='flex items-center capitalize'>
+												<span className="flex items-center capitalize">
 													{
 														item.username
 													}
 												</span>
 											</div>
-										</TableCell>
-										<TableCell>
+										</td>
+										<td>
 											<p className="font-medium text-md">
 												{item.roles.join(
 													", "
 												)}
 											</p>
-										</TableCell>
-										<TableCell>
+										</td>
+										<td className="flex justify-center items-center gap-2 mt-[20%]">
 											{item.username ===
 												"admin" &&
 											item.roles.includes(
@@ -129,23 +133,28 @@ const AdminRole: React.FC = () => {
 											) ? (
 												<div></div>
 											) : (
-												<button
-													className="px-4 py-2 text-white border border-amber-500 font-bold bg-amber-500 hover:bg-transparent hover:text-amber-500 duration-200 rounded-lg"
+												<div
+												className="p-2 hover:bg-yellow-200/30 rounded-full duration-200 cursor-pointer"
 													onClick={() =>
 														handleSelectUser(
 															item
 														)
 													}>
-													Edit
-												</button>
+													<FiEdit3
+														size={
+															20
+														}
+														className="text-yellow-500"
+													/>
+												</div>
 											)}
-										</TableCell>
-									</TableRow>
+										</td>
+									</tr>
 								);
 							})}
-						</TableBody>
-					</Table>
-				</TableContainer>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	);

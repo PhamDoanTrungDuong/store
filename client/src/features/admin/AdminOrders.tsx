@@ -1,11 +1,6 @@
 import {
 	TableContainer,
 	Paper,
-	Table,
-	TableHead,
-	TableRow,
-	TableCell,
-	TableBody,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -28,6 +23,7 @@ import { Link } from "react-router-dom";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import moment from "moment";
+import { FiShoppingCart, FiEye } from "react-icons/fi";
 
 interface TabPanelProps {
 	children?: React.ReactNode;
@@ -108,8 +104,8 @@ const AdminOrders: React.FC = () => {
 	};
 
 	return (
-		<div className="mt-5 p-5">
-			<div className="flex items-center ml-2 mb-5">
+		<div className="mt-24 p-5">
+			<div className="flex items-center ml-2 mb-8">
 				<Link to="/">
 					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
 						<AiOutlineHome size={20} />
@@ -126,743 +122,689 @@ const AdminOrders: React.FC = () => {
 					</h1>
 				</Link>
 			</div>
-			<div className="flex gap-2 justify-between items-center mb-5">
-				<div></div>
-				<div className="basis-3/4 w-[40%]">
-					<OrderSearch />
+			<div className="rounded-div2 p-0">
+				<div className="flex gap-2 justify-between items-center mb-5 p-6">
+					<div className="w-[30%]">
+						<OrderSearch />
+					</div>
+					<div></div>
 				</div>
-				<div></div>
-			</div>
-			<div>
-				<Box
-					sx={{
-						borderBottom: 1,
-						borderColor: "divider",
-					}}>
-					<Tabs
-						value={value}
-						onChange={handleChange}
-						aria-label="basic tabs example">
-						<Tab label="Pending Orders" {...a11yProps(0)} />
-						<Tab label="Confirmed" {...a11yProps(1)} />
-						<Tab label="Delivered" {...a11yProps(2)} />
-						<Tab label="Refunded" {...a11yProps(3)} />
-					</Tabs>
-				</Box>
-				<div className="h-[500px] overflow-y-scroll">
-					<Box sx={{ width: "100%" }}>
-						<TabPanel value={value} index={0}>
-							<TableContainer component={Paper}>
-								<Table
-									sx={{ minWidth: 650 }}
-									aria-label="simple table">
-									<TableHead>
-										<TableRow>
-											<TableCell>
-												Order
-												number
-											</TableCell>
-											<TableCell>
-												Fullname
-											</TableCell>
-											{/* <TableCell>City</TableCell>
-								<TableCell>Address</TableCell> */}
-											<TableCell align="center">
-												Total
-											</TableCell>
-											<TableCell align="center">
-												Order
-												Date
-											</TableCell>
-											<TableCell align="center">
-												Order
-												Status
-											</TableCell>
-											<TableCell align="center">
-												Delivery
-												Status
-											</TableCell>
-											<TableCell align="center"></TableCell>
-											<TableCell align="center"></TableCell>
-										</TableRow>
-									</TableHead>
-									<TableBody>
-										{orders
-											?.filter(
-												(
-													item
-												) =>
-													item.deliveryStatus ===
-														"PendingConfirm" &&
-													item.isRefund ===
-														false
-											)
-											?.map(
-												(
-													order
-												) => (
-													<TableRow
-														key={
-															order.id
-														}
-														sx={{
-															"&:last-child td, &:last-child th":
-																{
-																	border: 0,
-																},
-														}}>
-														<TableCell
-															sx={{
-																pl: 6,
-															}}
-															component="th"
-															scope="row">
-															#{" "}
-															{
-																order.id
-															}
-														</TableCell>
-														<TableCell>
-															<span className="font-bold text-lg capitalize">
-																{
-																	order
-																		.shippingAddress
-																		.fullName
-																}
-															</span>
-														</TableCell>
-														{/* <TableCell>
-										{
-											order
-												.shippingAddress
-												.city
-										}
-									</TableCell>
-									<TableCell>
-										{
-											order
-												.shippingAddress
-												.address1
-										}
-									</TableCell> */}
-														<TableCell align="center">
-															{currencyFormat(
-																order.total
-															)}
-														</TableCell>
-														<TableCell align="center">
-															{moment(
-																order.orderDate
-															).format(
-																"MMM Do YY, h:mm a"
-															)}
-														</TableCell>
-														<TableCell align="center">
-															{
-																order.orderStatus
-															}
-														</TableCell>
-														<TableCell align="center">
-															{order.deliveryStatus ===
-															"PendingConfirm" ? (
-																<div className="flex justify-center items-center">
-																	<TbGift
-																		size={
-																			25
-																		}
-																		className="mr-3 text-indigo-600"
-																	/>{" "}
-																	Pending
-																	Confirm
-																</div>
-															) : order.deliveryStatus ===
-															  "OnTheWay" ? (
-																<div className="flex justify-center items-center">
-																	<RiTruckLine
-																		size={
-																			25
-																		}
-																		className="mr-3 fill-red-600"
-																	/>{" "}
-																	On
-																	The
-																	Way
-																</div>
-															) : order.deliveryStatus ===
-															  "ProductDelivered" ? (
-																<div className="flex justify-center items-center">
-																	<TbHome2
-																		size={
-																			25
-																		}
-																		className="mr-3 text-green-600"
-																	/>{" "}
-																	Delivered
-																</div>
-															) : (
-																"Order Placed"
-															)}
-														</TableCell>
-														<TableCell align="center">
-															<button
-																className="bg-yellow-400 border border-yellow-400 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-yellow-400 duration-200 mr-3"
-																onClick={() => {
-																	handleOpen();
-																	setSelectedDeli(
-																		order.id
-																	);
-																}}>
-																Delivery
-															</button>
-															<button
-																className="c-btn"
-																onClick={() =>
-																	setSelectedOrderNumber(
-																		order.id
-																	)
-																}>
-																View
-															</button>
-														</TableCell>
-													</TableRow>
-												)
-											)}
-									</TableBody>
-								</Table>
-							</TableContainer>
-						</TabPanel>
-						<TabPanel value={value} index={1}>
-							<TableContainer component={Paper}>
-								<Table
-									sx={{ minWidth: 650 }}
-									aria-label="simple table">
-									<TableHead>
-										<TableRow>
-											<TableCell>
-												Order
-												number
-											</TableCell>
-											<TableCell>
-												Fullname
-											</TableCell>
-											{/* <TableCell>City</TableCell>
-								<TableCell>Address</TableCell> */}
-											<TableCell align="center">
-												Total
-											</TableCell>
-											<TableCell align="center">
-												Order
-												Date
-											</TableCell>
-											<TableCell align="center">
-												Order
-												Status
-											</TableCell>
-											<TableCell align="center">
-												Delivery
-												Status
-											</TableCell>
-											<TableCell align="center"></TableCell>
-											<TableCell align="center"></TableCell>
-										</TableRow>
-									</TableHead>
-									<TableBody>
-										{orders
-											?.filter(
-												(
-													item
-												) =>
-													item.deliveryStatus ===
-														"OnTheWay" &&
-													item.isRefund ===
-														false
-											)
-											?.map(
-												(
-													order
-												) => (
-													<TableRow
-														key={
-															order.id
-														}
-														sx={{
-															"&:last-child td, &:last-child th":
-																{
-																	border: 0,
-																},
-														}}>
-														<TableCell
-															sx={{
-																pl: 6,
-															}}
-															component="th"
-															scope="row">
-															#{" "}
-															{
-																order.id
-															}
-														</TableCell>
-														<TableCell>
-															<span className="font-bold text-lg capitalize">
-																{
-																	order
-																		.shippingAddress
-																		.fullName
-																}
-															</span>
-														</TableCell>
-														{/* <TableCell>
-										{
-											order
-												.shippingAddress
-												.city
-										}
-									</TableCell>
-									<TableCell>
-										{
-											order
-												.shippingAddress
-												.address1
-										}
-									</TableCell> */}
-														<TableCell align="center">
-															{currencyFormat(
-																order.total
-															)}
-														</TableCell>
-														<TableCell align="center">
-															{moment(
-																order.orderDate
-															).format(
-																"MMM Do YY, h:mm a"
-															)}
-														</TableCell>
-														<TableCell align="center">
-															{
-																order.orderStatus
-															}
-														</TableCell>
-														<TableCell align="center">
-															{order.deliveryStatus ===
-															"PendingConfirm" ? (
-																<div className="flex justify-center items-center">
-																	<TbGift
-																		size={
-																			25
-																		}
-																		className="mr-3 text-indigo-600"
-																	/>{" "}
-																	Pending
-																	Confirm
-																</div>
-															) : order.deliveryStatus ===
-															  "OnTheWay" ? (
-																<div className="flex justify-center items-center">
-																	<RiTruckLine
-																		size={
-																			25
-																		}
-																		className="mr-3 fill-red-600"
-																	/>{" "}
-																	On
-																	The
-																	Way
-																</div>
-															) : order.deliveryStatus ===
-															  "ProductDelivered" ? (
-																<div className="flex justify-center items-center">
-																	<TbHome2
-																		size={
-																			25
-																		}
-																		className="mr-3 text-green-600"
-																	/>{" "}
-																	Delivered
-																</div>
-															) : (
-																"Order Placed"
-															)}
-														</TableCell>
-														<TableCell align="center">
-															{/* <button
-																className="bg-yellow-400 border border-yellow-400 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-yellow-400 duration-200 mr-3"
-																onClick={() => {
-																	handleOpen();
-																	setSelectedDeli(
-																		order.id
-																	);
-																}}>
-																Delivery
-															</button> */}
-															<button
-																className="c-btn"
-																onClick={() =>
-																	setSelectedOrderNumber(
-																		order.id
-																	)
-																}>
-																View
-															</button>
-														</TableCell>
-													</TableRow>
-												)
-											)}
-									</TableBody>
-								</Table>
-							</TableContainer>
-						</TabPanel>
-						<TabPanel value={value} index={2}>
-							<TableContainer component={Paper}>
-								<Table
-									sx={{ minWidth: 650 }}
-									aria-label="simple table">
-									<TableHead>
-										<TableRow>
-											<TableCell>
-												Order
-												number
-											</TableCell>
-											<TableCell>
-												Fullname
-											</TableCell>
-											{/* <TableCell>City</TableCell>
-								<TableCell>Address</TableCell> */}
-											<TableCell align="center">
-												Total
-											</TableCell>
-											<TableCell align="center">
-												Order
-												Date
-											</TableCell>
-											<TableCell align="center">
-												Order
-												Status
-											</TableCell>
-											<TableCell align="center">
-												Delivery
-												Status
-											</TableCell>
-											<TableCell align="center"></TableCell>
-											<TableCell align="center"></TableCell>
-										</TableRow>
-									</TableHead>
-									<TableBody>
-										{orders
-											?.filter(
-												(
-													item
-												) =>
-													item.deliveryStatus ===
-														"ProductDelivered" &&
-													item.isRefund ===
-														false
-											)
-											?.map(
-												(
-													order
-												) => (
-													<TableRow
-														key={
-															order.id
-														}
-														sx={{
-															"&:last-child td, &:last-child th":
-																{
-																	border: 0,
-																},
-														}}>
-														<TableCell
-															sx={{
-																pl: 6,
-															}}
-															component="th"
-															scope="row">
-															#{" "}
-															{
-																order.id
-															}
-														</TableCell>
-														<TableCell>
-															<span className="font-bold text-lg capitalize">
-																{
-																	order
-																		.shippingAddress
-																		.fullName
-																}
-															</span>
-														</TableCell>
-														{/* <TableCell>
-										{
-											order
-												.shippingAddress
-												.city
-										}
-									</TableCell>
-									<TableCell>
-										{
-											order
-												.shippingAddress
-												.address1
-										}
-									</TableCell> */}
-														<TableCell align="center">
-															{currencyFormat(
-																order.total
-															)}
-														</TableCell>
-														<TableCell align="center">
-															{moment(
-																order.orderDate
-															).format(
-																"MMM Do YY, h:mm a"
-															)}
-														</TableCell>
-														<TableCell align="center">
-															{
-																order.orderStatus
-															}
-														</TableCell>
-														<TableCell align="center">
-															{order.deliveryStatus ===
-															"PendingConfirm" ? (
-																<div className="flex justify-center items-center">
-																	<TbGift
-																		size={
-																			25
-																		}
-																		className="mr-3 text-indigo-600"
-																	/>{" "}
-																	Pending
-																	Confirm
-																</div>
-															) : order.deliveryStatus ===
-															  "OnTheWay" ? (
-																<div className="flex justify-center items-center">
-																	<RiTruckLine
-																		size={
-																			25
-																		}
-																		className="mr-3 fill-red-600"
-																	/>{" "}
-																	On
-																	The
-																	Way
-																</div>
-															) : order.deliveryStatus ===
-															  "ProductDelivered" ? (
-																<div className="flex justify-center items-center">
-																	<TbHome2
-																		size={
-																			25
-																		}
-																		className="mr-3 text-green-600"
-																	/>{" "}
-																	Delivered
-																</div>
-															) : (
-																"Order Placed"
-															)}
-														</TableCell>
-														<TableCell align="center">
-															{/* <button
-																className="bg-yellow-400 border border-yellow-400 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-yellow-400 duration-200 mr-3"
-																onClick={() => {
-																	handleOpen();
-																	setSelectedDeli(
-																		order.id
-																	);
-																}}>
-																Delivery
-															</button> */}
-															<button
-																className="c-btn"
-																onClick={() =>
-																	setSelectedOrderNumber(
-																		order.id
-																	)
-																}>
-																View
-															</button>
-														</TableCell>
-													</TableRow>
-												)
-											)}
-									</TableBody>
-								</Table>
-							</TableContainer>
-						</TabPanel>
-						<TabPanel value={value} index={3}>
-							<table className="table-auto w-full text-xs sm:text-sm md:text-base">
-								<thead>
-									<tr className="border-b-2">
-										<td className="px-0 md:px-4 py-3">
-											Order number
-										</td>
-										<td
-											className="px-4 py-3"
-											align="center">
-											Total
-										</td>
-										<td
-											className="px-4 py-3"
-											align="center">
-											Order Date
-										</td>
-										<td
-											className="px-4 py-3"
-											align="center">
-											Order Status
-										</td>
-										<td
-											className="px-4 py-3"
-											align="center">
-											Delivery
-											Status
-										</td>
-										<td
-											className="px-4 py-3"
-											align="center"></td>
-									</tr>
-								</thead>
-								<tbody>
-									{orders
-										?.filter(
-											(item) =>
-												item.isRefund ===
-												true
-										)
-										?.map((order) => (
-											<tr
-												key={
-													order.id
-												}
-												className="border-b-2">
-												<td className="py-5">
-													#{" "}
-													{
-														order.id
-													}
+				<div>
+					<Box
+						sx={{
+							borderBottom: 1,
+							borderColor: "divider",
+						}}>
+						<Tabs
+							value={value}
+							onChange={handleChange}
+							aria-label="basic tabs example">
+							<Tab label="Pending Orders" {...a11yProps(0)} />
+							<Tab label="Confirmed" {...a11yProps(1)} />
+							<Tab label="Delivered" {...a11yProps(2)} />
+							<Tab label="Refunded" {...a11yProps(3)} />
+						</Tabs>
+					</Box>
+					<div className="h-[500px] overflow-y-scroll">
+						<Box sx={{ width: "100%" }}>
+							<TabPanel value={value} index={0}>
+									<table className="table-auto w-full text-xs sm:text-sm md:text-base">
+										<thead>
+											<tr className="border-b border-gray-200">
+												<td className="px-4 py-3" align="center">
+													Order
+													number
 												</td>
-												<td align="center">
-													{currencyFormat(
-														order.total
-													)}
+												<td className="px-4 py-3">
+													Fullname
 												</td>
-												<td align="center">
-													{moment(
-														order.orderDate
-													).format(
-														"MMM Do YY, h:mm a"
-													)}
+												<td className="px-4 py-3">City</td>
+												<td className="px-4 py-3">Address</td>
+												<td className="px-4 py-3" align="center">
+													Total
 												</td>
-												<td align="center">
-													{
-														order.orderStatus
-													}
+												<td className="px-4 py-3" align="center">
+													Order
+													Date
 												</td>
-												<td align="center">
-													{order.deliveryStatus ===
-													"PendingConfirm" ? (
-														<div className="flex justify-center items-center">
-															<TbGift
-																size={
-																	25
-																}
-																className="mr-3 text-indigo-600"
-															/>{" "}
-															Pending
-															Confirm
-														</div>
-													) : order.deliveryStatus ===
-													  "OnTheWay" ? (
-														<div className="flex justify-center items-center">
-															<RiTruckLine
-																size={
-																	25
-																}
-																className="mr-3 fill-red-600"
-															/>{" "}
-															On
-															The
-															Way
-														</div>
-													) : order.deliveryStatus ===
-													  "ProductDelivered" ? (
-														<div className="flex justify-center items-center">
-															<TbHome2
-																size={
-																	25
-																}
-																className="mr-3 text-green-600"
-															/>{" "}
-															Delivered
-														</div>
-													) : (
-														"Order Placed"
-													)}
+												<td className="px-4 py-3" align="center">
+													Order
+													Status
 												</td>
-												<td align="center">
-													{/* <button
-													className="c-btn"
-													onClick={() =>
-														setSelectedOrderNumber(
-															order.id
-														)
-													}>
-													View
-												</button> */}
+												<td className="px-4 py-3" align="center">
+													Delivery
+													Status
 												</td>
+												<td className="px-4 py-3" align="center"></td>
 											</tr>
-										))}
-								</tbody>
-							</table>
-						</TabPanel>
-					</Box>
-				</div>
+										</thead>
+										<tbody>
+											{orders
+												?.filter(
+													(
+														item
+													) =>
+														item.deliveryStatus ===
+															"PendingConfirm" &&
+														item.isRefund ===
+															false
+												)
+												?.map(
+													(
+														order
+													) => (
+														<tr
+														className="border-b border-gray-200"
+															key={
+																order.id
+															}>
+															<td className="py-9" align="center">
+																#{" "}
+																{
+																	order.id
+																}
+															</td>
+															<td>
+																<span className="font-bold capitalize">
+																	{
+																		order
+																			.shippingAddress
+																			.fullName
+																	}
+																</span>
+															</td>
+															 <td>
+																{
+																	order
+																		.shippingAddress
+																		.city
+																}
+															</td>
+															<td>
+																{
+																	order
+																		.shippingAddress
+																		.address1
+																}
+															</td>
+															<td align="center">
+																{currencyFormat(
+																	order.total
+																)}
+															</td>
+															<td align="center">
+																{moment(
+																	order.orderDate
+																).format(
+																	"MMM Do YY"
+																)}
+															</td>
+															<td align="center">
+																{
+																	order.orderStatus
+																}
+															</td>
+															<td align="center">
+																{order.deliveryStatus ===
+																"PendingConfirm" ? (
+																	<div className="flex justify-center items-center">
+																		<TbGift
+																			size={
+																				25
+																			}
+																			className="mr-3 text-indigo-600"
+																		/>{" "}
+																		Pending
+																		Confirm
+																	</div>
+																) : order.deliveryStatus ===
+																"OnTheWay" ? (
+																	<div className="flex justify-center items-center">
+																		<RiTruckLine
+																			size={
+																				25
+																			}
+																			className="mr-3 fill-red-600"
+																		/>{" "}
+																		On
+																		The
+																		Way
+																	</div>
+																) : order.deliveryStatus ===
+																"ProductDelivered" ? (
+																	<div className="flex justify-center items-center">
+																		<TbHome2
+																			size={
+																				25
+																			}
+																			className="mr-3 text-green-600"
+																		/>{" "}
+																		Delivered
+																	</div>
+																) : (
+																	"Order Placed"
+																)}
+															</td>
+															<td align="center" className="flex justify-center items-center gap-2 mt-[30%]">
+																<button
+																	className="p-2 hover:bg-yellow-200/30 rounded-full duration-200 cursor-pointer"
+																	onClick={() => {
+																		handleOpen();
+																		setSelectedDeli(
+																			order.id
+																		);
+																	}}>
+																	<FiShoppingCart size={20} className="text-yellow-500" />
+																</button>
+																<div
+																	className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
+																	onClick={() =>
+																		setSelectedOrderNumber(
+																			order.id
+																		)
+																	}>
+																	<FiEye className="text-indigo-600" size={20}/>
+																</div>
+															</td>
+														</tr>
+													)
+												)}
+										</tbody>
+									</table>
+							</TabPanel>
+							<TabPanel value={value} index={1}>
+									<table className="table-auto w-full text-xs sm:text-sm md:text-base">
+										<thead>
+											<tr className="border-b border-gray-200">
+												<td className="px-4 py-3" align="center">
+													Order
+													number
+												</td>
+												<td className="px-4 py-3">
+													Fullname
+												</td>
+												<td className="px-4 py-3">City</td>
+									<td className="px-4 py-3">Address</td>
+												<td className="px-4 py-3" align="center">
+													Total
+												</td>
+												<td className="px-4 py-3" align="center">
+													Order
+													Date
+												</td>
+												<td className="px-4 py-3" align="center">
+													Order
+													Status
+												</td>
+												<td className="px-4 py-3" align="center">
+													Delivery
+													Status
+												</td>
+												<td className="px-4 py-3" align="center"></td>
+											</tr>
+										</thead>
+										<tbody>
+											{orders
+												?.filter(
+													(
+														item
+													) =>
+														item.deliveryStatus ===
+															"OnTheWay" &&
+														item.isRefund ===
+															false
+												)
+												?.map(
+													(
+														order
+													) => (
+														<tr
+														className="border-b border-gray-200"
+															key={
+																order.id
+															}>
+															<td className="py-7" align="center">
+																#{" "}
+																{
+																	order.id
+																}
+															</td>
+															<td>
+																<span className="font-bold text-lg capitalize">
+																	{
+																		order
+																			.shippingAddress
+																			.fullName
+																	}
+																</span>
+															</td>
+															 <td>
+											{
+												order
+													.shippingAddress
+													.city
+											}
+										</td>
+										<td>
+											{
+												order
+													.shippingAddress
+													.address1
+											}
+										</td> 
+															<td align="center">
+																{currencyFormat(
+																	order.total
+																)}
+															</td>
+															<td align="center">
+																{moment(
+																	order.orderDate
+																).format(
+																	"MMM Do YY, h:mm a"
+																)}
+															</td>
+															<td align="center">
+																{
+																	order.orderStatus
+																}
+															</td>
+															<td align="center">
+																{order.deliveryStatus ===
+																"PendingConfirm" ? (
+																	<div className="flex justify-center items-center">
+																		<TbGift
+																			size={
+																				25
+																			}
+																			className="mr-3 text-indigo-600"
+																		/>{" "}
+																		Pending
+																		Confirm
+																	</div>
+																) : order.deliveryStatus ===
+																"OnTheWay" ? (
+																	<div className="flex justify-center items-center">
+																		<RiTruckLine
+																			size={
+																				25
+																			}
+																			className="mr-3 fill-red-600"
+																		/>{" "}
+																		On
+																		The
+																		Way
+																	</div>
+																) : order.deliveryStatus ===
+																"ProductDelivered" ? (
+																	<div className="flex justify-center items-center">
+																		<TbHome2
+																			size={
+																				25
+																			}
+																			className="mr-3 text-green-600"
+																		/>{" "}
+																		Delivered
+																	</div>
+																) : (
+																	"Order Placed"
+																)}
+															</td>
+															<td align="center" className="flex justify-center items-center gap-2 mt-[30%]">
+																{/* <button
+																	className="p-2 hover:bg-yellow-200/30 rounded-full duration-200 cursor-pointer"
+																	onClick={() => {
+																		handleOpen();
+																		setSelectedDeli(
+																			order.id
+																		);
+																	}}>
+																	<FiShoppingCart size={20} className="text-yellow-500" />
+																</button> */}
+																<div
+																	className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
+																	onClick={() =>
+																		setSelectedOrderNumber(
+																			order.id
+																		)
+																	}>
+																	<FiEye className="text-indigo-600" size={20}/>
+																</div>
+															</td>
+														</tr>
+													)
+												)}
+										</tbody>
+									</table>
+							</TabPanel>
+							<TabPanel value={value} index={2}>
+									<table className="table-auto w-full text-xs sm:text-sm md:text-base">
+										<thead>
+											<tr className="border-b border-gray-200">
+												<td className="px-4 py-3" align="center">
+													Order
+													number
+												</td>
+												<td className="px-4 py-3">
+													Fullname
+												</td>
+												<td className="px-4 py-3">City</td>
+									<td className="px-4 py-3">Address</td>
+												<td className="px-4 py-3" align="center">
+													Total
+												</td>
+												<td className="px-4 py-3" align="center">
+													Order
+													Date
+												</td>
+												<td className="px-4 py-3" align="center">
+													Order
+													Status
+												</td>
+												<td className="px-4 py-3" align="center">
+													Delivery
+													Status
+												</td>
+												<td className="px-4 py-3" align="center"></td>
+											</tr>
+										</thead>
+										<tbody>
+											{orders
+												?.filter(
+													(
+														item
+													) =>
+														item.deliveryStatus ===
+															"ProductDelivered" &&
+														item.isRefund ===
+															false
+												)
+												?.map(
+													(
+														order
+													) => (
+														<tr
+														className="border-b border-gray-200"
+															key={
+																order.id
+															}>
+															<td className="py-7" align="center">
+																#{" "}
+																{
+																	order.id
+																}
+															</td>
+															<td>
+																<span className="font-bold text-lg capitalize">
+																	{
+																		order
+																			.shippingAddress
+																			.fullName
+																	}
+																</span>
+															</td>
+															{/* <td>
+											{
+												order
+													.shippingAddress
+													.city
+											}
+										</td>
+										<td>
+											{
+												order
+													.shippingAddress
+													.address1
+											}
+										</td> */}
+															<td align="center">
+																{currencyFormat(
+																	order.total
+																)}
+															</td>
+															<td align="center">
+																{moment(
+																	order.orderDate
+																).format(
+																	"MMM Do YY, h:mm a"
+																)}
+															</td>
+															<td align="center">
+																{
+																	order.orderStatus
+																}
+															</td>
+															<td align="center">
+																{order.deliveryStatus ===
+																"PendingConfirm" ? (
+																	<div className="flex justify-center items-center">
+																		<TbGift
+																			size={
+																				25
+																			}
+																			className="mr-3 text-indigo-600"
+																		/>{" "}
+																		Pending
+																		Confirm
+																	</div>
+																) : order.deliveryStatus ===
+																"OnTheWay" ? (
+																	<div className="flex justify-center items-center">
+																		<RiTruckLine
+																			size={
+																				25
+																			}
+																			className="mr-3 fill-red-600"
+																		/>{" "}
+																		On
+																		The
+																		Way
+																	</div>
+																) : order.deliveryStatus ===
+																"ProductDelivered" ? (
+																	<div className="flex justify-center items-center">
+																		<TbHome2
+																			size={
+																				25
+																			}
+																			className="mr-3 text-green-600"
+																		/>{" "}
+																		Delivered
+																	</div>
+																) : (
+																	"Order Placed"
+																)}
+															</td>
+															<td align="center" className="flex justify-center items-center gap-2 mt-[30%]">
+																<div
+																	className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
+																	onClick={() =>
+																		setSelectedOrderNumber(
+																			order.id
+																		)
+																	}>
+																	<FiEye className="text-indigo-600" size={20}/>
+																</div>
+															</td>
+														</tr>
+													)
+												)}
+										</tbody>
+									</table>
+							</TabPanel>
+							<TabPanel value={value} index={3}>
+								<table className="table-auto w-full text-xs sm:text-sm md:text-base">
+									<thead>
+										<tr className="border-b border-gray-200">
+											<td className="px-4 py-3" align="center">
+												Order number
+											</td>
+											<td
+												className="px-4 py-3"
+												align="center">
+												Total
+											</td>
+											<td
+												className="px-4 py-3"
+												align="center">
+												Order Date
+											</td>
+											<td
+												className="px-4 py-3"
+												align="center">
+												Order Status
+											</td>
+											<td
+												className="px-4 py-3"
+												align="center">
+												Delivery
+												Status
+											</td>
+											<td
+												className="px-4 py-3"
+												align="center"></td>
+										</tr>
+									</thead>
+									<tbody>
+										{orders
+											?.filter(
+												(item) =>
+													item.isRefund ===
+													true
+											)
+											?.map((order) => (
+												<tr
+												className="border-b border-gray-200"
+													key={
+														order.id
+													}>
+													<td className="py-7" align="center">
+														#{" "}
+														{
+															order.id
+														}
+													</td>
+													<td align="center">
+														{currencyFormat(
+															order.total
+														)}
+													</td>
+													<td align="center">
+														{moment(
+															order.orderDate
+														).format(
+															"MMM Do YY, h:mm a"
+														)}
+													</td>
+													<td align="center">
+														{
+															order.orderStatus
+														}
+													</td>
+													<td align="center">
+														{order.deliveryStatus ===
+														"PendingConfirm" ? (
+															<div className="flex justify-center items-center">
+																<TbGift
+																	size={
+																		25
+																	}
+																	className="mr-3 text-indigo-600"
+																/>{" "}
+																Pending
+																Confirm
+															</div>
+														) : order.deliveryStatus ===
+														"OnTheWay" ? (
+															<div className="flex justify-center items-center">
+																<RiTruckLine
+																	size={
+																		25
+																	}
+																	className="mr-3 fill-red-600"
+																/>{" "}
+																On
+																The
+																Way
+															</div>
+														) : order.deliveryStatus ===
+														"ProductDelivered" ? (
+															<div className="flex justify-center items-center">
+																<TbHome2
+																	size={
+																		25
+																	}
+																	className="mr-3 text-green-600"
+																/>{" "}
+																Delivered
+															</div>
+														) : (
+															"Order Placed"
+														)}
+													</td>
+													<td align="center">
+														{/* <button
+														className="c-btn"
+														onClick={() =>
+															setSelectedOrderNumber(
+																order.id
+															)
+														}>
+														View
+													</button> */}
+													</td>
+												</tr>
+											))}
+									</tbody>
+								</table>
+							</TabPanel>
+						</Box>
+					</div>
 
-				<Modal
-					open={open}
-					onClose={handleClose}
-					aria-labelledby="modal-modal-title"
-					aria-describedby="modal-modal-description">
-					<Box sx={style}>
-						<Typography
-							id="modal-modal-title"
-							variant="h6"
-							component="h2">
-							Delivery Status
-						</Typography>
-						<div id="modal-modal-description">
-							<form
-								onSubmit={handleSubmit(onSubmit)}
-								className="flex flex-col ">
-								<select
-									className="p-4 focus:outline-hidden"
-									{...register(
-										"deliveryStatus"
-									)}
-									name="deliveryStatus">
-									<option value="choose-status">
-										--- Confirm Delivery
-										Status ---
-									</option>
-									<option value="OnTheWay">
-										On The Way
-									</option>
-									{/* <option value="ProductDelivered">
-										Product Delivered
-									</option> */}
-								</select>
-								<input
-									className="c-btn mt-5 cursor-pointer"
-									type="submit"
-									value="Submit"
-								/>
-							</form>
-						</div>
-					</Box>
-				</Modal>
-			</div>
+					<Modal
+						open={open}
+						onClose={handleClose}
+						aria-labelledby="modal-modal-title"
+						aria-describedby="modal-modal-description">
+						<Box sx={style}>
+							<Typography
+								id="modal-modal-title"
+								variant="h6"
+								component="h2">
+								Delivery Status
+							</Typography>
+							<div id="modal-modal-description">
+								<form
+									onSubmit={handleSubmit(onSubmit)}
+									className="flex flex-col ">
+									<select
+										className="p-4 focus:outline-hidden"
+										{...register(
+											"deliveryStatus"
+										)}
+										name="deliveryStatus">
+										<option value="choose-status">
+											--- Confirm Delivery
+											Status ---
+										</option>
+										<option value="OnTheWay">
+											On The Way
+										</option>
+										{/* <option value="ProductDelivered">
+											Product Delivered
+										</option> */}
+									</select>
+									<input
+										className="c-btn mt-5 cursor-pointer"
+										type="submit"
+										value="Submit"
+									/>
+								</form>
+							</div>
+						</Box>
+					</Modal>
+				</div>
+				</div>
 		</div>
 	);
 };

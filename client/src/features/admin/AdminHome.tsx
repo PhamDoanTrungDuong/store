@@ -29,7 +29,7 @@ const AdminHome: React.FC = () => {
 
 	return (
 		<>
-			<div className="flex items-center ml-2 mb-5">
+			<div className="flex items-center ml-2 mb-12 mt-24">
 				<Link to="/">
 					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
 						<AiOutlineHome size={20} />
@@ -47,7 +47,7 @@ const AdminHome: React.FC = () => {
 				</Link>
 			</div>
 			<div className="flex justify-center gap-4">
-				<div className="text-white bg-gradient-to-r from-indigo-600 to-indigo-400 px-8 py-6 rounded-[30px] w-[30%] mb-4">
+				<div className="text-white bg-gradient-to-r from-indigo-600 to-indigo-400 px-8 py-6 rounded-[30px] w-[30%] mb-4 shadow-xl">
 					<div className="flex justify-between mb-3">
 						<div className="p-3 bg-white text-indigo-600 rounded-2xl inline-block">
 							<MdAttachMoney size={25} />
@@ -69,7 +69,7 @@ const AdminHome: React.FC = () => {
 					</div>
 				</div>
 
-				<div className="text-white bg-gradient-to-r from-cyan-600 to-cyan-400 px-8 py-6 rounded-[30px] w-[30%] mb-4">
+				<div className="text-white bg-gradient-to-r from-cyan-600 to-cyan-400 px-8 py-6 rounded-[30px] w-[30%] mb-4 shadow-xl">
 					<div className="flex justify-between mb-3">
 						<div className="p-3 bg-white text-cyan-600 rounded-2xl inline-block">
 							<BsCart4 size={25} />
@@ -91,7 +91,7 @@ const AdminHome: React.FC = () => {
 					</div>
 				</div>
 
-				<div className="text-white bg-gradient-to-r from-green-600 to-green-400 px-8 py-6 rounded-[30px] w-[30%] mb-4">
+				<div className="text-white bg-gradient-to-r from-green-600 to-green-400 px-8 py-6 rounded-[30px] w-[30%] mb-4 shadow-xl">
 					<div className="flex justify-between mb-3">
 						<div className="p-3 bg-white text-green-600 rounded-2xl inline-block">
 							<BsPeople size={25} />
@@ -146,7 +146,7 @@ const AdminHome: React.FC = () => {
 					</div>
 				</div>
 			</div>
-			<div className="mt-5">
+			<div className="rounded-div2 mt-10">
 				<ViewDatePicker />
 			</div>
 		</>

@@ -5,63 +5,66 @@ import { MdManageAccounts, MdInsertComment, MdOutlineCardGiftcard } from "react-
 
 const SideBar: React.FC = () => {
 	const [open, setOpen] = useState(true);
+	const [idx, setIndex] = useState<number>();
 
 	const Menus = [
 		{
+			id: 0,
 			title: "Inventory",
 			to: "/inventory",
 			icon: (
 				<RiBarChartBoxFill
 					size={30}
-					className="rounded-lg fill-white group-hover:fill-indigo-600"
+					className="rounded-lg fill-[#637381]"
 				/>
 			),
 		},
 		{
+			id: 1,
 			title: "Sales",
 			to: "/admin-sales",
 			icon: (
 				<RiPriceTag3Fill
 					size={30}
-					className="rounded-lg fill-white group-hover:fill-indigo-600"
+					className="rounded-lg fill-[#637381]"
 				/>
 			),
 		},
-		{ title: "Categories", to: "/admin-categories", icon: (
+		{ id: 2, title: "Categories", to: "/admin-categories", icon: (
                   <RiTableFill
                         size={30}
-                        className="rounded-lg fill-white group-hover:fill-indigo-600"
+                        className="rounded-lg fill-[#637381]"
                   />
             ), },
-		{ title: "Member", to: "/admin-members", icon: (
+		{ id: 3, title: "Member", to: "/admin-members", icon: (
                   <RiAccountCircleFill
                         size={30}
-                        className="rounded-lg fill-white group-hover:fill-indigo-600"
+                        className="rounded-lg fill-[#637381]"
                   />), },
-		{ title: "Role", to: "/admin-role", icon: (
+		{ id: 4, title: "Role", to: "/admin-role", icon: (
                   <MdManageAccounts
                         size={30}
-                        className="rounded-lg fill-white group-hover:fill-indigo-600"
+                        className="rounded-lg fill-[#637381]"
                   />), },
-		{ title: "Comments", to: "/admin-comments", icon: (
+		{ id: 5, title: "Comments", to: "/admin-comments", icon: (
                   <MdInsertComment
                         size={30}
-                        className="rounded-lg fill-white group-hover:fill-indigo-600"
+                        className="rounded-lg fill-[#637381]"
                   />), },
-		{ title: "Orders", to: "/admin-orders", icon: (
+		{ id: 6, title: "Orders", to: "/admin-orders", icon: (
                   <MdOutlineCardGiftcard
                         size={30}
-                        className="rounded-lg fill-white group-hover:fill-indigo-600"
+                        className="rounded-lg fill-[#637381]"
                   />), },
 	];
 	return (
 		<div
 			className={` ${
-				open ? "w-64" : "w-20 "
-			} bg-indigo-600 h-screen p-5 pt-8 relative duration-300`}>
+				open ? "w-64" : "w-20"
+			} bg-[#F9FAFB] h-screen p-5 pt-8 relative duration-300 border border-r-gray-300`}>
 			<img
 				src="/images/control.png"
-				className={`absolute cursor-pointer -right-3 top-9 w-7 border-2 border-indigo-600 rounded-full  ${
+				className={`absolute cursor-pointer -right-3 top-9 w-8 border-2 border-gray-200 rounded-full z-50 ${
 					!open && "rotate-180"
 				}`}
 				onClick={() => setOpen(!open)}
@@ -76,23 +79,24 @@ const SideBar: React.FC = () => {
 				/>
 				<Link to="/">
 					<h1
-						className={`text-white origin-left font-bold italic text-3xl duration-200 ${
+						className={`text-indigo-600 origin-left font-bold italic text-3xl duration-200 ${
 							!open && "scale-0"
 						}`}>
 						STORE.
 					</h1>
 				</Link>
 			</div>
-			<ul className="pt-6">
+			<ul className="pt-12">
 				{Menus.map((Menu, index) => (
 					<Link to={Menu.to} key={index}>
 						<li
-							className={`flex rounded-md p-2 cursor-pointer hover:bg-white duration-100 text-white text-sm items-center gap-x-4 my-4 group`}>
-							{Menu.icon}
+							onClick={() => setIndex(index)}
+							className={`flex rounded-lg p-3 cursor-pointer ${idx === index ? "bg-blue-300/40" : ""} hover:bg-gray-300/60 duration-100 text-[#637381] text-sm items-center gap-x-4 my-1 group`}>
+								{Menu.icon}
 							<span
 								className={`${
 									!open && "hidden"
-								} origin-left duration-200`}>
+								} origin-left text-[#637381]  ${idx === index ? "text-sky-600" : ""} duration-200`}>
 								{Menu.title}
 							</span>
 						</li>

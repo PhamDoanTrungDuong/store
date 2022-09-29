@@ -64,30 +64,17 @@ const App: React.FC = () => {
 			{user?.roles?.includes("Admin") ? (
 				<div className="flex">
 					<SideBar />
-					<div className="h-screen flex-1 p-4 overflow-y-scroll">
-						<div className="flex justify-end items-end">
-							{user ? (
-								<>
-								<div className="flex jutify-between items-center gap-2">
-									<SignedInMenu />
-									<Notifications />
+					<div className="h-screen flex-1 p-4 overflow-y-scroll bg-[#F9FAFB]">
+						{user && (
+							<>
+								<div className="fixed top-0 left-[20%] w-[78%] z-40 p-6 bg-[#F9FAFB] bg-opacity-70 backdrop-blur-sm flex justify-end items-end">
+									<div className="z-50 flex jutify-between items-center gap-2">
+										<SignedInMenu />
+										<Notifications />
+									</div>
 								</div>
-								</>
-							) : (
-								<div className="flex justify-evenly">
-									<Link
-										className="text-primary py-2 ml-4 hover:text-indigo-600 duration-200"
-										to="/login">
-										Sign In
-									</Link>
-									<Link
-										className="bg-indigo-600 border border-indigo-600 text-white px-5 py-2 ml-4 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-indigo-600 duration-200"
-										to="/register">
-										Sign up
-									</Link>
-								</div>
-							)}
-						</div>
+							</>
+						)}
 						<Routes>
 							<Route path="/" element={<AdminHome />} />
 						</Routes>

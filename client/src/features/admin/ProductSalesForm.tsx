@@ -8,7 +8,9 @@ import React from "react";
 import agent from "../../app/api/agent";
 import Swal from "sweetalert2";
 import { setProductState } from "../catalog/catalogSlice";
-
+import { Link } from "react-router-dom";
+import { AiOutlineHome, AiOutlineTag } from "react-icons/ai";
+import { IoIosArrowForward } from "react-icons/io";
 interface IProps {
 	product?: IProductDiscount;
 	cancelEdit: () => void;
@@ -60,11 +62,26 @@ const ProductSalesForm: React.FC<IProps> = ({ product, cancelEdit }) => {
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
+
 	return (
-		<div className="rmt-5 p-5">
-			<Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
-				Product Sales
-			</Typography>
+		<div className="mt-24 p-5 rounded-div2">
+			<div className="flex items-center ml-2 mt-4 mb-8">
+					<Link to="/">
+						<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+							<AiOutlineHome size={20} />
+							Home
+						</h1>
+					</Link>
+					<div className="mx-2">
+						<IoIosArrowForward size={15} />
+					</div>
+					<Link to="/">
+						<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+							<AiOutlineTag size={20} />
+							Product Sales
+						</h1>
+					</Link>
+				</div>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<div className='mb-4'>
 					{selectedProduct !== undefined && (

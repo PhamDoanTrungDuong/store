@@ -20,8 +20,8 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder }) => {
 		order.orderItems.reduce((sum, item) => sum + item.quantity * item.price, 0) ?? 0;
 	const steps = ["Order Placed", "On The Way", "Product Delivered"];
 	return (
-		<div className=" mt-5 p-5">
-			<div className="flex items-center ml-2 mt-3 mb-5">
+		<div className=" mt-24 p-5">
+			<div className="flex items-center ml-2 mt-3 mb-8">
 				<Link to="/">
 					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
 						<AiOutlineHome size={20} />
@@ -121,7 +121,7 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder }) => {
 				</div>
 			</div>
 
-			<div className="flex flex-col md:flex-row gap-3 mt-10">
+			<div className="rounded-div2 flex flex-col md:flex-row gap-3 mt-10">
 				<div className="basis md:basis-2/3 overflow-y-scroll scroll-smooth h-[500px]">
 					<BasketTable
 						items={order.orderItems as BasketItem[]}
