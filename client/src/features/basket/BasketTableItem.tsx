@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { BasketItem } from "../../app/interfaces/IBasket";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { BsTrash } from "react-icons/bs";
-import { LoadingButton } from "@mui/lab";
 import { addBasketItemAsync, removeBasketItemAsync } from "./basketSlice";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import useProducts from "../../app/hooks/useProducts";
 import { IProductDiscount } from "../../app/interfaces/IProduct";
+import { FiTrash2 } from "react-icons/fi";
 
 interface IProps {
 	item: BasketItem;
@@ -132,11 +131,8 @@ const BasketTableItem: React.FC<IProps> = ({ item, isBasket }) => {
 			</td>
 			{isBasket && (
 				<td>
-					<LoadingButton
-						loading={
-							status ===
-							"pendingRemoveItem" + item.productId + "del"
-						}
+					<div
+						className="p-2 hover:bg-red-300/30 rounded-full duration-200 cursor-pointer"
 						onClick={() => {
 							dispatch(
 								removeBasketItemAsync({
@@ -145,10 +141,9 @@ const BasketTableItem: React.FC<IProps> = ({ item, isBasket }) => {
 									name: "del",
 								})
 							);
-						}}
-						color="error">
-						<BsTrash />
-					</LoadingButton>
+						}}>
+						<FiTrash2 size={20} className='text-red-600' />
+					</div>
 				</td>
 			)}
 		</>
