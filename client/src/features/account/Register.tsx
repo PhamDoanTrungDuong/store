@@ -11,6 +11,9 @@ const Register = () => {
 		password: string;
 		username: string;
 	};
+
+
+
 	const {
 		register,
 		handleSubmit,
@@ -137,6 +140,7 @@ const Register = () => {
 										Already have an account? <span className="font-medium underline underline-offset-2 text-indigo-600 hover:text-indigo-400 duration-300">Sign In</span>
 										</h4>
 								</Link>
+								
 						</div>
 					</form>
 				</div>

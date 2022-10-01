@@ -52,6 +52,9 @@ const SignedInMenu: React.FC = () => {
 						<MenuItem component={NavLink} to="/profile">
 							Profile
 						</MenuItem>
+						<MenuItem component={NavLink} to="/face-authen">
+							Face Authentication
+						</MenuItem>
 						<MenuItem component={NavLink} to="/shipping-address">
 							Shipping Address
 						</MenuItem>

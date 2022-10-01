@@ -12,8 +12,12 @@ import GoogleButton from "react-google-button";
 import { auth } from "../../app/firebase/firebase";
 import agent from "../../app/api/agent";
 import useMembers from "../../app/hooks/useMembers";
+import useFaceAuthen from "../../app/hooks/useFaceAuthen";
+import Swal from "sweetalert2";
 
 const Login = () => {
+	const { faceRegistration, faceSignIn, dataFaceRegister, dataFaceLogin, dataUserLogin } = useFaceAuthen();
+
 	type FormData = {
 		password: string;
 		username: string;
@@ -25,7 +29,7 @@ const Login = () => {
 		};
 	};
 	// const members = useAppSelector(membersSelector.selectAll);
-	
+
 	const { members } = useMembers();
 
 
@@ -69,7 +73,7 @@ const Login = () => {
 			unsubcribe();
 		}
 	}, [])
-
+	// GOOGLE LOGIN
 	useEffect(() => {
 		if(googleUser){
 			const dataRegister = {email: googleUser.email, password: googleUser.uid, username: googleUser.email}
@@ -89,6 +93,45 @@ const Login = () => {
 		}
 	}, [googleUser, members, dispatch, from])
 
+	// FACIAL REGISTER
+	useEffect(() => {
+		if(dataFaceRegister && dataUserLogin){
+			const dataRegister = {email: dataUserLogin.email, password: dataFaceRegister.facialId + "ABCXYZ", username: dataUserLogin.username}
+
+			if(dataRegister !== undefined)
+			{
+				agent.Account.register(dataRegister).then(() => {
+					Swal.fire({
+						icon: "success",
+						title: "You Has Create FaceID Successful",
+						showConfirmButton: false,
+						timer: 1500,
+					});
+				})
+			}
+		}
+	}, [dataFaceRegister, dataUserLogin, members, dispatch, from])
+	//FACE LOGIN
+	useEffect(() => {
+		if(dataFaceLogin){
+			const dataLogin = {password: dataFaceLogin.facialId + "ABCXYZ", username: dataFaceLogin.payload.username}
+
+			console.log(dataLogin)
+
+			if(dataLogin)
+			{
+				dispatch(signInUser(dataLogin));
+				history.push(from);
+			}else{
+				Swal.fire({
+					icon: "success",
+					title: "Don't have FaceID, please Register new FaceID",
+					showConfirmButton: false,
+					timer: 1500,
+				});
+			}
+		}
+	}, [dataFaceLogin, members, dispatch, from])
 	return (
 		<div className="mt-5">
 			<div className="max-w-[350px] md:max-w-[400px] border h-auto border-slate-300 rounded-2xl px-4 py-10 my-[100px] mx-auto">
@@ -153,10 +196,17 @@ const Login = () => {
 								<GoogleButton onClick={handleGoogleSignIn} />
 							</div>
 						</div> */}
+
 						<div className="text-center mt-3">
 								<Link to="/register">
 										<h4>Don't have an account? <span className="font-medium underline underline-offset-2 text-indigo-600 hover:text-indigo-400 duration-300">Sign Up</span> </h4>
 								</Link>
+								<div className="c-btn cursor-pointer my-3" onClick={faceRegistration}>
+									Face Authen Register
+								</div>
+								<div className="c-btn cursor-pointer" onClick={faceSignIn}>
+									Face Login
+								</div>
 						</div>
 					</form>
 				</div>

@@ -12,7 +12,7 @@ const ProductList: React.FC<IProps> = ({ products }) => {
   const {productsLoaded} = useAppSelector(state => state.catalog);
   return (
     <>
-      <div className="my-6 grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="mt-8 mb-6 grid sm:grid-cols-2 md:grid-cols-3 gap-6">
         {products.map((product) => {
           return (
             <div className="" key={product.id}>

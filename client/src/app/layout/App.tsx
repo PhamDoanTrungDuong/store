@@ -36,8 +36,10 @@ import MoMoPaymentSucceeded from "../../features/checkout/MoMoPaymentSucceeded";
 import AdminSales from "../../features/admin/AdminSales";
 import Notifications from "../components/Notifications";
 import ShippingAddress from "../../features/account/ShippingAddress";
+import FaceAuthen from "../../features/account/FaceAuthen";
 
 const App: React.FC = () => {
+
 	const dispatch = useAppDispatch();
 	const [loading, setLoading] = useState(true);
 	const { user } = useAppSelector((state) => state.account);
@@ -221,6 +223,14 @@ const App: React.FC = () => {
 								element={
 									<PrivateRoute>
 										<ShippingAddress />
+									</PrivateRoute>
+								}
+							/>
+							<Route
+								path="/face-authen"
+								element={
+									<PrivateRoute>
+										<FaceAuthen />
 									</PrivateRoute>
 								}
 							/>
