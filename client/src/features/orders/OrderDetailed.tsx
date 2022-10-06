@@ -5,22 +5,37 @@ import BasketSumary from "../basket/BasketSumary";
 import BasketTable from "../basket/BasketTable";
 import { TbGift, TbHome2 } from "react-icons/tb";
 import { RiTruckLine } from "react-icons/ri";
-import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlineHome, AiOutlineShoppingCart, AiOutlineFilePdf } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaHashtag } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import PDFPrint from "../../app/components/PDFPrint";
+import { useState } from "react";
 
 interface IProps {
 	order: IOrder;
 	setSelectedOrder: (id: number) => void;
+	isAdmin: boolean
 }
 
-const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder }) => {
+const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin }) => {
 	const subtotal =
 		order.orderItems.reduce((sum, item) => sum + item.quantity * item.price, 0) ?? 0;
 	const steps = ["Order Placed", "On The Way", "Product Delivered"];
+	const [openPdf, setOpenPdf] = useState<boolean>(false);
+	const handlePDF = () => {
+		setOpenPdf(true)
+	}
+
+	const cancelExport = () => {
+		setOpenPdf(false);
+	}
+
+	if(openPdf){
+		return <PDFPrint cancelExport={cancelExport} order={order}/>
+	}
 	return (
-		<div className=" mt-24 p-5">
+		<div className={`${isAdmin ? "mt-24" : ""} p-5`}>
 			<div className="flex items-center ml-2 mt-3 mb-8">
 				<Link to="/">
 					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
@@ -132,6 +147,17 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder }) => {
 					<BasketSumary subtotal={subtotal} />
 				</div>
 			</div>
+			{isAdmin ? (
+				<div className="flex justify-end items-center mt-3">
+					<div className="group">
+						<button
+									className="border text-white px-3 py-1 border-[#AA0A00] bg-[#AA0A00] text-lg rounded-lg group-hover:text-[#AA0A00] group-hover:bg-transparent duration-200 ease-in-out flex justify-center items-center gap-2"
+									onClick={handlePDF}>
+									<AiOutlineFilePdf size={30} className="text-white p-0 duration-200 ease-in-out group-hover:text-[#AA0A00]" /> Export
+							</button>
+					</div>
+				</div>
+			) : ""}
 		</div>
 	);
 };

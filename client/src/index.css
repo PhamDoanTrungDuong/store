@@ -20,7 +20,7 @@
 		@apply border border-[#ffffff] rounded-2xl shadow-xl bg-primary px-4 max-w-[1140px] w-full mx-auto;
 	}
 	.rounded-div2 {
-		@apply border border-gray-300/60 rounded-2xl shadow-xl p-6 bg-white w-full mx-auto;
+		@apply border border-gray-300/60 rounded-2xl p-6 bg-white w-full mx-auto;
 	}
 	li {
 		@apply cursor-pointer text-sm hover:text-indigo-600 duration-75 hover:scale-105 font-medium

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import agent from "../../app/api/agent";
-import { ICategory } from "../../app/interfaces/ICategory";
+// import { ICategory } from "../../app/interfaces/ICategory";
 import { IComment } from "../../app/interfaces/IComment";
 import { IOrder, OrdersParams } from "../../app/interfaces/IOrder";
 import { CategoriesParams, CommentsParams } from "../../app/interfaces/IProduct";
@@ -17,6 +17,7 @@ export interface AdminState {
       categoriesParams: CategoriesParams;
       commentsParams: CommentsParams;
       ordersParams: OrdersParams;
+      todaySales: number
 }
 
 const initParams = () => {
@@ -35,6 +36,7 @@ const initialState: AdminState = {
       categoriesParams: initParams(),
       commentsParams: initParams(),
       ordersParams: initParams(),
+      todaySales: 0,
 }
 
 const getCategoriesAxiosParams = (categoriesParams: CategoriesParams) => {
@@ -93,6 +95,17 @@ export const fetchOrdersAsync = createAsyncThunk<IOrder[], void, {state: RootSta
             }
       }
 )
+export const statisticsTodaySales = createAsyncThunk<number>(
+      "admin/statisticsTodaySales",
+      async (_, thunkAPI) => {
+            try {
+                  const sale = await agent.Admin.statisticToday();
+                  return sale;
+            } catch( error: any) {
+                  console.log(error)
+            }
+      }
+)
 
 export const adminSlice = createSlice({
     name: 'admin',
@@ -132,6 +145,9 @@ export const adminSlice = createSlice({
       builder.addCase(fetchOrdersAsync.fulfilled, (state, action) => {
             state.loadOrder = false;
             state.orders = action.payload;
+      })
+      builder.addCase(statisticsTodaySales.fulfilled, (state, action) => {
+            state.todaySales = action.payload
       })
     }
 })

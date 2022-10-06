@@ -229,7 +229,7 @@ const AdminMembers: React.FC = () => {
 											/>
 										)}
 									</td> */}
-									<td align="right" className="flex justify-center items-center gap-2 mt-[35%]">
+									{/* <td align="right" className="flex justify-center items-center gap-2 mt-[35%]">
 										<div
 										className="p-2 hover:bg-red-300/30 rounded-full duration-200 cursor-pointer"
 											onClick={() =>
@@ -240,7 +240,7 @@ const AdminMembers: React.FC = () => {
 										>
 												<FiTrash2 size={20} className='text-red-600' />
 											</div>
-									</td>
+									</td> */}
 								</tr>
 							))}
 						</tbody>

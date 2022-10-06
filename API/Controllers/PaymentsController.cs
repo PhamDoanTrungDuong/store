@@ -56,6 +56,26 @@ namespace API.Controllers
 
                   return basket.MapBasketToDto();
             }
+            [Authorize]
+            [HttpPost("refund-intent/{id}")]
+            public async Task<ActionResult> RefundIntent(int id)
+            {
+                  var order = await _context.Orders.FindAsync(id);
+                  Refund intent = await _paymentService.RefundIntent(id);
+
+                  if (intent == null) return BadRequest(new ProblemDetails { Title = " Problem creating payment intent" });
+
+                  if(intent.Status == "succeeded")
+                  {
+                        order.isRefund = true;
+                  }
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if(result) return Ok(intent);
+
+                  return BadRequest();
+            }
 
             //stripe listen -f http://localhost:5000/api/payments/webhook -e charge.succeeded
             [HttpPost("webhook")]

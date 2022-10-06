@@ -104,7 +104,9 @@ const ProductSalesForm: React.FC<IProps> = ({ product, cancelEdit }) => {
 				</div>
 				<div className="flex justify-between items-center gap-3">
 					<div className="basis-[70%]">
-							  <input className='px-4 py-2 border border-gray-300 rounded-lg w-full' placeholder="Enter discount value" {...register("percent")} />
+							  <input className='px-4 py-2 border border-gray-300 rounded-lg w-full' placeholder="Enter discount value" {...register("percent", {
+									required: "Percent is required",
+								})} />
 					</div>
 					<div className="basis-[30%]">
 						<div

@@ -21,6 +21,7 @@ interface AccountState {
 	user: IUser | null;
 	users: IUsers[] | null;
 	isError: boolean;
+	accountState: boolean
 	status: string;
 	count: number;
 	memberParams: MemberParams;
@@ -123,6 +124,7 @@ export const accountSlice = createSlice({
 		user: null,
 		users: [],
 		isError: true,
+		accountState: false,
 		status: "idle",
 		count: 0,
 		memberParams: initParams(),
@@ -151,6 +153,9 @@ export const accountSlice = createSlice({
 		},
 		setStateUser: (state) => {
 			state.status = "idle";
+		},
+		setRoleState: (state) => {
+			state.accountState = !state.accountState;
 		},
 		setPagination: (state, action) => {
 			state.pagination = action.payload;
@@ -236,7 +241,8 @@ export const {
 	setMember,
 	removeMember,
 	changePwd,
-	setMemberParams
+	setMemberParams,
+	setRoleState
 } = accountSlice.actions;
 export const membersSelector = memberAdapter.getSelectors((state: RootState) => state.account);
 export default accountSlice.reducer;

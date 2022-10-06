@@ -22,6 +22,7 @@ namespace API.Data
           public DbSet<Entities.Size> Sizes { get; set; }
           public DbSet<Colour> Colours { get; set; }
           public DbSet<SelectedAddress> SelectedAddresses { get; set; }
+          public DbSet<OrderItem> OrderItems { get; set; }
           protected override void OnModelCreating(ModelBuilder builder)
           {
                base.OnModelCreating(builder);

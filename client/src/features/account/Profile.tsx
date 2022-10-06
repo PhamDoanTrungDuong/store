@@ -9,6 +9,8 @@ import agent from "../../app/api/agent";
 import { useAppSelector } from "../../app/store/configureStore";
 import ProfileForm from "./ProfileForm";
 import Loading from "../../app/layout/Loading";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { validationProfile } from "./validationProfile";
 
 const Profile: React.FC = () => {
 	const { user } = useAppSelector((state) => state.account);
@@ -16,6 +18,7 @@ const Profile: React.FC = () => {
 
 	const methods = useForm({
 		mode: "all",
+		resolver: yupResolver<any>(validationProfile)
 	});
 
 	useEffect(() => {

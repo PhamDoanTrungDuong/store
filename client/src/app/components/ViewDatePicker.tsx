@@ -6,6 +6,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import agent from "../api/agent";
+
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -16,6 +17,7 @@ import {
 	Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { currencyFormat } from "../utilities/util";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -50,12 +52,14 @@ const labels = [
 const ViewDatePicker: React.FC = () => {
 	const [value, setValue] = useState<any>(dayjs());
 	const [month, setMonth] = useState<any>();
+	const [yearValue, setYearValue] = useState<any>(dayjs());
+	const [salePerDay, setSalePerDay] = useState<any>();
 
 	const data = {
 		labels,
 		datasets: [
 			{
-				label: "Total Money Per Month",
+				label: `Total Money Per Month - ${yearValue.$y}`,
 				data: labels.map(
 					(_, idx) =>
 						month && (month.find((_: any, id: any) => idx === id)) / 100
@@ -65,37 +69,72 @@ const ViewDatePicker: React.FC = () => {
 		],
 	};
 	useEffect(() => {
-		// if(value){
-		// 	const data = {d: value.$D!, m: value.$M + 1, y: value.$y}
-		// 	agent.Admin.statisticCurrentDay(data).then((res) => {
-		// 		console.log(res)
-		// 	})
-		// }
-		agent.Admin.statisticMonth().then((res) => {
-			setMonth(res);
-		});
-	}, [value]);
+		if(value){
+			const data = {d: value.$D!, m: value.$M + 1, y: value.$y}
+			agent.Admin.statisticCurrentDay(data).then((res) => {
+				setSalePerDay(res)
+			})
+		}
+		if(yearValue){
+			const data = {d: yearValue.$D!, m: yearValue.$M + 1, y: yearValue.$y}
+			agent.Admin.statisticPerYear(data).then((res) => {
+				console.log(res)
+				setMonth(res);
+			});
+		}
+	}, [value, yearValue]);
 	return (
 		<>
-			<div className="flex justify-end items-center">
-				<LocalizationProvider dateAdapter={AdapterDayjs}>
-					<Stack spacing={3}>
-						<DatePicker
-							openTo="year"
-							views={["year", "month", "day"]}
-							label="Year, month and date"
-							value={value}
-							onChange={(newValue: any) => {
-								setValue(newValue);
-							}}
-							renderInput={(params: any) => (
-								<TextField {...params} helperText={null} />
-							)}
-						/>
-					</Stack>
-				</LocalizationProvider>
+			<div className="flex justify-start items-center w-[40%]">
+				<div className="rounded-div2">
+					<h2 className="p-2 font-medium text-lg">Total Revenue Per Day</h2>
+					<div className="w-[100%] mt-4 flex justify-center items-center">
+						<p className="font-medium mr-2">Date:</p>
+						<LocalizationProvider dateAdapter={AdapterDayjs}>
+							<Stack spacing={3}>
+								<DatePicker
+									openTo="day"
+									views={["year", "month", "day"]}
+									label="Year, month and date"
+									value={value}
+									onChange={(newValue: any) => {
+										setValue(newValue);
+									}}
+									renderInput={(params: any) => (
+										<TextField {...params} helperText={null} />
+									)}
+								/>
+							</Stack>
+						</LocalizationProvider>
+						<div className="text-white mx-3 p-4 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-400">
+								<p>
+									{currencyFormat(salePerDay)}
+								</p>
+						</div>
+					</div>
+				</div>
 			</div>
-			<Bar options={options} data={data} />
+			<div className="rounded-div2 mt-5">
+				<h3 className="text-lg font-medium p-2">Total Revenue Per Month</h3>
+				<div className="flex justify-end items-center w-full">
+					<LocalizationProvider dateAdapter={AdapterDayjs}>
+						<Stack spacing={3}>
+							<DatePicker
+								views={['year']}
+								label="Year only"
+								value={yearValue}
+								onChange={(newValue: any) => {
+									setYearValue(newValue);
+								}}
+								renderInput={(params2: any) => (
+									<TextField {...params2} helperText={null} />
+								)}
+							/>
+						</Stack>
+					</LocalizationProvider>
+				</div>
+				<Bar options={options} data={data} />
+			</div>
 		</>
 	);
 };

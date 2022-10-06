@@ -51,7 +51,7 @@ const Notifications: React.FC = () => {
 				id="dropdownNotification"
 				className={`${
 					!isOpen ? "hidden" : ""
-				} duration-300 absolute right-12 top-16 text-black w-full max-w-sm bg-white divide-y shadow dark:bg-white divide-indigo-600 rounded-xl h-[400px] `}>
+				} duration-300 absolute right-12 top-16 text-black w-full max-w-sm bg-white divide-y shadow dark:bg-white divide-indigo-600 rounded-xl h-[400px] overflow-hidden overflow-y-scroll`}>
 				<div className="block py-2 px-4 font-medium text-center bg-indigo-600 text-white rounded-t-xl">
 					Notifications
 				</div>
@@ -67,7 +67,7 @@ const Notifications: React.FC = () => {
 											comment.id
 										)
 									}
-									className="flex py-3 px-4 hover:bg-gray-200 duration-200 cursor-pointer overflow-y-scroll">
+									className="flex py-3 px-4 hover:bg-gray-200 duration-200 cursor-pointer">
 									<div className="flex-shrink-0">
 										<img
 											className="w-11 h-11 rounded-full"

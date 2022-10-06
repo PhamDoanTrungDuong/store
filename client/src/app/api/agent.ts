@@ -139,6 +139,7 @@ const Orders = {
 
 const Payments = {
     createPaymentIntent: () => requests.post('payments', {}),
+    refundIntent: (orderId: number) => requests.post(`payments/refund-intent/${orderId}`, {}),
     momoPayment: () => requests.post('payments/Momo-payment', {}),
     momoQuery: (orderId: number) => requests.post(`payments/Momo-query?Id=${orderId}`, {}),
     momoRefund: (orderId: number) => requests.post(`payments/Momo-refund?Id=${orderId}`, {})
@@ -172,7 +173,9 @@ const Admin = {
     lockUser: (id: string) => requests.post(`account/lock-user/${id}`, {}),
     unlockUser: (id: string) => requests.post(`account/unlock-user/${id}`, {}),
     statisticCurrentDay: (data: any) => requests.get(`admin/statistic-dmy?d=${data.d}&m=${data.m}&y=${data.y}`),
-    statisticMonth: () => requests.get(`admin/statistic-month`),
+    statisticToday: () => requests.get(`admin/statistic-current-day`),
+    statisticPerYear: (data: any) => requests.get(`admin/statistic-selected-year?year=${data.y}`),
+    orderDeliveryState: () => requests.get(`admin/order-delivery-state`),
 }
 
 const Profile = {

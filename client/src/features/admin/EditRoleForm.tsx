@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
 import { MdManageAccounts } from "react-icons/md";
+import { useAppDispatch } from '../../app/store/configureStore';
+import { setRoleState } from '../account/accountSlice';
 
 
 interface IProps {
@@ -28,9 +30,11 @@ interface IProps {
 
 const EditRoleForm: React.FC<IProps> = ({user, cancelEdit}) => {
 	const { register, handleSubmit } = useForm<IFormInput>();
+  const dispatch = useAppDispatch();
 	async function handleSubmitData(data: any) {
             try {
                   await agent.Admin.editRole(user?.username!, data.value);
+                  dispatch(setRoleState())
                 	cancelEdit();
             } catch (error: any) {
                 	console.log(error)

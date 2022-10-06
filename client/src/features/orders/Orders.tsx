@@ -11,6 +11,8 @@ import { BsThreeDots } from "react-icons/bs";
 import { IoIosArrowForward, IoMdArrowDropup } from "react-icons/io";
 import { TbGift, TbHome2 } from "react-icons/tb";
 import { IoIosArrowBack } from "react-icons/io";
+import { FiShoppingCart, FiEye } from "react-icons/fi";
+import { RiRefund2Line } from "react-icons/ri";
 
 import { RiTruckLine } from "react-icons/ri";
 import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
@@ -93,6 +95,7 @@ const Order: React.FC = () => {
 			<OrderDetailed
 				order={orders?.find((o) => o.id === selectedOrderNumber)!}
 				setSelectedOrder={setSelectedOrderNumber}
+				isAdmin={false}
 			/>
 		);
 
@@ -108,6 +111,19 @@ const Order: React.FC = () => {
 	const handleMomoRefund = (Id: number) => {
 		agent.Payments.momoRefund(Id).then((res) => {
 			console.log(res);
+			setLoading(true)
+			Swal.fire({
+				icon: "success",
+				title: "Your order has been refunded, please wait for the system to process",
+				showConfirmButton: false,
+				timer: 2500,
+			});
+		});
+	};
+	const RefundIntent = (Id: number) => {
+		agent.Payments.refundIntent(Id).then((res) => {
+			console.log(res);
+			setLoading(true)
 			Swal.fire({
 				icon: "success",
 				title: "Your order has been refunded, please wait for the system to process",
@@ -234,7 +250,7 @@ const Order: React.FC = () => {
 												order.id
 											}
 											className="border-b border-gray-200">
-											<td align="center" className="py-5">
+											<td align="center" className="py-7">
 												#{" "}
 												{
 													order.id
@@ -267,7 +283,7 @@ const Order: React.FC = () => {
 													order.orderStatus
 												}
 											</td>
-											<td align="center">
+											<td align="left">
 												{order.deliveryStatus ===
 												"PendingConfirm" ? (
 													<div className="flex justify-center items-center">
@@ -308,10 +324,10 @@ const Order: React.FC = () => {
 													"Order Placed"
 												)}
 											</td>
-											<td align="right">
-												{order.orderId && (
+											<td align="right" className="flex justify-center items-center mt-[20%]">
+												{order.orderId ? (
 													<button
-														className="bg-[#A50064] border border-[#A50064] text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-[#A50064] duration-200 mr-3"
+														className="p-2 hover:bg-[#A50064]/10 rounded-full duration-200 cursor-pointer"
 														onClick={() => {
 															handleClickOpen();
 															handleMomoQuery(
@@ -321,18 +337,34 @@ const Order: React.FC = () => {
 																order
 															);
 														}}>
-														Refund
+														<RiRefund2Line size={25} className="text-[#A50064]" />
 													</button>
+												) :  (
+													<div
+														className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
+														onClick={() => {
+															handleClickOpen();
+															setCurrentOrder(
+																order
+															);
+														}}>
+														<RiRefund2Line size={25} className="text-indigo-600" />
+													</div>
 												)}
-												<button
-													className="c-btn px-2 py-1 w-[80px]"
+												<div
+													className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
 													onClick={() =>
 														setSelectedOrderNumber(
 															order.id
 														)
 													}>
-													View
-												</button>
+													<FiEye
+														className="text-indigo-600"
+														size={
+															25
+														}
+													/>
+												</div>
 											</td>
 										</tr>
 									))}
@@ -429,7 +461,7 @@ const Order: React.FC = () => {
 													order.orderStatus
 												}
 											</td>
-											<td align="center">
+											<td align="left">
 												{order.deliveryStatus ===
 												"PendingConfirm" ? (
 													<div className="flex justify-center items-center">
@@ -471,15 +503,20 @@ const Order: React.FC = () => {
 												)}
 											</td>
 											<td align="center">
-												<button
-													className="c-btn px-2 py-1 w-[80px]"
+											<div
+													className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
 													onClick={() =>
 														setSelectedOrderNumber(
 															order.id
 														)
 													}>
-													View
-												</button>
+													<FiEye
+														className="text-indigo-600"
+														size={
+															20
+														}
+													/>
+												</div>
 											</td>
 										</tr>
 									))}
@@ -490,13 +527,18 @@ const Order: React.FC = () => {
 						<table className="table-auto w-full text-xs sm:text-sm md:text-base">
 							<thead>
 								<tr className="border-b border-gray-200">
-									<td className="px-0 md:px-4 py-3">
+									<td align="center" className="px-0 md:px-4 py-3">
 										Order number
 									</td>
 									<td
 										className="px-4 py-3"
 										align="center">
 										Address
+									</td>
+									<td
+										className="px-4 py-3"
+										align="center">
+										City
 									</td>
 									<td
 										className="px-4 py-3"
@@ -544,8 +586,15 @@ const Order: React.FC = () => {
 													order.id
 												}
 											</td>
-											<td align="center">
+											<td align="left">
 												{order.shippingAddress.address1}
+											</td>
+											<td>
+											{
+												order
+													.shippingAddress
+													.city
+											}
 											</td>
 											<td align="center">
 												{currencyFormat(
@@ -564,7 +613,7 @@ const Order: React.FC = () => {
 													order.orderStatus
 												}
 											</td>
-											<td align="center">
+											<td align="left">
 												{order.deliveryStatus ===
 												"PendingConfirm" ? (
 													<div className="flex justify-center items-center">
@@ -606,15 +655,20 @@ const Order: React.FC = () => {
 												)}
 											</td>
 											<td align="center">
-												<button
-													className="c-btn"
+											<div
+													className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
 													onClick={() =>
 														setSelectedOrderNumber(
 															order.id
 														)
 													}>
-													View
-												</button>
+													<FiEye
+														className="text-indigo-600"
+														size={
+															20
+														}
+													/>
+												</div>
 											</td>
 										</tr>
 									))}
@@ -625,7 +679,7 @@ const Order: React.FC = () => {
 						<table className="table-auto w-full text-xs sm:text-sm md:text-base">
 							<thead>
 								<tr className="border-b border-gray-200">
-									<td className="px-0 md:px-4 py-3">
+									<td align="center" className="px-0 md:px-4 py-3">
 										Order number
 									</td>
 									<td
@@ -685,61 +739,26 @@ const Order: React.FC = () => {
 												)}
 											</td>
 											<td align="center">
-												{
-													order.orderStatus
-												}
+												Refund
 											</td>
 											<td align="center">
-												{order.deliveryStatus ===
-												"PendingConfirm" ? (
-													<div className="flex justify-center items-center">
-														<TbGift
-															size={
-																25
-															}
-															className="mr-3 text-indigo-600"
-														/>{" "}
-														Pending
-														Confirm
-													</div>
-												) : order.deliveryStatus ===
-												  "OnTheWay" ? (
-													<div className="flex justify-center items-center">
-														<RiTruckLine
-															size={
-																25
-															}
-															className="mr-3 fill-red-600"
-														/>{" "}
-														On
-														The
-														Way
-													</div>
-												) : order.deliveryStatus ===
-												  "ProductDelivered" ? (
-													<div className="flex justify-center items-center">
-														<TbHome2
-															size={
-																25
-															}
-															className="mr-3 text-green-600"
-														/>{" "}
-														Delivered
-													</div>
-												) : (
-													"Order Placed"
-												)}
+												Refund
 											</td>
-											<td align="center">
-												{/* <button
-													className="c-btn"
+											<td align="center" className='flex justify-center items-centerr mt-[25%]'>
+											<div
+													className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
 													onClick={() =>
 														setSelectedOrderNumber(
 															order.id
 														)
 													}>
-													View
-												</button> */}
+													<FiEye
+														className="text-indigo-600"
+														size={
+															20
+														}
+													/>
+												</div>
 											</td>
 										</tr>
 									))}
@@ -748,7 +767,7 @@ const Order: React.FC = () => {
 					</TabPanel>
 				</Box>
 			</div>
-			{momoOrderQuery && (
+			{momoOrderQuery !== undefined ? (
 				<Dialog
 					open={open}
 					onClose={handleClose}
@@ -831,20 +850,120 @@ const Order: React.FC = () => {
 								)}
 							</tbody>
 						</table>
-						Price: {currencyFormat(momoOrderQuery.amount)}
+						Total: {currencyFormat(momoOrderQuery.amount)}
 					</DialogContent>
 					<DialogActions>
 						<Button onClick={handleClose}>Disagree</Button>
-						<Button
-							onClick={() => {
-								handleClose();
-								handleMomoRefund(currentOrder.id);
-							}}
-							autoFocus>
-							Agree
-						</Button>
+							<Button
+								onClick={() => {
+									handleClose();
+									setMomoOrderQuery(undefined)
+									handleMomoRefund(currentOrder.id);
+								}}
+								autoFocus>
+								Agree
+							</Button>
 					</DialogActions>
 				</Dialog>
+			) : (
+				currentOrder && (
+					<Dialog
+						open={open}
+						onClose={handleClose}
+						aria-labelledby="alert-dialog-title"
+						aria-describedby="alert-dialog-description">
+						<DialogTitle id="alert-dialog-title">
+							{`Transaction Refund #${currentOrder?.id}`}
+						</DialogTitle>
+						<DialogContent>
+							<table className="max-w-[400px] sm:max-w-[500px] md:max-w-[600px]">
+								<thead>
+									<tr>
+										<th
+											align="left"
+											className="px-5 md:px-20 pb-5">
+											Product
+										</th>
+										<th
+											align="center"
+											className="px-5 md:px-10 pb-5">
+											Quantity
+										</th>
+										<th
+											align="center"
+											className="px-5 md:px-10 pb-5">
+											Subtotal
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									{currentOrder.orderItems.map(
+										(item: any) => (
+											<tr
+												key={
+													item.productId
+												}>
+												<td className="py-4">
+													<Link
+														to={`/catalog/${item.productId}`}>
+														<div className="flex items-center">
+															<img
+																className="rounded-xl"
+																src={
+																	item.pictureUrl
+																}
+																alt={
+																	item.name
+																}
+																style={{
+																	height: 80,
+																	marginRight: 20,
+																}}
+															/>
+															<span className="hidden md:block">
+																{
+																	item.name
+																}
+															</span>
+														</div>
+													</Link>
+												</td>
+												<td align="center">
+													{
+														item.quantity
+													}
+												</td>
+												<td align="center">
+													<h5 className="text-lg font-bold">
+														$
+														{(
+															item.price /
+															100
+														).toFixed(
+															2
+														)}
+													</h5>
+												</td>
+											</tr>
+										)
+									)}
+								</tbody>
+							</table>
+							Total: {currencyFormat(currentOrder.total)}
+						</DialogContent>
+						<DialogActions>
+							<Button onClick={handleClose}>Disagree</Button>
+								<Button
+									onClick={() => {
+										handleClose();
+										RefundIntent(+currentOrder.id);
+									}}
+									autoFocus>
+									Agree
+								</Button>
+						</DialogActions>
+					</Dialog>
+				)
 			)}
 		</div>
 	);

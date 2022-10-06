@@ -1,3 +1,4 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import { Grid, Box } from "@mui/material";
 import React, { useEffect } from "react";
@@ -5,6 +6,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import agent from "../../app/api/agent";
 import AppTextInput from "../../app/components/AppTextInput";
+import { validationShippingAddress } from "./validationProfile";
 
 interface IProps {
 	address?: any;
@@ -19,6 +21,7 @@ const ShippingAddressForm: React.FC<IProps> = ({ address, cancelEdit }) => {
 		formState: { isDirty, isSubmitting },
 	} = useForm({
 		mode: "all",
+		resolver: yupResolver<any>(validationShippingAddress)
 	});
 
   useEffect(() => {
