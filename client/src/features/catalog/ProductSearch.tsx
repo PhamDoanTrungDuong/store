@@ -31,7 +31,8 @@ const ProductSearch: React.FC = () => {
   return (
     <div className="relative">
       <input
-        className="w-[88%] border border-zinc-300 py-4 pl-[60px] rounded-xl focus:outline-none"
+        // className="w-[88%] border border-zinc-300 py-4 pl-[60px] rounded-xl focus:outline-none"
+        className="w-[100%] border border-zinc-300 py-4 pl-[60px] rounded-xl focus:outline-none"
         placeholder="Search product..."
         value={searchTerm || ""}
         onChange={(e: any) => {
@@ -42,7 +43,7 @@ const ProductSearch: React.FC = () => {
       <div className="absolute top-4 left-5 text-zinc-500">
         <AiOutlineSearch size={30} />
       </div>
-      <div>
+      {/* <div>
         <div className="absolute top-1 right-5 p-2 text-zinc-500 border border-zinc-100 cursor-pointer hover:scale-125 hover:border-transparent hover:text-sky-500 hover:bg-sky-200/30 rounded-full duration-200" onClick={handleVoice}>
           <MdOutlineKeyboardVoice size={33} />
         </div>
@@ -50,7 +51,7 @@ const ProductSearch: React.FC = () => {
             <span className="text-sky-500">{isVoice === true ? "Recording..." : ""}</span>
             <span className="text-red-600">{error === true ? errorMess : ""}</span> 
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

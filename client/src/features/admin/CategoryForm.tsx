@@ -69,12 +69,12 @@ const CategoryForm: React.FC<Props> = ({ category, cancelEdit }) => {
 				/>
 				<div className="flex justify-between items-center gap-4">
 					<button
-						className="p-3 my-5 w-full c-btn bg-zinc-300 border-none text-black hover:border hover:border-zinc-300"
+						className="bg-gray-500 border border-gray-500 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-gray-500 duration-200"
 						onClick={cancelEdit}>
 						Cancel
 					</button>
 					<button
-						className="p-3 my-5 w-full c-btn"
+						className="p-3 my-5 c-btn"
 						disabled={!isValid}
 						type="submit">
 						Create

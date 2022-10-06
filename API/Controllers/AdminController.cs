@@ -215,7 +215,7 @@ namespace API.Controllers
             }
 
             // Order Statistic
-            [HttpGet("order-delivery-state")]
+            [HttpGet("order-delivery-state")] // [x]
             public async Task<ActionResult> DeliveryState()
             {
                   var orderCount = (await _context.Orders

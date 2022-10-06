@@ -17,13 +17,17 @@
       [] bảng chức năng
       [] giải thích hình
  -->
-<!--
-      - [Basket(Momo) + ProfileForm(textwarn)]
-      - SignedInMenu(ChangePwd)
-      - AdminMember(lockout)
-      - [ProductDetail(productAttribute) + BasketTable(displayProAttr)]
-      - [App(<Notifications />)]
-      - [Login(google-login)]
+<!-- NLN
+      - [] Basket(Momo) + ProfileForm(textwarn)
+      - [] SignedInMenu(ChangePwd, faceAuth, shippingAddress)
+      - [] AdminMember(lockout)
+      - [] [ProductDetail(productAttribute) + BasketTable(displayProAttr)]
+      - [] App(<Notifications />)
+      - [] Login(google-login, faceAuthen)
+      - [] ProductSearch(VoiceSearch)
+      - [] AddressForm(AnotherAddress)
+      - [] SideBar(SaleManagement)
+      - [] ProductCard(LikeHeart)
 -->
 <!-- NLN
       [x] Momo
