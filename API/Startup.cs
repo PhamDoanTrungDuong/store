@@ -65,6 +65,7 @@ namespace API
             });
             services.AddDbContext<StoreContext>(options =>
             {
+                //docker run --name dev -e POSTGRES_USER=appuser -e POSTGRES_PASSWORD=secret -p 5432:5432 -d postgres:latest
                 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
                 string connStr;
