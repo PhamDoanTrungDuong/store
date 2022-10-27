@@ -12,6 +12,7 @@ import CategoryForm from "./CategoryForm";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FiTrash2 } from "react-icons/fi";
+import Loading from "../../app/layout/Loading";
 
 const AdminCategories: React.FC = () => {
 	const { categories, load } = useAppSelector((state) => state.admin);
@@ -38,6 +39,8 @@ const AdminCategories: React.FC = () => {
 	};
 
 	if (editMode) return <CategoryForm category={selectedCategory} cancelEdit={cancelEdit} />;
+
+	if(!categories) return <Loading message="Loading categories" />;
 
 	const handleDeleteCate = (id: number) => {
 		Swal.fire({

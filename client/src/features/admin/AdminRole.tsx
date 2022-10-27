@@ -15,6 +15,7 @@ import Modal from '@mui/material/Modal';
 import { useForm } from "react-hook-form";
 import agent from "../../app/api/agent";
 import { LoadingButton } from "@mui/lab";
+import Loading from "../../app/layout/Loading";
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -81,6 +82,7 @@ const AdminRole: React.FC = () => {
 	const handleChecked = (role: string) => {
 		return selectedUser?.roles.includes(role) ? true : false;
 	}
+	if (!users) return <Loading message="Loading users" />;
 
 	return (
 		<div className=" mt-24 p-5">
@@ -127,8 +129,8 @@ const AdminRole: React.FC = () => {
 							</tr>
 						</thead>
 						<tbody>
-							{users?.map((item: any) => {
-								return (
+							{users?.map((item: any) => (
+								item.username === "admin" ? "" : (
 									<tr
 										key={item.id}
 										className="border-b border-gray-200">
@@ -195,8 +197,8 @@ const AdminRole: React.FC = () => {
 											)}
 										</td>
 									</tr>
-								);
-							})}
+								)
+							))}
 						</tbody>
 					</table>
 				</div>

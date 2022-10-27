@@ -66,10 +66,10 @@ const App: React.FC = () => {
 			{user?.roles?.includes("Admin") ? (
 				<div className="flex">
 					<SideBar />
-					<div className="h-screen flex-1 p-4 overflow-y-scroll bg-[#F9FAFB]">
+					<div className="h-screen relative flex-1 p-4 overflow-y-scroll bg-[#F9FAFB]">
 						{user && (
 							<>
-								<div className="fixed top-0 left-[20%] w-[78%] z-40 p-6 bg-[#F9FAFB] bg-opacity-70 backdrop-blur-sm flex justify-end items-end">
+								<div className="fixed top-0 left-0 w-[98%] z-40 p-6 bg-[#F9FAFB] bg-opacity-70 backdrop-blur-sm flex justify-end items-end">
 									<div className="z-50 flex jutify-between items-center gap-2">
 										<SignedInMenu />
 										<Notifications />

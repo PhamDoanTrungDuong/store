@@ -20,6 +20,7 @@ import { AiOutlineHome, AiOutlinePlus } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
 import { RiBarChartBoxFill } from "react-icons/ri";
 import Swal from "sweetalert2";
+import Loading from "../../app/layout/Loading";
 
 
 const Inventory: React.FC = () => {
@@ -76,6 +77,8 @@ const Inventory: React.FC = () => {
 	}
 
 	if (editMode) return <ProductForm product={selectedProduct} cancelEdit={cancelEdit} />;
+
+	if(!products) return <Loading message="Loading products" />;
 	return (
 		<div className="mt-24 p-5 ">
 			<div className='flex justify-between items-center mb-8'>

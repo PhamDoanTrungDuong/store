@@ -21,6 +21,7 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import moment from "moment";
 import { FiShoppingCart, FiEye } from "react-icons/fi";
+import Loading from "../../app/layout/Loading";
 
 interface TabPanelProps {
 	children?: React.ReactNode;
@@ -65,7 +66,7 @@ const style = {
 const AdminOrders: React.FC = () => {
 	const { orders, loadOrder } = useAppSelector((state) => state.admin);
 	const dispatch = useAppDispatch();
-	// const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(true);
 	const [selectedOrderNumber, setSelectedOrderNumber] = useState(0);
 	const [selectedDeli, setSelectedDeli] = useState<number>(0);
 	const { register, handleSubmit } = useForm();
@@ -100,6 +101,8 @@ const AdminOrders: React.FC = () => {
 			handleClose();
 		});
 	};
+
+	if (!orders) return <Loading message="Loading comments" />;
 
 	return (
 		<div className="mt-24 p-5">

@@ -14,6 +14,7 @@ import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Swal from "sweetalert2";
 import { FiTrash2, FiCheckSquare } from "react-icons/fi";
+import Loading from "../../app/layout/Loading";
 
 interface TabPanelProps {
 	children?: React.ReactNode;
@@ -112,6 +113,9 @@ const AdminComment: React.FC = () => {
 			}
 		});
 	};
+
+	if (!comments) return <Loading message="Loading comments" />;
+
 
 	return (
 		<div className=" mt-24 p-5">

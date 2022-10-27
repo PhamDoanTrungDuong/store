@@ -13,10 +13,6 @@
       [x] thống kê
       [] router history
  -->
- <!-- Bao cao
-      [] bảng chức năng
-      [] giải thích hình
- -->
 <!-- NLN
       - [] Basket(Momo) + ProfileForm(textwarn)
       - [] SignedInMenu(ChangePwd, faceAuth, shippingAddress)

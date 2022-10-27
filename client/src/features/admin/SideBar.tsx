@@ -60,8 +60,8 @@ const SideBar: React.FC = () => {
 	return (
 		<div
 			className={` ${
-				open ? "w-64" : "w-20"
-			} bg-[#F9FAFB] h-screen p-5 pt-8 relative duration-300 border border-r-gray-300`}>
+				open ? "w-64" : "w-[90px]"
+			} bg-[#F9FAFB] h-screen z-50 p-5 pt-8 relative duration-300 border border-r-gray-300`}>
 			<img
 				src="/images/control.png"
 				className={`absolute cursor-pointer -right-3 top-9 w-8 border-2 border-gray-200 rounded-full z-50 ${

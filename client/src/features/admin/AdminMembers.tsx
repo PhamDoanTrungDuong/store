@@ -29,7 +29,7 @@ const AdminMembers: React.FC = () => {
 
 	const [selectedMember, setSelectedMember] = useState<IUser | undefined>(undefined);
 
-	// if (loading) return <Loading message="Loading orders" />;
+	if (loading || !members) return <Loading message="Loading orders" />;
 
 	function cancelEdit() {
 		if (selectedMember) setSelectedMember(undefined);
@@ -110,7 +110,7 @@ const AdminMembers: React.FC = () => {
 						<thead>
 							<tr className="border-b border-gray-200">
 								<td className="px-4 py-3" align="center">Id</td>
-								<td className="px-4 py-3" align="left">Username</td>
+								<td className="px-4 py-3" align="left">Image</td>
 								<td className="px-4 py-3" align="right">
 									FullName
 								</td>
@@ -131,14 +131,15 @@ const AdminMembers: React.FC = () => {
 						</thead>
 						<tbody>
 							{members?.map((member: any, idx) => (
-								<tr
+								member.userName === "admin" ? "" : (
+									<tr
 									className="border-b border-gray-200"
 									key={idx}>
 									<td className="py-7" align="center">
 										{member.id}
 									</td>
-									<td align="left">
-										<div className="flex">
+									<td align="center">
+										<div>
 											<img
 												src={
 													member?.pictureUrl
@@ -154,14 +155,14 @@ const AdminMembers: React.FC = () => {
 												}}
 												className="rounded-full"
 											/>
-											<span>
+											{/* <span>
 												{
 													member.userName
 												}
-											</span>
+											</span> */}
 										</div>
 									</td>
-									<td align="left">
+									<td align="center">
 										<span>
 											{member?.address
 												?.fullName
@@ -171,17 +172,17 @@ const AdminMembers: React.FC = () => {
 												: "-"}
 										</span>
 									</td>
-									<td align="left">
+									<td align="center">
 										<span>
 											{member?.phoneNumber
 												? member?.phoneNumber
 												: "-"}
 										</span>
 									</td>
-									<td align="left">
+									<td align="center">
 										<span>{member?.email}</span>
 									</td>
-									<td align="left">
+									<td align="center">
 										<span>
 											{member?.address
 												?.city
@@ -201,7 +202,7 @@ const AdminMembers: React.FC = () => {
 												: "-"}
 										</span>
 									</td>
-									<td align="left">
+									<td align="center">
 										<span>
 											{member?.address
 												?.country
@@ -242,6 +243,7 @@ const AdminMembers: React.FC = () => {
 											</div>
 									</td> */}
 								</tr>
+								)
 							))}
 						</tbody>
 					</table>
