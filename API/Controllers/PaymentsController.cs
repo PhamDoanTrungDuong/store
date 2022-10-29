@@ -361,7 +361,7 @@ namespace API.Controllers
 
                   return Ok(responseFromMomo);
             }
-            
+
             [Authorize]
             [HttpPost("vnpay-payment")]
             public async Task<ActionResult> VnPayPayment()
@@ -442,6 +442,64 @@ namespace API.Controllers
 
                   // return Ok();
             }
+            // [Authorize]
+            // [HttpPost("paypal-payment")]
+            // public async Task<ActionResult> PayPalPayment()
+            // {
+            //       var basket = await _context.Baskets
+            //           .RetrieveBasketWithItems(User.Identity.Name)
+            //           .FirstOrDefaultAsync();
+
+            //       var userShippingAddres = await _context.Users
+            //             .Where(x => x.UserName == User.Identity.Name)
+            //             .Include(x => x.Address)
+            //             .FirstOrDefaultAsync();
+
+            //       if (basket == null) return NotFound();
+
+            //       if(userShippingAddres.Address == null)
+            //       {
+            //             return BadRequest(new ProblemDetails{Title = "Please check your information from your profile"});
+            //       }
+
+            //       var items = new List<Entities.OrderAggregate.OrderItem>();
+
+            //       foreach (var item in basket.Items)
+            //       {
+            //             var productItem = await _context.Products.FindAsync(item.ProductId);
+            //             if(productItem == null) return NotFound();
+            //             // if(productItem.QuantityInStock < 1) return BadRequest(new ProblemDetails{Title = $"Product {productItem.Name} is out of stock"});
+            //             var itemOrdered = new ProductItemOrdered
+            //             {
+            //                   ProductId = productItem.Id,
+            //                   Name = productItem.Name,
+            //                   PictureUrl = productItem.PictureUrl,
+            //                   Color = item.Color,
+            //                   Size = item.Size
+            //             };
+
+            //             var orderItem = new Entities.OrderAggregate.OrderItem
+            //             {
+            //                   ItemOrdered = itemOrdered,
+            //                   Price = productItem.Price,
+            //                   Quantity = item.Quantity
+            //             };
+
+            //             items.Add(orderItem);
+            //       }
+
+            //       // var subtotal = (items.Sum(item => item.Price * item.Quantity)) * 234.000;
+            //       var subtotal = items.Sum(item => item.Price * item.Quantity);
+
+            //       //Get Config Info
+            //       string clientId = _config["PayPalSettings:clientId"].ToString();
+            //       string secretKet = _config["PayPalSettings:secretKey"].ToString();
+
+
+
+            //       return Ok();
+            // }
+
 
             [HttpPost("confirm-hashsecret/{vnp_SecureHash}")]
             public bool HashSecretConfirm(string vnp_SecureHash) {
