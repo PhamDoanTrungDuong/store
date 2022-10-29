@@ -23,6 +23,7 @@ namespace API.Extensions
                     Total = order.GetTotal(),
                     isRefund = order.isRefund,
                     orderId = order.orderId,
+                    paymentIntentId = order.PaymentIntentId,
                     OrderItems = order.OrderItems.Select(item => new OrderItemDto
                     {
                         ProductId = item.ItemOrdered.ProductId,

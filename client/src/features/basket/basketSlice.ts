@@ -12,7 +12,7 @@ export interface BasketState {
 const initialState: BasketState = {
   basket: null,
   status: 'idle',
-  signature: ""
+  signature: "",
 };
 
 export const addBasketItemAsync = createAsyncThunk<IBasket, {productId: number, quantity?: number, color: string, size: string}>(

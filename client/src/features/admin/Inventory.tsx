@@ -21,7 +21,8 @@ import { IoIosArrowForward } from "react-icons/io";
 import { RiBarChartBoxFill } from "react-icons/ri";
 import Swal from "sweetalert2";
 import Loading from "../../app/layout/Loading";
-
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from '@mui/material/Zoom';
 
 const Inventory: React.FC = () => {
 	const { products, pagination } = useProducts();
@@ -186,14 +187,18 @@ const Inventory: React.FC = () => {
 													product
 												)
 											}>
-												<FiEdit3 size={20} className="text-yellow-500" />
+												<Tooltip TransitionComponent={Zoom} title="Edit">
+													<FiEdit3 size={20} className="text-yellow-500" />
+												</Tooltip>
 										</div>
 										<div
 											className="p-2 hover:bg-red-300/30 rounded-full duration-200 cursor-pointer"
 											onClick={() =>
 												handleDelete(product.id)
 											}>
-												<FiTrash2 size={20} className='text-red-600' />
+												<Tooltip TransitionComponent={Zoom} title="Delete">
+													<FiTrash2 size={20} className='text-red-600' />
+												</Tooltip>
 										</div>
 									</td>
 								</tr>

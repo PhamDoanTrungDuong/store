@@ -26,5 +26,7 @@ namespace API.DTOs
 
         public bool isRefund { get; set; }
         public string orderId { get; set; }
+        public string paymentIntentId { get; set; }
+
     }
 }

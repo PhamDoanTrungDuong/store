@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using API.Data;
 using API.DTOs;
+using API.Entities;
 using API.Entities.OrderAggregate;
 using API.Extensions;
 using API.Services;
@@ -29,6 +30,28 @@ namespace API.Controllers
                   _config = config;
                   _context = context;
                   _paymentService = paymentService;
+            }
+
+            [Authorize]
+            [HttpPost("Normal-payment")]
+            public async Task<ActionResult<BasketDto>> CreatePayment()
+            {
+                  var basket = await _context.Baskets
+                      .RetrieveBasketWithItems(User.Identity.Name)
+                      .FirstOrDefaultAsync();
+
+                  if (basket == null) return NotFound();
+
+                  basket.PaymentIntentId = "0";
+                  basket.ClientSecret = "0";
+
+                  _context.Update(basket);
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if (!result) return BadRequest(new ProblemDetails { Title = "Problem updating basket with intent" });
+
+                  return basket.MapBasketToDto();
             }
 
             [Authorize]
@@ -337,6 +360,101 @@ namespace API.Controllers
                   await _context.SaveChangesAsync();
 
                   return Ok(responseFromMomo);
+            }
+            
+            [Authorize]
+            [HttpPost("vnpay-payment")]
+            public async Task<ActionResult> VnPayPayment()
+            {
+                  var basket = await _context.Baskets
+                      .RetrieveBasketWithItems(User.Identity.Name)
+                      .FirstOrDefaultAsync();
+
+                  var userShippingAddres = await _context.Users
+                        .Where(x => x.UserName == User.Identity.Name)
+                        .Include(x => x.Address)
+                        .FirstOrDefaultAsync();
+
+                  if (basket == null) return NotFound();
+
+                  if(userShippingAddres.Address == null)
+                  {
+                        return BadRequest(new ProblemDetails{Title = "Please check your information from your profile"});
+                  }
+
+                  var items = new List<Entities.OrderAggregate.OrderItem>();
+
+                  foreach (var item in basket.Items)
+                  {
+                        var productItem = await _context.Products.FindAsync(item.ProductId);
+                        if(productItem == null) return NotFound();
+                        // if(productItem.QuantityInStock < 1) return BadRequest(new ProblemDetails{Title = $"Product {productItem.Name} is out of stock"});
+                        var itemOrdered = new ProductItemOrdered
+                        {
+                              ProductId = productItem.Id,
+                              Name = productItem.Name,
+                              PictureUrl = productItem.PictureUrl,
+                              Color = item.Color,
+                              Size = item.Size
+                        };
+
+                        var orderItem = new Entities.OrderAggregate.OrderItem
+                        {
+                              ItemOrdered = itemOrdered,
+                              Price = productItem.Price,
+                              Quantity = item.Quantity
+                        };
+
+                        items.Add(orderItem);
+                  }
+
+                  var subtotal = (items.Sum(item => item.Price * item.Quantity)) * 234.000;
+
+                  //Get Config Info
+                  string vnp_Returnurl = _config["VnPaySettings:vnp_Returnurl"].ToString(); //URL nhan ket qua tra ve
+                  string vnp_Url = _config["VnPaySettings:vnp_Url"].ToString(); //URL thanh toan cua VNPAY
+                  string vnp_TmnCode = _config["VnPaySettings:vnp_TmnCode"].ToString(); //Ma website
+                  string vnp_HashSecret = _config["VnPaySettings:vnp_HashSecret"].ToString(); //Chuoi bi mat
+                  VnPayService pay = new VnPayService();
+
+                  pay.AddRequestData("vnp_Version", "2.1.0"); //Phiên bản api mà merchant kết nối. Phiên bản hiện tại là 2.1.0
+                  pay.AddRequestData("vnp_Command", "pay"); //Mã API sử dụng, mã cho giao dịch thanh toán là 'pay'
+                  pay.AddRequestData("vnp_TmnCode", vnp_TmnCode); //Mã website của merchant trên hệ thống của VNPAY (khi đăng ký tài khoản sẽ có trong mail VNPAY gửi về)
+                  pay.AddRequestData("vnp_Amount", subtotal.ToString()); //số tiền cần thanh toán, công thức: số tiền * 100 - ví dụ 10.000 (mười nghìn đồng) --> 1000000
+                  pay.AddRequestData("vnp_BankCode", ""); //Mã Ngân hàng thanh toán (tham khảo: https://sandbox.vnpayment.vn/apis/danh-sach-ngan-hang/), có thể để trống, người dùng có thể chọn trên cổng thanh toán VNPAY
+                  pay.AddRequestData("vnp_CreateDate", DateTime.Now.ToString("yyyyMMddHHmmss")); //ngày thanh toán theo định dạng yyyyMMddHHmmss
+                  pay.AddRequestData("vnp_CurrCode", "VND"); //Đơn vị tiền tệ sử dụng thanh toán. Hiện tại chỉ hỗ trợ VND
+                  pay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress()); //Địa chỉ IP của khách hàng thực hiện giao dịch
+                  pay.AddRequestData("vnp_Locale", "vn"); //Ngôn ngữ giao diện hiển thị - Tiếng Việt (vn), Tiếng Anh (en)
+                  pay.AddRequestData("vnp_OrderInfo", "Thanh toan don hang"); //Thông tin mô tả nội dung thanh toán
+                  pay.AddRequestData("vnp_OrderType", "other"); //topup: Nạp tiền điện thoại - billpayment: Thanh toán hóa đơn - fashion: Thời trang - other: Thanh toán trực tuyến
+                  pay.AddRequestData("vnp_ReturnUrl", vnp_Returnurl); //URL thông báo kết quả giao dịch khi Khách hàng kết thúc thanh toán
+                  pay.AddRequestData("vnp_TxnRef", DateTime.Now.Ticks.ToString()); //mã hóa đơn
+
+                  string paymentUrl = pay.CreateRequestUrl(vnp_Url, vnp_HashSecret);
+
+                  return Ok(paymentUrl);
+
+                  // //Update basket
+                  // _context.Update(basket);
+                  // var result = await _context.SaveChangesAsync() > 0;
+                  // if (!result) return BadRequest(new ProblemDetails { Title = "Problem updating basket with momo" });
+
+                  // return Ok();
+            }
+
+            [HttpPost("confirm-hashsecret/{vnp_SecureHash}")]
+            public bool HashSecretConfirm(string vnp_SecureHash) {
+                  string hashSecret = _config["VnPaySettings:vnp_HashSecret"].ToString(); //Chuoi bi mat
+                  VnPayService pay = new VnPayService();
+
+                   bool checkSignature = pay.ValidateSignature(vnp_SecureHash, hashSecret);
+
+                   if(checkSignature){
+                        return true;
+                   }else{
+                        return false;
+                   }
             }
 
             public static string Base64EncodeObject(object obj)

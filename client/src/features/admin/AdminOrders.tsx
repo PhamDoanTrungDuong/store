@@ -22,7 +22,8 @@ import Tabs from "@mui/material/Tabs";
 import moment from "moment";
 import { FiShoppingCart, FiEye } from "react-icons/fi";
 import Loading from "../../app/layout/Loading";
-
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from '@mui/material/Zoom';
 interface TabPanelProps {
 	children?: React.ReactNode;
 	index: number;
@@ -318,12 +319,14 @@ const AdminOrders: React.FC = () => {
 																		order.id
 																	);
 																}}>
-																<FiShoppingCart
-																	size={
-																		20
-																	}
-																	className="text-yellow-500"
-																/>
+																	<Tooltip TransitionComponent={Zoom} title="Change Status">
+																		<FiShoppingCart
+																			size={
+																				20
+																			}
+																			className="text-yellow-500"
+																		/>
+																	</Tooltip>
 															</button>
 															<div
 																className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
@@ -332,12 +335,14 @@ const AdminOrders: React.FC = () => {
 																		order.id
 																	)
 																}>
-																<FiEye
-																	className="text-indigo-600"
-																	size={
-																		20
-																	}
-																/>
+																	<Tooltip TransitionComponent={Zoom} title="View">
+																		<FiEye
+																			className="text-indigo-600"
+																			size={
+																				20
+																			}
+																		/>
+																	</Tooltip>
 															</div>
 														</td>
 													</tr>
@@ -513,12 +518,14 @@ const AdminOrders: React.FC = () => {
 																		order.id
 																	);
 																}}>
-																<FiShoppingCart
-																	size={
-																		20
-																	}
-																	className="text-yellow-500"
-																/>
+																<Tooltip TransitionComponent={Zoom} title="Change Status">
+																		<FiShoppingCart
+																			size={
+																				20
+																			}
+																			className="text-yellow-500"
+																		/>
+																	</Tooltip>
 															</button>
 															<div
 																className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
@@ -527,12 +534,14 @@ const AdminOrders: React.FC = () => {
 																		order.id
 																	)
 																}>
-																<FiEye
-																	className="text-indigo-600"
-																	size={
-																		20
-																	}
-																/>
+																<Tooltip TransitionComponent={Zoom} title="View">
+																		<FiEye
+																			className="text-indigo-600"
+																			size={
+																				20
+																			}
+																		/>
+																	</Tooltip>
 															</div>
 														</td>
 													</tr>
@@ -707,12 +716,14 @@ const AdminOrders: React.FC = () => {
 																		order.id
 																	)
 																}>
-																<FiEye
-																	className="text-indigo-600"
-																	size={
-																		20
-																	}
-																/>
+																<Tooltip TransitionComponent={Zoom} title="View">
+																		<FiEye
+																			className="text-indigo-600"
+																			size={
+																				20
+																			}
+																		/>
+																	</Tooltip>
 															</div>
 														</td>
 													</tr>
@@ -811,12 +822,14 @@ const AdminOrders: React.FC = () => {
 																		order.id
 																	)
 																}>
-																<FiEye
-																	className="text-indigo-600"
-																	size={
-																		20
-																	}
-																/>
+																<Tooltip TransitionComponent={Zoom} title="View">
+																		<FiEye
+																			className="text-indigo-600"
+																			size={
+																				20
+																			}
+																		/>
+																	</Tooltip>
 															</div>
 														</td>
 													</tr>

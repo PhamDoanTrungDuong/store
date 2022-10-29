@@ -24,6 +24,7 @@ import AdminComment from "../../features/admin/AdminComment";
 import { fetchCurrentUser } from "../../features/account/accountSlice";
 import PrivateRoute from "./PrivateRoute";
 import CheckoutWrapper from "../../features/checkout/CheckoutWrapper";
+import NormalCheckoutWrapper from "../../features/checkout/NormalCheckoutWrapper";
 import Footer from "./Footer";
 import Profile from "../../features/account/Profile";
 import AdminMembers from "../../features/admin/AdminMembers";
@@ -37,6 +38,7 @@ import AdminSales from "../../features/admin/AdminSales";
 import Notifications from "../components/Notifications";
 import ShippingAddress from "../../features/account/ShippingAddress";
 import FaceAuthen from "../../features/account/FaceAuthen";
+import PaymentConfirm from "../../features/checkout/PaymentConfirm";
 
 const App: React.FC = () => {
 
@@ -203,6 +205,14 @@ const App: React.FC = () => {
 								}
 							/>
 							<Route
+								path="/normal-checkout"
+								element={
+									<PrivateRoute>
+										<NormalCheckoutWrapper />
+									</PrivateRoute>
+								}
+							/>
+							<Route
 								path="/orders"
 								element={
 									<PrivateRoute>
@@ -237,6 +247,10 @@ const App: React.FC = () => {
 							<Route
 								path="/returnUrl"
 								element={<MoMoPaymentSucceeded />}
+							/>
+							<Route
+								path="/paymentConfirm"
+								element={<PaymentConfirm />}
 							/>
 							<Route path="*" element={<NotFound />} />
 						</Routes>

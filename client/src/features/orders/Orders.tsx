@@ -27,6 +27,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Swal from "sweetalert2";
 import moment from "moment";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from '@mui/material/Zoom';
 interface TabPanelProps {
 	children?: React.ReactNode;
 	index: number;
@@ -65,6 +67,7 @@ const Order: React.FC = () => {
 		setValue(newValue);
 	};
 	const [orders, setOrders] = useState<IOrder[] | null>(null);
+	console.log(orders)
 	const [loading, setLoading] = useState(true);
 	const [selectedOrderNumber, setSelectedOrderNumber] = useState(0);
 	const dispatch = useAppDispatch();
@@ -324,7 +327,7 @@ const Order: React.FC = () => {
 													"Order Placed"
 												)}
 											</td>
-											<td align="right" className="flex justify-center items-center mt-[20%]">
+											<td align="right" className="flex justify-end items-center mt-[20%]">
 												{order.orderId ? (
 													<button
 														className="p-2 hover:bg-[#A50064]/10 rounded-full duration-200 cursor-pointer"
@@ -337,9 +340,11 @@ const Order: React.FC = () => {
 																order
 															);
 														}}>
-														<RiRefund2Line size={25} className="text-[#A50064]" />
+															<Tooltip TransitionComponent={Zoom} title="Momo Refund">
+																<RiRefund2Line size={25} className="text-[#A50064]" />
+															</Tooltip>
 													</button>
-												) :  (
+												) : order.paymentIntentId ? (
 													<div
 														className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
 														onClick={() => {
@@ -348,9 +353,14 @@ const Order: React.FC = () => {
 																order
 															);
 														}}>
-														<RiRefund2Line size={25} className="text-indigo-600" />
+															<Tooltip TransitionComponent={Zoom} title="Stripe Refund">
+																<RiRefund2Line size={25} className="text-indigo-600" />
+															</Tooltip>
 													</div>
-												)}
+												) : <div
+														className="p-2 rounded-full duration-200 cursor-default">
+														<RiRefund2Line size={25} className="text-gray-600/50" />
+													</div>}
 												<div
 													className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
 													onClick={() =>
@@ -358,12 +368,14 @@ const Order: React.FC = () => {
 															order.id
 														)
 													}>
-													<FiEye
-														className="text-indigo-600"
-														size={
-															25
-														}
-													/>
+														<Tooltip TransitionComponent={Zoom} title="View">
+															<FiEye
+																className="text-indigo-600"
+																size={
+																	25
+																}
+															/>
+														</Tooltip>
 												</div>
 											</td>
 										</tr>
@@ -510,12 +522,14 @@ const Order: React.FC = () => {
 															order.id
 														)
 													}>
-													<FiEye
-														className="text-indigo-600"
-														size={
-															20
-														}
-													/>
+													<Tooltip TransitionComponent={Zoom} title="View">
+															<FiEye
+																className="text-indigo-600"
+																size={
+																	25
+																}
+															/>
+														</Tooltip>
 												</div>
 											</td>
 										</tr>
@@ -662,12 +676,14 @@ const Order: React.FC = () => {
 															order.id
 														)
 													}>
-													<FiEye
-														className="text-indigo-600"
-														size={
-															20
-														}
-													/>
+													<Tooltip TransitionComponent={Zoom} title="View">
+															<FiEye
+																className="text-indigo-600"
+																size={
+																	25
+																}
+															/>
+														</Tooltip>
 												</div>
 											</td>
 										</tr>
@@ -752,12 +768,14 @@ const Order: React.FC = () => {
 															order.id
 														)
 													}>
-													<FiEye
-														className="text-indigo-600"
-														size={
-															20
-														}
-													/>
+													<Tooltip TransitionComponent={Zoom} title="View">
+															<FiEye
+																className="text-indigo-600"
+																size={
+																	25
+																}
+															/>
+														</Tooltip>
 												</div>
 											</td>
 										</tr>

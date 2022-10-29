@@ -6486,11 +6486,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\NET\\Restore\\API\\API.csproj",
+      "projectUniqueName": "C:\\NET\\Restore\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "c:\\NET\\Restore\\API\\API.csproj",
+      "projectPath": "C:\\NET\\Restore\\API\\API.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "c:\\NET\\Restore\\API\\obj\\",
+      "outputPath": "C:\\NET\\Restore\\API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"

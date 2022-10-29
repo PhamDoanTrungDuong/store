@@ -16,6 +16,8 @@ import { useForm } from "react-hook-form";
 import agent from "../../app/api/agent";
 import { LoadingButton } from "@mui/lab";
 import Loading from "../../app/layout/Loading";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from '@mui/material/Zoom';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -187,12 +189,9 @@ const AdminRole: React.FC = () => {
 														)
 													}
 													}>
-													<FiEdit3
-														size={
-															20
-														}
-														className="text-yellow-500"
-													/>
+														<Tooltip TransitionComponent={Zoom} title="Edit">
+															<FiEdit3 size={20} className="text-yellow-500" />
+														</Tooltip>
 												</div>
 											)}
 										</td>

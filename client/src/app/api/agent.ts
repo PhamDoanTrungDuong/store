@@ -134,13 +134,17 @@ const Orders = {
     fetch: (id: number) => requests.get(`orders/${id}`),
     create: (values: any) => requests.post('orders', values),
     Momocreate: (data: any) => requests.get(`orders/momo-order?orderId=${data.orderId}&requestId=${data.requestId}&transId=${data.transId}`),
+    Vnpaycreate: () => requests.get('orders/vnpay-order'),
     statusDelivery: (values: any) => requests.post('orders/delivery-status', values)
 }
 
 const Payments = {
     createPaymentIntent: () => requests.post('payments', {}),
+    createNormalPayment: () => requests.post('payments/normal-payment', {}),
+    confirmHashSecret: (vnp_SecureHash: any) => requests.post(`payments/confirm-hashsecret/${vnp_SecureHash}`, {}),
     refundIntent: (orderId: number) => requests.post(`payments/refund-intent/${orderId}`, {}),
     momoPayment: () => requests.post('payments/Momo-payment', {}),
+    vnpayPayment: () => requests.post('payments/vnpay-payment', {}),
     momoQuery: (orderId: number) => requests.post(`payments/Momo-query?Id=${orderId}`, {}),
     momoRefund: (orderId: number) => requests.post(`payments/Momo-refund?Id=${orderId}`, {})
 }

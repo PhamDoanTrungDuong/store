@@ -13,6 +13,8 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FiTrash2 } from "react-icons/fi";
 import Loading from "../../app/layout/Loading";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from '@mui/material/Zoom';
 
 const AdminCategories: React.FC = () => {
 	const { categories, load } = useAppSelector((state) => state.admin);
@@ -133,7 +135,9 @@ const AdminCategories: React.FC = () => {
 													)
 												}
 											>
-												<FiTrash2 size={20} className='text-red-600' />
+												<Tooltip TransitionComponent={Zoom} title="Delete">
+													<FiTrash2 size={20} className='text-red-600' />
+												</Tooltip>
 											</div>
 										</td>
 									</tr>

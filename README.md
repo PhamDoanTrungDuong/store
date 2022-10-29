@@ -43,5 +43,5 @@
       [x] chọn địa chỉ
       [] blog
       [] paypal
-      [] vnpay
+      [x] vnpay
  -->

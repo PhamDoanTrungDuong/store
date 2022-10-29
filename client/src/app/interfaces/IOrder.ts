@@ -31,6 +31,7 @@ export interface IOrder {
   total: number;
   isRefund: boolean;
   orderId: string;
+  paymentIntentId: string;
 }
 
 export interface OrdersParams {
