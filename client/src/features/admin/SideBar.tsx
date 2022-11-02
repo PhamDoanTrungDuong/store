@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { RiBarChartBoxFill, RiTableFill, RiAccountCircleFill, RiPriceTag3Fill } from "react-icons/ri";
 import { MdManageAccounts, MdInsertComment, MdOutlineCardGiftcard } from "react-icons/md";
 
 const SideBar: React.FC = () => {
 	const [open, setOpen] = useState(true);
-	const [idx, setIndex] = useState<number>();
 
 	const Menus = [
 		{
@@ -88,19 +87,24 @@ const SideBar: React.FC = () => {
 			</div>
 			<ul className="pt-12">
 				{Menus.map((Menu, index) => (
-					<Link to={Menu.to} key={index}>
-						<li
-							onClick={() => setIndex(index)}
-							className={`flex rounded-lg p-3 cursor-pointer ${idx === index ? "bg-blue-300/40" : ""} hover:bg-gray-300/60 duration-100 text-[#637381] text-sm items-center gap-x-4 my-1 group`}>
-								{Menu.icon}
-							<span
-								className={`${
-									!open && "hidden"
-								} origin-left text-[#637381]  ${idx === index ? "text-sky-600" : ""} duration-200`}>
-								{Menu.title}
-							</span>
-						</li>
-					</Link>
+					<NavLink to={Menu.to} key={index}
+						className={({ isActive }) => {
+							return `flex rounded-lg p-3 cursor-pointer ${isActive ? "bg-blue-300/40" : ""} hover:bg-gray-300/60 duration-100 text-[#637381] my-1 text-sm group`}}
+					>
+						{({ isActive }) =>
+							<li
+								className="flex items-center gap-x-4 "
+							>
+									{Menu.icon}
+									<span
+										className={`${
+											!open && "hidden"
+										} origin-left text-[#637381]  ${isActive ? "text-sky-600" : ""} duration-200`}>
+										{Menu.title}
+									</span>
+							</li>
+						}
+					</NavLink>
 				))}
 			</ul>
 		</div>
