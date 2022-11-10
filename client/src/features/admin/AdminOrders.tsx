@@ -865,7 +865,7 @@ const AdminOrders: React.FC = () => {
 											"deliveryStatus"
 										)}
 										name="deliveryStatus">
-										<option value="choose-status">
+										<option selected={true} value="choose-status">
 											--- Confirm
 											Delivery
 											Status ---
