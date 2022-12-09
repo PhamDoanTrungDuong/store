@@ -62,7 +62,7 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 							src={product.pictureUrl}
 							alt={product.name}
 						/>
-						{product?.quantityInStock! < 0 ? (
+						{product?.quantityInStock! < 1 ? (
 							<img
 								src="./images/out-of-stock-2.png"
 								alt={product.name}
@@ -143,7 +143,7 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 							</h5>
 						)}
 						<div className="flex items-center">
-							{/* <button
+							<button
 								onClick={() => {
 										handleLike(product.id)
 										setLikeStatus(true)
@@ -166,7 +166,7 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 											: "text-gray-600 hover:text-red-600 duration-300"
 									}
 								/>
-							</button> */}
+							</button>
 							{!(product?.quantityInStock! < 1) ? (
 								<button
 									className="p-1 rounded-full text-gray-600 hover:text-indigo-600 duration-300 hover:bg-indigo-100"

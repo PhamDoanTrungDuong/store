@@ -85,7 +85,7 @@ const Basket: React.FC = () => {
 							Please choose your payment methods!!!
 						</h1>
 						<div className="flex justify-between gap-3">
-							{/* <div className="w-[50%]">
+							<div className="w-[50%]">
 								<button
 									onClick={handlePayment}
 									className="bg-[#A50064] border border-[#A50064] text-white p-2 w-full rounded-lg shadow-lg my-2 hover:scale-105 hover:shadow-xl duration-200 flex justify-center items-center gap-2">
@@ -99,7 +99,7 @@ const Basket: React.FC = () => {
 									>
 									<img src="/images/vnpay-2.svg" alt=""/>
 								</button>
-							</div> */}
+							</div>
 							<Link to="/checkout" className="w-full">
 								<button className="bg-indigo-600 border border-indigo-600 text-white p-2 w-full rounded-lg shadow-lg my-2 hover:scale-105 hover:shadow-xl duration-200 flex justify-center items-center gap-2">
 									<GrStripe size={20} />{" "}

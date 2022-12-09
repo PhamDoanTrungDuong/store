@@ -189,24 +189,24 @@ const Login = () => {
 							type="submit">
 							Sign In
 						</button>
-						{/* <hr />
+						<hr />
 						<div className="flex flex-col justify-center items-center gap-2">
 							<p>or</p>
 							<div>
 								<GoogleButton onClick={handleGoogleSignIn} />
 							</div>
-						</div> */}
+						</div>
 
 						<div className="text-center mt-3">
 								<Link to="/register">
 										<h4>Don't have an account? <span className="font-medium underline underline-offset-2 text-indigo-600 hover:text-indigo-400 duration-300">Sign Up</span> </h4>
 								</Link>
-								{/* <div className="c-btn cursor-pointer my-3" onClick={faceRegistration}>
+								<div className="c-btn cursor-pointer my-3" onClick={faceRegistration}>
 									Face Authen Register
 								</div>
 								<div className="c-btn cursor-pointer" onClick={faceSignIn}>
 									Face Login
-								</div> */}
+								</div>
 						</div>
 					</form>
 				</div>

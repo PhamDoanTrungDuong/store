@@ -110,7 +110,7 @@ const AdminSales: React.FC = () => {
 			</div>
 			<div className="rounded-div2 p-0">
 				<div className="flex p-6 justify-between items-center mb-3">
-					<div className="w-[30%]">
+					<div className="w-full">
 						<ProductSearch />
 					</div>
 					<div></div>

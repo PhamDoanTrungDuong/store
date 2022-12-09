@@ -39,34 +39,33 @@ const ShippingAddress: React.FC = () => {
 	return (
 		<div className="my-5 p-5 h-[1000px]">
 			<div className="flex items-center ml-2 mt-3 my-4">
-						<Link to="/">
-							<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
-								<AiOutlineHome size={20} />
-								Home
-							</h1>
-						</Link>
-						<div className="mx-2">
-							<IoIosArrowForward size={15} />
-						</div>
-						<Link to="/catalog">
-							<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
-								<BiCategoryAlt size={20} />
-								Shipping Addresses
-							</h1>
-						</Link>
-					</div>
-					<div className="flex justify-end py-4">
-						<button
-							onClick={() => setEditMode(true)}
-							className="border text-white px-6 py-1 border-indigo-600 bg-indigo-600 text-lg rounded-lg hover:text-indigo-600 hover:bg-transparent duration-200 ease-in-out ">
-							Add new Address
-						</button>
-					</div>
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<AiOutlineHome size={20} />
+						Home
+					</h1>
+				</Link>
+				<div className="mx-2">
+					<IoIosArrowForward size={15} />
+				</div>
+				<Link to="/catalog">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<BiCategoryAlt size={20} />
+						Shipping Addresses
+					</h1>
+				</Link>
+			</div>
+			<div className="flex justify-end py-4">
+				<button
+					onClick={() => setEditMode(true)}
+					className="border text-white px-6 py-1 border-indigo-600 bg-indigo-600 text-lg rounded-lg hover:text-indigo-600 hover:bg-transparent duration-200 ease-in-out ">
+					Add new Address
+				</button>
+			</div>
 			{addresses.length === 0 ? (
-				<h1>Chưa nào được tạo có địa chỉ</h1>
+				<h1>None Address Has Create</h1>
 			) : (
 				<>
-					
 					<div className="max-h-[800px] overflow-y-scroll">
 						{addresses.map((item: any) => {
 							return (
@@ -80,7 +79,7 @@ const ShippingAddress: React.FC = () => {
 									className={`flex flex-col gap-5 my-3 p-4 border rounded-xl hover:border-gray-600 duration-100 cursor-pointer border-gray-300 `}>
 									<p>
 										<span className="text-lg font-bold">
-											FullName
+											Full Name
 										</span>
 										: {item.fullName}
 									</p>

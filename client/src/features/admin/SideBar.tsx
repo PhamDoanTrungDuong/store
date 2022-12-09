@@ -18,17 +18,17 @@ const SideBar: React.FC = () => {
 				/>
 			),
 		},
-		// {
-		// 	id: 1,
-		// 	title: "Sales",
-		// 	to: "/admin-sales",
-		// 	icon: (
-		// 		<RiPriceTag3Fill
-		// 			size={30}
-		// 			className="rounded-lg fill-[#637381]"
-		// 		/>
-		// 	),
-		// },
+		{
+			id: 1,
+			title: "Sales",
+			to: "/admin-sales",
+			icon: (
+				<RiPriceTag3Fill
+					size={30}
+					className="rounded-lg fill-[#637381]"
+				/>
+			),
+		},
 		{ id: 2, title: "Categories", to: "/admin-categories", icon: (
                   <RiTableFill
                         size={30}

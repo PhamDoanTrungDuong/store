@@ -33,7 +33,7 @@ const AddressForm: React.FC<IProps> = (props) => {
 
 	return (
 		<>
-			{/* <div>
+			<div>
 				<div>
 					<Modal
 						open={open}
@@ -113,7 +113,7 @@ const AddressForm: React.FC<IProps> = (props) => {
 			<div className="c-btn" onClick={handleOpen}>
 			Choose Another Address
 			</div>
-		</div> */}
+		</div>
 			<h6 className="text-xl font-medium my-2">New Shipping address</h6>
 			<div>
 				<div className="py-4">

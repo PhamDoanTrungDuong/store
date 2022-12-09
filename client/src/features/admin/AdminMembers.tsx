@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import Swal from "sweetalert2";
 import { FiTrash2 } from "react-icons/fi";
+import AppSwitch from "../../app/components/AppSwitch";
 
 const AdminMembers: React.FC = () => {
 	const { members, pagination } = useMembers();
@@ -125,7 +126,7 @@ const AdminMembers: React.FC = () => {
 								<td className="px-4 py-3" align="center">
 									Country
 								</td>
-								{/* <td className="px-4 py-3" align="center">Active</td> */}
+								<td className="px-4 py-3" align="center">Active</td>
 								<td className="px-4 py-3" align="right"></td>
 							</tr>
 						</thead>
@@ -212,7 +213,7 @@ const AdminMembers: React.FC = () => {
 												: "-"}
 										</span>
 									</td>
-									{/* <td align="left">
+									<td align="right">
 										{member.userName ===
 										"admin" ? (
 											<div></div>
@@ -229,7 +230,7 @@ const AdminMembers: React.FC = () => {
 												}
 											/>
 										)}
-									</td> */}
+									</td>
 									{/* <td align="right" className="flex justify-center items-center gap-2 mt-[35%]">
 										<div
 										className="p-2 hover:bg-red-300/30 rounded-full duration-200 cursor-pointer"

@@ -29,7 +29,7 @@ const BasketTableItem: React.FC<IProps> = ({ item, isBasket }) => {
 
 	return (
 		<>
-		<td className="py-4">
+			<td className="py-4">
 				<Link to={`/catalog/${item.productId}`}>
 					<div className="flex items-center">
 						<img
@@ -45,15 +45,16 @@ const BasketTableItem: React.FC<IProps> = ({ item, isBasket }) => {
 					</div>
 				</Link>
 			</td>
-			{/* <td align="center" className="uppercase">
-							{item.color}, {item.size}
-						</td> */}
+			<td align="center" className="uppercase">
+				{item.color}, {item.size}
+			</td>
 			<td align="center">
 				{itemSales?.discountValue ? (
 					<>
 						<div className="text-lg font-bold">
 							<h5 className="text-gray-400 font-bold line-through">
-								${(itemSales.price / 100).toFixed(2)}
+								$
+								{(itemSales.price / 100).toFixed(2)}
 							</h5>
 							<h5 className="font-bold">
 								$
@@ -115,11 +116,13 @@ const BasketTableItem: React.FC<IProps> = ({ item, isBasket }) => {
 						<h5 className="font-bold">
 							$
 							{(
-								((itemSales.price * item.quantity) / 100 -
-								((itemSales.price * item.quantity) *
+								(itemSales.price * item.quantity) /
+									100 -
+								(itemSales.price *
+									item.quantity *
 									(itemSales.discountValue /
 										100)) /
-									100)
+									100
 							).toFixed(2)}
 						</h5>
 					</>
@@ -142,7 +145,7 @@ const BasketTableItem: React.FC<IProps> = ({ item, isBasket }) => {
 								})
 							);
 						}}>
-						<FiTrash2 size={20} className='text-red-600' />
+						<FiTrash2 size={20} className="text-red-600" />
 					</div>
 				</td>
 			)}

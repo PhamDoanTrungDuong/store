@@ -14,16 +14,16 @@
       [] router history
  -->
 <!-- NLN
-      - [] Basket(Momo) + ProfileForm(textwarn)
-      - [] SignedInMenu(ChangePwd, faceAuth, shippingAddress)
-      - [] AdminMember(lockout)
-      - [] [ProductDetail(productAttribute) + BasketTable(displayProAttr)]
-      - [] App(<Notifications />)
-      - [] Login(google-login, faceAuthen)
-      - [] ProductSearch(VoiceSearch)
-      - [] AddressForm(AnotherAddress)
-      - [] SideBar(SaleManagement)
-      - [] ProductCard(LikeHeart)
+      - [x] Basket(Momo) + ProfileForm(textwarn)
+      - [x] SignedInMenu(ChangePwd, faceAuth, shippingAddress)
+      - [x] AdminMember(lockout)
+      - [x] [ProductDetail(productAttribute) + BasketTable(displayProAttr)]
+      - [x] App(<Notifications />)
+      - [x] Login(google-login, faceAuthen)
+      - [x] ProductSearch(VoiceSearch)
+      - [x] AddressForm(AnotherAddress)
+      - [x] SideBar(SaleManagement)
+      - [x] ProductCard(LikeHeart)
 -->
 <!-- NLN
       [x] Momo

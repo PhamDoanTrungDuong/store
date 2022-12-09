@@ -7,6 +7,10 @@ import Swal from "sweetalert2";
 import agent from "../../app/api/agent";
 import AppTextInput from "../../app/components/AppTextInput";
 import { validationShippingAddress } from "./validationProfile";
+import { Link } from "react-router-dom";
+import { IoIosArrowForward } from "react-icons/io";
+import { AiOutlineHome } from "react-icons/ai";
+import { BiCategoryAlt } from "react-icons/bi";
 
 interface IProps {
 	address?: any;
@@ -68,6 +72,23 @@ const ShippingAddressForm: React.FC<IProps> = ({ address, cancelEdit }) => {
 
 	return (
 		<div className="my-5 p-5">
+			<div className="flex items-center ml-2 mt-3 my-4">
+				<Link to="/">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<AiOutlineHome size={20} />
+						Home
+					</h1>
+				</Link>
+				<div className="mx-2">
+					<IoIosArrowForward size={15} />
+				</div>
+				<Link to="/catalog">
+					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
+						<BiCategoryAlt size={20} />
+						Shipping Addresse Form
+					</h1>
+				</Link>
+			</div>
 			<form onSubmit={handleSubmit(handleSubmitData)}>
 				<Grid container spacing={3}>
 					<Grid item xs={12} sm={12}>

@@ -24,5 +24,5 @@ export const validationShippingAddress = yup.object({
       city: yup.string().required(),
       state: yup.string().required(),
       country: yup.string().required(),
-      zip: yup.number().required(),
+      zip: yup.string().required(),
 });
