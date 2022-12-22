@@ -47,11 +47,11 @@
       =====================
       [] user export excel
       [] slider (img, caption, heading, desc, createAt)
-      [] menu (name, parent, createAt)
       [] partner (name, img, createAt)
       [] discount (img, title, caption, createAt)
       [] lượt xem sản phẩm (view count)
       [] coupon (name, code, number, feature, value, exspire, createAt)
       [] voucher
       [] điểm danh nhận voucher
+      [] menu (name, parent, createAt)
  -->
