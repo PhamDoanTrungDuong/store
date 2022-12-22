@@ -11,20 +11,7 @@
       [x] adminRole
       [x] Validation form
       [x] thống kê
-      [] router history
  -->
-<!-- NLN
-      - [x] Basket(Momo) + ProfileForm(textwarn)
-      - [x] SignedInMenu(ChangePwd, faceAuth, shippingAddress)
-      - [x] AdminMember(lockout)
-      - [x] [ProductDetail(productAttribute) + BasketTable(displayProAttr)]
-      - [x] App(<Notifications />)
-      - [x] Login(google-login, faceAuthen)
-      - [x] ProductSearch(VoiceSearch)
-      - [x] AddressForm(AnotherAddress)
-      - [x] SideBar(SaleManagement)
-      - [x] ProductCard(LikeHeart)
--->
 <!-- NLN
       [x] Momo
       [x] đổi mật khẩu
