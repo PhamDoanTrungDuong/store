@@ -13,7 +13,7 @@ const ProductDiscount: React.FC = () => {
 	const dispatch = useAppDispatch();
 
 	const { productDiscount } = useProducts();
-	console.log(productDiscount)
+	// console.log(productDiscount)
 	const { status } = useAppSelector((state) => state.basket);
 
 	useEffect(() => {

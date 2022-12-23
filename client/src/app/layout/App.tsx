@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { CssBaseline } from "@mui/material";
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Header from "./Header";
 import Home from "../../features/home/Home";
 import ProductDetails from "../../features/catalog/ProductDetails";
@@ -29,6 +29,7 @@ import Footer from "./Footer";
 import Profile from "../../features/account/Profile";
 import AdminMembers from "../../features/admin/AdminMembers";
 import AdminCategories from "../../features/admin/AdminCategories";
+import AdminSlider from "../../features/admin/AdminSlider";
 import AdminHome from "../../features/admin/AdminHome";
 import SideBar from "../../features/admin/SideBar";
 import SignedInMenu from "./SignedInMenu";
@@ -39,6 +40,8 @@ import Notifications from "../components/Notifications";
 import ShippingAddress from "../../features/account/ShippingAddress";
 import FaceAuthen from "../../features/account/FaceAuthen";
 import PaymentConfirm from "../../features/checkout/PaymentConfirm";
+import AdminPartner from "../../features/admin/AdminPartner";
+import AdminDiscountBanner from "../../features/admin/AdminDiscountBanner";
 
 const App: React.FC = () => {
 
@@ -143,6 +146,33 @@ const App: React.FC = () => {
 									<PrivateRoute
 										roles={["Admin"]}>
 										<AdminCategories />
+									</PrivateRoute>
+								}
+							/>
+							<Route
+								path="/admin-sliders"
+								element={
+									<PrivateRoute
+										roles={["Admin"]}>
+										<AdminSlider />
+									</PrivateRoute>
+								}
+							/>
+							<Route
+								path="/admin-partners"
+								element={
+									<PrivateRoute
+										roles={["Admin"]}>
+										<AdminPartner />
+									</PrivateRoute>
+								}
+							/>
+							<Route
+								path="/admin-discountBanner"
+								element={
+									<PrivateRoute
+										roles={["Admin"]}>
+										<AdminDiscountBanner />
 									</PrivateRoute>
 								}
 							/>

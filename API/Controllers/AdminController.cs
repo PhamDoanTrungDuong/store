@@ -7,6 +7,7 @@ using API.DTOs;
 using API.Entities;
 using API.Entities.OrderAggregate;
 using API.Extensions;
+using API.Services;
 using API.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -19,11 +20,13 @@ namespace API.Controllers
       {
             private readonly UserManager<User> _userManager;
             private readonly StoreContext _context;
+            private readonly ImageService _imageService;
             private List<long> monthStatistic = new List<long>();
             private List<int> OrderMonthStatistic = new List<int>();
 
-            public AdminController(UserManager<User> userManager, StoreContext context)
+            public AdminController(UserManager<User> userManager, StoreContext context, ImageService imageService)
             {
+                  _imageService = imageService;
                   _context = context;
                   _userManager = userManager;
             }
@@ -258,5 +261,220 @@ namespace API.Controllers
 
                 return OrderMonthStatistic;
             }
+
+            // Sliders
+            [HttpGet("get-sliders")]
+            public async Task<List<Slider>> GetSliders() {
+                  return await _context.Sliders.ToListAsync();
+            }
+
+            [HttpPost("add-slider")]
+            public async Task<ActionResult> AddSlider([FromForm] SliderVm sliderVm)
+            {
+                  if (sliderVm.File != null)
+                  {
+                        var imageResult = await _imageService.AddImageAsync(sliderVm.File);
+
+                        if (imageResult.Error != null)
+                              return BadRequest(new ProblemDetails { Title = imageResult.Error.Message });
+
+                        var slider = new Slider {
+                              Picture = imageResult.SecureUrl.ToString(),
+                              Caption = sliderVm.Caption,
+                              Description = sliderVm.Description,
+                              CreateAt = DateTime.Now
+                        };
+
+                        _context.Sliders.Add(slider);
+                  }
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if (result) return Ok(result);
+
+                  return BadRequest(new ProblemDetails { Title = "Problem adding slider" });
+            }
+
+            [HttpPut("update-slider")]
+            public async Task<ActionResult> UpdateSlider([FromForm] SliderUpdateVm sliderUpdateVm)
+            {
+                  var sliderUpdate = await _context.Sliders.FindAsync(sliderUpdateVm.Id);
+
+                  if (sliderUpdateVm.File != null)
+                  {
+                        var imageResult = await _imageService.AddImageAsync(sliderUpdateVm.File);
+
+                        if (imageResult.Error != null)
+                              return BadRequest(new ProblemDetails { Title = imageResult.Error.Message });
+
+                        sliderUpdate.Picture = imageResult.SecureUrl.ToString();
+                  }
+                  sliderUpdate.Caption = sliderUpdateVm.Caption;
+                  sliderUpdate.Description = sliderUpdateVm.Description;
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if (result) return Ok(result);
+
+                  return BadRequest(new ProblemDetails { Title = "Problem updating slider" });
+            }
+
+            [HttpDelete("delete-slider/{id}")]
+            public async Task<ActionResult> DeleteSlider(int id) {
+                  var slider = await _context.Sliders.FindAsync(id);
+
+                  if(slider == null) return BadRequest(new ProblemDetails{ Title = "Can't delete slider"});
+
+                  _context.Sliders.Remove(slider);
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if(result) return Ok();
+
+                  return BadRequest(new ProblemDetails{ Title = "Something went wrong"});
+            }
+
+            //Partners
+            [HttpGet("get-partners")]
+            public async Task<List<Partner>> GetPartners() {
+                  return await _context.Partners.ToListAsync();
+            }
+
+            [HttpPost("add-partner")]
+            public async Task<ActionResult> AddPartner([FromForm] PartnerVm partnerVm)
+            {
+                  if (partnerVm.File != null)
+                  {
+                        var imageResult = await _imageService.AddImageAsync(partnerVm.File);
+
+                        if (imageResult.Error != null)
+                              return BadRequest(new ProblemDetails { Title = imageResult.Error.Message });
+
+                        var partner = new Partner {
+                              Picture = imageResult.SecureUrl.ToString(),
+                              Name = partnerVm.Name,
+                              CreateAt = DateTime.Now
+                        };
+
+                        _context.Partners.Add(partner);
+                  }
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if (result) return Ok(result);
+
+                  return BadRequest(new ProblemDetails { Title = "Problem adding partner" });
+            }
+
+            [HttpPut("update-partner")]
+            public async Task<ActionResult> UpdatePartner([FromForm] PartnerUpdateVm partnerUpdateVm)
+            {
+                  var partUpdate = await _context.Partners.FindAsync(partnerUpdateVm.Id);
+
+                  if (partnerUpdateVm.File != null)
+                  {
+                        var imageResult = await _imageService.AddImageAsync(partnerUpdateVm.File);
+
+                        if (imageResult.Error != null)
+                              return BadRequest(new ProblemDetails { Title = imageResult.Error.Message });
+
+                        partUpdate.Picture = imageResult.SecureUrl.ToString();
+                  }
+                  partUpdate.Name = partnerUpdateVm.Name;
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if (result) return Ok(result);
+
+                  return BadRequest(new ProblemDetails { Title = "Problem updating slider" });
+            }
+
+            [HttpDelete("delete-partner/{id}")]
+            public async Task<ActionResult> DeletePartner(int id) {
+                  var partner = await _context.Partners.FindAsync(id);
+
+                  if(partner == null) return BadRequest(new ProblemDetails{ Title = "Can't delete partner"});
+
+                  _context.Partners.Remove(partner);
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if(result) return Ok();
+
+                  return BadRequest(new ProblemDetails{ Title = "Something went wrong"});
+            }
+
+            // Discount
+            [HttpGet("get-discountBanners")]
+            public async Task<List<DiscountBanner>> GetDiscountBanners() {
+                  return await _context.DiscountBanners.ToListAsync();
+            }
+
+            [HttpPost("add-discountBanner")]
+            public async Task<ActionResult> AddDiscountBanner([FromForm] DiscountBannerVm discountVm)
+            {
+                  if (discountVm.File != null)
+                  {
+                        var imageResult = await _imageService.AddImageAsync(discountVm.File);
+
+                        if (imageResult.Error != null)
+                              return BadRequest(new ProblemDetails { Title = imageResult.Error.Message });
+
+                        var discountBanner = new DiscountBanner {
+                              Picture = imageResult.SecureUrl.ToString(),
+                              Caption = discountVm.Caption,
+                              Title = discountVm.Title,
+                              CreateAt = DateTime.Now
+                        };
+
+                        _context.DiscountBanners.Add(discountBanner);
+                  }
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if (result) return Ok(result);
+
+                  return BadRequest(new ProblemDetails { Title = "Problem adding Discount Banner" });
+            }
+
+            [HttpPut("update-discountBanner")]
+            public async Task<ActionResult> UpdateDiscountBanner([FromForm] DiscountBannerUpdateVm discountBannerUpdateVm)
+            {
+                  var sliderUpdate = await _context.DiscountBanners.FindAsync(discountBannerUpdateVm.Id);
+
+                  if (discountBannerUpdateVm.File != null)
+                  {
+                        var imageResult = await _imageService.AddImageAsync(discountBannerUpdateVm.File);
+
+                        if (imageResult.Error != null)
+                              return BadRequest(new ProblemDetails { Title = imageResult.Error.Message });
+
+                        sliderUpdate.Picture = imageResult.SecureUrl.ToString();
+                  }
+                  sliderUpdate.Caption = discountBannerUpdateVm.Caption;
+                  sliderUpdate.Title = discountBannerUpdateVm.Title;
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if (result) return Ok(result);
+
+                  return BadRequest(new ProblemDetails { Title = "Problem updating discount banner" });
+            }
+
+            [HttpDelete("delete-discountBanner/{id}")]
+            public async Task<ActionResult> DeleteDiscountBanner(int id) {
+                  var discountBanner = await _context.DiscountBanners.FindAsync(id);
+
+                  if(discountBanner == null) return BadRequest(new ProblemDetails{ Title = "Can't delete discount banner"});
+
+                  _context.DiscountBanners.Remove(discountBanner);
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if(result) return Ok();
+
+                  return BadRequest(new ProblemDetails{ Title = "Something went wrong"});
+            }
+
       }
 }

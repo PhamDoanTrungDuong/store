@@ -164,22 +164,50 @@ const Admin = {
     getUserRole: () => requests.get('admin/user-with-roles'),
     editRole: (username: string, roles: string[]) => axios.post(`admin/edit-roles/${username}?roles=${roles}`),
     getOrders: (params: URLSearchParams) => requests.get('admin/admin-get-orders', params),
+    //Members
     getMembers: (params: URLSearchParams) => requests.get('account/all-members', params),
     deleteMember: (id: string) => requests.delete(`account/delete-member/${id}`),
+
+    //Comments
     getComments: (params: URLSearchParams) => requests.get('comment/get-all-comments', params),
     deleteComment: (id: number) => requests.delete(`comment/${id}`),
     approveComment: (id: number) => requests.post(`comment/${id}`, {}),
     checkNotifyComment: (id: number) => requests.post(`comment/notify/${id}`, {}),
+
+    //Categories
     getCategories: () => requests.get('category/get-category-client'),
     getAdminCategories: (params: URLSearchParams) => requests.get('category', params),
     createCategory: (name: string) => requests.post('category', name),
     deleteCategory: (id: number) => requests.delete(`category/${id}`),
+
+    //Users
     lockUser: (id: string) => requests.post(`account/lock-user/${id}`, {}),
     unlockUser: (id: string) => requests.post(`account/unlock-user/${id}`, {}),
+
+    //statistic
     statisticCurrentDay: (data: any) => requests.get(`admin/statistic-dmy?d=${data.d}&m=${data.m}&y=${data.y}`),
     statisticToday: () => requests.get(`admin/statistic-current-day`),
     statisticPerYear: (data: any) => requests.get(`admin/statistic-selected-year?year=${data.y}`),
     orderDeliveryState: () => requests.get(`admin/order-delivery-state`),
+
+    //sliders
+    getSliders: () => requests.get('admin/get-sliders'),
+    newSlider: (slider: any) => requests.postForm('admin/add-slider', createFormData(slider)),
+    updateSlider: (slider: any) => requests.putForm('admin/update-slider', createFormData(slider)),
+    deleteSlider: (id: number) => requests.delete(`admin/delete-slider/${id}`),
+
+    //partners
+    getPartners: () => requests.get('admin/get-partners'),
+    newPartner: (partner: any) => requests.postForm('admin/add-partner', createFormData(partner)),
+    updatePartner: (partner: any) => requests.putForm('admin/update-partner', createFormData(partner)),
+    deletePartner: (id: number) => requests.delete(`admin/delete-partner/${id}`),
+
+    //discountBanners
+    getDiscountBanner: () => requests.get('admin/get-discountBanners'),
+    newDiscountBanner: (discountBanner: any) => requests.postForm('admin/add-discountBanner', createFormData(discountBanner)),
+    updateDiscountBanner: (discountBanner: any) => requests.putForm('admin/update-discountBanner', createFormData(discountBanner)),
+    deleteDiscountBanner: (id: number) => requests.delete(`admin/delete-discountBanner/${id}`),
+
 }
 
 const Profile = {

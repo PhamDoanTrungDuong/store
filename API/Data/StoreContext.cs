@@ -23,6 +23,10 @@ namespace API.Data
           public DbSet<Colour> Colours { get; set; }
           public DbSet<SelectedAddress> SelectedAddresses { get; set; }
           public DbSet<OrderItem> OrderItems { get; set; }
+          public DbSet<Slider> Sliders { get; set; }
+          public DbSet<Partner> Partners { get; set; }
+          public DbSet<DiscountBanner> DiscountBanners { get; set; }
+          public DbSet<Coupon> Coupons { get; set; }
           protected override void OnModelCreating(ModelBuilder builder)
           {
                base.OnModelCreating(builder);

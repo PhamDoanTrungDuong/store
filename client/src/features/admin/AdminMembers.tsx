@@ -20,6 +20,7 @@ import { Box } from "@mui/material";
 import Swal from "sweetalert2";
 import { FiTrash2 } from "react-icons/fi";
 import AppSwitch from "../../app/components/AppSwitch";
+import { CSVLink } from "react-csv";
 
 const AdminMembers: React.FC = () => {
 	const { members, pagination } = useMembers();
@@ -27,6 +28,17 @@ const AdminMembers: React.FC = () => {
 	const [editMode, setEditMode] = useState(false);
 	const [target, setTarget] = useState("");
 	const dispatch = useAppDispatch();
+
+	const headers = [
+  { label: "Id", key: "id" },
+  { label: "Image", key: "pictureUrl" },
+  { label: "FullName", key: "address.fullName" },
+  { label: "PhoneNumber", key: "phoneNumber" },
+  { label: "Email", key: "email" },
+  { label: "City", key: "address.city" },
+  { label: "Address", key: "address.address1" },
+  { label: "Country", key: "address.country" },
+];
 
 	const [selectedMember, setSelectedMember] = useState<IUser | undefined>(undefined);
 
@@ -105,7 +117,11 @@ const AdminMembers: React.FC = () => {
 					<div className="w-[30%]">
 						<MemberSearch />
 					</div>
-					<div></div>
+					<div>
+					<CSVLink data={members} headers={headers} filename="parents.csv">
+						<button className="bg-[#1F6D42] border border-[#1F6D42] text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-[#1F6D42] duration-200">Export</button>
+					</CSVLink>
+					</div>
 				</div>
 					<table className="table-auto w-full text-xs sm:text-sm md:text-base">
 						<thead>

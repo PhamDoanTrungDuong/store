@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { RiBarChartBoxFill, RiTableFill, RiAccountCircleFill, RiPriceTag3Fill } from "react-icons/ri";
+import { TbSlideshow, TbDiscount } from "react-icons/tb";
+import { SiGooglecolab } from "react-icons/si";
 import { MdManageAccounts, MdInsertComment, MdOutlineCardGiftcard } from "react-icons/md";
 
 const SideBar: React.FC = () => {
@@ -54,6 +56,21 @@ const SideBar: React.FC = () => {
                   <MdOutlineCardGiftcard
                         size={30}
                         className="rounded-lg fill-[#637381]"
+                  />), },
+		{ id: 7, title: "Slider", to: "/admin-sliders", icon: (
+                  <TbSlideshow
+                        size={30}
+                        className="rounded-lg"
+                  />), },
+		{ id: 8, title: "Partner", to: "/admin-partners", icon: (
+                  <SiGooglecolab
+                        size={30}
+                        className="rounded-lg"
+                  />), },
+		{ id: 9, title: "Discount Banner", to: "/admin-discountBanner", icon: (
+                  <TbDiscount
+                        size={30}
+                        className="rounded-lg"
                   />), },
 	];
 	return (

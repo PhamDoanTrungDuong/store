@@ -5,8 +5,10 @@ import useProducts from "../../app/hooks/useProducts";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import About from "../about/About";
 import { setStateUser } from "../account/accountSlice";
+import { fetchSliders } from "../admin/adminSlice";
 import Advertise from "../Advertise/Advertise";
 import Contact from "../contact/Contact";
+import Partner from "../partner/Partner";
 import ProductDiscount from "./ProductDiscount";
 
 const Home: React.FC = () => {
@@ -20,9 +22,15 @@ const Home: React.FC = () => {
 		autoplay: true,
 	};
 	const { status } = useAppSelector((state) => state.account);
+	const { sliders } = useAppSelector((state) => state.admin);
+
 	const dispatch = useAppDispatch();
 
 	const { productDiscount } = useProducts(); 
+
+	useEffect(() => {
+		dispatch(fetchSliders());
+	}, [dispatch]);
 
 	useEffect(() => {
 		if (status === "loginSuccess") {
@@ -50,66 +58,30 @@ const Home: React.FC = () => {
 		<div className="max-w-[1140px] mx-auto mt-2">
 			<div>
 				<Slider {...settings}>
-					<div>
-						<img
-							src="/images/banner6.jpg"
-							alt="hero"
-							style={{
-								display: "block",
-								width: "100%",
-								maxHeight: 500,
-							}}
-						/>
-					</div>
-					<div>
-						<img
-							src="/images/banner1.jpg"
-							alt="hero"
-							style={{
-								display: "block",
-								width: "100%",
-								maxHeight: 500,
-							}}
-						/>
-					</div>
-					<div>
-						<img
-							src="/images/banner4.jpg"
-							alt="hero"
-							style={{
-								display: "block",
-								width: "100%",
-								maxHeight: 500,
-							}}
-						/>
-					</div>
-					<div>
-						<img
-							src="/images/banner2.jpg"
-							alt="hero"
-							style={{
-								display: "block",
-								width: "100%",
-								maxHeight: 500,
-							}}
-						/>
-					</div>
-					<div>
-						<img
-							src="/images/banner5.jpg"
-							alt="hero"
-							style={{
-								display: "block",
-								width: "100%",
-								maxHeight: 500,
-							}}
-						/>
-					</div>
+					{sliders.map((slider: any, idx:  number) => {
+							return (
+								<div key={idx}>
+									<img
+										src={slider.picture}
+										alt="hero"
+										style={{
+											display: "block",
+											width: "100%",
+											maxHeight: 500,
+										}}
+									/>
+								</div>
+							);
+						})}
 				</Slider>
 				<div className="mt-3 text-center p-4">
 					{productDiscount.length !== 0 &&
 						<ProductDiscount />
 					}
+
+					{/* Partner */}
+					<Partner />
+					<hr />
 
 					{/* About */}
 					<About />

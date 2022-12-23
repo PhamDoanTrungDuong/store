@@ -10,6 +10,9 @@ export interface AdminState {
       load: boolean;
       loadComment: boolean;
       loadOrder: boolean;
+      loadSlider: boolean;
+      loadPartner: boolean;
+      loadDiscountBanner: boolean;
       // categories: ICategory[] | null;
       categories: string[];
       comments: IComment[] | null;
@@ -17,7 +20,10 @@ export interface AdminState {
       categoriesParams: CategoriesParams;
       commentsParams: CommentsParams;
       ordersParams: OrdersParams;
-      todaySales: number
+      todaySales: number;
+      sliders: any;
+      partners: any;
+      discountBanners: any;
 }
 
 const initParams = () => {
@@ -30,9 +36,15 @@ const initialState: AdminState = {
       categories: [],
       comments: [],
       orders: [],
+      sliders: [],
+      partners: [],
+      discountBanners: [],
       load: false,
       loadComment: false,
       loadOrder: false,
+      loadSlider: false,
+      loadPartner: false,
+      loadDiscountBanner: false,
       categoriesParams: initParams(),
       commentsParams: initParams(),
       ordersParams: initParams(),
@@ -64,6 +76,39 @@ export const fetchCategories = createAsyncThunk<string[], void, {state: RootStat
             try {
                   const categories = await agent.Admin.getAdminCategories(params);
                   return categories;
+            } catch (error: any) {
+                  console.log(error);
+            }
+      }
+)
+export const fetchSliders = createAsyncThunk<any, void, {state: RootState}>(
+      "admin/fetchSliders",
+      async (_, thunkAPI) => {
+            try {
+                  const slider = await agent.Admin.getSliders();
+                  return slider;
+            } catch (error: any) {
+                  console.log(error);
+            }
+      }
+)
+export const fetchPartners = createAsyncThunk<any, void, {state: RootState}>(
+      "admin/fetchPartners",
+      async (_, thunkAPI) => {
+            try {
+                  const partner = await agent.Admin.getPartners();
+                  return partner;
+            } catch (error: any) {
+                  console.log(error);
+            }
+      }
+)
+export const fetchDiscountBanner = createAsyncThunk<any, void, {state: RootState}>(
+      "admin/fetchDiscountBanner",
+      async (_, thunkAPI) => {
+            try {
+                  const discountBanner = await agent.Admin.getDiscountBanner();
+                  return discountBanner;
             } catch (error: any) {
                   console.log(error);
             }
@@ -120,6 +165,15 @@ export const adminSlice = createSlice({
       setOrdLoad: (state) => {
             state.loadOrder = !state.loadOrder;
       },
+      setSliderLoad: (state) => {
+            state.loadSlider = !state.loadSlider;
+      },
+      setPartnerLoad: (state) => {
+            state.loadPartner = !state.loadPartner;
+      },
+      setDiscountBannerLoad: (state) => {
+            state.loadDiscountBanner = !state.loadDiscountBanner;
+      },
       setCatagoriesParams: (state, action) => {
             state.categoriesParams = action.payload;
             state.load = true;
@@ -149,8 +203,20 @@ export const adminSlice = createSlice({
       builder.addCase(statisticsTodaySales.fulfilled, (state, action) => {
             state.todaySales = action.payload
       })
+      builder.addCase(fetchSliders.fulfilled, (state, action) => {
+            state.loadSlider = false
+            state.sliders = action.payload
+      })
+      builder.addCase(fetchPartners.fulfilled, (state, action) => {
+            state.loadPartner = false
+            state.partners = action.payload
+      })
+      builder.addCase(fetchDiscountBanner.fulfilled, (state, action) => {
+            state.loadDiscountBanner = false
+            state.discountBanners = action.payload
+      })
     }
 })
 
-export const { setCateLoad, setComLoad, setOrdLoad, setCatagoriesParams, setCommentsParams, setOrdersParams } = adminSlice.actions
+export const { setCateLoad, setComLoad, setOrdLoad, setSliderLoad, setPartnerLoad, setDiscountBannerLoad, setCatagoriesParams, setCommentsParams, setOrdersParams } = adminSlice.actions
 export default adminSlice.reducer

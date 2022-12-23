@@ -28,17 +28,17 @@ const AdminCategories: React.FC = () => {
 		!load ? dispatch(fetchCategories()) : dispatch(fetchCategories());
 	}, [dispatch, load])
 
-	function cancelEdit() {
-		if (selectedCategory) setSelectedCategory(undefined);
-		setEditMode(false);
-	}
-
 	const handleDeleteCategory = async (id: number) => {
 		let response = await agent.Admin.deleteCategory(id)
 			.then(() => dispatch(setCateLoad()))
 			.catch((error) => console.log(error))
 		return response
 	};
+
+	function cancelEdit() {
+		if (selectedCategory) setSelectedCategory(undefined);
+		setEditMode(false);
+	}
 
 	if (editMode) return <CategoryForm category={selectedCategory} cancelEdit={cancelEdit} />;
 
@@ -91,7 +91,7 @@ const AdminCategories: React.FC = () => {
 						onClick={() => setEditMode(true)}
 						className="flex justify-between items-center gap-2 border text-white px-3 py-2 border-indigo-600 bg-indigo-600 rounded-lg hover:text-indigo-600 hover:bg-transparent duration-200 ease-in-out ">
 							<AiOutlinePlus />
-						New Catagory
+						New Category
 					</button>
 				</div>
 			</div>

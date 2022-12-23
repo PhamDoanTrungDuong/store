@@ -11,6 +11,8 @@
       [x] adminRole
       [x] Validation form
       [x] thống kê
+      [x] color
+      [x] loading
  -->
 <!-- NLN
       [x] Momo
@@ -31,14 +33,20 @@
       [x] vnpay
       [] blog
       [] paypal
+
       =====================
-      [] user export excel
-      [] slider (img, caption, heading, desc, createAt)
-      [] partner (name, img, createAt)
-      [] discount (img, title, caption, createAt)
+      [x] user export excel
+      [x] slider (img, caption, heading, desc, createAt)
+      [x] partner (name, img, createAt)
+      [x] discount (img, title, caption, createAt)
+      [] fb chatbot
       [] lượt xem sản phẩm (view count)
+      [] thông báo người dùng trạng thái sản phẩm
       [] coupon (name, code, number, feature, value, exspire, createAt)
       [] voucher
       [] điểm danh nhận voucher
-      [] menu (name, parent, createAt)
+      [] doanh thu (ref thầy Đệ)
+      [] quản lý color, size
+      [] giao hàng nhanh
+      [] reddot thông báo có đơn, member, comment mới
  -->
