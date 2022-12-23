@@ -12,7 +12,7 @@
       [x] Validation form
       [x] thống kê
       [x] color
-      [x] loading
+      [] loading
  -->
 <!-- NLN
       [x] Momo

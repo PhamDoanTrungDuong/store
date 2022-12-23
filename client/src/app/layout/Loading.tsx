@@ -1,4 +1,4 @@
-import { Backdrop, Box, CircularProgress, Typography } from '@mui/material'
+import { Backdrop, Box, CircularProgress } from '@mui/material'
 import React from 'react'
 
 interface IProps {
