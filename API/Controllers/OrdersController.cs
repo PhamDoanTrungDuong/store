@@ -142,8 +142,15 @@ namespace API.Controllers
                     items.Add(orderItem);
                     productItem.QuantityInStock -= item.Quantity;
                 }
+                double subtotal = 0;
+                double discount = orderDto.Discount / 100;
+                var subtotal2 = items.Sum(item => item.Price * item.Quantity);
 
-                var subtotal = items.Sum(item => item.Price * item.Quantity);
+                if(orderDto.Discount != 0) {
+                    subtotal = subtotal2 - (subtotal2 * discount);
+                } else {
+                    subtotal = subtotal2;
+                }
                 var deliveryFee = subtotal > 10000 ? 0 : 500;
 
                 var order = new Order
@@ -151,11 +158,12 @@ namespace API.Controllers
                     OrderItems = items,
                     BuyerId = User.Identity.Name,
                     ShippingAddress = orderDto.ShippingAddress,
-                    Subtotal = subtotal,
+                    Subtotal = (long)subtotal,
                     DeliveryFee = deliveryFee,
                     PaymentIntentId = basket.PaymentIntentId,
                     isRefund = false,
                     CurrentShipperId = 1,
+                    Discount = orderDto.Discount,
                 };
 
                 _context.Orders.Add(order);

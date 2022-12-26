@@ -26,6 +26,7 @@ export interface AdminState {
       partners: any;
       vouchers: any;
       discountBanners: any;
+      selectedVoucher: any;
 }
 
 const initParams = () => {
@@ -53,6 +54,7 @@ const initialState: AdminState = {
       commentsParams: initParams(),
       ordersParams: initParams(),
       todaySales: 0,
+      selectedVoucher: Object,
 }
 
 const getCategoriesAxiosParams = (categoriesParams: CategoriesParams) => {
@@ -171,6 +173,13 @@ export const adminSlice = createSlice({
     name: 'admin',
     initialState,
     reducers: {
+      setSelectedVoucher: (state, action) => {
+            console.log(action.payload)
+            state.selectedVoucher = action.payload;
+      },
+      setVoucherNull: (state) => {
+            state.selectedVoucher.value = 0;
+      },
       setCateLoad: (state) => {
             state.load = !state.load;
       },
@@ -240,5 +249,5 @@ export const adminSlice = createSlice({
     }
 })
 
-export const { setCateLoad, setComLoad, setOrdLoad, setSliderLoad, setPartnerLoad, setDiscountBannerLoad, setVoucherLoad, setCatagoriesParams, setCommentsParams, setOrdersParams } = adminSlice.actions
+export const { setSelectedVoucher, setVoucherNull, setCateLoad, setComLoad, setOrdLoad, setSliderLoad, setPartnerLoad, setDiscountBannerLoad, setVoucherLoad, setCatagoriesParams, setCommentsParams, setOrdersParams } = adminSlice.actions
 export default adminSlice.reducer

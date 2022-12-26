@@ -148,7 +148,7 @@ const AdminMembers: React.FC = () => {
 						</thead>
 						<tbody>
 							{members?.map((member: any, idx) => (
-								member.userName === "admin" ? "" : (
+								member.username === "admin" ? "" : (
 									<tr
 									className="border-b border-gray-200"
 									key={idx}>
@@ -164,7 +164,7 @@ const AdminMembers: React.FC = () => {
 														: "/images/empty-user.png"
 												}
 												alt={
-													member.userName
+													member.username
 												}
 												style={{
 													height: 40,
@@ -174,7 +174,7 @@ const AdminMembers: React.FC = () => {
 											/>
 											{/* <span>
 												{
-													member.userName
+													member.username
 												}
 											</span> */}
 										</div>
@@ -230,7 +230,7 @@ const AdminMembers: React.FC = () => {
 										</span>
 									</td>
 									<td align="right">
-										{member.userName ===
+										{member.username ===
 										"admin" ? (
 											<div></div>
 										) : (

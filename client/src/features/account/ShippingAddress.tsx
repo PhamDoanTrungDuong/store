@@ -85,6 +85,12 @@ const ShippingAddress: React.FC = () => {
 									</p>
 									<p>
 										<span className="text-lg font-bold">
+											Phone Number
+										</span>
+										: {item.phoneNumber}
+									</p>
+									<p>
+										<span className="text-lg font-bold">
 											Address 1
 										</span>
 										: {item.address1}

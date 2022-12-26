@@ -18,6 +18,7 @@ interface IProps {
 }
 
 const ShippingAddressForm: React.FC<IProps> = ({ address, cancelEdit }) => {
+	console.log(address)
 	const {
 		control,
 		reset,
@@ -96,6 +97,13 @@ const ShippingAddressForm: React.FC<IProps> = ({ address, cancelEdit }) => {
 							control={control}
 							name="fullName"
 							label="Full Name"
+						/>
+					</Grid>
+					<Grid item xs={12} sm={12}>
+						<AppTextInput
+							control={control}
+							name="phoneNumber"
+							label="Phone Number"
 						/>
 					</Grid>
 					<Grid item xs={12} sm={12}>

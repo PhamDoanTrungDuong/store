@@ -66,7 +66,7 @@ const ProfileForm: React.FC<Props> = ({user}) => {
                     {watchFile ? (
                         <img src={watchFile.preview} alt='preview' style={{maxHeight: 200}} />
                     ) : (
-                        <img src={user?.pictureUrl} alt={user?.userName} style={{maxHeight: 200}} />
+                        <img src={user?.pictureUrl} alt={user?.username} style={{maxHeight: 200}} />
                     )}
                 </Box>
           </div>

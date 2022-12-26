@@ -30,6 +30,7 @@ namespace API.Entities.OrderAggregate
         public bool isRefund { get; set; }
         public bool isUserNotifi { get; set; }
         public bool? isVnPay { get; set; }
+        public double Discount { get; set; }
 
         public long GetTotal()
         {

@@ -4,6 +4,7 @@ namespace API.ViewModel
     {
         public int Id { get; set; }
         public string FullName { get; set; }
+        public string PhoneNumber { get; set; }
 
         public string Address1 { get; set; }
 

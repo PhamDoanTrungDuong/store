@@ -1,15 +1,42 @@
 import BasketSumary from "./BasketSumary";
 import { Link, useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../app/store/configureStore";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import BasketTable from "./BasketTable";
 import { GrStripe } from "react-icons/gr";
 import agent from "../../app/api/agent";
 import { AiOutlineHome } from "react-icons/ai";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import { useEffect, useState } from "react";
+import { fetchVouchers, setSelectedVoucher } from "../admin/adminSlice";
+import moment from "moment";
+
+const style = {
+	position: "absolute" as "absolute",
+	top: "50%",
+	left: "50%",
+	transform: "translate(-50%, -50%)",
+	width: 600,
+	bgcolor: "background.paper",
+	border: "2px solid #000",
+	boxShadow: 24,
+	p: 4,
+};
 
 const Basket: React.FC = () => {
+	const [open, setOpen] = useState(false);
+	const handleOpen = () => setOpen(true);
+	const handleClose = () => setOpen(false);
 	const { basket } = useAppSelector((state) => state.basket);
+	const { vouchers, loadVoucher, selectedVoucher } = useAppSelector((state) => state.admin);
+	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		loadVoucher ? dispatch(fetchVouchers()) : dispatch(fetchVouchers());
+	}, [dispatch, loadVoucher]);
+
 	//=====================MOMO=============================
 	// App - Basket - MoMopayment - agent - appsettings
 	const { user } = useAppSelector((state) => state.account);
@@ -80,6 +107,18 @@ const Basket: React.FC = () => {
 				</div>
 				<div className="md:basis-[30%]">
 					<BasketSumary />
+					{selectedVoucher.value !== 0 ?
+						<div className="p-3 border border-orange-400 mt-4">
+							<p className="text-xl">Discount for basket: <span className="font-bold">{selectedVoucher.value}%</span></p>
+						</div> : <div></div>
+					}
+					<div className="my-3 w-full">
+						<button
+							className="bg-orange-600 border border-orange-600 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-orange-600 duration-200 w-full"
+							onClick={handleOpen}>
+							Vouchers
+						</button>
+					</div>
 					<div className="mt-5">
 						<h1 className="text-lg text-center text-gray-400 font-bold italic">
 							Please choose your payment methods!!!
@@ -89,15 +128,20 @@ const Basket: React.FC = () => {
 								<button
 									onClick={handlePayment}
 									className="bg-[#A50064] border border-[#A50064] text-white p-2 w-full rounded-lg shadow-lg my-2 hover:scale-105 hover:shadow-xl duration-200 flex justify-center items-center gap-2">
-									<img src="/images/momo-2.svg" alt="" />
+									<img
+										src="/images/momo-2.svg"
+										alt=""
+									/>
 								</button>
 							</div>
 							<div className="w-[50%]">
 								<button
 									onClick={handleVnPayPayment}
-									className="bg-transparent border border-gray-300 text-white p-2 w-full rounded-lg shadow-lg my-2 hover:scale-105 hover:shadow-xl duration-200 flex justify-center items-center gap-2"
-									>
-									<img src="/images/vnpay-2.svg" alt=""/>
+									className="bg-transparent border border-gray-300 text-white p-2 w-full rounded-lg shadow-lg my-2 hover:scale-105 hover:shadow-xl duration-200 flex justify-center items-center gap-2">
+									<img
+										src="/images/vnpay-2.svg"
+										alt=""
+									/>
 								</button>
 							</div>
 							<Link to="/checkout" className="w-full">
@@ -108,7 +152,9 @@ const Basket: React.FC = () => {
 									</p>
 								</button>
 							</Link>
-							<Link to="/normal-checkout" className="w-full">
+							<Link
+								to="/normal-checkout"
+								className="w-full">
 								<button className="bg-indigo-400 border border-indigo-400 text-white p-2 w-full rounded-lg shadow-lg my-2 hover:scale-105 hover:shadow-xl duration-200 flex justify-center items-center gap-2">
 									<p className="pt-1 font-bold italic">
 										Checkout
@@ -119,6 +165,37 @@ const Basket: React.FC = () => {
 					</div>
 				</div>
 			</div>
+			<Modal
+				open={open}
+				onClose={handleClose}
+				aria-labelledby="modal-modal-title"
+				aria-describedby="modal-modal-description">
+				<Box sx={style}>
+					{vouchers.map((item: any, idx: number) => {
+						return (
+							<div key={idx} onClick={() => {
+								handleClose();
+								dispatch(setSelectedVoucher(item));
+							}}>
+								<div className="flex my-5 cursor-pointer hover:bg-gray-100">
+									<div className="w-[60%] h-[60%]">
+										<img src="/images/voucher.jpg" alt="" />
+									</div>
+									<div className="p-4 w-full border border-black/25">
+										<div className="text-3xl font-bold">{item.name}</div>
+										<div className="text-xl font-medium my-1">Sale up to {item.value}%</div>
+										<div className="text-orange-500">{moment(
+																	item.exspire
+																).format(
+																	"lll"
+																)}</div>
+									</div>
+								</div>
+							</div>
+						);
+					})}
+				</Box>
+			</Modal>
 		</div>
 	);
 };

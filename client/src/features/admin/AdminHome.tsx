@@ -146,18 +146,24 @@ const AdminHome: React.FC = () => {
 													idx
 												}
 												className="w-10 h-10 rounded-full border-2 border-white dark:border-gray-800"
+												// src={
+												// 	i.username.includes(
+												// 		"admin"
+												// 	)
+												// 		? "/images/admin.jpg"
+												// 		: i.pictureUrl ===
+												// 		  null
+												// 		? "/images/empty-user.png"
+												// 		: i.pictureUrl
+												// }
 												src={
-													i.userName.includes(
-														"admin"
-													)
-														? "/images/admin.jpg"
-														: i.pictureUrl ===
-														  null
+													i.pictureUrl ===
+													null
 														? "/images/empty-user.png"
 														: i.pictureUrl
 												}
 												alt={
-													i.userName
+													i.username
 												}
 											/>
 										);

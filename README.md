@@ -15,8 +15,9 @@
       [x] loading
       [x] tương tác like sản phầm
       [x] sđt đơn hàng
-      [] sđt (chọn nhiều địa chỉ)
-      [] thông báo có đơn hàng (admin
+      [x] sđt (chọn nhiều địa chỉ)
+      [x] thông báo đơn hàng (user)
+      [] order discount
  -->
 <!--       ==========Main features===========
       [x] Momo
@@ -35,6 +36,8 @@
             - doanh số theo d/m/y
       [x] chọn địa chỉ
       [x] vnpay
+      [] blog
+      [] paypal
 
       [x] user export excel
       [x] slider (img, caption, heading, desc, createAt)
@@ -43,13 +46,12 @@
       [x~] fb chatbot //PAGE_ID=437632991777696 APP_ID=909918376677562
       [x] lượt xem sản phẩm (view count)
       [x] thông báo người dùng trạng thái đơn hàng
-      [x~] voucher (name, code, feature, value, exspire, createAt)
       [x] giao hàng
-      [] voucher giảm giá
+      [x] voucher (name, code, feature, value, exspire, createAt)
+      [x] voucher giảm giá
       [] admin reddot thông báo có đơn, member, comment mới
       [] doanh thu (ref thầy Đệ)
       [] điểm danh nhận voucher
 
-      [] blog
-      [] paypal
+
  -->

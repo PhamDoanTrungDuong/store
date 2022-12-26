@@ -89,7 +89,7 @@ const Profile: React.FC = () => {
 							? user?.pictureUrl
 							: "/images/empty-user.png"
 					}
-					alt={user?.userName}
+					alt={user?.username}
 				/>
 			</div>
 			<FormProvider {...methods}>

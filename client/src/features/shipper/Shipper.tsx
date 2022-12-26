@@ -288,9 +288,6 @@ const Shipper = () => {
 													Fullname
 												</td>
 												<td className="px-4 py-3">
-													City
-												</td>
-												<td className="px-4 py-3">
 													Address
 												</td>
 												<td
@@ -357,13 +354,6 @@ const Shipper = () => {
 																			.fullName
 																	}
 																</span>
-															</td>
-															<td>
-																{
-																	order
-																		.shippingAddress
-																		.city
-																}
 															</td>
 															<td>
 																{
@@ -489,9 +479,6 @@ const Shipper = () => {
 													Fullname
 												</td>
 												<td className="px-4 py-3">
-													City
-												</td>
-												<td className="px-4 py-3">
 													Address
 												</td>
 												<td
@@ -558,13 +545,6 @@ const Shipper = () => {
 																			.fullName
 																	}
 																</span>
-															</td>
-															<td>
-																{
-																	order
-																		.shippingAddress
-																		.city
-																}
 															</td>
 															<td>
 																{

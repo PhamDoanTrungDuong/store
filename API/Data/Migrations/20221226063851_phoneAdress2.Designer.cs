@@ -3,15 +3,17 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20221226063851_phoneAdress2")]
+    partial class phoneAdress2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -194,9 +196,6 @@ namespace API.Data.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<int>("DeliveryStatus")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Discount")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("OrderDate")
@@ -426,14 +425,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "55d55435-45c5-4195-8f37-5c1a669f24af",
+                            ConcurrencyStamp = "13455d22-e7ab-4710-b725-9a515b73ddbb",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "aab390be-44a5-4907-8262-aa250ff0fb76",
+                            ConcurrencyStamp = "f640913c-f5b5-43ff-ac41-88d99a2805ba",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

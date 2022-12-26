@@ -23,10 +23,13 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { setStateUser } from "../account/accountSlice";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
+import { setVoucherNull } from "../admin/adminSlice";
 
 const steps = ["Shipping address", "Review your order", "Payment details"];
 
 const Checkout: React.FC = () => {
+	const { selectedVoucher } = useAppSelector((state) => state.admin);
+
 	const [activeStep, setActiveStep] = useState(0);
 	const [orderNumber, setOrderNumber] = useState(0);
 	const [loading, setLoading] = useState(false);
@@ -131,6 +134,7 @@ const Checkout: React.FC = () => {
 			});
 		}
 	}, [methods, selectedAddress]);
+	var discount = selectedVoucher.value;
 
 	const submitOrder = async (data: FieldValues) => {
 		setLoading(true);
@@ -153,12 +157,14 @@ const Checkout: React.FC = () => {
 				const orderNumber = await agent.Orders.create({
 					saveAddress,
 					shippingAddress,
+					discount
 				});
 				setOrderNumber(orderNumber);
 				setPaymentSucceeded(true);
 				setPaymentMessage("Thank you - We have received your payment");
 				setActiveStep(activeStep + 1);
 				dispatch(clearBasket());
+				dispatch(setVoucherNull());
 				setLoading(false);
 			} else {
 				setPaymentMessage(paymentResult.error?.message!);

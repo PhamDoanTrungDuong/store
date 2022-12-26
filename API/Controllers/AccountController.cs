@@ -259,8 +259,8 @@ namespace API.Controllers
                               City = addressDefault.City,
                               State = addressDefault.State,
                               Zip = addressDefault.Zip,
-                              // PhoneNumber = user.PhoneNumber,
-                              UserId = 0
+                              PhoneNumber = addressDefault.PhoneNumber,
+                              UserId = user.Id,
                         };
                         items.Add(addrDefaul);
                   }
@@ -278,7 +278,8 @@ namespace API.Controllers
                               City = address.City,
                               State = address.State,
                               Zip = address.Zip,
-                              UserId = address.User.Id
+                              UserId = address.User.Id,
+                              PhoneNumber = address.PhoneNumber,
                         };
                         items.Add(addr);
                   }
@@ -295,6 +296,7 @@ namespace API.Controllers
 
                   var newAddress = new SelectedAddress {
                         FullName = newAddressVm.FullName,
+                        PhoneNumber = newAddressVm.PhoneNumber,
                         Address1 = newAddressVm.Address1,
                         Address2 = newAddressVm.Address2,
                         City = newAddressVm.City,
@@ -318,26 +320,42 @@ namespace API.Controllers
                   var address = await _context.SelectedAddresses
                         .FindAsync(updateAddressVm.Id);
                   var user = await _context.Users
+                        .Include(a => a.Address)
                         .FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
 
-                  if(address == null) return BadRequest();
+                  if(updateAddressVm.Id == 0) {
+                        var updateAddress = new UserAddress {
+                              FullName = updateAddressVm.FullName,
+                              Address1 = updateAddressVm.Address1,
+                              Address2 = updateAddressVm.Address2,
+                              City = updateAddressVm.City,
+                              Zip = updateAddressVm.Zip,
+                              State = updateAddressVm.State,
+                              Country = updateAddressVm.City,
+                              PhoneNumber = updateAddressVm.PhoneNumber,
+                        };
 
-                  address.FullName = updateAddressVm.FullName;
-                  address.Address1 = updateAddressVm.Address1;
-                  address.Address2 = updateAddressVm.Address2;
-                  address.City = updateAddressVm.City;
-                  address.Zip = updateAddressVm.Zip;
-                  address.State = updateAddressVm.State;
-                  address.Country = updateAddressVm.City;
-                  address.UserId = user.Id;
+                        user.Address = updateAddress;
+                  } else {
+                        if(address == null) return BadRequest();
 
+                        address.FullName = updateAddressVm.FullName;
+                        address.PhoneNumber = updateAddressVm.PhoneNumber;
+                        address.Address1 = updateAddressVm.Address1;
+                        address.Address2 = updateAddressVm.Address2;
+                        address.City = updateAddressVm.City;
+                        address.Zip = updateAddressVm.Zip;
+                        address.State = updateAddressVm.State;
+                        address.Country = updateAddressVm.City;
+                        address.UserId = user.Id;
+                  }
                   // _context.SelectedAddresses.Update(newAddress);
 
                   var result = await _context.SaveChangesAsync() > 0;
 
                   if (result) return Ok(result);
 
-                  return BadRequest(new ProblemDetails { Title = "Problem add new address" });
+                  return BadRequest(new ProblemDetails { Title = "Problem update address" });
             }
 
             [HttpDelete("delete-address/{id}")]

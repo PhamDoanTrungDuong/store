@@ -8,9 +8,13 @@ interface IProps {
 
 const BasketSumary: React.FC<IProps> = ({subtotal}) => {
   const {basket} = useAppSelector(state => state.basket);
+  const { selectedVoucher } = useAppSelector((state) => state.admin);
 
     if (subtotal === undefined)
        subtotal = basket?.items.reduce((sum, item) => sum + (item.quantity * item.salePrice), 0) ?? 0;
+       var discount = +selectedVoucher.value;
+       var subtotal2 = subtotal - (subtotal * (discount/100));
+
     const deliveryFee = subtotal > 10000 ? 0 : 500;
 
     return (
@@ -21,7 +25,7 @@ const BasketSumary: React.FC<IProps> = ({subtotal}) => {
                 </h1>
                 <div className='flex my-4 justify-between'>
                     <h1>Subtotal</h1>
-                    <p>{currencyFormat(subtotal)}</p>
+                    <p>{currencyFormat(selectedVoucher ? subtotal2 : subtotal)}</p>
                 </div>
                 <hr />
                 <div className='flex my-4 justify-between'>
@@ -31,7 +35,7 @@ const BasketSumary: React.FC<IProps> = ({subtotal}) => {
                 <hr />
                 <div className='flex mt-8 justify-between text-lg font-bold'>
                     <h1>Total</h1>
-                    <p>{currencyFormat(subtotal + deliveryFee)}</p>
+                    <p>{currencyFormat((selectedVoucher ? subtotal2 : subtotal) + deliveryFee)}</p>
                 </div>
                 <hr />
                 <div className='flex my-4 justify-between'>

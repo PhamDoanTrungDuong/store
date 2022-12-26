@@ -28,7 +28,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Swal from "sweetalert2";
 import moment from "moment";
 import Tooltip from "@mui/material/Tooltip";
-import Zoom from '@mui/material/Zoom';
+import Zoom from "@mui/material/Zoom";
 interface TabPanelProps {
 	children?: React.ReactNode;
 	index: number;
@@ -67,7 +67,7 @@ const Order: React.FC = () => {
 		setValue(newValue);
 	};
 	const [orders, setOrders] = useState<IOrder[] | null>(null);
-	console.log(orders)
+	console.log(orders);
 	const [loading, setLoading] = useState(true);
 	const [selectedOrderNumber, setSelectedOrderNumber] = useState(0);
 	const dispatch = useAppDispatch();
@@ -114,7 +114,7 @@ const Order: React.FC = () => {
 	const handleMomoRefund = (Id: number) => {
 		agent.Payments.momoRefund(Id).then((res) => {
 			console.log(res);
-			setLoading(true)
+			setLoading(true);
 			Swal.fire({
 				icon: "success",
 				title: "Your order has been refunded, please wait for the system to process",
@@ -126,7 +126,7 @@ const Order: React.FC = () => {
 	const RefundIntent = (Id: number) => {
 		agent.Payments.refundIntent(Id).then((res) => {
 			console.log(res);
-			setLoading(true)
+			setLoading(true);
 			Swal.fire({
 				icon: "success",
 				title: "Your order has been refunded, please wait for the system to process",
@@ -200,7 +200,9 @@ const Order: React.FC = () => {
 						<table className="table-auto w-full text-xs sm:text-sm md:text-base">
 							<thead>
 								<tr className="border-b border-gray-200">
-									<td className="px-0 md:px-4 py-3" align="center">
+									<td
+										className="px-0 md:px-4 py-3"
+										align="center">
 										Order number
 									</td>
 									<td
@@ -253,21 +255,27 @@ const Order: React.FC = () => {
 												order.id
 											}
 											className="border-b border-gray-200">
-											<td align="center" className="py-7">
+											<td
+												align="center"
+												className="py-7">
 												#{" "}
 												{
 													order.id
 												}
 											</td>
 											<td align="left">
-												{order.shippingAddress.address1}
+												{
+													order
+														.shippingAddress
+														.address1
+												}
 											</td>
 											<td>
-											{
-												order
-													.shippingAddress
-													.city
-											}
+												{
+													order
+														.shippingAddress
+														.city
+												}
 											</td>
 											<td align="center">
 												{currencyFormat(
@@ -287,42 +295,44 @@ const Order: React.FC = () => {
 												}
 											</td> */}
 											<td align="center">
-															{order.deliveryStatus ===
-																"CancelOrder" ||
-															order.isRefund ===
-																true ? (
-																<span className="p-2 bg-red-100 rounded-lg">
-																	<span className="text-red-700 font-medium">
-																		Cancel
-																		Order
-																	</span>
-																</span>
-															) : order.deliveryStatus ===
-															  "OnTheWay" ? (
-																<span className="p-2 bg-blue-100 rounded-lg">
-																	<span className="text-blue-700 font-medium">
-																		Comfirmed
-																	</span>
-																</span>
-															) : order.deliveryStatus ===
-															  "ProductDelivered" ? (
-																<span className="p-2 bg-green-100 rounded-lg">
-																	<span className="text-green-700 font-medium">
-																		Delivered
-																	</span>
-																</span>
-															) : order.deliveryStatus ===
-															  "PendingConfirm" ? (
-																<span className="p-2 bg-yellow-100 rounded-lg">
-																	<span className="text-yellow-700 font-medium">
-																		Pending
-																	</span>
-																</span>
-															) : (
-																""
-															)}
-														</td>
-											<td align="right" className="flex justify-end items-center mt-[20%]">
+												{order.deliveryStatus ===
+													"CancelOrder" ||
+												order.isRefund ===
+													true ? (
+													<span className="p-2 bg-red-100 rounded-lg">
+														<span className="text-red-700 font-medium">
+															Cancel
+															Order
+														</span>
+													</span>
+												) : order.deliveryStatus ===
+												  "OnTheWay" ? (
+													<span className="p-2 bg-blue-100 rounded-lg">
+														<span className="text-blue-700 font-medium">
+															Comfirmed
+														</span>
+													</span>
+												) : order.deliveryStatus ===
+												  "ProductDelivered" ? (
+													<span className="p-2 bg-green-100 rounded-lg">
+														<span className="text-green-700 font-medium">
+															Delivered
+														</span>
+													</span>
+												) : order.deliveryStatus ===
+												  "PendingConfirm" ? (
+													<span className="p-2 bg-yellow-100 rounded-lg">
+														<span className="text-yellow-700 font-medium">
+															Pending
+														</span>
+													</span>
+												) : (
+													""
+												)}
+											</td>
+											<td
+												align="right"
+												className="flex justify-end items-center mt-[20%]">
 												{order.orderId ? (
 													<button
 														className="p-2 hover:bg-[#A50064]/10 rounded-full duration-200 cursor-pointer"
@@ -335,9 +345,18 @@ const Order: React.FC = () => {
 																order
 															);
 														}}>
-															<Tooltip TransitionComponent={Zoom} title="Momo Refund">
-																<RiRefund2Line size={25} className="text-[#A50064]" />
-															</Tooltip>
+														<Tooltip
+															TransitionComponent={
+																Zoom
+															}
+															title="Momo Refund">
+															<RiRefund2Line
+																size={
+																	25
+																}
+																className="text-[#A50064]"
+															/>
+														</Tooltip>
 													</button>
 												) : order.paymentIntentId ? (
 													<div
@@ -348,14 +367,29 @@ const Order: React.FC = () => {
 																order
 															);
 														}}>
-															<Tooltip TransitionComponent={Zoom} title="Stripe Refund">
-																<RiRefund2Line size={25} className="text-indigo-600" />
-															</Tooltip>
+														<Tooltip
+															TransitionComponent={
+																Zoom
+															}
+															title="Stripe Refund">
+															<RiRefund2Line
+																size={
+																	25
+																}
+																className="text-indigo-600"
+															/>
+														</Tooltip>
 													</div>
-												) : <div
-														className="p-2 rounded-full duration-200 cursor-default">
-														<RiRefund2Line size={25} className="text-gray-600/50" />
-													</div>}
+												) : (
+													<div className="p-2 rounded-full duration-200 cursor-default">
+														<RiRefund2Line
+															size={
+																25
+															}
+															className="text-gray-600/50"
+														/>
+													</div>
+												)}
 												<div
 													className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
 													onClick={() =>
@@ -363,14 +397,18 @@ const Order: React.FC = () => {
 															order.id
 														)
 													}>
-														<Tooltip TransitionComponent={Zoom} title="View">
-															<FiEye
-																className="text-indigo-600"
-																size={
-																	25
-																}
-															/>
-														</Tooltip>
+													<Tooltip
+														TransitionComponent={
+															Zoom
+														}
+														title="View">
+														<FiEye
+															className="text-indigo-600"
+															size={
+																25
+															}
+														/>
+													</Tooltip>
 												</div>
 											</td>
 										</tr>
@@ -382,7 +420,9 @@ const Order: React.FC = () => {
 						<table className="table-auto w-full text-xs sm:text-sm md:text-base">
 							<thead>
 								<tr className="border-b border-gray-200">
-									<td className="px-0 md:px-4 py-3" align="center">
+									<td
+										className="px-0 md:px-4 py-3"
+										align="center">
 										Order number
 									</td>
 									<td
@@ -435,21 +475,27 @@ const Order: React.FC = () => {
 												order.id
 											}
 											className="border-b border-gray-200">
-											<td align="center" className="py-5">
+											<td
+												align="center"
+												className="py-5">
 												#{" "}
 												{
 													order.id
 												}
 											</td>
 											<td align="left">
-												{order.shippingAddress.address1}
+												{
+													order
+														.shippingAddress
+														.address1
+												}
 											</td>
 											<td>
-											{
-												order
-													.shippingAddress
-													.city
-											}
+												{
+													order
+														.shippingAddress
+														.city
+												}
 											</td>
 											<td align="center">
 												{currencyFormat(
@@ -469,57 +515,61 @@ const Order: React.FC = () => {
 												}
 											</td> */}
 											<td align="center">
-															{order.deliveryStatus ===
-																"CancelOrder" ||
-															order.isRefund ===
-																true ? (
-																<span className="p-2 bg-red-100 rounded-lg">
-																	<span className="text-red-700 font-medium">
-																		Cancel
-																		Order
-																	</span>
-																</span>
-															) : order.deliveryStatus ===
-															  "OnTheWay" ? (
-																<span className="p-2 bg-blue-100 rounded-lg">
-																	<span className="text-blue-700 font-medium">
-																		Comfirmed
-																	</span>
-																</span>
-															) : order.deliveryStatus ===
-															  "ProductDelivered" ? (
-																<span className="p-2 bg-green-100 rounded-lg">
-																	<span className="text-green-700 font-medium">
-																		Delivered
-																	</span>
-																</span>
-															) : order.deliveryStatus ===
-															  "PendingConfirm" ? (
-																<span className="p-2 bg-yellow-100 rounded-lg">
-																	<span className="text-yellow-700 font-medium">
-																		Pending
-																	</span>
-																</span>
-															) : (
-																""
-															)}
-														</td>
+												{order.deliveryStatus ===
+													"CancelOrder" ||
+												order.isRefund ===
+													true ? (
+													<span className="p-2 bg-red-100 rounded-lg">
+														<span className="text-red-700 font-medium">
+															Cancel
+															Order
+														</span>
+													</span>
+												) : order.deliveryStatus ===
+												  "OnTheWay" ? (
+													<span className="p-2 bg-blue-100 rounded-lg">
+														<span className="text-blue-700 font-medium">
+															Comfirmed
+														</span>
+													</span>
+												) : order.deliveryStatus ===
+												  "ProductDelivered" ? (
+													<span className="p-2 bg-green-100 rounded-lg">
+														<span className="text-green-700 font-medium">
+															Delivered
+														</span>
+													</span>
+												) : order.deliveryStatus ===
+												  "PendingConfirm" ? (
+													<span className="p-2 bg-yellow-100 rounded-lg">
+														<span className="text-yellow-700 font-medium">
+															Pending
+														</span>
+													</span>
+												) : (
+													""
+												)}
+											</td>
 											<td align="center">
-											<div
+												<div
 													className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
 													onClick={() =>
 														setSelectedOrderNumber(
 															order.id
 														)
 													}>
-													<Tooltip TransitionComponent={Zoom} title="View">
-															<FiEye
-																className="text-indigo-600"
-																size={
-																	25
-																}
-															/>
-														</Tooltip>
+													<Tooltip
+														TransitionComponent={
+															Zoom
+														}
+														title="View">
+														<FiEye
+															className="text-indigo-600"
+															size={
+																25
+															}
+														/>
+													</Tooltip>
 												</div>
 											</td>
 										</tr>
@@ -531,7 +581,9 @@ const Order: React.FC = () => {
 						<table className="table-auto w-full text-xs sm:text-sm md:text-base">
 							<thead>
 								<tr className="border-b border-gray-200">
-									<td align="center" className="px-0 md:px-4 py-3">
+									<td
+										align="center"
+										className="px-0 md:px-4 py-3">
 										Order number
 									</td>
 									<td
@@ -584,21 +636,27 @@ const Order: React.FC = () => {
 												order.id
 											}
 											className="border-b border-gray-200">
-											<td align="center" className="py-5">
+											<td
+												align="center"
+												className="py-5">
 												#{" "}
 												{
 													order.id
 												}
 											</td>
 											<td align="left">
-												{order.shippingAddress.address1}
+												{
+													order
+														.shippingAddress
+														.address1
+												}
 											</td>
 											<td>
-											{
-												order
-													.shippingAddress
-													.city
-											}
+												{
+													order
+														.shippingAddress
+														.city
+												}
 											</td>
 											<td align="center">
 												{currencyFormat(
@@ -618,57 +676,61 @@ const Order: React.FC = () => {
 												}
 											</td> */}
 											<td align="center">
-															{order.deliveryStatus ===
-																"CancelOrder" ||
-															order.isRefund ===
-																true ? (
-																<span className="p-2 bg-red-100 rounded-lg">
-																	<span className="text-red-700 font-medium">
-																		Cancel
-																		Order
-																	</span>
-																</span>
-															) : order.deliveryStatus ===
-															  "OnTheWay" ? (
-																<span className="p-2 bg-blue-100 rounded-lg">
-																	<span className="text-blue-700 font-medium">
-																		Comfirmed
-																	</span>
-																</span>
-															) : order.deliveryStatus ===
-															  "ProductDelivered" ? (
-																<span className="p-2 bg-green-100 rounded-lg">
-																	<span className="text-green-700 font-medium">
-																		Delivered
-																	</span>
-																</span>
-															) : order.deliveryStatus ===
-															  "PendingConfirm" ? (
-																<span className="p-2 bg-yellow-100 rounded-lg">
-																	<span className="text-yellow-700 font-medium">
-																		Pending
-																	</span>
-																</span>
-															) : (
-																""
-															)}
-														</td>
+												{order.deliveryStatus ===
+													"CancelOrder" ||
+												order.isRefund ===
+													true ? (
+													<span className="p-2 bg-red-100 rounded-lg">
+														<span className="text-red-700 font-medium">
+															Cancel
+															Order
+														</span>
+													</span>
+												) : order.deliveryStatus ===
+												  "OnTheWay" ? (
+													<span className="p-2 bg-blue-100 rounded-lg">
+														<span className="text-blue-700 font-medium">
+															Comfirmed
+														</span>
+													</span>
+												) : order.deliveryStatus ===
+												  "ProductDelivered" ? (
+													<span className="p-2 bg-green-100 rounded-lg">
+														<span className="text-green-700 font-medium">
+															Delivered
+														</span>
+													</span>
+												) : order.deliveryStatus ===
+												  "PendingConfirm" ? (
+													<span className="p-2 bg-yellow-100 rounded-lg">
+														<span className="text-yellow-700 font-medium">
+															Pending
+														</span>
+													</span>
+												) : (
+													""
+												)}
+											</td>
 											<td align="center">
-											<div
+												<div
 													className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
 													onClick={() =>
 														setSelectedOrderNumber(
 															order.id
 														)
 													}>
-													<Tooltip TransitionComponent={Zoom} title="View">
-															<FiEye
-																className="text-indigo-600"
-																size={
-																	25
-																}
-															/>
-														</Tooltip>
+													<Tooltip
+														TransitionComponent={
+															Zoom
+														}
+														title="View">
+														<FiEye
+															className="text-indigo-600"
+															size={
+																25
+															}
+														/>
+													</Tooltip>
 												</div>
 											</td>
 										</tr>
@@ -680,7 +742,9 @@ const Order: React.FC = () => {
 						<table className="table-auto w-full text-xs sm:text-sm md:text-base">
 							<thead>
 								<tr className="border-b border-gray-200">
-									<td align="center" className="px-0 md:px-4 py-3">
+									<td
+										align="center"
+										className="px-0 md:px-4 py-3">
 										Order number
 									</td>
 									<td
@@ -713,7 +777,9 @@ const Order: React.FC = () => {
 									?.filter(
 										(item) =>
 											item.isRefund ===
-											true
+												true ||
+											item.deliveryStatus ===
+												"CancelOrder"
 									)
 									?.map((order) => (
 										<tr
@@ -721,7 +787,9 @@ const Order: React.FC = () => {
 												order.id
 											}
 											className="border-b border-gray-200">
-											<td align="center" className="py-5">
+											<td
+												align="center"
+												className="py-5">
 												#{" "}
 												{
 													order.id
@@ -743,57 +811,63 @@ const Order: React.FC = () => {
 												Refund
 											</td> */}
 											<td align="center">
-															{order.deliveryStatus ===
-																"CancelOrder" ||
-															order.isRefund ===
-																true ? (
-																<span className="p-2 bg-red-100 rounded-lg">
-																	<span className="text-red-700 font-medium">
-																		Cancel
-																		Order
-																	</span>
-																</span>
-															) : order.deliveryStatus ===
-															  "OnTheWay" ? (
-																<span className="p-2 bg-blue-100 rounded-lg">
-																	<span className="text-blue-700 font-medium">
-																		Comfirmed
-																	</span>
-																</span>
-															) : order.deliveryStatus ===
-															  "ProductDelivered" ? (
-																<span className="p-2 bg-green-100 rounded-lg">
-																	<span className="text-green-700 font-medium">
-																		Delivered
-																	</span>
-																</span>
-															) : order.deliveryStatus ===
-															  "PendingConfirm" ? (
-																<span className="p-2 bg-yellow-100 rounded-lg">
-																	<span className="text-yellow-700 font-medium">
-																		Pending
-																	</span>
-																</span>
-															) : (
-																""
-															)}
-														</td>
-											<td align="center" className='flex justify-center items-center mt-[15%]'>
-											<div
+												{order.deliveryStatus ===
+													"CancelOrder" ||
+												order.isRefund ===
+													true ? (
+													<span className="p-2 bg-red-100 rounded-lg">
+														<span className="text-red-700 font-medium">
+															Cancel
+															Order
+														</span>
+													</span>
+												) : order.deliveryStatus ===
+												  "OnTheWay" ? (
+													<span className="p-2 bg-blue-100 rounded-lg">
+														<span className="text-blue-700 font-medium">
+															Comfirmed
+														</span>
+													</span>
+												) : order.deliveryStatus ===
+												  "ProductDelivered" ? (
+													<span className="p-2 bg-green-100 rounded-lg">
+														<span className="text-green-700 font-medium">
+															Delivered
+														</span>
+													</span>
+												) : order.deliveryStatus ===
+												  "PendingConfirm" ? (
+													<span className="p-2 bg-yellow-100 rounded-lg">
+														<span className="text-yellow-700 font-medium">
+															Pending
+														</span>
+													</span>
+												) : (
+													""
+												)}
+											</td>
+											<td
+												align="center"
+												className="flex justify-center items-center mt-[15%]">
+												<div
 													className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
 													onClick={() =>
 														setSelectedOrderNumber(
 															order.id
 														)
 													}>
-													<Tooltip TransitionComponent={Zoom} title="View">
-															<FiEye
-																className="text-indigo-600"
-																size={
-																	25
-																}
-															/>
-														</Tooltip>
+													<Tooltip
+														TransitionComponent={
+															Zoom
+														}
+														title="View">
+														<FiEye
+															className="text-indigo-600"
+															size={
+																25
+															}
+														/>
+													</Tooltip>
 												</div>
 											</td>
 										</tr>
@@ -890,15 +964,15 @@ const Order: React.FC = () => {
 					</DialogContent>
 					<DialogActions>
 						<Button onClick={handleClose}>Disagree</Button>
-							<Button
-								onClick={() => {
-									handleClose();
-									setMomoOrderQuery(undefined)
-									handleMomoRefund(currentOrder.id);
-								}}
-								autoFocus>
-								Agree
-							</Button>
+						<Button
+							onClick={() => {
+								handleClose();
+								setMomoOrderQuery(undefined);
+								handleMomoRefund(currentOrder.id);
+							}}
+							autoFocus>
+							Agree
+						</Button>
 					</DialogActions>
 				</Dialog>
 			) : (
@@ -988,15 +1062,19 @@ const Order: React.FC = () => {
 							Total: {currencyFormat(currentOrder.total)}
 						</DialogContent>
 						<DialogActions>
-							<Button onClick={handleClose}>Disagree</Button>
-								<Button
-									onClick={() => {
-										handleClose();
-										RefundIntent(+currentOrder.id);
-									}}
-									autoFocus>
-									Agree
-								</Button>
+							<Button onClick={handleClose}>
+								Disagree
+							</Button>
+							<Button
+								onClick={() => {
+									handleClose();
+									RefundIntent(
+										+currentOrder.id
+									);
+								}}
+								autoFocus>
+								Agree
+							</Button>
 						</DialogActions>
 					</Dialog>
 				)

@@ -8,15 +8,15 @@ import { TbGift, TbHome2 } from "react-icons/tb";
 import { RiTruckLine } from "react-icons/ri";
 import { MdOutlineCancel } from "react-icons/md";
 
-const Notifications: React.FC = () => {
+const UserNotifi: React.FC = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const handleOpen = () => {
 		setIsOpen(!isOpen);
 	};
 
 	const { orders, loadOrder } = useAppSelector((state) => state.admin);
+	const { user } = useAppSelector((state) => state.account);
 	const dispatch = useAppDispatch();
-	console.log(orders);
 
 	useEffect(() => {
 		!loadOrder ? dispatch(fetchOrdersAsync()) : dispatch(fetchOrdersAsync());
@@ -39,7 +39,7 @@ const Notifications: React.FC = () => {
 				/>
 				<div
 					className={`relative ${
-						orders?.find((item) => item.isUserNotifi === true)
+						orders?.find((item) => item.isUserNotifi === true && item.buyerId === user?.username)
 							? "flex"
 							: "hidden"
 					}`}>
@@ -62,8 +62,9 @@ const Notifications: React.FC = () => {
 				</div>
 				<div className="divide-y divide-gray-200">
 					{orders
-						?.filter((item) => item.isUserNotifi === true)
+						?.filter((item) => item.isUserNotifi === true && item.buyerId === user?.username)
 						.map((status) => {
+							console.log(status)
 							return (
 								<div
 									key={status.id}
@@ -166,4 +167,4 @@ const Notifications: React.FC = () => {
 	);
 };
 
-export default Notifications;
+export default UserNotifi;

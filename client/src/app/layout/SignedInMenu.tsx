@@ -27,7 +27,7 @@ const SignedInMenu: React.FC = () => {
 				<img
 					className="w-[20%] hover:scale-105 duration-200 mx-2 border border-gray-300 cursor-pointer rounded-full"
 					src="/images/admin.jpg"
-					alt={user?.userName}
+					alt={user?.username}
 				/>
 			) : (
 				<img
@@ -37,7 +37,7 @@ const SignedInMenu: React.FC = () => {
 							? user?.pictureUrl
 							: "/images/empty-user.png"
 					}
-					alt={user?.userName}
+					alt={user?.username}
 				/>
 			)}
 

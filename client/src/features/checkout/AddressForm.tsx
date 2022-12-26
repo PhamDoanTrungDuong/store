@@ -82,6 +82,16 @@ const AddressForm: React.FC<IProps> = (props) => {
 												</p>
 												<p>
 													<span className="text-lg font-bold">
+														Phone Number
+													</span>
+
+													:{" "}
+													{
+														item.phoneNumber
+													}
+												</p>
+												<p>
+													<span className="text-lg font-bold">
 														Address
 														1
 													</span>
