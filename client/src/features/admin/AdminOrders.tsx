@@ -23,7 +23,7 @@ import moment from "moment";
 import { FiShoppingCart, FiEye } from "react-icons/fi";
 import Loading from "../../app/layout/Loading";
 import Tooltip from "@mui/material/Tooltip";
-import Zoom from '@mui/material/Zoom';
+import Zoom from "@mui/material/Zoom";
 interface TabPanelProps {
 	children?: React.ReactNode;
 	index: number;
@@ -94,14 +94,14 @@ const AdminOrders: React.FC = () => {
 			/>
 		);
 
-	const onSubmit = (data: any) => {
-		data = { id: selectedDeli, ...data };
-		agent.Orders.statusDelivery(data).then(() => {
-			dispatch(setOrdLoad());
-			setSelectedDeli(0);
-			handleClose();
-		});
-	};
+	// const onSubmit = (data: any) => {
+	// 	data = { id: selectedDeli, ...data };
+	// 	agent.Orders.statusDelivery(data).then(() => {
+	// 		dispatch(setOrdLoad());
+	// 		setSelectedDeli(0);
+	// 		handleClose();
+	// 	});
+	// };
 
 	if (!orders) return <Loading message="Loading comments" />;
 
@@ -182,12 +182,12 @@ const AdminOrders: React.FC = () => {
 												Order
 												Date
 											</td>
-											<td
+											{/* <td
 												className="px-4 py-3"
 												align="center">
 												Order
 												Status
-											</td>
+											</td> */}
 											<td
 												className="px-4 py-3"
 												align="center">
@@ -259,59 +259,55 @@ const AdminOrders: React.FC = () => {
 															{moment(
 																order.orderDate
 															).format(
-																"MMM Do YY"
+																"lll"
 															)}
 														</td>
-														<td align="center">
+														{/* <td align="center">
 															{
 																order.orderStatus
 															}
-														</td>
-														<td align="left">
+														</td> */}
+														<td align="center">
 															{order.deliveryStatus ===
-															"PendingConfirm" ? (
-																<div className="flex justify-center items-center">
-																	<TbGift
-																		size={
-																			25
-																		}
-																		className="mr-3 text-indigo-600"
-																	/>{" "}
-																	Pending
-																	Confirm
-																</div>
+																"CancelOrder" ||
+															order.isRefund ===
+																true ? (
+																<span className="p-2 bg-red-100 rounded-lg">
+																	<span className="text-red-700 font-medium">
+																		Cancel
+																		Order
+																	</span>
+																</span>
 															) : order.deliveryStatus ===
 															  "OnTheWay" ? (
-																<div className="flex justify-center items-center">
-																	<RiTruckLine
-																		size={
-																			25
-																		}
-																		className="mr-3 fill-red-600"
-																	/>{" "}
-																	On
-																	The
-																	Way
-																</div>
+																<span className="p-2 bg-blue-100 rounded-lg">
+																	<span className="text-blue-700 font-medium">
+																		Comfirmed
+																	</span>
+																</span>
 															) : order.deliveryStatus ===
 															  "ProductDelivered" ? (
-																<div className="flex justify-center items-center">
-																	<TbHome2
-																		size={
-																			25
-																		}
-																		className="mr-3 text-green-600"
-																	/>{" "}
-																	Delivered
-																</div>
+																<span className="p-2 bg-green-100 rounded-lg">
+																	<span className="text-green-700 font-medium">
+																		Delivered
+																	</span>
+																</span>
+															) : order.deliveryStatus ===
+															  "PendingConfirm" ? (
+																<span className="p-2 bg-yellow-100 rounded-lg">
+																	<span className="text-yellow-700 font-medium">
+																		Pending
+																	</span>
+																</span>
 															) : (
-																"Order Placed"
+																""
 															)}
 														</td>
 														<td
 															align="center"
-															className="flex justify-center items-center mt-[35%]">
-															<button
+															// className="flex justify-center items-center mt-[35%]"
+														>
+															{/* <button
 																className="p-2 hover:bg-yellow-200/30 rounded-full duration-200 cursor-pointer"
 																onClick={() => {
 																	handleOpen();
@@ -327,7 +323,7 @@ const AdminOrders: React.FC = () => {
 																			className="text-yellow-500"
 																		/>
 																	</Tooltip>
-															</button>
+															</button> */}
 															<div
 																className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
 																onClick={() =>
@@ -335,14 +331,18 @@ const AdminOrders: React.FC = () => {
 																		order.id
 																	)
 																}>
-																	<Tooltip TransitionComponent={Zoom} title="View">
-																		<FiEye
-																			className="text-indigo-600"
-																			size={
-																				20
-																			}
-																		/>
-																	</Tooltip>
+																<Tooltip
+																	TransitionComponent={
+																		Zoom
+																	}
+																	title="View">
+																	<FiEye
+																		className="text-indigo-600"
+																		size={
+																			20
+																		}
+																	/>
+																</Tooltip>
 															</div>
 														</td>
 													</tr>
@@ -381,12 +381,12 @@ const AdminOrders: React.FC = () => {
 												Order
 												Date
 											</td>
-											<td
+											{/* <td
 												className="px-4 py-3"
 												align="center">
 												Order
 												Status
-											</td>
+											</td> */}
 											<td
 												className="px-4 py-3"
 												align="center">
@@ -461,56 +461,52 @@ const AdminOrders: React.FC = () => {
 																"MMM Do YY, h:mm a"
 															)}
 														</td>
-														<td align="center">
+														{/* <td align="center">
 															{
 																order.orderStatus
 															}
-														</td>
-														<td align="left">
+														</td> */}
+														<td align="center">
 															{order.deliveryStatus ===
-															"PendingConfirm" ? (
-																<div className="flex justify-center items-center">
-																	<TbGift
-																		size={
-																			25
-																		}
-																		className="mr-3 text-indigo-600"
-																	/>{" "}
-																	Pending
-																	Confirm
-																</div>
+																"CancelOrder" ||
+															order.isRefund ===
+																true ? (
+																<span className="p-2 bg-red-100 rounded-lg">
+																	<span className="text-red-700 font-medium">
+																		Cancel
+																		Order
+																	</span>
+																</span>
 															) : order.deliveryStatus ===
 															  "OnTheWay" ? (
-																<div className="flex justify-center items-center">
-																	<RiTruckLine
-																		size={
-																			25
-																		}
-																		className="mr-3 fill-red-600"
-																	/>{" "}
-																	On
-																	The
-																	Way
-																</div>
+																<span className="p-2 bg-blue-100 rounded-lg">
+																	<span className="text-blue-700 font-medium">
+																		Comfirmed
+																	</span>
+																</span>
 															) : order.deliveryStatus ===
 															  "ProductDelivered" ? (
-																<div className="flex justify-center items-center">
-																	<TbHome2
-																		size={
-																			25
-																		}
-																		className="mr-3 text-green-600"
-																	/>{" "}
-																	Delivered
-																</div>
+																<span className="p-2 bg-green-100 rounded-lg">
+																	<span className="text-green-700 font-medium">
+																		Delivered
+																	</span>
+																</span>
+															) : order.deliveryStatus ===
+															  "PendingConfirm" ? (
+																<span className="p-2 bg-yellow-100 rounded-lg">
+																	<span className="text-yellow-700 font-medium">
+																		Pending
+																	</span>
+																</span>
 															) : (
-																"Order Placed"
+																""
 															)}
 														</td>
 														<td
 															align="center"
-															className="flex justify-center items-center mt-[30%]">
-															<button
+															// className="flex justify-center items-center mt-[30%]"
+														>
+															{/* <button
 																className="p-2 hover:bg-yellow-200/30 rounded-full duration-200 cursor-pointer"
 																onClick={() => {
 																	handleOpen();
@@ -526,7 +522,7 @@ const AdminOrders: React.FC = () => {
 																			className="text-yellow-500"
 																		/>
 																	</Tooltip>
-															</button>
+															</button> */}
 															<div
 																className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
 																onClick={() =>
@@ -534,14 +530,18 @@ const AdminOrders: React.FC = () => {
 																		order.id
 																	)
 																}>
-																<Tooltip TransitionComponent={Zoom} title="View">
-																		<FiEye
-																			className="text-indigo-600"
-																			size={
-																				20
-																			}
-																		/>
-																	</Tooltip>
+																<Tooltip
+																	TransitionComponent={
+																		Zoom
+																	}
+																	title="View">
+																	<FiEye
+																		className="text-indigo-600"
+																		size={
+																			20
+																		}
+																	/>
+																</Tooltip>
 															</div>
 														</td>
 													</tr>
@@ -580,12 +580,12 @@ const AdminOrders: React.FC = () => {
 												Order
 												Date
 											</td>
-											<td
+											{/* <td
 												className="px-4 py-3"
 												align="center">
 												Order
 												Status
-											</td>
+											</td> */}
 											<td
 												className="px-4 py-3"
 												align="center">
@@ -660,50 +660,45 @@ const AdminOrders: React.FC = () => {
 																"MMM Do YY, h:mm a"
 															)}
 														</td>
-														<td align="center">
+														{/* <td align="center">
 															{
 																order.orderStatus
 															}
-														</td>
-														<td align="left">
+														</td> */}
+														<td align="center">
 															{order.deliveryStatus ===
-															"PendingConfirm" ? (
-																<div className="flex justify-center items-center">
-																	<TbGift
-																		size={
-																			25
-																		}
-																		className="mr-3 text-indigo-600"
-																	/>{" "}
-																	Pending
-																	Confirm
-																</div>
+																"CancelOrder" ||
+															order.isRefund ===
+																true ? (
+																<span className="p-2 bg-red-100 rounded-lg">
+																	<span className="text-red-700 font-medium">
+																		Cancel
+																		Order
+																	</span>
+																</span>
 															) : order.deliveryStatus ===
 															  "OnTheWay" ? (
-																<div className="flex justify-center items-center">
-																	<RiTruckLine
-																		size={
-																			25
-																		}
-																		className="mr-3 fill-red-600"
-																	/>{" "}
-																	On
-																	The
-																	Way
-																</div>
+																<span className="p-2 bg-blue-100 rounded-lg">
+																	<span className="text-blue-700 font-medium">
+																		Comfirmed
+																	</span>
+																</span>
 															) : order.deliveryStatus ===
 															  "ProductDelivered" ? (
-																<div className="flex justify-center items-center">
-																	<TbHome2
-																		size={
-																			25
-																		}
-																		className="mr-3 text-green-600 mb-1"
-																	/>{" "}
-																	Delivered
-																</div>
+																<span className="p-2 bg-green-100 rounded-lg">
+																	<span className="text-green-700 font-medium">
+																		Delivered
+																	</span>
+																</span>
+															) : order.deliveryStatus ===
+															  "PendingConfirm" ? (
+																<span className="p-2 bg-yellow-100 rounded-lg">
+																	<span className="text-yellow-700 font-medium">
+																		Pending
+																	</span>
+																</span>
 															) : (
-																"Order Placed"
+																""
 															)}
 														</td>
 														<td
@@ -716,14 +711,18 @@ const AdminOrders: React.FC = () => {
 																		order.id
 																	)
 																}>
-																<Tooltip TransitionComponent={Zoom} title="View">
-																		<FiEye
-																			className="text-indigo-600"
-																			size={
-																				20
-																			}
-																		/>
-																	</Tooltip>
+																<Tooltip
+																	TransitionComponent={
+																		Zoom
+																	}
+																	title="View">
+																	<FiEye
+																		className="text-indigo-600"
+																		size={
+																			20
+																		}
+																	/>
+																</Tooltip>
 															</div>
 														</td>
 													</tr>
@@ -745,6 +744,11 @@ const AdminOrders: React.FC = () => {
 											<td
 												className="px-4 py-3"
 												align="center">
+												Full Name
+											</td>
+											<td
+												className="px-4 py-3"
+												align="center">
 												Total
 											</td>
 											<td
@@ -753,12 +757,12 @@ const AdminOrders: React.FC = () => {
 												Order
 												Date
 											</td>
-											<td
+											{/* <td
 												className="px-4 py-3"
 												align="center">
 												Order
 												Status
-											</td>
+											</td> */}
 											<td
 												className="px-4 py-3"
 												align="center">
@@ -777,7 +781,7 @@ const AdminOrders: React.FC = () => {
 													item
 												) =>
 													item.isRefund ===
-													true
+													true || item.deliveryStatus === "CancelOrder"
 											)
 											?.map(
 												(
@@ -796,6 +800,15 @@ const AdminOrders: React.FC = () => {
 																order.id
 															}
 														</td>
+														<td>
+															<span className="font-bold text-lg capitalize">
+																{
+																	order
+																		.shippingAddress
+																		.fullName
+																}
+															</span>
+														</td>
 														<td align="center">
 															{currencyFormat(
 																order.total
@@ -808,13 +821,48 @@ const AdminOrders: React.FC = () => {
 																"MMM Do YY, h:mm a"
 															)}
 														</td>
-														<td align="center">
+														{/* <td align="center">
 															Refund
-														</td>
+														</td> */}
 														<td align="center">
-															Refund
+															{order.deliveryStatus ===
+																"CancelOrder" ||
+															order.isRefund ===
+																true ? (
+																<span className="p-2 bg-red-100 rounded-lg">
+																	<span className="text-red-700 font-medium">
+																		Cancel
+																		Order
+																	</span>
+																</span>
+															) : order.deliveryStatus ===
+															  "OnTheWay" ? (
+																<span className="p-2 bg-blue-100 rounded-lg">
+																	<span className="text-blue-700 font-medium">
+																		Comfirmed
+																	</span>
+																</span>
+															) : order.deliveryStatus ===
+															  "ProductDelivered" ? (
+																<span className="p-2 bg-green-100 rounded-lg">
+																	<span className="text-green-700 font-medium">
+																		Delivered
+																	</span>
+																</span>
+															) : order.deliveryStatus ===
+															  "PendingConfirm" ? (
+																<span className="p-2 bg-yellow-100 rounded-lg">
+																	<span className="text-yellow-700 font-medium">
+																		Pending
+																	</span>
+																</span>
+															) : (
+																""
+															)}
 														</td>
-														<td align="center">
+														<td
+															align="center"
+															className="flex justify-center items-center gap-2 mt-[35%]">
 															<div
 																className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
 																onClick={() =>
@@ -822,14 +870,18 @@ const AdminOrders: React.FC = () => {
 																		order.id
 																	)
 																}>
-																<Tooltip TransitionComponent={Zoom} title="View">
-																		<FiEye
-																			className="text-indigo-600"
-																			size={
-																				20
-																			}
-																		/>
-																	</Tooltip>
+																<Tooltip
+																	TransitionComponent={
+																		Zoom
+																	}
+																	title="View">
+																	<FiEye
+																		className="text-indigo-600"
+																		size={
+																			20
+																		}
+																	/>
+																</Tooltip>
 															</div>
 														</td>
 													</tr>
@@ -841,7 +893,7 @@ const AdminOrders: React.FC = () => {
 						</Box>
 					</div>
 
-					<Modal
+					{/* <Modal
 						open={open}
 						onClose={handleClose}
 						aria-labelledby="modal-modal-title"
@@ -865,7 +917,11 @@ const AdminOrders: React.FC = () => {
 											"deliveryStatus"
 										)}
 										name="deliveryStatus">
-										<option selected={true} value="choose-status">
+										<option
+											selected={
+												true
+											}
+											value="choose-status">
 											--- Confirm
 											Delivery
 											Status ---
@@ -893,7 +949,7 @@ const AdminOrders: React.FC = () => {
 								</form>
 							</div>
 						</Box>
-					</Modal>
+					</Modal> */}
 				</div>
 			</div>
 		</div>

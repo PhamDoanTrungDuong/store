@@ -31,6 +31,7 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
 	    const { categories } = useAppSelector((state) => state.admin);
 
         var cate = categories.map((item: any) => {return item.name});
+        console.log(cate);
 
         const watchFile = watch('file', null);
         const dispatch = useAppDispatch();

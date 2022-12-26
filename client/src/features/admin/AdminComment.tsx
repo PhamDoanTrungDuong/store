@@ -9,7 +9,6 @@ import { AiOutlineHome, AiOutlineComment } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
 import { Link } from "react-router-dom";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Swal from "sweetalert2";
@@ -116,7 +115,7 @@ const AdminComment: React.FC = () => {
 		});
 	};
 
-	if (!comments) return <Loading message="Loading comments" />;
+	if (!comments) return <Loading message="Loading comments..." />;
 
 
 	return (

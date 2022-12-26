@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { RiBarChartBoxFill, RiTableFill, RiAccountCircleFill, RiPriceTag3Fill } from "react-icons/ri";
+import { RiBarChartBoxFill, RiTableFill, RiAccountCircleFill, RiPriceTag3Fill, RiCouponLine } from "react-icons/ri";
 import { TbSlideshow, TbDiscount } from "react-icons/tb";
 import { SiGooglecolab } from "react-icons/si";
 import { MdManageAccounts, MdInsertComment, MdOutlineCardGiftcard } from "react-icons/md";
@@ -72,11 +72,16 @@ const SideBar: React.FC = () => {
                         size={30}
                         className="rounded-lg"
                   />), },
+		{ id: 1, title: "Voucher", to: "/admin-vouchers", icon: (
+                  <RiCouponLine
+                        size={30}
+                        className="rounded-lg"
+                  />), },
 	];
 	return (
 		<div
 			className={` ${
-				open ? "w-64" : "w-[90px]"
+				open ? "w-64" : "w-[95px]"
 			} bg-[#F9FAFB] h-screen z-50 p-5 pt-8 relative duration-300 border border-r-gray-300`}>
 			<img
 				src="/images/control.png"

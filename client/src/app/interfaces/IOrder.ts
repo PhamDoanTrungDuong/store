@@ -1,5 +1,6 @@
 export interface ShippingAddress {
   fullName: string;
+  phoneNumber: string;
   address1: string;
   address2: string;
   city: string;
@@ -30,6 +31,8 @@ export interface IOrder {
   deliveryStatus: string;
   total: number;
   isRefund: boolean;
+  isUserNotifi: boolean;
+  isVnPay: boolean;
   orderId: string;
   paymentIntentId: string;
 }

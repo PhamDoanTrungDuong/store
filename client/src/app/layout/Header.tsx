@@ -5,6 +5,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useAppSelector } from "../store/configureStore";
 import SignedInMenu from "./SignedInMenu";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import UserNotifi from "../components/UserNotifi";
 
 const midLinks = [
 	{ title: "Products", path: "/catalog" },
@@ -23,11 +24,11 @@ const Header: React.FC = () => {
 	return (
 		<div className="rounded-div flex items-center justify-between h-20 font-bold">
 			<div>
-					<Link to="/">
-						<h1 className="text-3xl font-rubik italic font-extrabold text-indigo-600">
-							STORE.
-						</h1>
-					</Link>
+				<Link to="/">
+					<h1 className="text-3xl font-rubik italic font-extrabold text-indigo-600">
+						STORE.
+					</h1>
+				</Link>
 			</div>
 
 			<div className="md:flex hidden items-center">
@@ -68,7 +69,11 @@ const Header: React.FC = () => {
 				)}
 				<div className="hidden md:flex">
 					{user ? (
-						<SignedInMenu />
+						// <SignedInMenu />
+						<div className="z-50 flex jutify-between items-center gap-2">
+							<UserNotifi />
+							<SignedInMenu />
+						</div>
 					) : (
 						<div className="flex justify-evenly">
 							<Link
@@ -104,7 +109,9 @@ const Header: React.FC = () => {
 						return (
 							!user?.roles?.includes("Admin") && (
 								<li
-									onClick={() => setNav(false)}
+									onClick={() =>
+										setNav(false)
+									}
 									className="p-4 text-xl"
 									key={title}>
 									<Link
@@ -123,14 +130,16 @@ const Header: React.FC = () => {
 						</div>
 					) : (
 						<ul className="mt-4">
-							<li onClick={() => setNav(false)} className="flex items-center my-3">
+							<li
+								onClick={() => setNav(false)}
+								className="flex items-center my-3">
 								<Link
 									className="text-primary p-3 text-lg py-2 ml-4 hover:text-indigo-600 duration-200"
 									to="/login">
 									Sign In
 								</Link>
 							</li>
-							<li onClick={() => setNav(false)} >
+							<li onClick={() => setNav(false)}>
 								<Link
 									className="bg-indigo-600 border border-indigo-600 text-white px-5 py-2 ml-4 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-indigo-600 duration-200"
 									to="/register">

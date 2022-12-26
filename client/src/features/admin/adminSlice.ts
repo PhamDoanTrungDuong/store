@@ -11,6 +11,7 @@ export interface AdminState {
       loadComment: boolean;
       loadOrder: boolean;
       loadSlider: boolean;
+      loadVoucher: boolean;
       loadPartner: boolean;
       loadDiscountBanner: boolean;
       // categories: ICategory[] | null;
@@ -23,6 +24,7 @@ export interface AdminState {
       todaySales: number;
       sliders: any;
       partners: any;
+      vouchers: any;
       discountBanners: any;
 }
 
@@ -38,12 +40,14 @@ const initialState: AdminState = {
       orders: [],
       sliders: [],
       partners: [],
+      vouchers: [],
       discountBanners: [],
       load: false,
       loadComment: false,
       loadOrder: false,
       loadSlider: false,
       loadPartner: false,
+      loadVoucher: false,
       loadDiscountBanner: false,
       categoriesParams: initParams(),
       commentsParams: initParams(),
@@ -114,6 +118,17 @@ export const fetchDiscountBanner = createAsyncThunk<any, void, {state: RootState
             }
       }
 )
+export const fetchVouchers = createAsyncThunk<any, void, {state: RootState}>(
+      "admin/fetchVouchers",
+      async (_, thunkAPI) => {
+            try {
+                  const voucher = await agent.Admin.getVouchers();
+                  return voucher;
+            } catch (error: any) {
+                  console.log(error);
+            }
+      }
+)
 
 export const fetchCommentsAsync = createAsyncThunk<IComment[], void, {state: RootState}>(
       "admin/fetchCommentsAsync",
@@ -174,6 +189,9 @@ export const adminSlice = createSlice({
       setDiscountBannerLoad: (state) => {
             state.loadDiscountBanner = !state.loadDiscountBanner;
       },
+      setVoucherLoad: (state) => {
+            state.loadVoucher = !state.loadVoucher;
+      },
       setCatagoriesParams: (state, action) => {
             state.categoriesParams = action.payload;
             state.load = true;
@@ -215,8 +233,12 @@ export const adminSlice = createSlice({
             state.loadDiscountBanner = false
             state.discountBanners = action.payload
       })
+      builder.addCase(fetchVouchers.fulfilled, (state, action) => {
+            state.loadVoucher = false
+            state.vouchers = action.payload
+      })
     }
 })
 
-export const { setCateLoad, setComLoad, setOrdLoad, setSliderLoad, setPartnerLoad, setDiscountBannerLoad, setCatagoriesParams, setCommentsParams, setOrdersParams } = adminSlice.actions
+export const { setCateLoad, setComLoad, setOrdLoad, setSliderLoad, setPartnerLoad, setDiscountBannerLoad, setVoucherLoad, setCatagoriesParams, setCommentsParams, setOrdersParams } = adminSlice.actions
 export default adminSlice.reducer

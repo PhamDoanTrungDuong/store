@@ -6,6 +6,7 @@ export interface IProduct {
   pictureUrl: string;
   type?: string;
   brand: string;
+  viewCount?: number;
   quantityInStock?: number;
   color: string;
   size: string;

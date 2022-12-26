@@ -1,5 +1,5 @@
-import { Box, Rating, TextField } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Box, Rating } from "@mui/material";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
 import NotFound from "../../app/errors/NotFound";
 import Loading from "../../app/layout/Loading";
@@ -11,13 +11,12 @@ import CommentThread from "./CommentThread";
 import agent from "../../app/api/agent";
 import Swal from "sweetalert2";
 import { IoIosArrowDown, IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
-import useProducts from "../../app/hooks/useProducts";
+// import useProducts from "../../app/hooks/useProducts";
 import { IProductDiscount } from "../../app/interfaces/IProduct";
 import { AiOutlineHome } from "react-icons/ai";
 import { BiCategoryAlt } from "react-icons/bi";
 import { FaHashtag } from "react-icons/fa";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 import Tabs from "@mui/material/Tabs";
 
 interface TabPanelProps {
@@ -107,6 +106,19 @@ const ProductDetails: React.FC = () => {
 
 	const { id } = useParams<{ id: any }>();
 	const product = useAppSelector((state) => productSelector.selectById(state, id));
+
+	const productView = useCallback(async () => {
+		try {
+			if (id !== undefined)
+			agent.Catalog.productViewCount(Number(id));
+		} catch (error) {
+			console.log(error);
+		}
+	}, [id]);
+
+	useEffect(() => {
+		productView()
+	}, [productView]);
 
 	useEffect(() => {
 		if (id !== undefined)
@@ -201,6 +213,8 @@ const ProductDetails: React.FC = () => {
 	const handleSize = (value: string) => {
 		setSelectedSize(value);
 	};
+
+	
 
 	return (
 		<div className="mt-5 p-5">
@@ -341,22 +355,23 @@ const ProductDetails: React.FC = () => {
 					</div>
 					<div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
 						<div className="flex items-center">
-							<span className="mr-3">Color</span>
+							<span className="mr-3">Color:</span>
 							{colors && colors.map((color: any, idx) => {
+								var color1 = `bg-${color.colour_value}-500`
 								return (
 									<span key={color.id}>
-										<button onClick={() => handleColor(color.colour_value)} className={`border-2 border-gray-300 ${selectedColor === color.colour_value ? "border-black/70" : ""} ml-1 bg-${color.colour_value}-500 rounded-full w-6 h-6 focus:outline-none`}></button>
+										<div onClick={() => handleColor(color.colour_value)} className={`${color1} border-2 border-gray-300 ${selectedColor === color.colour_value ? "border-black/70" : ""} ml-1 rounded-full w-6 h-6 focus:outline-none`}></div>
 									</span>
 								)
 							})}
 						</div>
 						<div className="flex ml-6 items-center">
-							<span className="mr-3">Size</span>
+							<span className="mr-3">Size:</span>
 							<div className="relative">
 								<select onChange={(e) => handleSize(e.target.value)} className="rounded border appearance-none border-gray-700 py-2 focus:outline-none focus:border-indigo-600 text-base pl-3 pr-10">
-									{sizes && sizes.map((size: any) => {
+									{sizes && sizes.map((size: any, idx) => {
 										return (
-											<option value={size.size_value}>{size.size_value}</option>
+											<option key={idx} value={size.size_value}>{size.size_value}</option>
 										)
 									})}
 								</select>

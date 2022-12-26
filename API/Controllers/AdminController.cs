@@ -77,7 +77,7 @@ namespace API.Controllers
                   return Ok(await _userManager.GetRolesAsync(user));
             }
 
-            [Authorize(Policy = "RequireAdminRole")]
+            // [Authorize(Policy = "RequireAdminRole")]
             [HttpGet("admin-get-orders")]
             public async Task<ActionResult<List<OrderDto>>> GetOrders([FromQuery] OrderVm orderVm)
             {
@@ -404,7 +404,7 @@ namespace API.Controllers
                   return BadRequest(new ProblemDetails{ Title = "Something went wrong"});
             }
 
-            // Discount
+            // DiscountBanners
             [HttpGet("get-discountBanners")]
             public async Task<List<DiscountBanner>> GetDiscountBanners() {
                   return await _context.DiscountBanners.ToListAsync();
@@ -468,6 +468,79 @@ namespace API.Controllers
                   if(discountBanner == null) return BadRequest(new ProblemDetails{ Title = "Can't delete discount banner"});
 
                   _context.DiscountBanners.Remove(discountBanner);
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if(result) return Ok();
+
+                  return BadRequest(new ProblemDetails{ Title = "Something went wrong"});
+            }
+
+            // Voucher
+            [HttpGet("get-vouchers")]
+            public async Task<List<Voucher>> GetVoucher() {
+                  return await _context.Vouchers.ToListAsync();
+            }
+
+            [HttpPost("add-voucher")]
+            public async Task<ActionResult> AddVoucher([FromForm] VoucherVm voucherVm)
+            {
+                  var voucher = new Voucher {
+                        Name = voucherVm.Name,
+                        Code = voucherVm.Code,
+                        Value = voucherVm.Value,
+                        CreateAt = DateTime.Now,
+                        Exspire = DateTime.Now.AddDays(7),
+                  };
+
+                  if(voucherVm.Feature == "Percent"){
+                        voucher.Feature = VoucherFeature.Percent;
+                  } else if (voucherVm.Feature == "FreeShip") {
+                        voucher.Feature = VoucherFeature.FreeShip;
+                  } else {
+                        voucher.Feature = VoucherFeature.Money;
+                  }
+
+                  _context.Vouchers.Add(voucher);
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if (result) return Ok(result);
+
+                  return BadRequest(new ProblemDetails { Title = "Problem adding voucher" });
+            }
+
+            [HttpPut("update-voucher")]
+            public async Task<ActionResult> UpdateVoucher([FromForm] VoucherUpdateVm voucherUpdateVm)
+            {
+                  var voucherUpdate = await _context.Vouchers.FindAsync(voucherUpdateVm.Id);
+
+                  voucherUpdate.Name = voucherUpdateVm.Name;
+                  voucherUpdate.Code = voucherUpdateVm.Code;
+                  voucherUpdate.Value = voucherUpdateVm.Value;
+
+                  if(voucherUpdateVm.Feature == "Percent"){
+                        voucherUpdate.Feature = VoucherFeature.Percent;
+                  } else if (voucherUpdateVm.Feature == "FreeShip") {
+                        voucherUpdate.Feature = VoucherFeature.FreeShip;
+                  } else {
+                        voucherUpdate.Feature = VoucherFeature.Money;
+                  }
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if (result) return Ok(result);
+
+                  return BadRequest(new ProblemDetails { Title = "Problem updating voucher" });
+            }
+
+            [HttpDelete("delete-voucher/{id}")]
+            public async Task<ActionResult> DeleteVoucher(int id) {
+                  var voucher = await _context.Vouchers.FindAsync(id);
+
+                  if(voucher == null) return BadRequest(new ProblemDetails{ Title = "Can't delete voucher"});
+
+                  _context.Vouchers.Remove(voucher);
 
                   var result = await _context.SaveChangesAsync() > 0;
 

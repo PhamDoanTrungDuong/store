@@ -108,6 +108,9 @@ const Catalog = {
     getProductDiscount: () => requests.get('discount'),
     addProductDiscount: (proudctId: number, percent: number) => requests.post(`discount?productId=${proudctId}&discount=${percent}`, {}),
     deleteProductDiscount: (productId: number) => requests.delete(`discount/${productId}`),
+    productViewCount: (productId: number) => requests.post(`products/product-viewcount/${productId}`, {}),
+    checkUserNotify: (id: number) => requests.post(`orders/userNotify/${id}`, {}),
+
 }
 
 const Basket = {
@@ -208,6 +211,11 @@ const Admin = {
     updateDiscountBanner: (discountBanner: any) => requests.putForm('admin/update-discountBanner', createFormData(discountBanner)),
     deleteDiscountBanner: (id: number) => requests.delete(`admin/delete-discountBanner/${id}`),
 
+     //vouchers
+     getVouchers: () => requests.get('admin/get-vouchers'),
+     newVoucher: (voucher: any) => requests.postForm('admin/add-voucher', createFormData(voucher)),
+     updateVoucher: (voucher: any) => requests.putForm('admin/update-voucher', createFormData(voucher)),
+     deleteVoucher: (id: number) => requests.delete(`admin/delete-voucher/${id}`),
 }
 
 const Profile = {

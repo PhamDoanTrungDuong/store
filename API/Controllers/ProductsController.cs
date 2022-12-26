@@ -47,6 +47,7 @@ namespace API.Controllers
             {
                   return await _context.Products.ToListAsync();
             }
+            
 
             [HttpGet("get-product-count")]
             public async Task<int> GetCounterProduct()
@@ -160,6 +161,19 @@ namespace API.Controllers
                   if (result) return Ok();
 
                   return BadRequest(new ProblemDetails { Title = "Problem deleting product" });
+            }
+
+            [HttpPost("product-viewcount/{id}")]
+            public async Task<ActionResult> ProductViewCount(int id)
+            {
+                  var product = await _context.Products.FindAsync(id);
+                  if(product == null) return BadRequest(new ProblemDetails{Title = "Can't find product"});
+                  product.ViewCount = product.ViewCount + 1;
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if(result) return Ok(result);
+                  return BadRequest(new ProblemDetails{Title = "Something went wrong"});
             }
       }
 }

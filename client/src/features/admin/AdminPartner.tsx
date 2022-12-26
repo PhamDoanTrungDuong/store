@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { fetchPartners, setPartnerLoad, setSliderLoad } from "./adminSlice";
 import Swal from "sweetalert2";
 import PartnerForm from "./PartnerForm";
+import Loading from "../../app/layout/Loading";
 
 const AdminPartner = () => {
 	const { partners, loadPartner } = useAppSelector((state) => state.admin);
@@ -64,6 +65,8 @@ const AdminPartner = () => {
 	};
 
 	if (editMode) return <PartnerForm partner={selectedPartner} cancelEdit={cancelEdit} />;
+
+	if (!partners) return <Loading message="Loading partner..." />;
 
 	return (
 		<div className="mt-24 p-5">

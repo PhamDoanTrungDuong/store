@@ -223,11 +223,11 @@ const Order: React.FC = () => {
 										align="center">
 										Order Date
 									</td>
-									<td
+									{/* <td
 										className="px-4 py-3"
 										align="center">
 										Order Status
-									</td>
+									</td> */}
 									<td
 										className="px-4 py-3"
 										align="center">
@@ -281,52 +281,47 @@ const Order: React.FC = () => {
 													"MMM Do YY, h:mm a"
 												)}
 											</td>
-											<td align="center">
+											{/* <td align="center">
 												{
 													order.orderStatus
 												}
-											</td>
-											<td align="left">
-												{order.deliveryStatus ===
-												"PendingConfirm" ? (
-													<div className="flex justify-center items-center">
-														<TbGift
-															size={
-																25
-															}
-															className="mr-3 text-indigo-600"
-														/>{" "}
-														Pending
-														Confirm
-													</div>
-												) : order.deliveryStatus ===
-												  "OnTheWay" ? (
-													<div className="flex justify-center items-center">
-														<RiTruckLine
-															size={
-																25
-															}
-															className="mr-3 fill-red-600"
-														/>{" "}
-														On
-														The
-														Way
-													</div>
-												) : order.deliveryStatus ===
-												  "ProductDelivered" ? (
-													<div className="flex justify-center items-center">
-														<TbHome2
-															size={
-																25
-															}
-															className="mr-3 text-green-600"
-														/>{" "}
-														Delivered
-													</div>
-												) : (
-													"Order Placed"
-												)}
-											</td>
+											</td> */}
+											<td align="center">
+															{order.deliveryStatus ===
+																"CancelOrder" ||
+															order.isRefund ===
+																true ? (
+																<span className="p-2 bg-red-100 rounded-lg">
+																	<span className="text-red-700 font-medium">
+																		Cancel
+																		Order
+																	</span>
+																</span>
+															) : order.deliveryStatus ===
+															  "OnTheWay" ? (
+																<span className="p-2 bg-blue-100 rounded-lg">
+																	<span className="text-blue-700 font-medium">
+																		Comfirmed
+																	</span>
+																</span>
+															) : order.deliveryStatus ===
+															  "ProductDelivered" ? (
+																<span className="p-2 bg-green-100 rounded-lg">
+																	<span className="text-green-700 font-medium">
+																		Delivered
+																	</span>
+																</span>
+															) : order.deliveryStatus ===
+															  "PendingConfirm" ? (
+																<span className="p-2 bg-yellow-100 rounded-lg">
+																	<span className="text-yellow-700 font-medium">
+																		Pending
+																	</span>
+																</span>
+															) : (
+																""
+															)}
+														</td>
 											<td align="right" className="flex justify-end items-center mt-[20%]">
 												{order.orderId ? (
 													<button
@@ -410,11 +405,11 @@ const Order: React.FC = () => {
 										align="center">
 										Order Date
 									</td>
-									<td
+									{/* <td
 										className="px-4 py-3"
 										align="center">
 										Order Status
-									</td>
+									</td> */}
 									<td
 										className="px-4 py-3"
 										align="center">
@@ -468,52 +463,47 @@ const Order: React.FC = () => {
 													"MMM Do YY, h:mm a"
 												)}
 											</td>
-											<td align="center">
+											{/* <td align="center">
 												{
 													order.orderStatus
 												}
-											</td>
-											<td align="left">
-												{order.deliveryStatus ===
-												"PendingConfirm" ? (
-													<div className="flex justify-center items-center">
-														<TbGift
-															size={
-																25
-															}
-															className="mr-3 text-indigo-600"
-														/>{" "}
-														Pending
-														Confirm
-													</div>
-												) : order.deliveryStatus ===
-												  "OnTheWay" ? (
-													<div className="flex justify-center items-center">
-														<RiTruckLine
-															size={
-																25
-															}
-															className="mr-3 fill-red-600"
-														/>{" "}
-														On
-														The
-														Way
-													</div>
-												) : order.deliveryStatus ===
-												  "ProductDelivered" ? (
-													<div className="flex justify-center items-center">
-														<TbHome2
-															size={
-																25
-															}
-															className="mr-3 text-green-600"
-														/>{" "}
-														Delivered
-													</div>
-												) : (
-													"Order Placed"
-												)}
-											</td>
+											</td> */}
+											<td align="center">
+															{order.deliveryStatus ===
+																"CancelOrder" ||
+															order.isRefund ===
+																true ? (
+																<span className="p-2 bg-red-100 rounded-lg">
+																	<span className="text-red-700 font-medium">
+																		Cancel
+																		Order
+																	</span>
+																</span>
+															) : order.deliveryStatus ===
+															  "OnTheWay" ? (
+																<span className="p-2 bg-blue-100 rounded-lg">
+																	<span className="text-blue-700 font-medium">
+																		Comfirmed
+																	</span>
+																</span>
+															) : order.deliveryStatus ===
+															  "ProductDelivered" ? (
+																<span className="p-2 bg-green-100 rounded-lg">
+																	<span className="text-green-700 font-medium">
+																		Delivered
+																	</span>
+																</span>
+															) : order.deliveryStatus ===
+															  "PendingConfirm" ? (
+																<span className="p-2 bg-yellow-100 rounded-lg">
+																	<span className="text-yellow-700 font-medium">
+																		Pending
+																	</span>
+																</span>
+															) : (
+																""
+															)}
+														</td>
 											<td align="center">
 											<div
 													className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
@@ -564,11 +554,11 @@ const Order: React.FC = () => {
 										align="center">
 										Order Date
 									</td>
-									<td
+									{/* <td
 										className="px-4 py-3"
 										align="center">
 										Order Status
-									</td>
+									</td> */}
 									<td
 										className="px-4 py-3"
 										align="center">
@@ -622,52 +612,47 @@ const Order: React.FC = () => {
 													"MMM Do YY, h:mm a"
 												)}
 											</td>
-											<td align="center">
+											{/* <td align="center">
 												{
 													order.orderStatus
 												}
-											</td>
-											<td align="left">
-												{order.deliveryStatus ===
-												"PendingConfirm" ? (
-													<div className="flex justify-center items-center">
-														<TbGift
-															size={
-																25
-															}
-															className="mr-3 text-indigo-600"
-														/>{" "}
-														Pending
-														Confirm
-													</div>
-												) : order.deliveryStatus ===
-												  "OnTheWay" ? (
-													<div className="flex justify-center items-center">
-														<RiTruckLine
-															size={
-																25
-															}
-															className="mr-3 fill-red-600"
-														/>{" "}
-														On
-														The
-														Way
-													</div>
-												) : order.deliveryStatus ===
-												  "ProductDelivered" ? (
-													<div className="flex justify-center items-center">
-														<TbHome2
-															size={
-																25
-															}
-															className="mr-3 text-green-600"
-														/>{" "}
-														Delivered
-													</div>
-												) : (
-													"Order Placed"
-												)}
-											</td>
+											</td> */}
+											<td align="center">
+															{order.deliveryStatus ===
+																"CancelOrder" ||
+															order.isRefund ===
+																true ? (
+																<span className="p-2 bg-red-100 rounded-lg">
+																	<span className="text-red-700 font-medium">
+																		Cancel
+																		Order
+																	</span>
+																</span>
+															) : order.deliveryStatus ===
+															  "OnTheWay" ? (
+																<span className="p-2 bg-blue-100 rounded-lg">
+																	<span className="text-blue-700 font-medium">
+																		Comfirmed
+																	</span>
+																</span>
+															) : order.deliveryStatus ===
+															  "ProductDelivered" ? (
+																<span className="p-2 bg-green-100 rounded-lg">
+																	<span className="text-green-700 font-medium">
+																		Delivered
+																	</span>
+																</span>
+															) : order.deliveryStatus ===
+															  "PendingConfirm" ? (
+																<span className="p-2 bg-yellow-100 rounded-lg">
+																	<span className="text-yellow-700 font-medium">
+																		Pending
+																	</span>
+																</span>
+															) : (
+																""
+															)}
+														</td>
 											<td align="center">
 											<div
 													className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
@@ -708,11 +693,11 @@ const Order: React.FC = () => {
 										align="center">
 										Order Date
 									</td>
-									<td
+									{/* <td
 										className="px-4 py-3"
 										align="center">
 										Order Status
-									</td>
+									</td> */}
 									<td
 										className="px-4 py-3"
 										align="center">
@@ -754,13 +739,46 @@ const Order: React.FC = () => {
 													"MMM Do YY, h:mm a"
 												)}
 											</td>
-											<td align="center">
+											{/* <td align="center">
 												Refund
-											</td>
+											</td> */}
 											<td align="center">
-												Refund
-											</td>
-											<td align="center" className='flex justify-center items-centerr mt-[25%]'>
+															{order.deliveryStatus ===
+																"CancelOrder" ||
+															order.isRefund ===
+																true ? (
+																<span className="p-2 bg-red-100 rounded-lg">
+																	<span className="text-red-700 font-medium">
+																		Cancel
+																		Order
+																	</span>
+																</span>
+															) : order.deliveryStatus ===
+															  "OnTheWay" ? (
+																<span className="p-2 bg-blue-100 rounded-lg">
+																	<span className="text-blue-700 font-medium">
+																		Comfirmed
+																	</span>
+																</span>
+															) : order.deliveryStatus ===
+															  "ProductDelivered" ? (
+																<span className="p-2 bg-green-100 rounded-lg">
+																	<span className="text-green-700 font-medium">
+																		Delivered
+																	</span>
+																</span>
+															) : order.deliveryStatus ===
+															  "PendingConfirm" ? (
+																<span className="p-2 bg-yellow-100 rounded-lg">
+																	<span className="text-yellow-700 font-medium">
+																		Pending
+																	</span>
+																</span>
+															) : (
+																""
+															)}
+														</td>
+											<td align="center" className='flex justify-center items-center mt-[15%]'>
 											<div
 													className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer"
 													onClick={() =>

@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { fetchDiscountBanner, setDiscountBannerLoad } from "./adminSlice";
 import Swal from "sweetalert2";
 import DiscountBannerForm from "./DiscountBannerForm";
+import Loading from "../../app/layout/Loading";
 
 const AdminDiscountBanner = () => {
 	const { discountBanners, loadDiscountBanner } = useAppSelector((state) => state.admin);
@@ -64,6 +65,8 @@ const AdminDiscountBanner = () => {
 	};
 
 	if (editMode) return <DiscountBannerForm discountBanner={selectedDiscountBanner} cancelEdit={cancelEdit} />;
+
+	if (!discountBanners) return <Loading message="Loading discount banner..." />;
 
 	return (
 		<div className="mt-24 p-5">

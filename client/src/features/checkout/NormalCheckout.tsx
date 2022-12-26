@@ -57,6 +57,7 @@ const NormalCheckout: React.FC = () => {
 		};
 	}, [dispatch, status]);
 
+	// For Choose Address
 	const [addresses, setAddresses] = useState<any>([]);
 	useEffect(() => {
 		agent.Account.userAddresses().then((res) => {
@@ -82,6 +83,7 @@ const NormalCheckout: React.FC = () => {
 	useEffect(() => {
 		if(selectedAddress === undefined){
 			agent.Account.fetchAddress().then((res) => {
+				// console.log(methods);
 			if (res) {
 				methods.reset({
 					...methods.getValues(),

@@ -12,9 +12,13 @@
       [x] Validation form
       [x] thống kê
       [x] color
-      [] loading
+      [x] loading
+      [x] tương tác like sản phầm
+      [x] sđt đơn hàng
+      [] sđt (chọn nhiều địa chỉ)
+      [] thông báo có đơn hàng (admin
  -->
-<!-- NLN
+<!--       ==========Main features===========
       [x] Momo
       [x] đổi mật khẩu
       [x] lock user
@@ -31,22 +35,21 @@
             - doanh số theo d/m/y
       [x] chọn địa chỉ
       [x] vnpay
-      [] blog
-      [] paypal
 
-      =====================
       [x] user export excel
       [x] slider (img, caption, heading, desc, createAt)
       [x] partner (name, img, createAt)
       [x] discount (img, title, caption, createAt)
-      [] fb chatbot
-      [] lượt xem sản phẩm (view count)
-      [] thông báo người dùng trạng thái sản phẩm
-      [] coupon (name, code, number, feature, value, exspire, createAt)
-      [] voucher
-      [] điểm danh nhận voucher
+      [x~] fb chatbot //PAGE_ID=437632991777696 APP_ID=909918376677562
+      [x] lượt xem sản phẩm (view count)
+      [x] thông báo người dùng trạng thái đơn hàng
+      [x~] voucher (name, code, feature, value, exspire, createAt)
+      [x] giao hàng
+      [] voucher giảm giá
+      [] admin reddot thông báo có đơn, member, comment mới
       [] doanh thu (ref thầy Đệ)
-      [] quản lý color, size
-      [] giao hàng nhanh
-      [] reddot thông báo có đơn, member, comment mới
+      [] điểm danh nhận voucher
+
+      [] blog
+      [] paypal
  -->

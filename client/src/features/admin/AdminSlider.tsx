@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { fetchSliders, setSliderLoad } from "./adminSlice";
 import SliderForm from "./SliderForm";
 import Swal from "sweetalert2";
+import Loading from "../../app/layout/Loading";
 
 const AdminSlider = () => {
 	const { sliders, loadSlider } = useAppSelector((state) => state.admin);
@@ -64,6 +65,8 @@ const AdminSlider = () => {
 	};
 
 	if (editMode) return <SliderForm slider={selectedSlider} cancelEdit={cancelEdit} />;
+
+	if (!sliders) return <Loading message="Loading sliders..." />;
 
 	return (
 		<div className="mt-24 p-5">

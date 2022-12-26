@@ -22,6 +22,8 @@ namespace API.Extensions
                     DeliveryStatus = order.DeliveryStatus.ToString(),
                     Total = order.GetTotal(),
                     isRefund = order.isRefund,
+                    isUserNotifi = order.isUserNotifi,
+                    isVnPay = order.isVnPay,
                     orderId = order.orderId,
                     paymentIntentId = order.PaymentIntentId,
                     OrderItems = order.OrderItems.Select(item => new OrderItemDto

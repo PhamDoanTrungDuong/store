@@ -153,39 +153,6 @@ namespace API.Data.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("API.Entities.Coupon", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Code")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime>("Expire")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Feature")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Number")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Coupons");
-                });
-
             modelBuilder.Entity("API.Entities.DiscountBanner", b =>
                 {
                     b.Property<int>("Id")
@@ -220,6 +187,9 @@ namespace API.Data.Migrations
                     b.Property<string>("BuyerId")
                         .HasColumnType("text");
 
+                    b.Property<int>("CurrentShipperId")
+                        .HasColumnType("integer");
+
                     b.Property<long>("DeliveryFee")
                         .HasColumnType("bigint");
 
@@ -241,6 +211,12 @@ namespace API.Data.Migrations
                     b.Property<bool>("isRefund")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("isUserNotifi")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("isVnPay")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("orderId")
                         .HasColumnType("text");
 
@@ -251,6 +227,8 @@ namespace API.Data.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CurrentShipperId");
 
                     b.ToTable("Orders");
                 });
@@ -332,6 +310,9 @@ namespace API.Data.Migrations
 
                     b.Property<string>("Type")
                         .HasColumnType("text");
+
+                    b.Property<int>("ViewCount")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -442,14 +423,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "69502aa9-6b95-424d-a5db-399e1339ca5b",
+                            ConcurrencyStamp = "6ee8d996-c2b7-49f9-8191-774b5257c251",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "729acac5-83aa-4a74-9641-8cecc021f8c1",
+                            ConcurrencyStamp = "e2f7f851-b5e9-416c-81b8-3468b367e647",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -491,6 +472,48 @@ namespace API.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("SelectedAddresses");
+                });
+
+            modelBuilder.Entity("API.Entities.Shipper", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DayBirth")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LicensePlates")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Sex")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Shippers");
                 });
 
             modelBuilder.Entity("API.Entities.Size", b =>
@@ -624,6 +647,9 @@ namespace API.Data.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("text");
 
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
                     b.Property<string>("State")
                         .HasColumnType("text");
 
@@ -685,6 +711,36 @@ namespace API.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles");
+                });
+
+            modelBuilder.Entity("API.Entities.Voucher", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("Exspire")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("Feature")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<double?>("Value")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vouchers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -813,6 +869,12 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.OrderAggregate.Order", b =>
                 {
+                    b.HasOne("API.Entities.Shipper", "Shipper")
+                        .WithMany("Orders")
+                        .HasForeignKey("CurrentShipperId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.OwnsOne("API.Entities.OrderAggregate.ShippingAddress", "ShippingAddress", b1 =>
                         {
                             b1.Property<int>("OrderId")
@@ -835,6 +897,9 @@ namespace API.Data.Migrations
                             b1.Property<string>("FullName")
                                 .HasColumnType("text");
 
+                            b1.Property<string>("PhoneNumber")
+                                .HasColumnType("text");
+
                             b1.Property<string>("State")
                                 .HasColumnType("text");
 
@@ -848,6 +913,8 @@ namespace API.Data.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("OrderId");
                         });
+
+                    b.Navigation("Shipper");
 
                     b.Navigation("ShippingAddress");
                 });
@@ -1081,6 +1148,11 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Entities.Role", b =>
                 {
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("API.Entities.Shipper", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("API.Entities.Size", b =>

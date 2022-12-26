@@ -219,6 +219,7 @@ namespace API.Controllers
                         Zip = memberUpdateDto.Zip,
                         State = memberUpdateDto.State,
                         Country = memberUpdateDto.City,
+                        PhoneNumber = memberUpdateInfoDto.Phone,
                   };
 
                   user.Address = updateAddress;
@@ -258,6 +259,7 @@ namespace API.Controllers
                               City = addressDefault.City,
                               State = addressDefault.State,
                               Zip = addressDefault.Zip,
+                              // PhoneNumber = user.PhoneNumber,
                               UserId = 0
                         };
                         items.Add(addrDefaul);

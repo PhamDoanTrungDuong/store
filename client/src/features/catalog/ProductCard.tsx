@@ -29,6 +29,8 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 				.catch((error) => console.log(error));
 	}, [avg, product.id]);
 
+	
+
 	useEffect(() => {
 		if(product !== null){
 			agent.Like.getCurrentLike().then((res: any) => {

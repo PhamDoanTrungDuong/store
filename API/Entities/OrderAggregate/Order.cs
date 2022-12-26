@@ -28,10 +28,15 @@ namespace API.Entities.OrderAggregate
         public string? requestId { get; set; }
         public string? transId { get; set; }
         public bool isRefund { get; set; }
+        public bool isUserNotifi { get; set; }
+        public bool? isVnPay { get; set; }
 
         public long GetTotal()
         {
             return Subtotal + DeliveryFee;
         }
+
+        public int CurrentShipperId { get; set; }
+        public Shipper? Shipper { get; set; }
     }
 }

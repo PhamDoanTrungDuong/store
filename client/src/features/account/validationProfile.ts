@@ -4,7 +4,7 @@ import * as yup from 'yup';
 
 export const validationProfile = yup.object({
       email: yup.string().required().email("Email invalid"),
-      phone: yup.number().required(),
+      phone: yup.string().required(),
       fullName: yup.string().required(),
       address1: yup.string().required(),
       address2: yup.string().required(),

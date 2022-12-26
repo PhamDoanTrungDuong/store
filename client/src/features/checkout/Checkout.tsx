@@ -82,7 +82,7 @@ const Checkout: React.FC = () => {
 		});
 	};
 
-
+	// For Choose Address
 	const [addresses, setAddresses] = useState<any>([]);
 	useEffect(() => {
 		agent.Account.userAddresses().then((res) => {

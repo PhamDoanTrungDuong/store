@@ -73,15 +73,38 @@ namespace API.Controllers
                     var order = await _context.Orders.FirstOrDefaultAsync(x =>
                               x.Id == deliveryDto.Id);
 
-                    // if(deliveryDto.DeliveryStatus == "PendingConfirm") order.DeliveryStatus = DeliveryStatus.PendingConfirm;
+                    if(deliveryDto.DeliveryStatus == "OnTheWay") {
+                        order.isUserNotifi = true;
+                        order.DeliveryStatus = DeliveryStatus.OnTheWay;
+                    };
 
-                    if(deliveryDto.DeliveryStatus == "OnTheWay") order.DeliveryStatus = DeliveryStatus.OnTheWay;
+                    if(deliveryDto.DeliveryStatus == "ProductDelivered") {
+                        order.isUserNotifi = true;
+                        order.DeliveryStatus = DeliveryStatus.ProductDelivered;
+                    }
 
-                    if(deliveryDto.DeliveryStatus == "ProductDelivered") order.DeliveryStatus = DeliveryStatus.ProductDelivered;
+                    if(deliveryDto.DeliveryStatus == "CancelOrder") {
+                        order.isUserNotifi = true;
+                        order.DeliveryStatus = DeliveryStatus.CancelOrder;
+                    };
 
                     await _context.SaveChangesAsync();
 
                     return new EmptyResult();
+            }
+
+            [HttpPost("userNotify/{id}")]
+            public async Task<ActionResult> UserNotify(int id)
+            {
+                    var order = await _context.Orders.FindAsync(id);
+
+                    if(order != null)  order.isUserNotifi = false;
+
+                    var result = await _context.SaveChangesAsync() > 0;
+                    if(result) return Ok();
+
+                    return BadRequest(new ProblemDetails{Title = "Problem apply the order"});
+
             }
 
             [HttpPost]
@@ -132,6 +155,7 @@ namespace API.Controllers
                     DeliveryFee = deliveryFee,
                     PaymentIntentId = basket.PaymentIntentId,
                     isRefund = false,
+                    CurrentShipperId = 1,
                 };
 
                 _context.Orders.Add(order);
@@ -214,6 +238,7 @@ namespace API.Controllers
 
                 var shipadr = new ShippingAddress {
                     FullName = userShippingAddres.Address.FullName,
+                    PhoneNumber = userShippingAddres.PhoneNumber,
                     Address1 = userShippingAddres.Address.Address1,
                     Address2 = userShippingAddres.Address.Address2,
                     City = userShippingAddres.Address.City,
@@ -233,6 +258,7 @@ namespace API.Controllers
                     requestId = paramsTrans.requestId,
                     transId = paramsTrans.transId,
                     isRefund = false,
+                    CurrentShipperId = 1,
                 };
 
                 _context.Orders.Add(order);
@@ -295,6 +321,7 @@ namespace API.Controllers
 
                 var shipadr = new ShippingAddress {
                     FullName = userShippingAddres.Address.FullName,
+                    PhoneNumber = userShippingAddres.PhoneNumber,
                     Address1 = userShippingAddres.Address.Address1,
                     Address2 = userShippingAddres.Address.Address2,
                     City = userShippingAddres.Address.City,
@@ -311,6 +338,8 @@ namespace API.Controllers
                     Subtotal = subtotal,
                     DeliveryFee = deliveryFee,
                     isRefund = false,
+                    isVnPay = true,
+                    CurrentShipperId = 1,
                 };
 
                 _context.Orders.Add(order);

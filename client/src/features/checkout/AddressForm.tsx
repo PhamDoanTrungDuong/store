@@ -74,6 +74,7 @@ const AddressForm: React.FC<IProps> = (props) => {
 													<span className="text-lg font-bold">
 														FullName
 													</span>
+
 													:{" "}
 													{
 														item.fullName
@@ -84,6 +85,7 @@ const AddressForm: React.FC<IProps> = (props) => {
 														Address
 														1
 													</span>
+
 													:{" "}
 													{
 														item.address1
@@ -94,6 +96,7 @@ const AddressForm: React.FC<IProps> = (props) => {
 														Address
 														2
 													</span>
+
 													:{" "}
 													{
 														item.address2
@@ -109,11 +112,11 @@ const AddressForm: React.FC<IProps> = (props) => {
 				</div>
 			</div>
 			<div className="flex justify-between items-center cursor-pointer">
-			//new shipping address
-			<div className="c-btn" onClick={handleOpen}>
-			Choose Another Address
+				<div></div>
+				<div className="c-btn" onClick={handleOpen}>
+					Choose Another Address
+				</div>
 			</div>
-		</div>
 			<h6 className="text-xl font-medium my-2">New Shipping address</h6>
 			<div>
 				<div className="py-4">
@@ -121,6 +124,13 @@ const AddressForm: React.FC<IProps> = (props) => {
 						control={control}
 						name="fullName"
 						label="Full Name"
+					/>
+				</div>
+				<div className="py-4">
+					<AppTextInput
+						control={control}
+						name="phoneNumber"
+						label="Phone Number"
 					/>
 				</div>
 				<div className="py-4">

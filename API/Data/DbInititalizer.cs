@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -89,6 +90,26 @@ namespace API.Data
 
                 await userManager.CreateAsync(admin, "Pa$$w0rd");
                 await userManager.AddToRolesAsync(admin, new[] {"Member", "Admin"});
+            }
+
+            // SHIPPER
+            if(!context.Shippers.Any())
+            {
+                var shipper = new Shipper
+                {
+                    Name = "Nguyen Van A",
+                    Password = "Admin@123",
+                    Email = "vanA@gmail.com",
+                    Phone = "0916087649",
+                    DayBirth = DateTime.Now,
+                    LicensePlates = "65A-L999999",
+                    Sex = "Male",
+                    Address = "A13-13 street 9",
+                    Status = "Online",
+                    Role = "Shipper"
+                };
+
+                context.Shippers.Add(shipper);
             }
 
             // PRODUCT

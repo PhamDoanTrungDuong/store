@@ -17,6 +17,7 @@ namespace API.Entities
         public string Brand { get; set; }
         public int QuantityInStock { get; set; }
         public string PublicId { get; set; }
+        public int ViewCount { get; set; } = default;
         public ICollection<Comment> CommentReceived { get; set; }
         public ICollection<UserLike> LikedByUsers { get; set; }
 

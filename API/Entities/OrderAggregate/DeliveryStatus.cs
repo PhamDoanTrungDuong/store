@@ -4,6 +4,7 @@ namespace API.Entities.OrderAggregate
     {
         PendingConfirm,
         OnTheWay,
-        ProductDelivered
+        ProductDelivered,
+        CancelOrder
     }
 }

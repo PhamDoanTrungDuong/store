@@ -25,6 +25,8 @@ namespace API.DTOs
         public long Total { get; set; }
 
         public bool isRefund { get; set; }
+        public bool isUserNotifi { get; set; }
+        public bool? isVnPay { get; set; }
         public string orderId { get; set; }
         public string paymentIntentId { get; set; }
 
