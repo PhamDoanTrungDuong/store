@@ -35,6 +35,7 @@ export interface IOrder {
   isVnPay: boolean;
   orderId: string;
   paymentIntentId: string;
+  discount: number;
 }
 
 export interface OrdersParams {

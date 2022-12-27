@@ -77,7 +77,7 @@ const Shipper = () => {
 		);
 
 	return (
-		<div className="mt-24 h-full w-[60%] mx-auto p-5">
+		<div className="mt-24 h-full w-[70%] mx-auto p-5">
 			<div>
 				<div className="h-[100px] flex justify-center items-center bg-green-500">
 					<span className="text-3xl text-white font-bold">
@@ -126,10 +126,11 @@ const Shipper = () => {
 													number
 												</td>
 												<td className="px-4 py-3">
-													Fullname
+													Full Name
 												</td>
 												<td className="px-4 py-3">
-													Address
+													Phone
+													Number
 												</td>
 												<td
 													className="px-4 py-3"
@@ -190,11 +191,11 @@ const Shipper = () => {
 																	}
 																</span>
 															</td>
-															<td>
+															<td align="center">
 																{
 																	order
 																		.shippingAddress
-																		.address1
+																		.phoneNumber
 																}
 															</td>
 															<td align="center">
@@ -285,22 +286,23 @@ const Shipper = () => {
 													number
 												</td>
 												<td className="px-4 py-3">
-													Fullname
+													Full Name
 												</td>
 												<td className="px-4 py-3">
-													Address
+													Phone
+													Number
 												</td>
 												<td
 													className="px-4 py-3"
 													align="center">
 													Total
 												</td>
-												<td
+												{/* <td
 													className="px-4 py-3"
 													align="center">
 													Order
 													Date
-												</td>
+												</td> */}
 												{/* <td
 												className="px-4 py-3"
 												align="center">
@@ -355,11 +357,11 @@ const Shipper = () => {
 																	}
 																</span>
 															</td>
-															<td>
+															<td align="center">
 																{
 																	order
 																		.shippingAddress
-																		.address1
+																		.phoneNumber
 																}
 															</td>
 															<td align="center">
@@ -367,13 +369,13 @@ const Shipper = () => {
 																	order.total
 																)}
 															</td>
-															<td align="center">
+															{/* <td align="center">
 																{moment(
 																	order.orderDate
 																).format(
 																	"MMM Do YY, h:mm a"
 																)}
-															</td>
+															</td> */}
 															{/* <td align="center">
 															{
 																order.orderStatus
@@ -476,10 +478,11 @@ const Shipper = () => {
 													number
 												</td>
 												<td className="px-4 py-3">
-													Fullname
+													Full Name
 												</td>
 												<td className="px-4 py-3">
-													Address
+													Phone
+													Number
 												</td>
 												<td
 													className="px-4 py-3"
@@ -546,11 +549,11 @@ const Shipper = () => {
 																	}
 																</span>
 															</td>
-															<td>
+															<td align="center">
 																{
 																	order
 																		.shippingAddress
-																		.address1
+																		.phoneNumber
 																}
 															</td>
 															<td align="center">

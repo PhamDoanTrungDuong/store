@@ -29,6 +29,7 @@ namespace API.DTOs
         public bool? isVnPay { get; set; }
         public string orderId { get; set; }
         public string paymentIntentId { get; set; }
+        public double Discount { get; set; }
 
     }
 }

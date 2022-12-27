@@ -91,7 +91,7 @@ const BasketTableItem: React.FC<IProps> = ({ item, isBasket }) => {
 							<IoIosArrowBack />
 						</button>
 					)}
-					<span>{item.quantity}</span>
+					<span>x{item.quantity}</span>
 					{isBasket && (
 						<button
 							className="hover:text-green-600 p-2 border rounded-full"

@@ -18,7 +18,7 @@ const style = {
 	top: "50%",
 	left: "50%",
 	transform: "translate(-50%, -50%)",
-	width: 600,
+	width: 800,
 	bgcolor: "background.paper",
 	border: "2px solid #000",
 	boxShadow: 24,
@@ -27,6 +27,7 @@ const style = {
 
 const Basket: React.FC = () => {
 	const [open, setOpen] = useState(false);
+	const [choosenVoucher, setChoosenVoucher] = useState<any>();
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 	const { basket } = useAppSelector((state) => state.basket);
@@ -60,6 +61,11 @@ const Basket: React.FC = () => {
 			});
 		}
 	};
+
+	const handleSelectedVoucher = () => {
+		handleClose()
+		dispatch(setSelectedVoucher(choosenVoucher));
+	}
 	//======================================================
 
 	if (!basket)
@@ -107,7 +113,7 @@ const Basket: React.FC = () => {
 				</div>
 				<div className="md:basis-[30%]">
 					<BasketSumary />
-					{selectedVoucher.value !== 0 ?
+					{selectedVoucher !== 0 ?
 						<div className="p-3 border border-orange-400 mt-4">
 							<p className="text-xl">Discount for basket: <span className="font-bold">{selectedVoucher.value}%</span></p>
 						</div> : <div></div>
@@ -171,13 +177,13 @@ const Basket: React.FC = () => {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description">
 				<Box sx={style}>
-					{vouchers.map((item: any, idx: number) => {
+					<div className="h-[500px] overflow-y-scroll">
+						{vouchers.map((item: any, idx: number) => {
 						return (
 							<div key={idx} onClick={() => {
-								handleClose();
-								dispatch(setSelectedVoucher(item));
+								setChoosenVoucher(item)
 							}}>
-								<div className="flex my-5 cursor-pointer hover:bg-gray-100">
+								<div className={`flex my-5 cursor-pointer hover:bg-gray-100 ${choosenVoucher !== undefined && choosenVoucher.id === item.id ? "border border-orange-700" : ""}`}>
 									<div className="w-[60%] h-[60%]">
 										<img src="/images/voucher.jpg" alt="" />
 									</div>
@@ -193,7 +199,12 @@ const Basket: React.FC = () => {
 								</div>
 							</div>
 						);
-					})}
+						})}
+					</div>
+					<div className="flex justify-end gap-4">
+						<button className="c-btn" onClick={() => handleClose()}>Cancel</button>
+						<button className="bg-orange-600 border border-orange-600 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-orange-600 duration-200" onClick={handleSelectedVoucher}>Aplly</button>
+					</div>
 				</Box>
 			</Modal>
 		</div>

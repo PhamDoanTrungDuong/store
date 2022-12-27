@@ -14,9 +14,9 @@ const BasketSumary: React.FC<IProps> = ({subtotal}) => {
        subtotal = basket?.items.reduce((sum, item) => sum + (item.quantity * item.salePrice), 0) ?? 0;
        var discount = +selectedVoucher.value;
        var subtotal2 = subtotal - (subtotal * (discount/100));
-
     const deliveryFee = subtotal > 10000 ? 0 : 500;
-
+    console.log(subtotal)
+    console.log(subtotal2)
     return (
         <>
             <div className='p-4 border rounded-xl'>

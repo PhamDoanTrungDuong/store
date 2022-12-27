@@ -18,7 +18,7 @@ const BasketTable: React.FC<IProps> = ({ items, isBasket = true }) => {
 	}, [dispatch, status]);
 
 	return (
-		<table className="max-w-[400px] sm:max-w-[500px] md:max-w-[600px]">
+		<table className="max-w-[400px] sm:max-w-[500px] md:w-[600px]">
 			<thead>
 				<tr>
 					<th align="left" className="px-5 md:px-20 pb-5">

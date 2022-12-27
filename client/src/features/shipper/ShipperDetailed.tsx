@@ -17,8 +17,9 @@ const ShipperDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin })
 	const dispatch = useAppDispatch();
 	const { user } = useAppSelector((state) => state.account);
 
-	const subtotal =
-		order.orderItems.reduce((sum, item) => sum + item.quantity * item.price, 0) ?? 0;
+	// const subtotal =
+	// 	order.orderItems.reduce((sum, item) => sum + item.quantity * item.price, 0) ?? 0;
+	
 	const steps = ["Order Placed", "On The Way", "Product Delivered"];
 	const [openPdf, setOpenPdf] = useState<boolean>(false);
 	const handlePDF = () => {
@@ -43,21 +44,21 @@ const ShipperDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin })
 	};
 
 	return (
-		<div className="mt-24 h-full w-[60%] mx-auto p-5">
+		<div className="mt-24 h-full w-[70%] mx-auto p-5">
 			<div>
 				<div className="flex justify-start items-center mb-5">
 					<div className="p-4">
 						<button
-							className="border text-white px-6 py-1 border-indigo-600 bg-indigo-600 text-lg rounded-lg hover:text-indigo-600 hover:bg-transparent duration-200 ease-in-out mr-4"
+							className="border text-white px-6 py-1 border-indigo-600 bg-indigo-600 text-lg rounded-lg hover:text-indigo-600 hover:bg-transparent duration-200 ease-in-out mr-4 flex items-center gap-2"
 							onClick={() => setSelectedOrder(0)}>
-							<MdArrowBackIosNew size={20} />
+							<MdArrowBackIosNew size={20} /> Back
 						</button>
 					</div>
 					<div>
 						<span className="text-lg font-medium">Code Orders: #{order.id}</span>
 					</div>
 				</div>
-				<div className="rounded-div p-3 flex justify-start gap-3">
+				<div className="p-3 flex justify-start gap-3">
 					<div className="basis-3/5">
 						<h1 className="text-lg font-extrabold">
 							Delivery Address
@@ -115,9 +116,15 @@ const ShipperDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin })
 							<div className="my-3">
 								<span className="font-bold text-base mr-4">
 									Discount:{" "}
-								</span>{" "}
-								...
+								</span>
+								<span>{order.discount}%</span>
 							</div>
+							{/* <div className="my-3">
+								<span className="font-bold text-base mr-4">
+									Delivery Fee:{" "}
+								</span>
+								<span>Delivery Fee{currencyFormat(order.deliveryFee)}</span>
+							</div> */}
 							<div className="my-3">
 								<span className="font-bold text-base mr-4">
 									Amount to be paid:{" "}
@@ -129,63 +136,67 @@ const ShipperDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin })
 				</div>
 				<div className="rounded-div p-3 mt-5">
 					<div className="p-5">
-						{order.orderItems.map((item) => {
-							return (
-								<div>
-									<div className="flex items-center gap-4 my-5">
-										<div>
-											<img
-												className="rounded-xl"
-												src={
-													item.pictureUrl
-												}
-												alt={
-													item.name
-												}
-												style={{
-													height: 80,
-													marginRight: 20,
-												}}
-											/>
-										</div>
-										<div className="flex-row">
-											<div className="flex justify-between w-[300px]">
-												<div className="hidden md:block">
-													{
+						<div className="flex justify-center">
+							<div>
+							{order.orderItems.map((item) => {
+								return (
+									<div>
+										<div className="flex items-center gap-4 my-5">
+											<div>
+												<img
+													className="rounded-xl"
+													src={
+														item.pictureUrl
+													}
+													alt={
 														item.name
 													}
-												</div>
-												<div className="ml-8">
-													$
-													{(
-														item.price /
-														100
-													).toFixed(
-														2
-													)}
-												</div>
+													style={{
+														height: 80,
+														marginRight: 20,
+													}}
+												/>
 											</div>
-											<div>
-												x
-												{
-													item.quantity
-												}
+											<div className="flex-row">
+												<div className="flex justify-between w-[300px]">
+													<div className="hidden md:block">
+														{
+															item.name
+														}
+													</div>
+													<div className="ml-8">
+														$
+														{(
+															item.price /
+															100
+														).toFixed(
+															2
+														)}
+													</div>
+												</div>
+												<div>
+													x
+													{
+														item.quantity
+													}
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							);
-						})}
+								);
+							})}
+							</div>
+						</div>
 						<div className="flex justify-end items-end">
 							<div>
 								<p className="text-lg font-medium my-4">
-									Discount: <span>...</span>
+									Discount: <span>{order.discount}%</span>
 								</p>
 								<p className="text-lg font-medium">
 									Total:{" "}
 									<span>
 										{currencyFormat(
-											subtotal
+											order.total
 										)}
 									</span>
 								</p>
@@ -203,7 +214,7 @@ const ShipperDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin })
 									? "$0"
 									: order.isVnPay === true
 									? "$0"
-									: currencyFormat(subtotal)}
+									: currencyFormat(order.subtotal)}
 							</p>
 						</div>
 						<button

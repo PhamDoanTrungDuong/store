@@ -26,6 +26,7 @@ namespace API.Extensions
                     isVnPay = order.isVnPay,
                     orderId = order.orderId,
                     paymentIntentId = order.PaymentIntentId,
+                    Discount = order.Discount,
                     OrderItems = order.OrderItems.Select(item => new OrderItemDto
                     {
                         ProductId = item.ItemOrdered.ProductId,

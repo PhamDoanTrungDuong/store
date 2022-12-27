@@ -54,7 +54,7 @@ const initialState: AdminState = {
       commentsParams: initParams(),
       ordersParams: initParams(),
       todaySales: 0,
-      selectedVoucher: Object,
+      selectedVoucher: 0,
 }
 
 const getCategoriesAxiosParams = (categoriesParams: CategoriesParams) => {

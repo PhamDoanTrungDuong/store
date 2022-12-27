@@ -1,13 +1,12 @@
-import { Box, Stepper, Step, StepLabel } from "@mui/material";
 import { BasketItem } from "../../app/interfaces/IBasket";
 import { IOrder } from "../../app/interfaces/IOrder";
 import BasketSumary from "../basket/BasketSumary";
 import BasketTable from "../basket/BasketTable";
-import { TbGift, TbHome2 } from "react-icons/tb";
-import { RiTruckLine } from "react-icons/ri";
+import { MdArrowBackIosNew } from "react-icons/md";
 import { AiOutlineHome, AiOutlineShoppingCart, AiOutlineFilePdf } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaHashtag } from "react-icons/fa";
+import { RiTruckLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import PDFPrint from "../../app/components/PDFPrint";
 import { useState } from "react";
@@ -182,20 +181,39 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin }) =
 						</Stepper>
 					</Box>
 				</div> */}
-				<div className="p-4">
+				<div className="p-4 flex gap-4">
 					<button
-						className="border text-white px-6 py-1 border-indigo-600 bg-indigo-600 text-lg rounded-lg hover:text-indigo-600 hover:bg-transparent duration-200 ease-in-out mr-4"
+						className="border text-white px-6 py-1 border-indigo-600 bg-indigo-600 text-lg rounded-lg hover:text-indigo-600 hover:bg-transparent duration-200 ease-in-out mr-4 flex items-center gap-2"
 						onClick={() => setSelectedOrder(0)}>
-						Back to orders
+						<MdArrowBackIosNew size={20} />
+						Back
 					</button>
+					{isAdmin ? (
+						<div>
+							<div className="group">
+								<button
+									className="border text-white px-3 py-1 border-[#AA0A00] bg-[#AA0A00] text-lg rounded-lg group-hover:text-[#AA0A00] group-hover:bg-transparent duration-200 ease-in-out flex justify-center items-center gap-2"
+									onClick={handlePDF}>
+									<AiOutlineFilePdf
+										size={30}
+										className="text-white p-0 duration-200 ease-in-out group-hover:text-[#AA0A00]"
+									/>{" "}
+									Export
+								</button>
+							</div>
+						</div>
+					) : (
+						""
+					)}
 					{user?.roles?.includes("Admin") &&
 					order.deliveryStatus === "PendingConfirm" &&
 					order.isRefund === false ? (
 						<button
-							className="border text-white px-6 py-1 border-green-600 bg-green-600 text-lg rounded-lg hover:text-green-600 hover:bg-transparent duration-200 ease-in-out "
+							className="border text-white px-6 py-1 border-green-600 bg-green-600 text-lg rounded-lg hover:text-green-600 hover:bg-transparent duration-200 ease-in-out flex items-center gap-2"
 							onClick={() =>
 								handleShipper(order.id, "OnTheWay")
 							}>
+							<RiTruckLine size={20} />
 							Deliver to Shipper
 						</button>
 					) : (
@@ -223,7 +241,7 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin }) =
 								? order.shippingAddress.phoneNumber
 								: "0" +
 								  order.shippingAddress.phoneNumber} */}
-								{order.shippingAddress.phoneNumber}
+							{order.shippingAddress.phoneNumber}
 						</div>
 						<div className="my-3">
 							<span className="font-bold text-base mr-4">
@@ -252,47 +270,31 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin }) =
 						</div>
 						<div className="my-3">
 							<span className="font-bold text-base mr-4">
-								Discount:{" "}
+								Discount:
 							</span>{" "}
-							...
+							<span>{order.discount}%</span>
 						</div>
 						<div className="my-3">
 							<span className="font-bold text-base mr-4">
-								Amount to be paid:{" "}
+								Total:{" "}
 							</span>{" "}
-							{currencyFormat(order.total)}
+							<span className="text-xl">{currencyFormat(order.total)}</span>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div className="rounded-div2 flex flex-col md:flex-row gap-3 mt-10">
-				<div className="basis md:basis-2/3 overflow-y-scroll scroll-smooth h-[500px]">
-					<BasketTable
-						items={order.orderItems as BasketItem[]}
-						isBasket={false}
-					/>
+			<div className="rounded-div2 flex justify-center gap-3 mt-10">
+				<BasketTable
+					items={order.orderItems as BasketItem[]}
+					isBasket={false}
+				/>
+				{/* <div className="basis md:basis-2/3 overflow-y-scroll scroll-smooth h-[500px]">
+					
 				</div>
 				<div className="basis md:basis-1/3">
 					<BasketSumary subtotal={subtotal} />
-				</div>
+				</div> */}
 			</div>
-			{isAdmin ? (
-				<div className="flex justify-end items-center mt-3">
-					<div className="group">
-						<button
-							className="border text-white px-3 py-1 border-[#AA0A00] bg-[#AA0A00] text-lg rounded-lg group-hover:text-[#AA0A00] group-hover:bg-transparent duration-200 ease-in-out flex justify-center items-center gap-2"
-							onClick={handlePDF}>
-							<AiOutlineFilePdf
-								size={30}
-								className="text-white p-0 duration-200 ease-in-out group-hover:text-[#AA0A00]"
-							/>{" "}
-							Export
-						</button>
-					</div>
-				</div>
-			) : (
-				""
-			)}
 		</div>
 	);
 };

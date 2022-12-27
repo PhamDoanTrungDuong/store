@@ -17,7 +17,8 @@
       [x] sđt đơn hàng
       [x] sđt (chọn nhiều địa chỉ)
       [x] thông báo đơn hàng (user)
-      [] order discount
+      [x] hủy voucher
+      [x] order detail discount
  -->
 <!--       ==========Main features===========
       [x] Momo
