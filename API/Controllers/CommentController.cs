@@ -36,6 +36,8 @@ namespace API.Controllers
 
                   var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == username);
                   var product = await _context.Products.FindAsync(createCommentDto.ProductId);
+                  var adminCommentNotify = await _context.Notifies.FindAsync(1);
+
 
                   if (product == null) return NotFound();
 
@@ -51,6 +53,8 @@ namespace API.Controllers
                         isAccept = false,
                         isNoftify = true,
                   };
+
+                  adminCommentNotify.CommentNotify = true;
 
                   _commentService.AddComment(comment);
 

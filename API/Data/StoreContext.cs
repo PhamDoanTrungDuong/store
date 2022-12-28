@@ -28,6 +28,7 @@ namespace API.Data
           public DbSet<DiscountBanner> DiscountBanners { get; set; }
           public DbSet<Voucher> Vouchers { get; set; }
           public DbSet<Shipper> Shippers { get; set; }
+          public DbSet<Notify> Notifies { get; set; }
           protected override void OnModelCreating(ModelBuilder builder)
           {
                base.OnModelCreating(builder);

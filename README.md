@@ -19,6 +19,7 @@
       [x] thông báo đơn hàng (user)
       [x] hủy voucher
       [x] order detail discount
+      [] face authen
  -->
 <!--       ==========Main features===========
       [x] Momo
@@ -50,7 +51,7 @@
       [x] giao hàng
       [x] voucher (name, code, feature, value, exspire, createAt)
       [x] voucher giảm giá
-      [] admin reddot thông báo có đơn, member, comment mới
+      [x] admin reddot thông báo có đơn, member, comment mới
       [] doanh thu (ref thầy Đệ)
       [] điểm danh nhận voucher
 

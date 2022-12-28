@@ -10,6 +10,19 @@ namespace API.Data
     public static class DbInitializer
     {
         public static async Task Initialize(StoreContext context, UserManager<User> userManager, RoleManager<Role> roleManager){
+            //NOTIFY
+            if(!context.Notifies.Any())
+            {
+                var notify = new Notify
+                {
+                    Description = "Admin Notifications",
+                    CommentNotify = false,
+                    OrderNotify = false,
+                    MemberNotify = false
+                };
+
+                context.Notifies.Add(notify);
+            }
 
             // ROLE
             var roles = new List<Role>

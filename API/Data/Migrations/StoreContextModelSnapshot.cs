@@ -177,6 +177,30 @@ namespace API.Data.Migrations
                     b.ToTable("DiscountBanners");
                 });
 
+            modelBuilder.Entity("API.Entities.Notify", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<bool>("CommentNotify")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("MemberNotify")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("OrderNotify")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notifies");
+                });
+
             modelBuilder.Entity("API.Entities.OrderAggregate.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -196,8 +220,8 @@ namespace API.Data.Migrations
                     b.Property<int>("DeliveryStatus")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Discount")
-                        .HasColumnType("integer");
+                    b.Property<double>("Discount")
+                        .HasColumnType("double precision");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("timestamp without time zone");
@@ -426,14 +450,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "55d55435-45c5-4195-8f37-5c1a669f24af",
+                            ConcurrencyStamp = "aebb4d01-8d7c-4f3a-a69d-8cc526447cdf",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "aab390be-44a5-4907-8262-aa250ff0fb76",
+                            ConcurrencyStamp = "6377ae8e-7458-444e-8c48-0b00fda1bf95",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

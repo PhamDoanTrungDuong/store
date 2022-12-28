@@ -549,5 +549,28 @@ namespace API.Controllers
                   return BadRequest(new ProblemDetails{ Title = "Something went wrong"});
             }
 
+            [HttpGet("admin-notifies")]
+            public async Task<ActionResult<List<Notify>>> GetAdminNotifies() {
+                  return await _context.Notifies.ToListAsync();
+            }
+
+            [HttpPost("admin-check-notify/{notifyString}")]
+            public async Task<ActionResult> AdminCheckNotify(string notifyString) {
+                  var notify = await _context.Notifies.FindAsync(1);
+                  if(notifyString == "Order") {
+                        notify.OrderNotify = false;
+                  } else if (notifyString == "Comment") {
+                        notify.CommentNotify = false;
+                  } else {
+                        notify.MemberNotify = false;
+                  }
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if(result) return Ok();
+                  return Ok();
+
+            }
+
       }
 }

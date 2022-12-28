@@ -71,6 +71,7 @@ namespace API.Controllers
                   var user = new User { UserName = registerDto.UserName, Email = registerDto.Email };
 
                   var result = await _userManager.CreateAsync(user, registerDto.Password);
+                  var adminMemberNotify = await _context.Notifies.FindAsync(1);
 
                   if (!result.Succeeded)
                   {
@@ -81,6 +82,8 @@ namespace API.Controllers
 
                         return ValidationProblem();
                   }
+
+                  adminMemberNotify.MemberNotify = true;
 
                   await _userManager.AddToRoleAsync(user, "Member");
 

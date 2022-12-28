@@ -1,82 +1,112 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { RiBarChartBoxFill, RiTableFill, RiAccountCircleFill, RiPriceTag3Fill, RiCouponLine } from "react-icons/ri";
+import {
+	RiBarChartBoxFill,
+	RiTableFill,
+	RiAccountCircleFill,
+	RiPriceTag3Fill,
+	RiCouponLine,
+} from "react-icons/ri";
 import { TbSlideshow, TbDiscount } from "react-icons/tb";
 import { SiGooglecolab } from "react-icons/si";
 import { MdManageAccounts, MdInsertComment, MdOutlineCardGiftcard } from "react-icons/md";
+import { useAppSelector, useAppDispatch } from "../../app/store/configureStore";
+import { fetchNotifies, setNotifyLoad } from "./adminSlice";
+import agent from "../../app/api/agent";
 
 const SideBar: React.FC = () => {
+	const { notifies, loadNotify } = useAppSelector((state) => state.admin);
+	const dispatch = useAppDispatch();
 	const [open, setOpen] = useState(true);
+
+	useEffect(() => {
+		loadNotify ? dispatch(fetchNotifies()) : dispatch(fetchNotifies());
+	}, [dispatch, loadNotify]);
+
+	const handleCheckNotify = (notify: string) => {
+		agent.Admin.adminCheckNotify(notify)
+			.then(() => {
+				dispatch(setNotifyLoad());
+			});
+	};
 
 	const Menus = [
 		{
 			id: 0,
 			title: "Inventory",
 			to: "/inventory",
+			icon: <RiBarChartBoxFill size={30} className="rounded-lg fill-[#637381]" />,
+		},
+		{
+			id: 1,
+			title: "Sales",
+			to: "/admin-sales",
+			icon: <RiPriceTag3Fill size={30} className="rounded-lg fill-[#637381]" />,
+		},
+		{
+			id: 2,
+			title: "Categories",
+			to: "/admin-categories",
+			icon: <RiTableFill size={30} className="rounded-lg fill-[#637381]" />,
+		},
+		{
+			id: 3,
+			title: "Members",
+			to: "/admin-members",
 			icon: (
-				<RiBarChartBoxFill
+				<RiAccountCircleFill
 					size={30}
 					className="rounded-lg fill-[#637381]"
 				/>
 			),
 		},
 		{
-			id: 1,
-			title: "Sales",
-			to: "/admin-sales",
+			id: 4,
+			title: "Role",
+			to: "/admin-role",
+			icon: <MdManageAccounts size={30} className="rounded-lg fill-[#637381]" />,
+		},
+		{
+			id: 5,
+			title: "Comments",
+			to: "/admin-comments",
+			icon: <MdInsertComment size={30} className="rounded-lg fill-[#637381]" />,
+		},
+		{
+			id: 6,
+			title: "Orders",
+			to: "/admin-orders",
 			icon: (
-				<RiPriceTag3Fill
+				<MdOutlineCardGiftcard
 					size={30}
 					className="rounded-lg fill-[#637381]"
 				/>
 			),
 		},
-		{ id: 2, title: "Categories", to: "/admin-categories", icon: (
-                  <RiTableFill
-                        size={30}
-                        className="rounded-lg fill-[#637381]"
-                  />
-            ), },
-		{ id: 3, title: "Member", to: "/admin-members", icon: (
-                  <RiAccountCircleFill
-                        size={30}
-                        className="rounded-lg fill-[#637381]"
-                  />), },
-		{ id: 4, title: "Role", to: "/admin-role", icon: (
-                  <MdManageAccounts
-                        size={30}
-                        className="rounded-lg fill-[#637381]"
-                  />), },
-		{ id: 5, title: "Comments", to: "/admin-comments", icon: (
-                  <MdInsertComment
-                        size={30}
-                        className="rounded-lg fill-[#637381]"
-                  />), },
-		{ id: 6, title: "Orders", to: "/admin-orders", icon: (
-                  <MdOutlineCardGiftcard
-                        size={30}
-                        className="rounded-lg fill-[#637381]"
-                  />), },
-		{ id: 7, title: "Slider", to: "/admin-sliders", icon: (
-                  <TbSlideshow
-                        size={30}
-                        className="rounded-lg"
-                  />), },
-		{ id: 8, title: "Partner", to: "/admin-partners", icon: (
-                  <SiGooglecolab
-                        size={30}
-                        className="rounded-lg"
-                  />), },
-		{ id: 9, title: "Discount Banner", to: "/admin-discountBanner", icon: (
-                  <TbDiscount
-                        size={30}
-                        className="rounded-lg"
-                  />), },
-		{ id: 1, title: "Voucher", to: "/admin-vouchers", icon: (
-                  <RiCouponLine
-                        size={30}
-                        className="rounded-lg"
-                  />), },
+		{
+			id: 7,
+			title: "Slider",
+			to: "/admin-sliders",
+			icon: <TbSlideshow size={30} className="rounded-lg" />,
+		},
+		{
+			id: 8,
+			title: "Partner",
+			to: "/admin-partners",
+			icon: <SiGooglecolab size={30} className="rounded-lg" />,
+		},
+		{
+			id: 9,
+			title: "Discount Banner",
+			to: "/admin-discountBanner",
+			icon: <TbDiscount size={30} className="rounded-lg" />,
+		},
+		{
+			id: 1,
+			title: "Voucher",
+			to: "/admin-vouchers",
+			icon: <RiCouponLine size={30} className="rounded-lg" />,
+		},
 	];
 	return (
 		<div
@@ -109,23 +139,71 @@ const SideBar: React.FC = () => {
 			</div>
 			<ul className="pt-12">
 				{Menus.map((Menu, index) => (
-					<NavLink to={Menu.to} key={index}
+					<NavLink
+						to={Menu.to}
+						key={index}
 						className={({ isActive }) => {
-							return `flex rounded-lg p-3 cursor-pointer ${isActive ? "bg-blue-300/40" : ""} hover:bg-gray-300/60 duration-100 text-[#637381] my-1 text-sm group`}}
-					>
-						{({ isActive }) =>
+							return `flex rounded-lg p-3 cursor-pointer ${
+								isActive ? "bg-blue-300/40" : ""
+							} hover:bg-gray-300/60 duration-100 text-[#637381] my-1 text-sm group`;
+						}}>
+						{({ isActive }) => (
 							<li
-								className="flex items-center gap-x-4 "
-							>
-									{Menu.icon}
-									<span
-										className={`${
-											!open && "hidden"
-										} origin-left text-[#637381]  ${isActive ? "text-sky-600" : ""} duration-200`}>
-										{Menu.title}
-									</span>
+								className="flex w-full items-center gap-x-4 "
+								onClick={() =>
+									handleCheckNotify(
+										Menu.title ===
+											"Orders"
+											? "Order"
+											: Menu.title ===
+											  "Comments"
+											? "Comment"
+											: Menu.title ===
+											  "Members"
+											? "Member"
+											: ""
+									)
+								}>
+								{Menu.icon}
+								<span
+									className={`${
+										!open && "hidden"
+									} origin-left text-[#637381]  ${
+										isActive
+											? "text-sky-600"
+											: ""
+									} duration-200`}>
+									{Menu.title}
+								</span>
+								<div
+									className={`relative ${
+										Array.isArray(
+											notifies
+										) &&
+										notifies?.find(
+											(
+												item: any
+											) =>
+												(Menu.title ===
+													"Orders" &&
+													item.orderNotify ===
+														true) ||
+												(Menu.title ===
+													"Comments" &&
+													item.commentNotify ===
+														true) ||
+												(Menu.title ===
+													"Members" &&
+													item.memberNotify ===
+														true)
+										)
+											? "flex"
+											: "hidden"
+									}`}>
+									<div className="inline-flex relative -top-3 right-3 w-[10px] h-[10px] bg-red-600 rounded-full dark:border-gray-900"></div>
+								</div>
 							</li>
-						}
+						)}
 					</NavLink>
 				))}
 			</ul>

@@ -216,6 +216,11 @@ const Admin = {
      newVoucher: (voucher: any) => requests.postForm('admin/add-voucher', createFormData(voucher)),
      updateVoucher: (voucher: any) => requests.putForm('admin/update-voucher', createFormData(voucher)),
      deleteVoucher: (id: number) => requests.delete(`admin/delete-voucher/${id}`),
+
+     //Admin Notify
+     getAdminNotify: () => requests.get('admin/admin-notifies'),
+     adminCheckNotify: (data: string) => requests.post(`admin/admin-check-notify/${data}`, {}),
+
 }
 
 const Profile = {

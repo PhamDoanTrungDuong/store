@@ -113,6 +113,7 @@ namespace API.Controllers
                 var basket = await _context.Baskets
                         .RetrieveBasketWithItems(User.Identity.Name)
                         .FirstOrDefaultAsync();
+                var adminOrderNotify = await _context.Notifies.FindAsync(1);
 
                 if(basket == null) return BadRequest(new ProblemDetails{Title = "Could not locate basket"});
 
@@ -166,6 +167,8 @@ namespace API.Controllers
                     Discount = orderDto.Discount,
                 };
 
+                adminOrderNotify.OrderNotify = true;
+
                 _context.Orders.Add(order);
                 _context.Baskets.Remove(basket);
 
@@ -201,6 +204,7 @@ namespace API.Controllers
                 var basket = await _context.Baskets
                         .RetrieveBasketWithItems(User.Identity.Name)
                         .FirstOrDefaultAsync();
+                var adminOrderNotify = await _context.Notifies.FindAsync(1);
 
                 var userShippingAddres = await _context.Users
                         .Where(x => x.UserName == User.Identity.Name)
@@ -269,6 +273,8 @@ namespace API.Controllers
                     CurrentShipperId = 1,
                 };
 
+                adminOrderNotify.OrderNotify = true;
+
                 _context.Orders.Add(order);
                 _context.Baskets.Remove(basket);
 
@@ -284,6 +290,7 @@ namespace API.Controllers
                 var basket = await _context.Baskets
                         .RetrieveBasketWithItems(User.Identity.Name)
                         .FirstOrDefaultAsync();
+                var adminOrderNotify = await _context.Notifies.FindAsync(1);       
 
                 var userShippingAddres = await _context.Users
                         .Where(x => x.UserName == User.Identity.Name)
@@ -349,6 +356,8 @@ namespace API.Controllers
                     isVnPay = true,
                     CurrentShipperId = 1,
                 };
+
+                adminOrderNotify.OrderNotify = true;
 
                 _context.Orders.Add(order);
                 _context.Baskets.Remove(basket);

@@ -113,9 +113,9 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin }) =
 						)}
 					</h4>
 					<div>
-						<h5 className="text-lg font-medium">
+						<h5 className="text-lg font-bold">
 							Order Date:{" "}
-							{moment(order.orderDate).format("lll")}
+							<span className="font-medium">{moment(order.orderDate).format("lll")}</span>
 						</h5>
 					</div>
 				</div>
@@ -278,7 +278,7 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin }) =
 							<span className="font-bold text-base mr-4">
 								Total:{" "}
 							</span>{" "}
-							<span className="text-xl">{currencyFormat(order.total)}</span>
+							<span className="text-xl font-medium">{currencyFormat(order.total)}</span>
 						</div>
 					</div>
 				</div>
