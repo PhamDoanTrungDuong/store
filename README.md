@@ -53,7 +53,7 @@
       [x] voucher (name, code, feature, value, exspire, createAt)
       [x] voucher giảm giá
       [x] admin reddot thông báo có đơn, member, comment mới
-      [] size, color từng sản phẩm (chi tiết)
+      [x] size, color từng sản phẩm (chi tiết)
       [] doanh thu (ref thầy Đệ)
       [] điểm danh nhận voucher
       [] games (maybe)
