@@ -21,8 +21,7 @@ namespace API.Entities
         public ICollection<Comment> CommentReceived { get; set; }
         public ICollection<UserLike> LikedByUsers { get; set; }
 
-        public ICollection<ProductColour> ProductColours { get; set; }
-        public ICollection<ProductSize> ProductSizes { get; set; }
+        public ICollection<ProductDetails> ProductDetails { get; set; }
         public ICollection<ProductDiscount> ProductDiscounts { get; set; }
 
         public int CurrentCateId { get; set; }

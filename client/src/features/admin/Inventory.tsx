@@ -21,11 +21,13 @@ import Loading from "../../app/layout/Loading";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import { FiEye } from "react-icons/fi";
+import ProductVariants from "./ProductVariants";
 
 const Inventory: React.FC = () => {
 	const { products, pagination } = useProducts();
 	const dispatch = useAppDispatch();
 	const [editMode, setEditMode] = useState(false);
+	const [detailMode, setDetailMode] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState<IProduct | undefined>(undefined);
 	// const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	// const open = Boolean(anchorEl);
@@ -40,6 +42,10 @@ const Inventory: React.FC = () => {
 		setSelectedProduct(product);
 		setEditMode(true);
 	}
+	function handleProductDetails(product: IProduct) {
+		setSelectedProduct(product);
+		setDetailMode(true);
+	}
 
 	function handleDeleteProduct(id: number) {
 		let response = agent.Admin.deleteProduct(id)
@@ -51,6 +57,7 @@ const Inventory: React.FC = () => {
 	function cancelEdit() {
 		if (selectedProduct) setSelectedProduct(undefined);
 		setEditMode(false);
+		setDetailMode(false);
 	}
 
 	const handleDelete = (id: number) => {
@@ -76,6 +83,7 @@ const Inventory: React.FC = () => {
 	};
 
 	if (editMode) return <ProductForm product={selectedProduct} cancelEdit={cancelEdit} />;
+	if (detailMode) return <ProductVariants product={selectedProduct} cancelEdit={cancelEdit} />;
 
 	if (!products) return <Loading message="Loading products" />;
 	return (
@@ -199,7 +207,7 @@ const Inventory: React.FC = () => {
 										? 0
 										: product.quantityInStock}
 								</td>
-								<td className="flex justify-center items-center gap-2 mt-[20%]">
+								<td className="flex justify-center items-center gap-2 mt-[10%]">
 									<div
 										className="p-2 hover:bg-yellow-200/30 rounded-full duration-200 cursor-pointer"
 										onClick={() =>
@@ -238,6 +246,24 @@ const Inventory: React.FC = () => {
 												}
 												className="text-red-600"
 											/>
+										</Tooltip>
+									</div>
+									<div
+										className="p-2 hover:bg-green-300/30 rounded-full duration-200 cursor-pointer"
+										onClick={() =>
+											handleProductDetails(
+												product
+											)
+										}>
+										<Tooltip
+											TransitionComponent={
+												Zoom
+											}
+											title="Details">
+											<FiEye
+											className="text-green-600"
+											size={20}
+										/>
 										</Tooltip>
 									</div>
 								</td>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -47,7 +48,6 @@ namespace API.Controllers
             {
                   return await _context.Products.ToListAsync();
             }
-            
 
             [HttpGet("get-product-count")]
             public async Task<int> GetCounterProduct()
@@ -60,6 +60,7 @@ namespace API.Controllers
             {
                   return await _context.Colours.ToListAsync();
             }
+
             [HttpGet("get-sizes")]
             public async Task<List<Size>> GetSizes()
             {
@@ -70,6 +71,8 @@ namespace API.Controllers
             public async Task<ActionResult<Product>> GetProductById(int id)
             {
                   var product = await _context.Products.FindAsync(id);
+
+                  // _mapper.Map(product, productDto);
 
                   if (product == null) return NotFound();
 
@@ -86,12 +89,45 @@ namespace API.Controllers
                   return Ok(new { brands, types });
             }
 
-            [Authorize(Roles = "Admin")]
+            // [Authorize(Roles = "Admin")]
             [HttpPost]
-            public async Task<ActionResult<CreateProductDto>> CreateProduct([FromForm]CreateProductDto productDto)
+            public async Task<ActionResult<CreateProductDto>> CreateProduct(
+                  [FromForm]CreateProductDto productDto,
+                   [FromForm] ProductDetailsDto productDetailsDto)
             {
                   var product = _mapper.Map<Product>(productDto);
 
+                  var arrayColors = new List<Colour>();
+                  var arraySizes = new List<Size>();
+                  var arrayQuantity = new List<int>();
+                  var variantsQuantity = 0;
+
+                  if(productDetailsDto.Colors != null || productDetailsDto.Size != null || productDetailsDto.Quantity != null) {
+                        var colors = productDetailsDto.Colors.Split(", ");
+                        var sizes = productDetailsDto.Size.Split(", ");
+                        var Quantities = productDetailsDto.Quantity.Split(", ");
+
+                        var productDetail = new List<ProductDetails>();
+                        for (var i = 0; i < colors.Length; i++)
+                        {
+                              var color = await _context.Colours.FirstOrDefaultAsync(x => x.Colour_value == colors[i]);
+                              arrayColors.Add(color);
+                        }
+                        for (var i = 0; i < sizes.Length; i++)
+                        {
+                              var size = await _context.Sizes.FirstOrDefaultAsync(x => x.Size_value == sizes[i]);
+                              arraySizes.Add(size);
+                        }
+                        foreach (var qty in Quantities)
+                        {
+                              arrayQuantity.Add(Int32.Parse(qty));
+                              variantsQuantity += Int32.Parse(qty); 
+                        }
+
+                        if(productDto.QuantityInStock != variantsQuantity) return BadRequest(new ProblemDetails{ Title = "Quantity in stock must equal quantity variants"});
+                  }
+
+                  // Product
                   if(productDto.File != null)
                   {
                         var imageResult = await _imageService.AddImageAsync(productDto.File);
@@ -106,9 +142,32 @@ namespace API.Controllers
                   _context.Products.Add(product);
 
                   var result = await _context.SaveChangesAsync() > 0;
+                  // Details
+                  if(productDetailsDto.Colors != null || productDetailsDto.Size != null || productDetailsDto.Quantity != null) {
 
-                  if (result) return CreatedAtRoute("GetProduct", new { Id = product.Id }, product);
+                        if((arrayColors.Count() != arrayQuantity.Count()) || (arrayColors.Count() != arraySizes.Count()) || (arraySizes.Count() != arrayQuantity.Count())) {
+                              return BadRequest(new ProblemDetails{ Title = "Size, Quantity, Color fieald must equal" });
+                        } else {
+                              for (var i = 0; i < arrayColors.Count(); i++)
+                              {
+                                    for (int j = 0; j < arraySizes.Count(); j++) {
+                                          var detail = new ProductDetails {
+                                                ProductId = product.Id,
+                                                ColourId = arrayColors[i].Id,
+                                                ColourValue = arrayColors[i].Colour_value,
+                                                SizeId = arraySizes[j].Id,
+                                                SizeValue = arraySizes[j].Size_value,
+                                                Quantity = arrayQuantity[i]
+                                          };
+                                          _context.ProductDetails.Add(detail);
+                                    }
+                              }
+                        }
+                  }
+                  var resultDetails = await _context.SaveChangesAsync() > 0;
 
+                  // if (result || resultDetails) return CreatedAtRoute("GetProduct", new { Id = product.Id }, product);
+                  if (result || resultDetails) return Ok();
                   return BadRequest(new ProblemDetails { Title = "Problem creating new product" });
             }
 
@@ -174,6 +233,14 @@ namespace API.Controllers
 
                   if(result) return Ok(result);
                   return BadRequest(new ProblemDetails{Title = "Something went wrong"});
+            }
+
+            [HttpGet("product-variants/{id}")]
+            public async Task<ActionResult> ProductVariants(int id)
+            {
+                  var productDetails = await _context.ProductDetails.Where(x => x.ProductId == id).ToListAsync();
+                  if(productDetails == null) return BadRequest(new ProblemDetails{Title = "Can't find product"});
+                  return Ok(productDetails);
             }
       }
 }

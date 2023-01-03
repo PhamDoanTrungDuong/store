@@ -1,9 +1,9 @@
 ##https://store-unavailable.herokuapp.com/
 <!-- hot fix
-      [x] chi tiết sản phẩm x
-      [x] like useEffect x
-      [x] state admin x
-      [x] adminUI x
+      [x] chi tiết sản phẩm
+      [x] like useEffect
+      [x] state admin
+      [x] adminUI
       [x] refund stripe
       [x] xác nhận đã thanh toán
       [x] tìm kiếm loại sản phẩm
@@ -19,6 +19,7 @@
       [x] thông báo đơn hàng (user)
       [x] hủy voucher
       [x] order detail discount
+      [] chấp nhận trạng thái đơn hàng (shipper)
       [] face authen ui
  -->
 <!--       ==========Main features===========
@@ -52,8 +53,10 @@
       [x] voucher (name, code, feature, value, exspire, createAt)
       [x] voucher giảm giá
       [x] admin reddot thông báo có đơn, member, comment mới
+      [x] size, color từng sản phẩm (chi tiết)
       [] doanh thu (ref thầy Đệ)
       [] điểm danh nhận voucher
+      [] games (maybe)
 
 
  -->

@@ -122,6 +122,8 @@ namespace API.Controllers
                 foreach (var item in basket.Items)
                 {
                     var productItem = await _context.Products.FindAsync(item.ProductId);
+                    var productVariants = await _context.ProductDetails.FirstOrDefaultAsync(x => x.ProductId == item.ProductId && x.SizeValue == item.Size && x.ColourValue == item.Color);
+
                     if(productItem == null) return NotFound();
                     if(productItem.QuantityInStock < 1) return BadRequest(new ProblemDetails{Title = $"Product {productItem.Name} is out of stock"});
                     var itemOrdered = new ProductItemOrdered
@@ -142,6 +144,9 @@ namespace API.Controllers
 
                     items.Add(orderItem);
                     productItem.QuantityInStock -= item.Quantity;
+                    if(productVariants.ProductId == item.ProductId && productVariants.SizeValue == item.Size && productVariants.ColourValue == item.Color){
+                        productVariants.Quantity -= item.Quantity;
+                    }
                 }
                 double subtotal = 0;
                 double discount = orderDto.Discount / 100;
@@ -218,6 +223,8 @@ namespace API.Controllers
                 foreach (var item in basket.Items)
                 {
                     var productItem = await _context.Products.FindAsync(item.ProductId);
+                    var productVariants = await _context.ProductDetails.FirstOrDefaultAsync(x => x.ProductId == item.ProductId && x.SizeValue == item.Size && x.ColourValue == item.Color);
+
                     if(productItem == null) return NotFound();
                     if(productItem.QuantityInStock < 1) return BadRequest(new ProblemDetails{Title = $"Product {productItem.Name} is out of stock"});
                     var itemOrdered = new ProductItemOrdered
@@ -238,6 +245,9 @@ namespace API.Controllers
 
                     items.Add(orderItem);
                     productItem.QuantityInStock -= item.Quantity;
+                    if(productVariants.ProductId == item.ProductId && productVariants.SizeValue == item.Size && productVariants.ColourValue == item.Color){
+                        productVariants.Quantity -= item.Quantity;
+                    }
                 }
 
                 var subtotal = items.Sum(item => item.Price * item.Quantity);
@@ -305,6 +315,8 @@ namespace API.Controllers
                 {
                     var productItem = await _context.Products.FindAsync(item.ProductId);
                     if(productItem == null) return NotFound();
+                    var productVariants = await _context.ProductDetails.FirstOrDefaultAsync(x => x.ProductId == item.ProductId && x.SizeValue == item.Size && x.ColourValue == item.Color);
+
                     if(productItem.QuantityInStock < 1) return BadRequest(new ProblemDetails{Title = $"Product {productItem.Name} is out of stock"});
                     var itemOrdered = new ProductItemOrdered
                     {
@@ -324,6 +336,9 @@ namespace API.Controllers
 
                     items.Add(orderItem);
                     productItem.QuantityInStock -= item.Quantity;
+                    if(productVariants.ProductId == item.ProductId && productVariants.SizeValue == item.Size && productVariants.ColourValue == item.Color){
+                        productVariants.Quantity -= item.Quantity;
+                    }
                 }
 
                 var subtotal = items.Sum(item => item.Price * item.Quantity);

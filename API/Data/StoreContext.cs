@@ -21,6 +21,7 @@ namespace API.Data
           public DbSet<UserLike> Likes { get; set; }
           public DbSet<Entities.Size> Sizes { get; set; }
           public DbSet<Colour> Colours { get; set; }
+          public DbSet<ProductDetails> ProductDetails { get; set; }
           public DbSet<SelectedAddress> SelectedAddresses { get; set; }
           public DbSet<OrderItem> OrderItems { get; set; }
           public DbSet<Slider> Sliders { get; set; }
@@ -83,44 +84,11 @@ namespace API.Data
                     .HasForeignKey(k => k.CurrentCateId);
 
                //PRODUCT ATTR
-               builder.Entity<ProductSize>()
-                    .HasKey(k => new {k.SizeId, k.ProductId});
-               builder.Entity<ProductColour>()
-                    .HasKey(k => new {k.ColourId, k.ProductId});
+               // builder.Entity<ProductSize>()
+               //      .HasKey(k => new {k.SizeId, k.ProductId});
+               // builder.Entity<ProductDetails>()
+               //      .HasKey(k => new {k.ColourId, k.SizeId, k.ProductId});
 
-               // builder.Entity<Colour>()
-               //      .HasMany(p => p.ProductColours)
-               //      .WithOne(a => a.Colour)
-               //      .HasForeignKey(fk => fk.ColourId);
-               //  builder.Entity<Product>()
-               //      .HasMany(p => p.ProductColours)
-               //      .WithOne(a => a.Product)
-               //      .HasForeignKey(fk => fk.ProductId);
-
-               // builder.Entity<Size>()
-               //      .HasMany(p => p.ProductSizes)
-               //      .WithOne(a => a.Size)
-               //      .HasForeignKey(fk => fk.SizeId);
-               //  builder.Entity<Product>()
-               //      .HasMany(p => p.ProductSizes)
-               //      .WithOne(a => a.Product)
-               //      .HasForeignKey(fk => fk.ProductId);
-
-               //USER LIKE
-               // builder.Entity<UserLike>()
-               //      .HasKey(k => new {k.UserId, k.LikedProductId});
-
-               // builder.Entity<UserLike>()
-               //      .HasOne(u => u.User)
-               //      .WithMany(p => p.LikedProducts)
-               //      .HasForeignKey(s => s.UserId)
-               //      .OnDelete(DeleteBehavior.Cascade);
-
-               // builder.Entity<UserLike>()
-               //      .HasOne(u => u.LikedProduct)
-               //      .WithMany(p => p.LikedByUsers)
-               //      .HasForeignKey(s => s.LikedProductId)
-               //      .OnDelete(DeleteBehavior.Cascade);
           }
      }
 }

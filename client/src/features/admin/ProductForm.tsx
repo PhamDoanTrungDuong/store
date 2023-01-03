@@ -1,5 +1,5 @@
 import { Typography, Grid, Box, Button } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import AppTextInput from "../../app/components/AppTextInput";
 import useProducts from "../../app/hooks/useProducts";
@@ -27,14 +27,35 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
             resolver: yupResolver<any>(validationSchema)
       });
 
+        const [colors, setColors] = useState([]);
+	    const [sizes, setSizes] = useState([]);
+	    const [variants, setVariants] = useState([]);
+
         const { brands } = useProducts();
 	    const { categories } = useAppSelector((state) => state.admin);
 
         var cate = categories.map((item: any) => {return item.name});
-        console.log(cate);
+        // console.log(cate);
 
         const watchFile = watch('file', null);
         const dispatch = useAppDispatch();
+
+        useEffect(() => {
+		if (product && product.id !== undefined)
+			agent.Catalog.getColors()
+				.then((res) => setColors(res))
+				.catch((error) => console.log(error));
+            agent.Catalog.getSizes()
+                .then((res) => setSizes(res))
+                .catch((error) => console.log(error));
+            if(product !== undefined){
+                agent.Catalog.productVariants(product.id) 
+                .then((res) => setVariants(res))
+                .catch((error) => console.log(error));
+            }    
+        }, [product]);
+
+        console.log(variants)
 
         useEffect(() => {
             if (product && !watchFile  && !isDirty) reset(product);
@@ -44,6 +65,7 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
         }, [product, reset, watchFile, isDirty]);
 
         async function handleSubmitData(data: FieldValues) {
+            // console.log(data)
             try {
                 let response: IProduct;
                 if (product) {
@@ -91,14 +113,29 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
                             <AppSelectList items={cate} control={control} name='type'label='Type' />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                        <AppTextInput type='number' control={control} name='price' label='Price' />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <AppTextInput type='number' control={control} name='quantityInStock' label='Quantity in Stock' />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <AppTextInput multiline={true} rows={4} control={control} name='description' label='Description' />
-                    </Grid>
+                            <AppTextInput type='number' control={control} name='price' label='Price' />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <AppTextInput type='number' control={control} name='quantityInStock' label='Quantity in Stock' />
+                        </Grid>
+                        {!product ? (
+                            <>
+                                <Grid item xs={12} sm={4}>
+                                    <AppTextInput control={control} name='colors' label='Product Colors' />
+                                </Grid>
+                                <Grid item xs={12} sm={4}>
+                                    <AppTextInput control={control} name='size' label='Product Sizes' />
+                                </Grid>
+                                <Grid item xs={12} sm={4}>
+                                    <AppTextInput control={control} name='quantity' label='Quantity for variants' />
+                                </Grid>
+                            </>
+                        ) : (
+                            <div></div>
+                        )}
+                        <Grid item xs={12}>
+                            <AppTextInput multiline={true} rows={4} control={control} name='description' label='Description' />
+                        </Grid>
                         <Grid item xs={12}>
                             <Box display='flex' justifyContent='space-between' alignItems='center'>
                                 <AppDropzone control={control} name='file' />
