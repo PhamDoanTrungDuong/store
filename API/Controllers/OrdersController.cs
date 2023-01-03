@@ -144,8 +144,10 @@ namespace API.Controllers
 
                     items.Add(orderItem);
                     productItem.QuantityInStock -= item.Quantity;
-                    if(productVariants.ProductId == item.ProductId && productVariants.SizeValue == item.Size && productVariants.ColourValue == item.Color){
-                        productVariants.Quantity -= item.Quantity;
+                    if(productVariants != null) {
+                        if(productVariants.ProductId == item.ProductId && productVariants.SizeValue == item.Size && productVariants.ColourValue == item.Color){
+                            productVariants.Quantity -= item.Quantity;
+                        }
                     }
                 }
                 double subtotal = 0;
@@ -245,8 +247,10 @@ namespace API.Controllers
 
                     items.Add(orderItem);
                     productItem.QuantityInStock -= item.Quantity;
-                    if(productVariants.ProductId == item.ProductId && productVariants.SizeValue == item.Size && productVariants.ColourValue == item.Color){
-                        productVariants.Quantity -= item.Quantity;
+                    if(productVariants != null) {
+                        if(productVariants.ProductId == item.ProductId && productVariants.SizeValue == item.Size && productVariants.ColourValue == item.Color){
+                            productVariants.Quantity -= item.Quantity;
+                        }
                     }
                 }
 
@@ -336,8 +340,10 @@ namespace API.Controllers
 
                     items.Add(orderItem);
                     productItem.QuantityInStock -= item.Quantity;
-                    if(productVariants.ProductId == item.ProductId && productVariants.SizeValue == item.Size && productVariants.ColourValue == item.Color){
-                        productVariants.Quantity -= item.Quantity;
+                    if(productVariants != null) {
+                        if(productVariants.ProductId == item.ProductId && productVariants.SizeValue == item.Size && productVariants.ColourValue == item.Color){
+                            productVariants.Quantity -= item.Quantity;
+                        }
                     }
                 }
 
