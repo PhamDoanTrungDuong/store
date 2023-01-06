@@ -22,6 +22,8 @@
       [x] chấp nhận trạng thái đơn hàng (shipper)
       [x] kiểm tra giá trị input của variants
       [x] vnpay, momo order
+      [] load sales
+      [] giao diện sales, tìm kiếm, sales product vertical
       [] face authen ui
  -->
 <!--       ==========Main features===========
