@@ -20,6 +20,7 @@
       [x] hủy voucher
       [x] order detail discount
       [] chấp nhận trạng thái đơn hàng (shipper)
+      [] kiểm tra giá trị input của variants
       [] face authen ui
  -->
 <!--       ==========Main features===========
