@@ -1,36 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import agent from "../../app/api/agent";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { clearBasket } from "../basket/basketSlice";
 import { useAppDispatch } from "../../app/store/configureStore";
-// import {Buffer} from "buffer"
+import {Buffer} from "buffer"
 
 const MoMoPaymentSucceeded: React.FC = () => {
 	const search = useLocation().search;
-  // const [exData, setExData] = useState();
+  const [discount, setDiscount] = useState();
 	const dispatch = useAppDispatch();
 	const message = new URLSearchParams(search).get("message");
 	const resultCode = new URLSearchParams(search).get("resultCode");
 	const orderId = new URLSearchParams(search).get("orderId");
 	const requestId = new URLSearchParams(search).get("requestId");
 	const transId = new URLSearchParams(search).get("transId");
-	// const extraData = new URLSearchParams(search).get("extraData");
+	const extraData = new URLSearchParams(search).get("extraData");
 
-	//   if(extraData !== null){
-	//     let buff = new Buffer(extraData, 'base64');
-	//     let text = buff.toString('ascii');
-	//     console.log(JSON.parse(text))
-	//   }
-
-	if (search) {
-		if (message === "Successful." && resultCode === "0") {
-			const data = {orderId: orderId?.toString(), requestId: requestId?.toString(), transId: transId?.toString()}
-			agent.Orders.Momocreate(data).then(() => {
-				dispatch(clearBasket());
-        			window.history.pushState({}, "", "/returnUrl");
-			});
+	if(extraData !== null){
+		let buff = new Buffer(extraData, 'base64');
+		let text = buff.toString('ascii');
+		// setDiscount(JSON.parse(text));
+		console.log("DISCOUNT MOMO VALUE: ", JSON.parse(text))
+		if (search) {
+			if (message === "Successful." && resultCode === "0") {
+				// let discountValue = discount ? discount : 0;
+				const data = {orderId: orderId?.toString(), requestId: requestId?.toString(), transId: transId?.toString(), discount: JSON.parse(text)}
+				agent.Orders.Momocreate(data).then(() => {
+					dispatch(clearBasket());
+						  window.history.pushState({}, "", "/returnUrl");
+				});
+			}
 		}
 	}
 

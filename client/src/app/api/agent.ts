@@ -137,8 +137,8 @@ const Orders = {
     list: () => requests.get('orders'),
     fetch: (id: number) => requests.get(`orders/${id}`),
     create: (values: any) => requests.post('orders', values),
-    Momocreate: (data: any) => requests.get(`orders/momo-order?orderId=${data.orderId}&requestId=${data.requestId}&transId=${data.transId}`),
-    Vnpaycreate: () => requests.get('orders/vnpay-order'),
+    Momocreate: (data: any) => requests.get(`orders/momo-order?orderId=${data.orderId}&requestId=${data.requestId}&transId=${data.transId}&discount=${data.discount}`),
+    Vnpaycreate: (voucherDiscount: number) => requests.get(`orders/vnpay-order?discount=${voucherDiscount}`),
     statusDelivery: (values: any) => requests.post('orders/delivery-status', values)
 }
 
@@ -147,8 +147,8 @@ const Payments = {
     createNormalPayment: () => requests.post('payments/normal-payment', {}),
     confirmHashSecret: (vnp_SecureHash: any) => requests.post(`payments/confirm-hashsecret/${vnp_SecureHash}`, {}),
     refundIntent: (orderId: number) => requests.post(`payments/refund-intent/${orderId}`, {}),
-    momoPayment: () => requests.post('payments/Momo-payment', {}),
-    vnpayPayment: () => requests.post('payments/vnpay-payment', {}),
+    momoPayment: (voucherDiscount: number) => requests.post(`payments/Momo-payment?discount=${voucherDiscount}`, {}),
+    vnpayPayment: (voucherDiscount: number) => requests.post(`payments/vnpay-payment?discount=${voucherDiscount}`, {}),
     momoQuery: (orderId: number) => requests.post(`payments/Momo-query?Id=${orderId}`, {}),
     momoRefund: (orderId: number) => requests.post(`payments/Momo-refund?Id=${orderId}`, {})
 }

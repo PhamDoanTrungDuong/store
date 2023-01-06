@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { MdArrowBackIosNew } from "react-icons/md";
 import agent from "../../app/api/agent";
 import { setOrdLoad } from "../admin/adminSlice";
+import Swal from "sweetalert2";
 
 interface IProps {
 	order: IOrder;
@@ -36,10 +37,33 @@ const ShipperDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin })
 
 	const handleShipper = (idOrder: number, deliveryOrder: string) => {
 		var data = { id: idOrder, deliveryStatus: deliveryOrder };
-		console.log(data);
-		agent.Orders.statusDelivery(data).then(() => {
+		// console.log(data);
+		let res = agent.Orders.statusDelivery(data).then(() => {
 			dispatch(setOrdLoad());
 			setSelectedOrder(0);
+		});
+		return res;
+	};
+
+	const handleApproveShipper = (idOrder: number, deliveryOrder: string) => {
+		Swal.fire({
+			title: "Are you sure?",
+			text: "You won't be able to revert this!",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: deliveryOrder === "ProductDelivered" ? "Yes, Approve it!" : "Yes, Cancel it!",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				handleShipper(idOrder, deliveryOrder).then(() => {
+					Swal.fire(
+						"Shipment!",
+						deliveryOrder === "ProductDelivered" ? "The order has been placed" : "The order has been cancel",
+						deliveryOrder === "ProductDelivered" ? "success" : "info"
+					);
+				});
+			}
 		});
 	};
 
@@ -221,7 +245,7 @@ const ShipperDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin })
 							disabled={order.deliveryStatus !== "OnTheWay" ? true : false}
 							className="border text-white px-6 py-1 border-red-600 bg-red-600 text-lg rounded-lg hover:text-red-600 hover:bg-transparent duration-200 ease-in-out "
 							onClick={() =>
-								handleShipper(
+								handleApproveShipper(
 									order.id,
 									"CancelOrder"
 								)
@@ -232,7 +256,7 @@ const ShipperDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin })
 							disabled={order.deliveryStatus !== "OnTheWay" ? true : false}
 							className="border text-white px-6 py-1 border-green-600 bg-green-600 text-lg rounded-lg hover:text-green-600 hover:bg-transparent duration-200 ease-in-out "
 							onClick={() =>
-								handleShipper(
+								handleApproveShipper(
 									order.id,
 									"ProductDelivered"
 								)

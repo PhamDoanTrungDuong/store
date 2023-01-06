@@ -111,11 +111,13 @@ namespace API.Controllers
                         for (var i = 0; i < colors.Length; i++)
                         {
                               var color = await _context.Colours.FirstOrDefaultAsync(x => x.Colour_value == colors[i]);
+                              if(color == null) return BadRequest(new ProblemDetails{ Title = "Color " + colors[i] + " not exsist in system" });
                               arrayColors.Add(color);
                         }
                         for (var i = 0; i < sizes.Length; i++)
                         {
                               var size = await _context.Sizes.FirstOrDefaultAsync(x => x.Size_value == sizes[i]);
+                              if(size == null) return BadRequest(new ProblemDetails{ Title = "Size " + sizes[i] + " not exsist in system" });
                               arraySizes.Add(size);
                         }
                         foreach (var qty in Quantities)

@@ -130,7 +130,7 @@ namespace API.Controllers
 
             [Authorize]
             [HttpPost("Momo-payment")]
-            public async Task<ActionResult> MoMoPayment()
+            public async Task<ActionResult> MoMoPayment(double discount)
             {
                   var basket = await _context.Baskets
                       .RetrieveBasketWithItems(User.Identity.Name)
@@ -174,9 +174,17 @@ namespace API.Controllers
                         items.Add(orderItem);
                   }
 
-                  var subtotal = items.Sum(item => item.Price * item.Quantity);
+                  double subtotal = 0;
+                  double discountValue = discount / 100;
+                  var subtotal2 = items.Sum(item => item.Price * item.Quantity) * 23.400;
 
-                  var data = Base64EncodeObject(items);
+                  if(discount != 0) {
+                        subtotal = subtotal2 - (subtotal2 * discountValue);
+                  } else {
+                        subtotal = subtotal2;
+                  }
+
+                  var data = Base64EncodeObject(discount);
 
                   //request params need to request to MoMo system
                   string endpoint = _config["MoMoSettings:endpoint"].ToString() == "" ? "https://test-payment.momo.vn/v2/gateway/api/create" : _config["MoMoSettings:endpoint"].ToString();
@@ -364,7 +372,7 @@ namespace API.Controllers
 
             [Authorize]
             [HttpPost("vnpay-payment")]
-            public async Task<ActionResult> VnPayPayment()
+            public async Task<ActionResult> VnPayPayment(double discount)
             {
                   var basket = await _context.Baskets
                       .RetrieveBasketWithItems(User.Identity.Name)
@@ -408,7 +416,16 @@ namespace API.Controllers
                         items.Add(orderItem);
                   }
 
-                  var subtotal = (items.Sum(item => item.Price * item.Quantity)) * 234.000;
+                  // var subtotal = (items.Sum(item => item.Price * item.Quantity)) * 234.000;
+                  double subtotal = 0;
+                  double discountValue = discount / 100;
+                  var subtotal2 = items.Sum(item => item.Price * item.Quantity) * 234.000;
+
+                  if(discount != 0) {
+                        subtotal = subtotal2 - (subtotal2 * discountValue);
+                  } else {
+                        subtotal = subtotal2;
+                  }
 
                   //Get Config Info
                   string vnp_Returnurl = _config["VnPaySettings:vnp_Returnurl"].ToString(); //URL nhan ket qua tra ve
@@ -426,10 +443,11 @@ namespace API.Controllers
                   pay.AddRequestData("vnp_CurrCode", "VND"); //Đơn vị tiền tệ sử dụng thanh toán. Hiện tại chỉ hỗ trợ VND
                   pay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress()); //Địa chỉ IP của khách hàng thực hiện giao dịch
                   pay.AddRequestData("vnp_Locale", "vn"); //Ngôn ngữ giao diện hiển thị - Tiếng Việt (vn), Tiếng Anh (en)
-                  pay.AddRequestData("vnp_OrderInfo", "Thanh toan don hang"); //Thông tin mô tả nội dung thanh toán
+                  pay.AddRequestData("vnp_OrderInfo", discount.ToString()); //Thông tin mô tả nội dung thanh toán
                   pay.AddRequestData("vnp_OrderType", "other"); //topup: Nạp tiền điện thoại - billpayment: Thanh toán hóa đơn - fashion: Thời trang - other: Thanh toán trực tuyến
                   pay.AddRequestData("vnp_ReturnUrl", vnp_Returnurl); //URL thông báo kết quả giao dịch khi Khách hàng kết thúc thanh toán
                   pay.AddRequestData("vnp_TxnRef", DateTime.Now.Ticks.ToString()); //mã hóa đơn
+                  // pay.AddRequestData("vnp_Discount", discount.ToString()); //discount
 
                   string paymentUrl = pay.CreateRequestUrl(vnp_Url, vnp_HashSecret);
 

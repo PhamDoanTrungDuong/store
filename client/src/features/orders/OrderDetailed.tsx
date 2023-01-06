@@ -15,6 +15,7 @@ import { currencyFormat } from "../../app/utilities/util";
 import agent from "../../app/api/agent";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { setOrdLoad } from "../admin/adminSlice";
+import Swal from "sweetalert2";
 
 interface IProps {
 	order: IOrder;
@@ -45,9 +46,32 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin }) =
 	const handleShipper = (idOrder: number, deliveryOrder: string) => {
 		var data = { id: idOrder, deliveryStatus: deliveryOrder };
 		console.log(data);
-		agent.Orders.statusDelivery(data).then(() => {
+		let res = agent.Orders.statusDelivery(data).then(() => {
 			dispatch(setOrdLoad());
 			setSelectedOrder(0);
+		});
+		return res;
+	};
+
+	const handleApproveShipper = (idOrder: number, deliveryOrder: string) => {
+		Swal.fire({
+			title: "Are you sure?",
+			text: "You won't be able to revert this!",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "Yes, Approve it!",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				handleShipper(idOrder, deliveryOrder).then(() => {
+					Swal.fire(
+						"Shippment!",
+						"The items has been given to the shipper",
+						"success"
+					);
+				});
+			}
 		});
 	};
 
@@ -211,7 +235,7 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin }) =
 						<button
 							className="border text-white px-6 py-1 border-green-600 bg-green-600 text-lg rounded-lg hover:text-green-600 hover:bg-transparent duration-200 ease-in-out flex items-center gap-2"
 							onClick={() =>
-								handleShipper(order.id, "OnTheWay")
+								handleApproveShipper(order.id, "OnTheWay")
 							}>
 							<RiTruckLine size={20} />
 							Deliver to Shipper

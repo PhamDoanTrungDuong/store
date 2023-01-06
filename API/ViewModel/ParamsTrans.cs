@@ -5,5 +5,6 @@ namespace API.ViewModel
         public string orderId { get; set; }
         public string requestId { get; set; }
         public string transId { get; set; }
+        public double discount { get; set; }
     }
 }

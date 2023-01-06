@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import agent from "../../app/api/agent";
@@ -14,10 +13,15 @@ const PaymentConfirm = () => {
 	const orderId = new URLSearchParams(result).get("vnp_TxnRef");
 	const vnpayTranId = new URLSearchParams(result).get("vnp_TransactionNo");
 	const vnp_ResponseCode = new URLSearchParams(result).get("vnp_ResponseCode");
-	const vnp_SecureHash = new URLSearchParams(result).get("vnp_SecureHash");
+	// const vnp_SecureHash = new URLSearchParams(result).get("vnp_SecureHash");
+	const discountValue = new URLSearchParams(result).get("vnp_OrderInfo");
 
+	var discount = 0;
+	if(discountValue !== null) {
+		discount = +discountValue;
+	}
 	if (result && vnp_ResponseCode === "00") {
-		agent.Orders.Vnpaycreate().then(() => {
+		agent.Orders.Vnpaycreate(discount).then(() => {
 			dispatch(clearBasket());
 			window.history.pushState({}, "", "/paymentConfirm");
 		});

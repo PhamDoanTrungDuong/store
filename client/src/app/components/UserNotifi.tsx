@@ -64,7 +64,7 @@ const UserNotifi: React.FC = () => {
 					{orders
 						?.filter((item) => item.isUserNotifi === true && item.buyerId === user?.username)
 						.map((status) => {
-							console.log(status)
+							// console.log(status)
 							return (
 								<div
 									key={status.id}

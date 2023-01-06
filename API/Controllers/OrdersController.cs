@@ -254,7 +254,15 @@ namespace API.Controllers
                     }
                 }
 
-                var subtotal = items.Sum(item => item.Price * item.Quantity);
+                double subtotal = 0;
+                double discountValue = paramsTrans.discount / 100;
+                var subtotal2 = items.Sum(item => item.Price * item.Quantity);
+
+                if(paramsTrans.discount != 0) {
+                    subtotal = subtotal2 - (subtotal2 * discountValue);
+                } else {
+                    subtotal = subtotal2;
+                }
                 var deliveryFee = subtotal > 10000 ? 0 : 500;
 
                 if(userShippingAddres.Address == null)
@@ -278,13 +286,14 @@ namespace API.Controllers
                     OrderItems = items,
                     BuyerId = User.Identity.Name,
                     ShippingAddress = shipadr,
-                    Subtotal = subtotal,
+                    Subtotal = (long)subtotal,
                     DeliveryFee = deliveryFee,
                     orderId = paramsTrans.orderId,
                     requestId = paramsTrans.requestId,
                     transId = paramsTrans.transId,
                     isRefund = false,
                     CurrentShipperId = 1,
+                    Discount = paramsTrans.discount,
                 };
 
                 adminOrderNotify.OrderNotify = true;
@@ -299,12 +308,12 @@ namespace API.Controllers
                 return BadRequest("Problem creating order");
             }
             [HttpGet("vnpay-order")]
-            public async Task<ActionResult<int>> CreateVNPayOrder()
+            public async Task<ActionResult<int>> CreateVNPayOrder(double discount)
             {
                 var basket = await _context.Baskets
                         .RetrieveBasketWithItems(User.Identity.Name)
                         .FirstOrDefaultAsync();
-                var adminOrderNotify = await _context.Notifies.FindAsync(1);       
+                var adminOrderNotify = await _context.Notifies.FindAsync(1);
 
                 var userShippingAddres = await _context.Users
                         .Where(x => x.UserName == User.Identity.Name)
@@ -347,7 +356,16 @@ namespace API.Controllers
                     }
                 }
 
-                var subtotal = items.Sum(item => item.Price * item.Quantity);
+                // var subtotal = items.Sum(item => item.Price * item.Quantity);
+                double subtotal = 0;
+                double discountValue = discount / 100;
+                var subtotal2 = items.Sum(item => item.Price * item.Quantity);
+
+                if(discount != 0) {
+                    subtotal = subtotal2 - (subtotal2 * discountValue);
+                } else {
+                    subtotal = subtotal2;
+                }
                 var deliveryFee = subtotal > 10000 ? 0 : 500;
 
                 if(userShippingAddres.Address == null)
@@ -371,11 +389,12 @@ namespace API.Controllers
                     OrderItems = items,
                     BuyerId = User.Identity.Name,
                     ShippingAddress = shipadr,
-                    Subtotal = subtotal,
+                    Subtotal = (long)subtotal,
                     DeliveryFee = deliveryFee,
                     isRefund = false,
                     isVnPay = true,
                     CurrentShipperId = 1,
+                    Discount = discount,
                 };
 
                 adminOrderNotify.OrderNotify = true;

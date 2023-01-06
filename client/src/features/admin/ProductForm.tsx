@@ -121,13 +121,13 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
                         {!product ? (
                             <>
                                 <Grid item xs={12} sm={4}>
-                                    <AppTextInput control={control} name='colors' label='Product Colors' />
+                                    <AppTextInput control={control} name='colors' label='Colors (red, teal, sky, white, orange,...)' />
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
-                                    <AppTextInput control={control} name='size' label='Product Sizes' />
+                                    <AppTextInput control={control} name='size' label='Sizes (S, M, X, XL,...)' />
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
-                                    <AppTextInput control={control} name='quantity' label='Quantity for variants' />
+                                    <AppTextInput control={control} name='quantity' label='Quantity for each variants (40, 50, 60)' />
                                 </Grid>
                             </>
                         ) : (

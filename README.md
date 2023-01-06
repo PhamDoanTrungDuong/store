@@ -19,8 +19,9 @@
       [x] thông báo đơn hàng (user)
       [x] hủy voucher
       [x] order detail discount
-      [] chấp nhận trạng thái đơn hàng (shipper)
-      [] kiểm tra giá trị input của variants
+      [x] chấp nhận trạng thái đơn hàng (shipper)
+      [x] kiểm tra giá trị input của variants
+      [x] vnpay, momo order
       [] face authen ui
  -->
 <!--       ==========Main features===========
@@ -55,6 +56,7 @@
       [x] voucher giảm giá
       [x] admin reddot thông báo có đơn, member, comment mới
       [x] size, color từng sản phẩm (chi tiết)
+      [] Hiện variants ra chi tiết sản phẩm
       [] doanh thu (ref thầy Đệ)
       [] điểm danh nhận voucher
       [] games (maybe)

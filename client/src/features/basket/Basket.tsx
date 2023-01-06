@@ -42,21 +42,23 @@ const Basket: React.FC = () => {
 	// App - Basket - MoMopayment - agent - appsettings
 	const { user } = useAppSelector((state) => state.account);
 	let navigate = useNavigate();
+	var discount = selectedVoucher.value ? selectedVoucher.value : 0;
 
 	const handlePayment = () => {
 		if (!user) {
 			return navigate("/login");
 		} else {
-			agent.Payments.momoPayment().then((res: any) => {
+			agent.Payments.momoPayment(discount).then((res: any) => {
 				window.location.replace(res.payUrl);
 			});
 		}
 	};
+	console.log("DISCOUNT: ", discount);
 	const handleVnPayPayment = () => {
 		if (!user) {
 			return navigate("/login");
 		} else {
-			agent.Payments.vnpayPayment().then((res: any) => {
+			agent.Payments.vnpayPayment(discount).then((res: any) => {
 				window.location.replace(res);
 			});
 		}
