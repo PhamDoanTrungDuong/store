@@ -170,7 +170,7 @@ export const catalogSlice = createSlice({
           state.productsLoaded = false;
       },
       setProductState: (state) => {
-        state.productsLoaded = true
+        state.productsLoaded = false
       }
   },
   extraReducers: (builder) => {

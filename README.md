@@ -23,7 +23,7 @@
       [x] kiểm tra giá trị input của variants
       [x] vnpay, momo
       [x] qty in stock
-      [] load sales
+      [x] load sales
       [] giao diện sales, tìm kiếm, sales product vertical
       [] face authen ui
  -->
@@ -59,7 +59,7 @@
       [x] voucher giảm giá
       [x] admin reddot thông báo có đơn, member, comment mới
       [x] size, color từng sản phẩm (chi tiết)
-      [] Hiện variants ra chi tiết sản phẩm
+      [x] hiện variants ra chi tiết sản phẩm
       [] sản phẩm yêu thích
       [] doanh thu (ref thầy Đệ)
       [] điểm danh nhận voucher

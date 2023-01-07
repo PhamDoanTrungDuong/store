@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
 	Box,
 } from "@mui/material";
@@ -10,8 +10,8 @@ import ProductSearch from "../catalog/ProductSearch";
 import ProductSalesForm from "./ProductSalesForm";
 import agent from "../../app/api/agent";
 import Swal from "sweetalert2";
-import { setProductState } from "../catalog/catalogSlice";
-import { useAppDispatch } from "../../app/store/configureStore";
+import { fetchProductsDiscountAsync, setProductState } from "../catalog/catalogSlice";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { AiOutlineHome, AiOutlineTag, AiOutlinePlus } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
 import { Link } from "react-router-dom";
@@ -19,14 +19,19 @@ import { FiTrash2 } from "react-icons/fi";
 
 
 const AdminSales: React.FC = () => {
-	const { productDiscount } = useProducts();
+	const { productsLoaded, productDiscount } = useAppSelector((state) => state.catalog);
 	const [editMode, setEditMode] = useState(false);
 	const [selectedSaleProduct, setSelectedSaleProduct] = useState<
 		IProductDiscount | undefined
 	>(undefined);
 	const [loading, setLoading] = useState(false);
 	const [target, setTarget] = useState(0);
-	const dispatch = useAppDispatch();
+
+	const dispatch = useAppDispatch(); 
+	useEffect(() => {
+		!productsLoaded ? dispatch(fetchProductsDiscountAsync()) : dispatch(fetchProductsDiscountAsync());
+	 }, [dispatch, productsLoaded]);
+
 
 	// const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	// const open = Boolean(anchorEl);
@@ -123,10 +128,10 @@ const AdminSales: React.FC = () => {
 									<td className="px-4 py-3" align="left">
 										Product
 									</td>
-									<td className="px-4 py-3" align="right">
+									<td className="px-4 py-3" align="center">
 										Price
 									</td>
-									<td className="px-4 py-3" align="right">
+									<td className="px-4 py-3" align="center">
 										Percent Sale
 									</td>
 									<td className="px-4 py-3" align="center">
@@ -177,7 +182,7 @@ const AdminSales: React.FC = () => {
 													</span>
 												</Box>
 											</td>
-											<td align="right">
+											<td align="center">
 												{currencyFormat(
 													product.price
 												)}

@@ -29,7 +29,7 @@ const useProducts = () => {
       }, [dispatch, load])
 
       useEffect(() => {
-        if (!productsLoaded) dispatch(fetchProductsDiscountAsync());
+        !productsLoaded ? dispatch(fetchProductsDiscountAsync()) : dispatch(fetchProductsDiscountAsync());
       }, [dispatch, productsLoaded]);
 
       return {

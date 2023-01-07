@@ -50,6 +50,7 @@ const ProductSalesForm: React.FC<IProps> = ({ product, cancelEdit }) => {
 			setSelectedProduct(undefined)
 			reset()
 			dispatch(setProductState())
+			cancelEdit()
 			Swal.fire({
 				icon: "success",
 				title: "Create Discount Successful",

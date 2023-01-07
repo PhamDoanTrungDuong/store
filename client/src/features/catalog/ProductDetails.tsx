@@ -35,11 +35,7 @@ function TabPanel(props: TabPanelProps) {
 			id={`simple-tabpanel-${index}`}
 			aria-labelledby={`simple-tab-${index}`}
 			{...other}>
-			{value === index && (
-				<Box sx={{ p: 3 }}>
-					{children}
-				</Box>
-			)}
+			{value === index && <Box sx={{ p: 3 }}>{children}</Box>}
 		</div>
 	);
 }
@@ -68,6 +64,7 @@ const ProductDetails: React.FC = () => {
 	const [valuesStar, setValuesStar] = useState<number | null>(0);
 	const [colors, setColors] = useState([]);
 	const [sizes, setSizes] = useState([]);
+	const [variants, setVariantPerProduct] = useState<any>();
 	const [selectedColor, setSelectedColor] = useState("white");
 	const [selectedSize, setSelectedSize] = useState("S");
 	const [avg, setAvg] = useState<number>(0);
@@ -109,15 +106,14 @@ const ProductDetails: React.FC = () => {
 
 	const productView = useCallback(async () => {
 		try {
-			if (id !== undefined)
-			agent.Catalog.productViewCount(Number(id));
+			if (id !== undefined) agent.Catalog.productViewCount(Number(id));
 		} catch (error) {
 			console.log(error);
 		}
 	}, [id]);
 
 	useEffect(() => {
-		productView()
+		productView();
 	}, [productView]);
 
 	useEffect(() => {
@@ -140,10 +136,21 @@ const ProductDetails: React.FC = () => {
 			agent.Catalog.getColors()
 				.then((res) => setColors(res))
 				.catch((error) => console.log(error));
-		agent.Catalog.getSizes()
-			.then((res) => setSizes(res))
-			.catch((error) => console.log(error));
+			agent.Catalog.getSizes()
+				.then((res) => setSizes(res))
+				.catch((error) => console.log(error));
+		try {
+			agent.Catalog.variantsDetail(id)
+				.then((res) => {
+					setVariantPerProduct(res)
+				})
+				.catch((error) => console.log(error));
+		} catch (error) {
+			console.log(error)
+		}
 	}, [id]);
+
+	console.log(variants)
 
 	const [quantity, setQuantity] = useState(0);
 
@@ -213,8 +220,6 @@ const ProductDetails: React.FC = () => {
 	const handleSize = (value: string) => {
 		setSelectedSize(value);
 	};
-
-	
 
 	return (
 		<div className="mt-5 p-5">
@@ -305,7 +310,9 @@ const ProductDetails: React.FC = () => {
 											{(
 												product.price /
 												100
-											).toFixed(2)}
+											).toFixed(
+												2
+											)}
 										</h5>
 										<h5 className="font-bold text-2xl text-indigo-600">
 											$
@@ -316,13 +323,18 @@ const ProductDetails: React.FC = () => {
 													(Sales.discountValue /
 														100)) /
 													100
-											).toFixed(2)}
+											).toFixed(
+												2
+											)}
 										</h5>
 									</div>
 								</>
 							) : (
 								<h5 className="text-2xl md:text-3xl font-bold text-indigo-600">
-									${(product.price / 100).toFixed(2)}
+									$
+									{(
+										product.price / 100
+									).toFixed(2)}
 								</h5>
 							)}
 						</div>
@@ -335,52 +347,157 @@ const ProductDetails: React.FC = () => {
 					</div>
 					<div className="my-8 flex justify-between items-center">
 						<div className="flex items-center gap-4 ">
-								<h2>Quantity</h2>
-								<button
-									className="hover:text-red-600 p-3 border rounded-full"
-									onClick={handleMinus}>
-									<IoIosArrowBack />
-								</button>
-								<span className="text-xl ">{quantity}</span>
-								<button
-									className="hover:text-green-600 p-3 border rounded-full"
-									onClick={handlePlus}>
-									<IoIosArrowForward />
-								</button>
+							<h2>Quantity</h2>
+							<button
+								className="hover:text-red-600 p-3 border rounded-full"
+								onClick={handleMinus}>
+								<IoIosArrowBack />
+							</button>
+							<span className="text-xl ">{quantity}</span>
+							<button
+								className="hover:text-green-600 p-3 border rounded-full"
+								onClick={handlePlus}>
+								<IoIosArrowForward />
+							</button>
 						</div>
 						<div className="text-lg text-gray-500">
-								{product.quantityInStock} product in stock
+							{product.quantityInStock} product in stock
 						</div>
-						
 					</div>
-					<div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
-						<div className="flex items-center">
-							<span className="mr-3">Color:</span>
-							{colors && colors.map((color: any, idx) => {
-								var color1 = `bg-${color.colour_value}-500`
-								return (
-									<span key={color.id}>
-										<div onClick={() => handleColor(color.colour_value)} className={`${color1} border-2 border-gray-300 ${selectedColor === color.colour_value ? "border-black/70" : ""} ml-1 rounded-full w-6 h-6 focus:outline-none`}></div>
-									</span>
-								)
-							})}
-						</div>
-						<div className="flex ml-6 items-center">
-							<span className="mr-3">Size:</span>
-							<div className="relative">
-								<select onChange={(e) => handleSize(e.target.value)} className="rounded border appearance-none border-gray-700 py-2 focus:outline-none focus:border-indigo-600 text-base pl-3 pr-10">
-									{sizes && sizes.map((size: any, idx) => {
+					{(variants && (variants.colors.length !== 0 && variants.sizes.length !== 0)) ? (
+						<div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
+							<div className="flex items-center">
+								<span className="mr-3">Color:</span>
+								{variants && variants.colors.map((color: any, idx: number) => {
+										var color1 = `bg-${color.colour_value}-500`;
 										return (
-											<option key={idx} value={size.size_value}>{size.size_value}</option>
-										)
+											<span
+												key={
+													idx
+												}>
+												<div
+													onClick={() =>
+														handleColor(
+															color.colour_value
+														)
+													}
+													className={`${color1} border-2 border-gray-300 ${
+														selectedColor ===
+														color.colour_value
+															? "border-black/70"
+															: ""
+													} ml-1 rounded-full w-6 h-6 focus:outline-none`}></div>
+											</span>
+										);
 									})}
-								</select>
-								<span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
-									<IoIosArrowDown />
-								</span>
+							</div>
+							<div className="flex ml-6 items-center">
+								<span className="mr-3">Size:</span>
+								<div className="relative">
+									<select
+										onChange={(e) =>
+											handleSize(
+												e.target
+													.value
+											)
+										}
+										className="rounded border appearance-none border-gray-700 py-2 focus:outline-none focus:border-indigo-600 text-base pl-3 pr-10">
+										{variants && variants.sizes.map(
+												(
+													size: any,
+													idx: number
+												) => {
+													return (
+														<option
+															key={
+																idx
+															}
+															value={
+																size.size_value
+															}>
+															{
+																size.size_value
+															}
+														</option>
+													);
+												}
+											)}
+									</select>
+									<span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
+										<IoIosArrowDown />
+									</span>
+								</div>
 							</div>
 						</div>
-					</div>
+					) : (
+						<div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
+							<div className="flex items-center">
+								<span className="mr-3">Color:</span>
+								{colors &&
+									colors.map((color: any, idx) => {
+										var color1 = `bg-${color.colour_value}-500`;
+										return (
+											<span
+												key={
+													color.id
+												}>
+												<div
+													onClick={() =>
+														handleColor(
+															color.colour_value
+														)
+													}
+													className={`${color1} border-2 border-gray-300 ${
+														selectedColor ===
+														color.colour_value
+															? "border-black/70"
+															: ""
+													} ml-1 rounded-full w-6 h-6 focus:outline-none`}></div>
+											</span>
+										);
+									})}
+							</div>
+							<div className="flex ml-6 items-center">
+								<span className="mr-3">Size:</span>
+								<div className="relative">
+									<select
+										onChange={(e) =>
+											handleSize(
+												e.target
+													.value
+											)
+										}
+										className="rounded border appearance-none border-gray-700 py-2 focus:outline-none focus:border-indigo-600 text-base pl-3 pr-10">
+										{sizes &&
+											sizes.map(
+												(
+													size: any,
+													idx
+												) => {
+													return (
+														<option
+															key={
+																idx
+															}
+															value={
+																size.size_value
+															}>
+															{
+																size.size_value
+															}
+														</option>
+													);
+												}
+											)}
+									</select>
+									<span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
+										<IoIosArrowDown />
+									</span>
+								</div>
+							</div>
+						</div>
+						
+					)}
 					<div>
 						<button
 							className={
@@ -419,21 +536,70 @@ const ProductDetails: React.FC = () => {
 						</Tabs>
 					</Box>
 					<TabPanel value={value} index={0}>
-						<h2 className="text-lg text-gray-400">{product.description}</h2>
+						<h2 className="text-lg text-gray-400">
+							{product.description}
+						</h2>
 					</TabPanel>
 					<TabPanel value={value} index={1}>
-						<h1 className='text-xl font-bold italic'>
-						Returns Policy
+						<h1 className="text-xl font-bold italic">
+							Returns Policy
 						</h1>
-						<p className="text-md text-gray-400 my-2">+ You may return most new, unopened items within 30 days of delivery for a full refund. We'll also pay the return shipping costs if the return is a result of our error (you received an incorrect or defective item, etc.).</p>
-						<p className="text-md text-gray-400 my-2">+ You should expect to receive your refund within four weeks of giving your package to the return shipper, however, in many cases you will receive a refund more quickly. This time period includes the transit time for us to receive your return from the shipper (5 to 10 business days), the time it takes us to process your return once we receive it (3 to 5 business days), and the time it takes your bank to process our refund request (5 to 10 business days).</p>
-						<p className="text-md text-gray-400 my-2">+ If you need to return an item, simply login to your account, view the order using the 'Complete Orders' link under the My Account menu and click the Return Item(s) button. We'll notify you via e-mail of your refund once we've received and processed the returned item.</p>
-						<h1 className='text-xl font-bold italic'>
-						Shipping
+						<p className="text-md text-gray-400 my-2">
+							+ You may return most new, unopened items
+							within 30 days of delivery for a full
+							refund. We'll also pay the return shipping
+							costs if the return is a result of our error
+							(you received an incorrect or defective
+							item, etc.).
+						</p>
+						<p className="text-md text-gray-400 my-2">
+							+ You should expect to receive your refund
+							within four weeks of giving your package to
+							the return shipper, however, in many cases
+							you will receive a refund more quickly. This
+							time period includes the transit time for us
+							to receive your return from the shipper (5
+							to 10 business days), the time it takes us
+							to process your return once we receive it (3
+							to 5 business days), and the time it takes
+							your bank to process our refund request (5
+							to 10 business days).
+						</p>
+						<p className="text-md text-gray-400 my-2">
+							+ If you need to return an item, simply
+							login to your account, view the order using
+							the 'Complete Orders' link under the My
+							Account menu and click the Return Item(s)
+							button. We'll notify you via e-mail of your
+							refund once we've received and processed the
+							returned item.
+						</p>
+						<h1 className="text-xl font-bold italic">
+							Shipping
 						</h1>
-						<p className="text-md text-gray-400 my-2">+ We can ship to virtually any address in the world. Note that there are restrictions on some products, and some products cannot be shipped to international destinations.</p>
-						<p className="text-md text-gray-400 my-2">+ When you place an order, we will estimate shipping and delivery dates for you based on the availability of your items and the shipping options you choose. Depending on the shipping provider you choose, shipping date estimates may appear on the shipping quotes page.</p>
-						<p className="text-md text-gray-400 my-2">+ Please also note that the shipping rates for many items we sell are weight-based. The weight of any such item can be found on its detail page. To reflect the policies of the shipping companies we use, all weights will be rounded up to the next full pound.</p>
+						<p className="text-md text-gray-400 my-2">
+							+ We can ship to virtually any address in
+							the world. Note that there are restrictions
+							on some products, and some products cannot
+							be shipped to international destinations.
+						</p>
+						<p className="text-md text-gray-400 my-2">
+							+ When you place an order, we will estimate
+							shipping and delivery dates for you based on
+							the availability of your items and the
+							shipping options you choose. Depending on
+							the shipping provider you choose, shipping
+							date estimates may appear on the shipping
+							quotes page.
+						</p>
+						<p className="text-md text-gray-400 my-2">
+							+ Please also note that the shipping rates
+							for many items we sell are weight-based. The
+							weight of any such item can be found on its
+							detail page. To reflect the policies of the
+							shipping companies we use, all weights will
+							be rounded up to the next full pound.
+						</p>
 					</TabPanel>
 					<TabPanel value={value} index={2}>
 						<div>

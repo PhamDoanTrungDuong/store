@@ -251,6 +251,18 @@ namespace API.Controllers
                   if(productDetails == null) return BadRequest(new ProblemDetails{Title = "Can't find product"});
                   return Ok(productDetails);
             }
+
+            [HttpGet("variants-details/{id}")]
+            public async Task<ActionResult> VariantsDetails(int id)
+            {
+                  var Colors = await _context.ProductDetails.Where(x => x.ProductId == id).Select(x => x.Colour).Distinct().ToListAsync();
+                  var Sizes = await _context.ProductDetails.Where(x => x.ProductId == id).Select(x => x.Size).Distinct().ToListAsync();
+                  if(Colors == null || Sizes == null) return BadRequest(new ProblemDetails{Title = "Can't find product"});
+                  return Ok(new {
+                        Colors,
+                        Sizes
+                  });
+            }
       }
 }
 
