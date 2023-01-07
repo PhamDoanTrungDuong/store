@@ -123,10 +123,16 @@ namespace API.Controllers
                         foreach (var qty in Quantities)
                         {
                               arrayQuantity.Add(Int32.Parse(qty));
-                              variantsQuantity += Int32.Parse(qty); 
+                              // variantsQuantity += Int32.Parse(qty);
                         }
 
-                        if(productDto.QuantityInStock != variantsQuantity) return BadRequest(new ProblemDetails{ Title = "Quantity in stock must equal quantity variants"});
+                        for (var i = 0; i < arrayColors.Count(); i++)
+                              {
+                                    for (int j = 0; j < arraySizes.Count(); j++)
+                                    {
+                                          variantsQuantity += arrayQuantity[i];
+                                    }
+                              }
                   }
 
                   // Product
@@ -139,6 +145,7 @@ namespace API.Controllers
 
                         product.PictureUrl = imageResult.SecureUrl.ToString();
                         product.PublicId = imageResult.PublicId;
+                        product.QuantityInStock = variantsQuantity;
                   }
 
                   _context.Products.Add(product);
@@ -148,7 +155,7 @@ namespace API.Controllers
                   if(productDetailsDto.Colors != null || productDetailsDto.Size != null || productDetailsDto.Quantity != null) {
 
                         if((arrayColors.Count() != arrayQuantity.Count()) || (arrayColors.Count() != arraySizes.Count()) || (arraySizes.Count() != arrayQuantity.Count())) {
-                              return BadRequest(new ProblemDetails{ Title = "Size, Quantity, Color fieald must equal" });
+                              return BadRequest(new ProblemDetails{ Title = "Size, Quantity, Color field must equal" });
                         } else {
                               for (var i = 0; i < arrayColors.Count(); i++)
                               {

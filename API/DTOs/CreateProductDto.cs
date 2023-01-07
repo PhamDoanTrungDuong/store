@@ -28,8 +28,8 @@ namespace API.DTOs
         [Required]
         public string CurrentCateId { get; set; }
 
-        [Required]
-        [Range(0, 200)]
+        // [Required]
+        // [Range(0, 200)]
         public int QuantityInStock { get; set; }
     }
 }

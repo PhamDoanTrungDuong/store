@@ -69,10 +69,12 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
             try {
                 let response: IProduct;
                 if (product) {
+                    data.quantityInStock = product.quantityInStock;
                     response = await agent.Admin.updateProduct(data);
                 } else {
                     const cate: any = categories.find((e: any) => e.name === data.type);
-                    data.currentCateId = cate.cateId
+                    data.currentCateId = cate.cateId;
+                    data.quantityInStock = 0;
                     response = await agent.Admin.createProduct(data);
                 }
                 dispatch(setProduct(response));
@@ -106,25 +108,25 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
                         <Grid item xs={12} sm={12}>
                             <AppTextInput control={control} name='name' label='Product name' />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <AppSelectList items={brands} control={control} name='brand' label='Brand' />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <AppSelectList items={cate} control={control} name='type'label='Type' />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} sm={4}>
                             <AppTextInput type='number' control={control} name='price' label='Price' />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <AppTextInput type='number' control={control} name='quantityInStock' label='Quantity in Stock' />
+                        <Grid item xs={12} sm={4}>
+                            <AppSelectList items={brands} control={control} name='brand' label='Brand' />
                         </Grid>
+                        <Grid item xs={12} sm={4}>
+                            <AppSelectList items={cate} control={control} name='type'label='Type' />
+                        </Grid>
+                        {/* <Grid item xs={12} sm={6}>
+                            <AppTextInput type='number' control={control} name='quantityInStock' label='Quantity in Stock' />
+                        </Grid> */}
                         {!product ? (
                             <>
                                 <Grid item xs={12} sm={4}>
                                     <AppTextInput control={control} name='colors' label='Colors (red, teal, sky, white, orange,...)' />
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
-                                    <AppTextInput control={control} name='size' label='Sizes (S, M, X, XL,...)' />
+                                    <AppTextInput control={control} name='size' label='Sizes (S, M, L, XL,...)' />
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
                                     <AppTextInput control={control} name='quantity' label='Quantity for each variants (40, 50, 60)' />

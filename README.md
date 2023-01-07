@@ -21,7 +21,8 @@
       [x] order detail discount
       [x] chấp nhận trạng thái đơn hàng (shipper)
       [x] kiểm tra giá trị input của variants
-      [x] vnpay, momo order
+      [x] vnpay, momo
+      [x] qty in stock
       [] load sales
       [] giao diện sales, tìm kiếm, sales product vertical
       [] face authen ui
@@ -59,6 +60,7 @@
       [x] admin reddot thông báo có đơn, member, comment mới
       [x] size, color từng sản phẩm (chi tiết)
       [] Hiện variants ra chi tiết sản phẩm
+      [] sản phẩm yêu thích
       [] doanh thu (ref thầy Đệ)
       [] điểm danh nhận voucher
       [] games (maybe)
