@@ -41,6 +41,7 @@ const ProductDiscount: React.FC = () => {
 				<div>
 					<HeadDealOfDay />
 				</div>
+				{/* <div className='overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative'> */}
 				<div className="my-6 grid sm:grid-cols-3 md:grid-cols-4 gap-4">
 					{productDiscount.slice(0, 4).map((item) => {
 						return (
@@ -182,8 +183,9 @@ const ProductDiscount: React.FC = () => {
 						);
 					})}
 				</div>
+				</div>
 			</div>
-		</div>
+		// </div>
 	);
 };
 

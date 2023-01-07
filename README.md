@@ -24,7 +24,7 @@
       [x] vnpay, momo
       [x] qty in stock
       [x] load sales
-      [x] giao diện sales, tìm kiếm, sales product vertical
+      [x] giao diện sales, sales product vertical
       [] face authen ui
  -->
 <!--       ==========Main features===========
