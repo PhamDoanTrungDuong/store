@@ -24,7 +24,7 @@
       [x] vnpay, momo
       [x] qty in stock
       [x] load sales
-      [] giao diện sales, tìm kiếm, sales product vertical
+      [x] giao diện sales, tìm kiếm, sales product vertical
       [] face authen ui
  -->
 <!--       ==========Main features===========
@@ -61,9 +61,9 @@
       [x] size, color từng sản phẩm (chi tiết)
       [x] hiện variants ra chi tiết sản phẩm
       [] sản phẩm yêu thích
-      [] doanh thu (ref thầy Đệ)
-      [] điểm danh nhận voucher
-      [] games (maybe)
+      [] ~doanh thu (ref thầy Đệ)
+      [] ~điểm danh nhận voucher
+      [] ~games (maybe)
 
 
  -->
