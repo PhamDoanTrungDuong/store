@@ -25,7 +25,7 @@
       [x] qty in stock
       [x] load sales
       [x] giao diện sales, sales product vertical
-      [] face authen ui
+      [x] face authen ui
  -->
 <!--       ==========Main features===========
       [x] Momo

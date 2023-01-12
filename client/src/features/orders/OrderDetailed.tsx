@@ -45,7 +45,7 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin }) =
 
 	const handleShipper = (idOrder: number, deliveryOrder: string) => {
 		var data = { id: idOrder, deliveryStatus: deliveryOrder };
-		console.log(data);
+		// console.log(data);
 		let res = agent.Orders.statusDelivery(data).then(() => {
 			dispatch(setOrdLoad());
 			setSelectedOrder(0);

@@ -189,7 +189,7 @@ export const adminSlice = createSlice({
     initialState,
     reducers: {
       setSelectedVoucher: (state, action) => {
-            console.log(action.payload)
+            // console.log(action.payload)
             state.selectedVoucher = action.payload;
       },
       setVoucherNull: (state) => {

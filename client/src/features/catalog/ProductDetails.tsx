@@ -150,7 +150,7 @@ const ProductDetails: React.FC = () => {
 		}
 	}, [id]);
 
-	console.log(variants)
+	// console.log(variants)
 
 	const [quantity, setQuantity] = useState(0);
 

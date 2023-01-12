@@ -18,7 +18,7 @@ interface IProps {
 }
 
 const ShippingAddressForm: React.FC<IProps> = ({ address, cancelEdit }) => {
-	console.log(address)
+	// console.log(address)
 	const {
 		control,
 		reset,

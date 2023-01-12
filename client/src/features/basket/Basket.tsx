@@ -53,7 +53,7 @@ const Basket: React.FC = () => {
 			});
 		}
 	};
-	console.log("DISCOUNT: ", discount);
+	// console.log("DISCOUNT: ", discount);
 	const handleVnPayPayment = () => {
 		if (!user) {
 			return navigate("/login");

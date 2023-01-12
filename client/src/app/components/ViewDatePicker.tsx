@@ -78,7 +78,7 @@ const ViewDatePicker: React.FC = () => {
 		if(yearValue){
 			const data = {d: yearValue.$D!, m: yearValue.$M + 1, y: yearValue.$y}
 			agent.Admin.statisticPerYear(data).then((res) => {
-				console.log(res)
+				// console.log(res)
 				setMonth(res);
 			});
 		}

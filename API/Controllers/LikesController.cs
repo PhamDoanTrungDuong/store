@@ -69,7 +69,6 @@ namespace API.Controllers
                         .ToListAsync();
       }
 
-      [Authorize]
       [HttpGet("get-current-like")]
       public async Task<List<UserLike>> GetCurrentLikes()
       {

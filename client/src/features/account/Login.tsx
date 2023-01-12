@@ -2,6 +2,7 @@ import TextField from "@mui/material/TextField";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
+import { TbFaceId } from "react-icons/tb";
 import { FieldValues, useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { googleSignIn, membersSelector, signInUser } from "./accountSlice";
@@ -16,7 +17,8 @@ import useFaceAuthen from "../../app/hooks/useFaceAuthen";
 import Swal from "sweetalert2";
 
 const Login = () => {
-	const { faceRegistration, faceSignIn, dataFaceRegister, dataFaceLogin, dataUserLogin } = useFaceAuthen();
+	const { faceRegistration, faceSignIn, dataFaceRegister, dataFaceLogin, dataUserLogin } =
+		useFaceAuthen();
 
 	type FormData = {
 		password: string;
@@ -31,7 +33,6 @@ const Login = () => {
 	// const members = useAppSelector(membersSelector.selectAll);
 
 	const { members } = useMembers();
-
 
 	const [googleUser, setGoogleUser] = useState<any>();
 	const dispatch = useAppDispatch();
@@ -59,10 +60,10 @@ const Login = () => {
 	const handleGoogleSignIn = async () => {
 		try {
 			await googleSignIn();
-		}catch(error) {
-			console.log(error)
+		} catch (error) {
+			console.log(error);
 		}
-	}
+	};
 
 	useEffect(() => {
 		const unsubcribe = onAuthStateChanged(auth, (currentUser: any) => {
@@ -71,35 +72,41 @@ const Login = () => {
 
 		return () => {
 			unsubcribe();
-		}
-	}, [])
+		};
+	}, []);
 	// GOOGLE LOGIN
 	useEffect(() => {
-		if(googleUser){
-			const dataRegister = {email: googleUser.email, password: googleUser.uid, username: googleUser.email}
-			const dataLogin = {password: googleUser.uid, username: googleUser.email}
+		if (googleUser) {
+			const dataRegister = {
+				email: googleUser.email,
+				password: googleUser.uid,
+				username: googleUser.email,
+			};
+			const dataLogin = { password: googleUser.uid, username: googleUser.email };
 
-			let userLogin = members.find((item) => item.email === googleUser.email)
-			if(userLogin === undefined)
-			{
+			let userLogin = members.find((item) => item.email === googleUser.email);
+			if (userLogin === undefined) {
 				agent.Account.register(dataRegister).then(() => {
 					dispatch(signInUser(dataLogin));
 					history.push(from);
-				})
-			}else{
+				});
+			} else {
 				dispatch(signInUser(dataLogin));
 				history.push(from);
 			}
 		}
-	}, [googleUser, members, dispatch, from])
+	}, [googleUser, members, dispatch, from]);
 
 	// FACIAL REGISTER
 	useEffect(() => {
-		if(dataFaceRegister && dataUserLogin){
-			const dataRegister = {email: dataUserLogin.email, password: dataFaceRegister.facialId + "ABCXYZ", username: dataUserLogin.username}
+		if (dataFaceRegister && dataUserLogin) {
+			const dataRegister = {
+				email: dataUserLogin.email,
+				password: dataFaceRegister.facialId + "ABCXYZ",
+				username: dataUserLogin.username,
+			};
 
-			if(dataRegister !== undefined)
-			{
+			if (dataRegister !== undefined) {
 				agent.Account.register(dataRegister).then(() => {
 					Swal.fire({
 						icon: "success",
@@ -107,22 +114,24 @@ const Login = () => {
 						showConfirmButton: false,
 						timer: 1500,
 					});
-				})
+				});
 			}
 		}
-	}, [dataFaceRegister, dataUserLogin, members, dispatch, from])
+	}, [dataFaceRegister, dataUserLogin, members, dispatch, from]);
 	//FACE LOGIN
 	useEffect(() => {
-		if(dataFaceLogin){
-			const dataLogin = {password: dataFaceLogin.facialId + "ABCXYZ", username: dataFaceLogin.payload.username}
+		if (dataFaceLogin) {
+			const dataLogin = {
+				password: dataFaceLogin.facialId + "ABCXYZ",
+				username: dataFaceLogin.payload.username,
+			};
 
-			console.log(dataLogin)
+			// console.log(dataLogin);
 
-			if(dataLogin)
-			{
+			if (dataLogin) {
 				dispatch(signInUser(dataLogin));
 				history.push(from);
-			}else{
+			} else {
 				Swal.fire({
 					icon: "success",
 					title: "Don't have FaceID, please Register new FaceID",
@@ -131,7 +140,7 @@ const Login = () => {
 				});
 			}
 		}
-	}, [dataFaceLogin, members, dispatch, from])
+	}, [dataFaceLogin, members, dispatch, from]);
 	return (
 		<div className="mt-5">
 			<div className="max-w-[350px] md:max-w-[400px] border h-auto border-slate-300 rounded-2xl px-4 py-10 my-[100px] mx-auto">
@@ -139,49 +148,29 @@ const Login = () => {
 					<div className="bg-indigo-600 p-4 text-white rounded-full">
 						<LockOutlinedIcon />
 					</div>
-					<h1 className="font-bold text-2xl">
-						Sign in
-					</h1>
-					<form onSubmit={handleSubmit(
-							submitForm
-						)}>
+					<h1 className="font-bold text-2xl">Sign in</h1>
+					<form onSubmit={handleSubmit(submitForm)}>
 						<TextField
 							margin="normal"
 							fullWidth
 							label="Username"
 							autoFocus
-							{...register(
-								"username",
-								{
-									required: "Username is required",
-								}
-							)}
-							error={
-								!!errors.username
-							}
-							helperText={
-								errors?.username
-									?.message
-							}
+							{...register("username", {
+								required: "Username is required",
+							})}
+							error={!!errors.username}
+							helperText={errors?.username?.message}
 						/>
 						<TextField
 							margin="normal"
 							fullWidth
 							label="Password"
 							type="password"
-							{...register(
-								"password",
-								{
-									required: "Username is required",
-								}
-							)}
-							error={
-								!!errors.password
-							}
-							helperText={
-								errors?.password
-									?.message
-							}
+							{...register("password", {
+								required: "Username is required",
+							})}
+							error={!!errors.password}
+							helperText={errors?.password?.message}
 						/>
 						<button
 							className="p-3 my-5 w-full c-btn"
@@ -193,20 +182,39 @@ const Login = () => {
 						<div className="flex flex-col justify-center items-center gap-2">
 							<p>or</p>
 							<div>
-								<GoogleButton onClick={handleGoogleSignIn} />
+								<GoogleButton
+									onClick={handleGoogleSignIn}
+								/>
 							</div>
 						</div>
 
 						<div className="text-center mt-3">
-								<Link to="/register">
-										<h4>Don't have an account? <span className="font-medium underline underline-offset-2 text-indigo-600 hover:text-indigo-400 duration-300">Sign Up</span> </h4>
-								</Link>
-								<div className="c-btn cursor-pointer my-3" onClick={faceRegistration}>
-									Face Authen Register
+							<Link to="/register">
+								<h4>
+									Don't have an account?{" "}
+									<span className="font-medium underline underline-offset-2 text-indigo-600 hover:text-indigo-400 duration-300">
+										Sign Up
+									</span>{" "}
+								</h4>
+							</Link>
+							<div className="flex justify-center items-center gap-1 mt-5">
+								<div
+									className="c-btn cursor-pointer my-3 flex items-center gap-2"
+									onClick={faceRegistration}>
+									<TbFaceId size={20} />
+									<span className="font-medium">
+										Face Register
+									</span>
 								</div>
-								<div className="c-btn cursor-pointer" onClick={faceSignIn}>
-									Face Login
+								<div
+									className="c-btn cursor-pointer flex items-center gap-2"
+									onClick={faceSignIn}>
+									<TbFaceId size={20} />
+									<span className="font-medium">
+										Face Login
+									</span>
 								</div>
+							</div>
 						</div>
 					</form>
 				</div>

@@ -55,7 +55,7 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
             }    
         }, [product]);
 
-        console.log(variants)
+        // console.log(variants)
 
         useEffect(() => {
             if (product && !watchFile  && !isDirty) reset(product);

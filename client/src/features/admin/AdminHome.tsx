@@ -27,7 +27,7 @@ const AdminHome: React.FC = () => {
 	const { todaySales } = useAppSelector((state) => state.admin);
 	const [deliveryState, setDeliveryState] = useState<any>();
 
-	console.log(deliveryState);
+	// console.log(deliveryState);
 
 	useEffect(() => {
 		dispatch(fetchAllTotal());

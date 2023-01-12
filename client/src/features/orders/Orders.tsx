@@ -67,7 +67,7 @@ const Order: React.FC = () => {
 		setValue(newValue);
 	};
 	const [orders, setOrders] = useState<IOrder[] | null>(null);
-	console.log(orders);
+	// console.log(orders);
 	const [loading, setLoading] = useState(true);
 	const [selectedOrderNumber, setSelectedOrderNumber] = useState(0);
 	const dispatch = useAppDispatch();
@@ -113,7 +113,7 @@ const Order: React.FC = () => {
 	};
 	const handleMomoRefund = (Id: number) => {
 		agent.Payments.momoRefund(Id).then((res) => {
-			console.log(res);
+			// console.log(res);
 			setLoading(true);
 			Swal.fire({
 				icon: "success",
@@ -125,7 +125,7 @@ const Order: React.FC = () => {
 	};
 	const RefundIntent = (Id: number) => {
 		agent.Payments.refundIntent(Id).then((res) => {
-			console.log(res);
+			// console.log(res);
 			setLoading(true);
 			Swal.fire({
 				icon: "success",
