@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import agent from "../../app/api/agent";
 import { Rating, Tooltip } from "@mui/material";
 import useProducts from "../../app/hooks/useProducts";
+import Swal from "sweetalert2";
 
 interface IProps {
 	product: IProduct;
@@ -29,17 +30,15 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 				.catch((error) => console.log(error));
 	}, [avg, product.id]);
 
-	
-
 	useEffect(() => {
-		if(product !== null){
-			agent.Like.getCurrentLike().then((res: any) => {
-					setCurrentLike(res);
-				}).finally(() => {
-				  setLikeStatus(false);
-			  })
-		}
-	}, [product, likeStatus]);
+		agent.Like.getCurrentLike()
+			.then((res: any) => {
+				setCurrentLike(res);
+			})
+			.finally(() => {
+				setLikeStatus(false);
+			});
+	}, [likeStatus]);
 
 	useEffect(() => {
 		productDiscount.filter((e: any) => {
@@ -51,7 +50,14 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 	}, [productDiscount, product.id]);
 
 	const handleLike = async (productId: number) => {
-		await agent.Like.addLike(productId);
+		await agent.Like.addLike(productId).then(() => {
+			Swal.fire({
+				icon: "success",
+				// title: "Liked Product Successful",
+				showConfirmButton: false,
+				timer: 1500,
+			});
+		});
 	};
 
 	return (
@@ -147,10 +153,9 @@ const ProductCard: React.FC<IProps> = ({ product }) => {
 						<div className="flex items-center">
 							<button
 								onClick={() => {
-										handleLike(product.id)
-										setLikeStatus(true)
-									}
-								}
+									handleLike(product.id);
+									setLikeStatus(true);
+								}}
 								className="p-2 hover:bg-red-100 rounded-full duration-300">
 								<FaHeart
 									size="20"

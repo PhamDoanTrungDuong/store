@@ -44,6 +44,7 @@ import AdminPartner from "../../features/admin/AdminPartner";
 import AdminDiscountBanner from "../../features/admin/AdminDiscountBanner";
 import AdminVoucher from "../../features/admin/AdminVoucher";
 import Shipper from "../../features/shipper/Shipper";
+import LikedProduct from "../../features/catalog/LikedProduct";
 
 const App: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -328,6 +329,14 @@ const App: React.FC = () => {
 									element={
 										<PrivateRoute>
 											<FaceAuthen />
+										</PrivateRoute>
+									}
+								/>
+								<Route
+									path="/liked-product"
+									element={
+										<PrivateRoute>
+											<LikedProduct />
 										</PrivateRoute>
 									}
 								/>

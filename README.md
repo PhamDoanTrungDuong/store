@@ -60,7 +60,7 @@
       [x] admin reddot thông báo có đơn, member, comment mới
       [x] size, color từng sản phẩm (chi tiết)
       [x] hiện variants ra chi tiết sản phẩm
-      [] sản phẩm yêu thích
+      [x] sản phẩm yêu thích
       [] ~doanh thu (ref thầy Đệ)
       [] ~điểm danh nhận voucher
       [] ~games (maybe)

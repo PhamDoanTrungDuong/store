@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { IoIosCart } from "react-icons/io";
 import { Link } from "react-router-dom";
@@ -8,6 +8,7 @@ import { addBasketItemAsync, setStateBasket } from "../basket/basketSlice";
 import { Tooltip } from "@mui/material";
 import Swal from "sweetalert2";
 import HeadDealOfDay from "../../app/components/TimeCountDown";
+import agent from "../../app/api/agent";
 
 const ProductDiscount: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -15,6 +16,29 @@ const ProductDiscount: React.FC = () => {
 	const { productDiscount } = useProducts();
 	// console.log(productDiscount)
 	const { status } = useAppSelector((state) => state.basket);
+	const [userLikedProduct, setUserLikedProduct] = useState<any>();
+	const [likeStatus, setLikeStatus] = useState<boolean>();
+
+	useEffect(() => {
+		agent.Like.getCurrentLike()
+			.then((res: any) => {
+				setUserLikedProduct(res);
+			})
+			.finally(() => {
+				setLikeStatus(false);
+			});
+	}, [likeStatus]);
+
+	const handleLike = async (productId: number) => {
+		await agent.Like.addLike(productId).then(() => {
+			Swal.fire({
+				icon: "success",
+				// title: "Like Product Successful",
+				showConfirmButton: false, 
+				timer: 1500,
+			});
+		});
+	};
 
 	useEffect(() => {
 		if (status === "addSuccess") {
@@ -141,10 +165,31 @@ const ProductDiscount: React.FC = () => {
 												</h5>
 											</div>
 											<div className="flex items-center">
-												<button className="mr-1">
+												<button
+													onClick={() => {
+														handleLike(
+															item.productId
+														);
+														setLikeStatus(
+															true
+														);
+													}}
+													className="p-2 hover:bg-red-100 rounded-full duration-300">
 													<FaHeart
 														size="20"
-														className="text-gray-600 hover:text-red-600 duration-300"
+														className={
+															userLikedProduct?.find(
+																(
+																	like: any
+																) =>
+																	like.likedProductId ===
+																		item.productId &&
+																	like.isLike ===
+																		true
+															)
+																? "text-red-600 duration-300"
+																: "text-gray-600 hover:text-red-600 duration-300"
+														}
 													/>
 												</button>
 												{!(
@@ -183,8 +228,8 @@ const ProductDiscount: React.FC = () => {
 						);
 					})}
 				</div>
-				</div>
 			</div>
+		</div>
 		// </div>
 	);
 };

@@ -61,7 +61,7 @@ namespace API.Controllers
       }
 
       [HttpGet("get-all-like")]
-      public async Task<List<UserLike>> GetComments([FromQuery] LikeVm likeVm)
+      public async Task<List<UserLike>> GetLikes([FromQuery] LikeVm likeVm)
       {
             return await _context.Likes
                         .Search(likeVm.SearchTerm)
@@ -69,8 +69,9 @@ namespace API.Controllers
                         .ToListAsync();
       }
 
+      [Authorize]
       [HttpGet("get-current-like")]
-      public async Task<List<UserLike>> GetCurrentComments()
+      public async Task<List<UserLike>> GetCurrentLikes()
       {
             return await _context.Likes
                         .Where(x => x.Username == User.Identity.Name)
