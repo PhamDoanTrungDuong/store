@@ -61,6 +61,7 @@
       [x] size, color từng sản phẩm (chi tiết)
       [x] hiện variants ra chi tiết sản phẩm
       [x] sản phẩm yêu thích
+      [] gợi ý mua hàng
       [] ~doanh thu (ref thầy Đệ)
       [] ~điểm danh nhận voucher
       [] ~games (maybe)
