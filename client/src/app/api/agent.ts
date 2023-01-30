@@ -33,7 +33,6 @@ axios.interceptors.response.use(async res => {
 }, (error: AxiosError) => {
     const {data, status}: any = error.response;
     switch (status) {
-        
         case 400:
             if(data.errors) {
                 const modelStateErrors: string[] = [];
