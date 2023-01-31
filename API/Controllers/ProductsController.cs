@@ -263,6 +263,16 @@ namespace API.Controllers
                         Sizes
                   });
             }
+
+            [HttpGet("product-suggestion")]
+            public async Task<ActionResult> ProductSuggestion()
+            {
+                  var productSuggestion = await _context.Products
+                              .OrderByDescending(x => x.ViewCount)
+                              .Take(4)
+                              .ToListAsync();
+                  return Ok(productSuggestion);
+            }
       }
 }
 
