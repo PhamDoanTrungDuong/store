@@ -176,7 +176,8 @@ namespace API.Controllers
 
                   double subtotal = 0;
                   double discountValue = discount / 100;
-                  var subtotal2 = items.Sum(item => item.Price * item.Quantity) * 23.400;
+                  var gggg = items.Sum(item => item.Price * item.Quantity);
+                  var subtotal2 = items.Sum(item => item.Price * item.Quantity) * 23.444;
 
                   if(discount != 0) {
                         subtotal = subtotal2 - (subtotal2 * discountValue);
@@ -196,7 +197,7 @@ namespace API.Controllers
                   string ipnUrl = _config["MoMoSettings:notifyUrl"].ToString();
                   string requestType = "captureWallet";
 
-                  string amount = (subtotal).ToString();
+                  string amount = (Convert.ToInt32(subtotal)).ToString();
                   // string amount = (subtotal * 234.180).ToString();
 
                   string orderId = Guid.NewGuid().ToString("N");

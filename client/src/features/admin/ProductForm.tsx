@@ -109,7 +109,7 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
                             <AppTextInput control={control} name='name' label='Product name' />
                         </Grid>
                         <Grid item xs={12} sm={4}>
-                            <AppTextInput type='number' control={control} name='price' label='Price' />
+                            <AppTextInput type='number' control={control} name='price' label='Price (10000 = $100.00)' />
                         </Grid>
                         <Grid item xs={12} sm={4}>
                             <AppSelectList items={brands} control={control} name='brand' label='Brand' />
