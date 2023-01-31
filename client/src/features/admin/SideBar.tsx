@@ -200,6 +200,7 @@ const SideBar: React.FC = () => {
 											? "flex"
 											: "hidden"
 									}`}>
+									<div className="animate-ping inline-flex absolute -top-3 right-3 w-[10px] h-[10px] bg-red-600 rounded-full dark:border-gray-900"></div>
 									<div className="inline-flex relative -top-3 right-3 w-[10px] h-[10px] bg-red-600 rounded-full dark:border-gray-900"></div>
 								</div>
 							</li>

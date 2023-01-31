@@ -38,7 +38,8 @@ const Notifications: React.FC = () => {
 							? "flex"
 							: "hidden"
 					}`}>
-					<div className="inline-flex relative -top-2 right-3 w-3 h-3 bg-red-500 rounded-full border-2 border-white dark:border-gray-900"></div>
+					<div className="animate-ping inline-flex absolute -top-2 right-3 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></div>
+					<div className="inline-flex relative -top-2 right-3 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></div>
 				</div>
 			</button>
 			{/* <!-- Dropdown menu --> */}

@@ -26,8 +26,8 @@
       [x] load sales
       [x] giao diện sales, sales product vertical
       [x] face authen ui
-      [] scrollbar custom
-      [] reddot animations
+      [x] scrollbar custom
+      [x] reddot animations
  -->
 <!--       ==========Main features===========
       [x] Momo
