@@ -32,6 +32,8 @@ export interface ProductParams {
   brands: string[];
   pageNumber: number;
   pageSize: number;
+  minPrice: string;
+  maxPrice: string;
 }
 
 export interface CategoriesParams {

@@ -10,5 +10,8 @@ namespace API.ViewModel
 
             public string Brands { get; set; }
 
+            public string minPrice {get; set;}
+            public string maxPrice {get; set;}
+
       }
 }

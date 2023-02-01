@@ -1,6 +1,7 @@
 using System.Linq;
 using API.Entities;
 using System.Collections.Generic;
+using System;
 
 namespace API.Extensions
 {
@@ -30,7 +31,7 @@ namespace API.Extensions
             return query.Where(p => p.Name.ToLower().Contains(lowerCaseSearchTerm) || p.Brand.ToLower().Contains(lowerCaseSearchTerm) || p.Type.ToLower().Contains(lowerCaseSearchTerm));
         }
 
-        public static IQueryable<Product> Filter(this IQueryable<Product> query, string brands, string types)
+        public static IQueryable<Product> Filter(this IQueryable<Product> query, string brands, string types, string minPrice, string maxPrice)
         {
             var brandList = new List<string>();
             var typeList = new List<string>();
@@ -40,6 +41,10 @@ namespace API.Extensions
 
             if(!string.IsNullOrEmpty(types))
                 typeList.AddRange(types.ToLower().Split(",").ToList());
+
+            if(!string.IsNullOrEmpty(minPrice) && !string.IsNullOrEmpty(maxPrice)){
+                query = query.Where(p => p.Price >= Int64.Parse(minPrice) && p.Price <= Int64.Parse(maxPrice));
+            }
 
             query = query.Where(p => brandList.Count == 0 || brandList.Contains(p.Brand.ToLower()));
             query = query.Where(p => typeList.Count == 0 || typeList.Contains(p.Category.Name.ToLower()));

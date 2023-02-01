@@ -34,7 +34,7 @@ namespace API.Controllers
                   var query = _context.Products
                                 .Sort(productVm.OrderBy)
                                 .Search(productVm.SearchTerm)
-                                .Filter(productVm.Brands, productVm.Types)
+                                .Filter(productVm.Brands, productVm.Types, productVm.minPrice, productVm.maxPrice)
                                 .AsQueryable();
 
                   var products = await PagedList<Product>.ToPagedList(query, productVm.PageNumber, productVm.PageSize);

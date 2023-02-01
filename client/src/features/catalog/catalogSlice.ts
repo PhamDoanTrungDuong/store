@@ -27,11 +27,14 @@ interface CatalogState {
 const productsAdapter = createEntityAdapter<IProduct>();
 
 const getAxiosParams = (productParams: ProductParams) => {
+  console.log(productParams)
   const params = new URLSearchParams();
   params.append('pageNumber', productParams.pageNumber.toString());
   params.append('pageSize', productParams.pageSize.toString());
   params.append('orderBy', productParams.orderBy);
   if(productParams.searchTerm) params.append('searchTerm', productParams.searchTerm);
+  if(productParams.minPrice) params.append('minPrice', productParams.minPrice);
+  if(productParams.maxPrice) params.append('maxPrice', productParams.maxPrice);
   if(productParams.brands.length > 0) params.append('brands', productParams.brands.toString());
   if(productParams.types.length > 0) params.append('types', productParams.types.toString());
   return params;
@@ -125,6 +128,8 @@ const initParams = () => {
     orderBy: 'latest',
     brands: [],
     types: [],
+    minPrice: "",
+    maxPrice: "",
   }
 }
 
