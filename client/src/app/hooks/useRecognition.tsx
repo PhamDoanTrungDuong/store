@@ -33,7 +33,7 @@ const useRecognition = () => {
       setIsVoice(true)
    };
 
-   //stop
+   //while stop talking
    recognition.onspeechend = function() {
          setIsVoice(false)
          recognition.stop();
