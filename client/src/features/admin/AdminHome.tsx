@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { BsThreeDots, BsPeople, BsCart4 } from "react-icons/bs";
 import { IoIosArrowForward, IoMdArrowDropup } from "react-icons/io";
+import { FaLongArrowAltUp, FaLongArrowAltDown } from "react-icons/fa";
 import { MdAttachMoney } from "react-icons/md";
 import useMembers from "../../app/hooks/useMembers";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { currencyFormat } from "../../app/utilities/util";
 import { fetchMemberCount } from "../account/accountSlice";
-import { getProductCounterAsync } from "../catalog/catalogSlice";
+import { fetchProductAsync, getProductCounterAsync, productSelector } from "../catalog/catalogSlice";
 import { fetchAllTotal } from "../orders/orderSlice";
 import { AiOutlineHome } from "react-icons/ai";
 import { IoIosStats } from "react-icons/io";
 import { Link } from "react-router-dom";
 import ViewDatePicker from "../../app/components/ViewDatePicker";
-import { statisticsTodaySales } from "./adminSlice";
+import { bestSellerProduct, lessInteractionProduct, statisticsTodaySales } from "./adminSlice";
 import agent from "../../app/api/agent";
 import { TbGift, TbHome2 } from "react-icons/tb";
 import { RiTruckLine, RiRefund2Line } from "react-icons/ri";
@@ -24,16 +25,17 @@ const AdminHome: React.FC = () => {
 	const { allTotal } = useAppSelector((state) => state.order);
 	const { count } = useAppSelector((state) => state.account);
 	const { productCount } = useAppSelector((state) => state.catalog);
-	const { todaySales } = useAppSelector((state) => state.admin);
+	const { todaySales, bestSeller, lessInteract } = useAppSelector((state) => state.admin);
 	const [deliveryState, setDeliveryState] = useState<any>();
 
-	// console.log(deliveryState);
 
 	useEffect(() => {
 		dispatch(fetchAllTotal());
 		dispatch(fetchMemberCount());
 		dispatch(getProductCounterAsync());
 		dispatch(statisticsTodaySales());
+		dispatch(bestSellerProduct());
+		dispatch(lessInteractionProduct());
 		if (deliveryState === undefined) {
 			agent.Admin.orderDeliveryState().then((res) => {
 				setDeliveryState(res);
@@ -300,6 +302,105 @@ const AdminHome: React.FC = () => {
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
+			<div className="rounded-div2 mt-5">
+				<h3 className="font-medium text-lg p-2 mb-5">Best Seller</h3>
+				<div className="flex justify-center items-center gap-4">
+					{bestSeller.slice(0, 5).map((item: any) => {
+						return (
+							<div
+								key={item.productId}
+								className="border rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 duration-300">
+								<div>
+									<Link
+										to={`/inventory`}>
+										<div className="relative">
+											<img
+												className="h-full w-full object-contain rounded-t-xl"
+												src={
+													item.key[0].pictureUrl
+												}
+												alt={
+													item.key[0].name
+												}
+											/>
+										</div>
+									</Link>
+									<div className="p-4">
+										<Link
+											to={`/inventory`}>
+											<div className="flex justify-between items-center">
+												<div className="font-semibold">
+													{
+														item.key[0].name
+													}
+												</div>
+												<div className="flex justify-center items-center gap-1 ">
+													Sold:{" "}
+													<span className="flex justify-center items-center text-lg font-bold text-indigo-600">
+														{
+															item.value
+														}
+														<FaLongArrowAltUp size={20} className="text-green-500"/>
+													</span>
+												</div>
+											</div>
+										</Link>
+									</div>
+								</div>
+							</div>
+						);
+					})}
+				</div>
+			</div>
+			<div className="rounded-div2 mt-5">
+				<h3 className="font-medium text-lg p-2 mb-5">Less Interaction</h3>
+				<div className="flex justify-center items-center gap-4">
+					{lessInteract.map((item: any) => {
+						return (
+							<div
+								key={item.productId}
+								className="border rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 duration-300">
+								<div>
+									<Link
+										to={`/inventory`}>
+										<div className="relative">
+											<img
+												className="h-full w-full object-contain rounded-t-xl"
+												src={
+													item.pictureUrl
+												}
+												alt={
+													item.name
+												}
+											/>
+										</div>
+									</Link>
+									<div className="p-4">
+										<Link
+											to={`/inventory`}>
+											<div className="flex justify-between items-center">
+												<div className="font-semibold">
+													{
+														item.name
+													}
+												</div>
+												<div className="flex justify-center items-center gap-1">
+													view:{" "}
+													<span className="flex justify-center items-center text-lg font-bold text-indigo-600">
+														{
+															item.viewCount
+														}
+													</span>
+												</div>
+											</div>
+										</Link>
+									</div>
+								</div>
+							</div>
+						);
+					})}
 				</div>
 			</div>
 			<div className="mt-5">

@@ -193,6 +193,8 @@ const Admin = {
     statisticToday: () => requests.get(`admin/statistic-current-day`),
     statisticPerYear: (data: any) => requests.get(`admin/statistic-selected-year?year=${data.y}`),
     orderDeliveryState: () => requests.get(`admin/order-delivery-state`),
+    bestSeller: () => requests.get(`admin/best-seller`),
+    lessInteraction: () => requests.get(`admin/less-interaction`),
 
     //sliders
     getSliders: () => requests.get('admin/get-sliders'),

@@ -29,6 +29,8 @@ export interface AdminState {
       discountBanners: any;
       selectedVoucher: any;
       notifies: any;
+      bestSeller: [];
+      lessInteract: [];
 }
 
 const initParams = () => {
@@ -58,7 +60,9 @@ const initialState: AdminState = {
       ordersParams: initParams(),
       todaySales: 0,
       selectedVoucher: 0,
-      notifies: {}
+      notifies: {},
+      bestSeller: [],
+      lessInteract: []
 }
 
 const getCategoriesAxiosParams = (categoriesParams: CategoriesParams) => {
@@ -183,6 +187,26 @@ export const statisticsTodaySales = createAsyncThunk<number>(
             }
       }
 )
+export const bestSellerProduct = createAsyncThunk(
+      "admin/bestSellerProduct",
+      async (_, thunkAPI) => {
+            try {
+                  return await agent.Admin.bestSeller();
+            } catch( error: any) {
+                  console.log(error)
+            }
+      }
+)
+export const lessInteractionProduct = createAsyncThunk(
+      "admin/lessInteractionProduct",
+      async (_, thunkAPI) => {
+            try {
+                  return await agent.Admin.lessInteraction();
+            } catch( error: any) {
+                  console.log(error)
+            }
+      }
+)
 
 export const adminSlice = createSlice({
     name: 'admin',
@@ -267,6 +291,12 @@ export const adminSlice = createSlice({
       builder.addCase(fetchNotifies.fulfilled, (state, action) => {
             state.loadNotify = false
             state.notifies = action.payload
+      })
+      builder.addCase(bestSellerProduct.fulfilled, (state, action) => {
+            state.bestSeller = action.payload
+      })
+      builder.addCase(lessInteractionProduct.fulfilled, (state, action) => {
+            state.lessInteract = action.payload
       })
     }
 })

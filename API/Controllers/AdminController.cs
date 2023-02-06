@@ -126,15 +126,30 @@ namespace API.Controllers
             }
 
             // Product statistic
-            [HttpGet("best-saler")]
-            public async Task<Dictionary<int, int>> BestSaler()
+            [HttpGet("best-seller")]
+            public async Task<ActionResult> BestSeller()
             {
                   var orders = (await _context.OrderItems.ToListAsync())
                         .GroupBy(x => x.ItemOrdered.ProductId)
-                        .OrderBy(x => x.Key)
-                        .ToDictionary(x => x.Key, x => x.Select(y => y.Quantity).Count());
+                        .ToDictionary(x => x.Select(y => new { y.ItemOrdered.ProductId, y.ItemOrdered.PictureUrl, y.ItemOrdered.Name}).Distinct(), x => x.Select(y => y.Quantity).Count())
+                        .OrderByDescending(x => x.Value);
+                  return Ok(orders);
+            }
 
-                  return orders;
+            [HttpGet("less-interaction")]
+            public async Task<ActionResult> LessInteraction()
+            {
+                  var productLessInteract = await _context.Products
+                              .OrderBy(x => x.ViewCount)
+                              .Take(5)
+                              .Select(x => new {
+                                    x.Id,
+                                    x.Name,
+                                    x.PictureUrl,
+                                    x.ViewCount
+                              })
+                              .ToListAsync();
+                  return Ok(productLessInteract);
             }
 
             // [HttpGet("best-saler-categories")]

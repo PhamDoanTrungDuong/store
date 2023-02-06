@@ -70,5 +70,40 @@
       [] ~điểm danh nhận voucher
       [] ~games (maybe)
 
-
  -->
+ <!-- LV
+USER
+      [x] Đăng nhập bằng FB, GG
+      [x] Đăng Ký bằng FB, GG
+      [x] VnPay
+      [x] Tìm kiếm danh mục, mức giá
+      [x] Giỏ hàng
+      [x] Lịch sủ mua hàng.
+      [x] Theo dõi đơn hàng
+      [x] Đánh giá sản phẩm
+      [x] Xem chi tiết sản phẩm
+      [x] Hủy đơn hàng
+      [x] Tìm kiếm bằng giọng nói
+      [x] Nhận mã khuyễn mãi
+      [] PayPal
+      [] Cấp lại mật khẩu
+      [] Hình ảnh sản phẩm 3D
+      [] Chatbox
+
+ADMIN
+      [x] Thêm, sửa, xóa sản phẩm
+      [x] Tạo, sửa, ẩn danh mục sản phẩm
+      [x] Tạo, sửa, xóa khuyến mãi
+      [x] Xác nhận đơn hàng
+      [x] Quản lý sản phẩm
+      [x] Thống kê lịch sử giao dịch
+      [x] Quản lý tài khoản người dùng
+      [x] Thống kê doanh số bán (theo ngày, tháng, năm/ theo danh mục sản phẩm)
+      [x] Thống kê sản phẩm bán chạy nhất
+      [x] Thống báo sản phẩm ít tương tác trong tác
+      [] Thống kê độ hài lòng của khách hàng với sản phẩm
+      [] Thống kê tỉ lệ quay lại mua hàng của khách hàng
+      [] Thống kê thời gian sử dụng trang web của khách hàng
+      [] Thống kê lợi nhuận 
+      [] Chatbox
+  -->
