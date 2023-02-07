@@ -104,6 +104,6 @@ ADMIN
       [] Thống kê độ hài lòng của khách hàng với sản phẩm
       [] Thống kê tỉ lệ quay lại mua hàng của khách hàng
       [] Thống kê thời gian sử dụng trang web của khách hàng
-      [] Thống kê lợi nhuận 
+      [] Thống kê lợi nhuận
       [] Chatbox
   -->
