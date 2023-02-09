@@ -87,9 +87,9 @@ USER
       [x] Hủy đơn hàng
       [x] Tìm kiếm bằng giọng nói
       [x] Nhận mã khuyễn mãi
-      [] PayPal
-      [] Cấp lại mật khẩu
-      [] Hình ảnh sản phẩm 3D
+      [] PayPal (~~~)
+      [] Cấp lại mật khẩu (email)
+      [] Hình ảnh sản phẩm 3D (~~~)
       [] Chatbox
 
 ADMIN
@@ -103,9 +103,10 @@ ADMIN
       [x] Thống kê doanh số bán (theo ngày, tháng, năm/ theo danh mục sản phẩm)
       [x] Thống kê sản phẩm bán chạy nhất
       [x] Thống báo sản phẩm ít tương tác trong tác
-      [] Thống kê độ hài lòng của khách hàng với sản phẩm
-      [] Thống kê tỉ lệ quay lại mua hàng của khách hàng
-      [] Thống kê thời gian sử dụng trang web của khách hàng
-      [] Thống kê lợi nhuận
+      [] Thống kê độ hài lòng của khách hàng với sản phẩm (rating)
+      [] Thống kê tỉ lệ quay lại mua hàng của khách hàng (month chart, d/m/y)
+      [] Thống kê thời gian sử dụng trang web của khách hàng (client side triggers,
+            average time d/m/y)
+      [] Thống kê lợi nhuận (total revenue - (total import + total shipping fee))
       [] Chatbox
   -->
