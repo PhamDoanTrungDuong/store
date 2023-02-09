@@ -371,11 +371,10 @@ const ProductDetails: React.FC = () => {
 								{variants && variants.colors.map((color: any, idx: number) => {
 										var color1 = `bg-${color.colour_value}-500`;
 										return (
-											<span
-												key={
-													idx
-												}>
 												<div
+													key={
+														color.id
+													}
 													onClick={() =>
 														handleColor(
 															color.colour_value
@@ -386,8 +385,7 @@ const ProductDetails: React.FC = () => {
 														color.colour_value
 															? "border-black/70"
 															: ""
-													} ml-1 rounded-full w-6 h-6 focus:outline-none`}></div>
-											</span>
+													}ml-1 rounded-full w-6 h-6 focus:outline-none`}></div>
 										);
 									})}
 							</div>
