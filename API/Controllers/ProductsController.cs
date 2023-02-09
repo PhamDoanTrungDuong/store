@@ -125,14 +125,17 @@ namespace API.Controllers
                               arrayQuantity.Add(Int32.Parse(qty));
                               // variantsQuantity += Int32.Parse(qty);
                         }
-
-                        for (var i = 0; i < arrayColors.Count(); i++)
+                        if((arrayColors.Count() != arrayQuantity.Count()) || (arrayColors.Count() != arraySizes.Count()) || (arraySizes.Count() != arrayQuantity.Count())) {
+                              return BadRequest(new ProblemDetails{ Title = "Size, Quantity, Color field must equal" });
+                        } else {
+                              for (var i = 0; i < arrayColors.Count(); i++)
                               {
                                     for (int j = 0; j < arraySizes.Count(); j++)
                                     {
                                           variantsQuantity += arrayQuantity[i];
                                     }
                               }
+                        }
                   }
 
                   // Product

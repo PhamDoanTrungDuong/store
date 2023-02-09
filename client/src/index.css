@@ -13,9 +13,9 @@
 }
 
 @layer base {
-      body {
-            @apply font-rubik
-      }
+	body {
+			@apply font-rubik
+	}
 	.rounded-div {
 		@apply border border-[#ffffff] rounded-2xl shadow-xl bg-primary px-4 max-w-[1140px] w-full mx-auto;
 	}
@@ -28,6 +28,21 @@
 	.c-btn {
 		@apply bg-indigo-600 border border-indigo-600 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-indigo-600 duration-200
 	}
+	/* .bg-color-white {
+		@apply bg-white-500
+	}
+	.bg-color-red {
+		@apply bg-red-500
+	}
+	.bg-color-teal {
+		@apply bg-teal-500
+	}
+	.bg-color-orange {
+		@apply bg-orange-500
+	}
+	.bg-color-sky {
+		@apply bg-sky-500
+	} */
 }
 
 /* width */

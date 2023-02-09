@@ -221,6 +221,7 @@ const ProductDetails: React.FC = () => {
 		setSelectedSize(value);
 	};
 
+
 	return (
 		<div className="mt-5 p-5">
 			<div className="flex items-center ml-3 mt-3 mb-4">
@@ -365,27 +366,27 @@ const ProductDetails: React.FC = () => {
 						</div>
 					</div>
 					{(variants && (variants.colors.length !== 0 && variants.sizes.length !== 0)) ? (
-						<div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
+						<div className="flex items-center mt-6 pb-5 border-b-2 border-gray-200 mb-5">
 							<div className="flex items-center">
 								<span className="mr-3">Color:</span>
 								{variants && variants.colors.map((color: any, idx: number) => {
-										var color1 = `bg-${color.colour_value}-500`;
+										// var color1 = `bg-${color.colour_value}-500`;
 										return (
 												<div
 													key={
-														color.id
+														color.colour_value
 													}
 													onClick={() =>
 														handleColor(
 															color.colour_value
 														)
 													}
-													className={`${color1} border-2 border-gray-300 ${
+													className={`${color.colour_value === "red" ? "bg-red-500" : color.colour_value === "teal" ? "bg-teal-500" : color.colour_value === "orange" ? "bg-orange-500" : color.colour_value === "sky" ? "bg-sky-500" : ""} border-2 border-gray-300 ${
 														selectedColor ===
 														color.colour_value
 															? "border-black/70"
 															: ""
-													}ml-1 rounded-full w-6 h-6 focus:outline-none`}></div>
+													} ml-1 rounded-full w-6 h-6 focus:outline-none`}></div>
 										);
 									})}
 							</div>
@@ -428,30 +429,29 @@ const ProductDetails: React.FC = () => {
 							</div>
 						</div>
 					) : (
-						<div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
+						<div className="flex items-center mt-6 pb-5 border-b-2 border-gray-200 mb-5">
 							<div className="flex items-center">
 								<span className="mr-3">Color:</span>
 								{colors &&
 									colors.map((color: any, idx) => {
-										var color1 = `bg-${color.colour_value}-500`;
+										// var color1 = `bg-${color.colour_value}-500`;
 										return (
-											<span
-												key={
-													color.id
-												}>
 												<div
+													key={
+														color.colour_value
+													}
 													onClick={() =>
 														handleColor(
 															color.colour_value
 														)
 													}
-													className={`${color1} border-2 border-gray-300 ${
+													className={`${color.colour_value === "red" ? "bg-red-500" : color.colour_value === "teal" ? "bg-teal-500" : color.colour_value === "orange" ? "bg-orange-500" : color.colour_value === "sky" ? "bg-sky-500" : ""} border-2 border-gray-300 ${
 														selectedColor ===
 														color.colour_value
 															? "border-black/70"
 															: ""
-													} ml-1 rounded-full w-6 h-6 focus:outline-none`}></div>
-											</span>
+													} ml-1 rounded-full w-6 h-6 focus:outline-none`}>
+													</div>
 										);
 									})}
 							</div>
@@ -494,7 +494,6 @@ const ProductDetails: React.FC = () => {
 								</div>
 							</div>
 						</div>
-						
 					)}
 					<div>
 						<button
