@@ -106,6 +106,6 @@ ADMIN
       [x] Thống kê thời gian sử dụng trang web của khách hàng
       [x] Thống kê độ hài lòng của khách hàng với sản phẩm (rating)
       [x] Thống kê lợi nhuận (total revenue - (total import + total shipping fee))
-      [] Thống kê tỉ lệ quay lại mua hàng của khách hàng (month chart, d/m/y)
+      [x] Thống kê tỉ lệ quay lại mua hàng của khách hàng (month chart, d/m/y)
       [] Chatbox
   -->

@@ -197,6 +197,7 @@ const Admin = {
     orderDeliveryState: () => requests.get(`admin/order-delivery-state`),
     bestSeller: () => requests.get(`admin/best-seller`),
     lessInteraction: () => requests.get(`admin/less-interaction`),
+    returnPurchaseRate: () => requests.get(`admin/return-purchase-rate`),
 
     //sliders
     getSliders: () => requests.get('admin/get-sliders'),

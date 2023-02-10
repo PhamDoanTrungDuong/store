@@ -587,5 +587,56 @@ namespace API.Controllers
 
             }
 
+            [HttpGet("return-purchase-rate")]
+            public ActionResult GetPurchaseRate() {
+                  double firstTimeCustomers = GetFirstTimeCustomers();
+                  double repeatCustomers = GetRepeatCustomers();
+                  double repeatRate = (double)repeatCustomers / (double)firstTimeCustomers;
+                  // double repeatRate = (double)firstTimeCustomers / (double)repeatCustomers;
+                  
+                  return Ok(repeatRate);
+            }
+
+            private int GetFirstTimeCustomers()
+            {
+                  var customerIds = new HashSet<string>();
+                  int firstTimeCustomers = 0;
+                  var purchases = _context.Orders
+                                    .ToArray();
+
+                  foreach (Order purchase in purchases)
+                  {
+                        if (!customerIds.Contains(purchase.BuyerId))
+                        {
+                              customerIds.Add(purchase.BuyerId);
+                              firstTimeCustomers++;
+                        }
+                  }
+
+                  return firstTimeCustomers;
+            }
+            
+            private int GetRepeatCustomers()
+            {
+                  var customerIds = new HashSet<string>();
+                  int repeatCustomers = 0;
+                  var purchases = _context.Orders
+                                    .ToArray();
+
+                  foreach (var purchase in purchases)
+                  {
+                        if (customerIds.Contains(purchase.BuyerId))
+                        {
+                              repeatCustomers++;
+                        }
+                        else
+                        {
+                              customerIds.Add(purchase.BuyerId);
+                        }
+                  }
+
+                  return repeatCustomers;
+            }
+
       }
 }

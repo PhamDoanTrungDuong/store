@@ -9,7 +9,7 @@ import { currencyFormat } from "../../app/utilities/util";
 import { fetchMemberCount } from "../account/accountSlice";
 import { fetchProductAsync, getProductCounterAsync, productSelector } from "../catalog/catalogSlice";
 import { fetchAllTotal } from "../orders/orderSlice";
-import { AiOutlineHome, AiOutlineStar } from "react-icons/ai";
+import { AiOutlineHome, AiOutlineStar, AiOutlinePercentage } from "react-icons/ai";
 import { IoIosStats } from "react-icons/io";
 import { Link } from "react-router-dom";
 import ViewDatePicker from "../../app/components/ViewDatePicker";
@@ -30,6 +30,7 @@ const AdminHome: React.FC = () => {
 	const [deliveryState, setDeliveryState] = useState<any>();
 	const [averageTime, setAverageTime] = useState<any>();
 	const [customerSatisfaction, setCustomerSatisfaction] = useState<any>();
+	const [returnRate, setReturnRate] = useState<any>();
 
 
 	useEffect(() => {
@@ -49,6 +50,9 @@ const AdminHome: React.FC = () => {
 		});
 		agent.Comment.customerSatisfaction().then((res) => {
 			setCustomerSatisfaction(res);
+		});
+		agent.Admin.returnPurchaseRate().then((res) => {
+			setReturnRate(res);
 		});
 	}, [dispatch, deliveryState]);
 
@@ -82,11 +86,11 @@ const AdminHome: React.FC = () => {
 							<BsThreeDots className="cursor-pointer" size={20} />
 						</div>
 						<div className="relative mt-5">
-							<div className="text-xl font-bold py-1 py-1">
+							<div className="text-2xl font-bold py-1">
 								<p>{currencyFormat(allTotal)}</p>
 							</div>
 							<div className="flex font-medium justify-between items-center mt-1">
-								<h1 className="text-md font-bold">
+								<h1 className="text-xl font-bold">
 									Total Revenue
 								</h1>
 								<button className="py-2 px-4 hover:shadow-indigo-900 duration-300 bg-indigo-500 shadow-md rounded-full flex">
@@ -104,11 +108,11 @@ const AdminHome: React.FC = () => {
 							<BsThreeDots className="cursor-pointer" size={20} />
 						</div>
 						<div className="relative mt-5">
-							<div className="text-xl font-bold py-1">
+							<div className="text-2xl font-bold py-1">
 								<p>{currencyFormat(todaySales)}</p>
 							</div>
 							<div className="flex font-medium justify-between items-center mt-1">
-								<h1 className="text-md font-bold">
+								<h1 className="text-xl font-bold">
 									Today's Sales
 								</h1>
 								<button className="py-2 px-4 hover:shadow-fuchsia-900 duration-300 bg-fuchsia-500 shadow-md rounded-full flex">
@@ -126,11 +130,11 @@ const AdminHome: React.FC = () => {
 							<BsThreeDots className="cursor-pointer" size={20} />
 						</div>
 						<div className="relative mt-5">
-							<div className="text-xl font-bold py-1">
+							<div className="text-2xl font-bold py-1">
 								<p>{productCount} Products</p>
 							</div>
 							<div className="flex font-medium justify-between items-center mt-1">
-								<h1 className="text-md font-bold">
+								<h1 className="text-xl font-bold">
 									Total Product
 								</h1>
 								<button className="py-2 px-4 hover:shadow-cyan-900 duration-300 bg-cyan-500 shadow-md rounded-full flex">
@@ -193,7 +197,7 @@ const AdminHome: React.FC = () => {
 								<p>{count} Users</p>
 							</div>
 							<div className="flex font-medium justify-between items-center mt-1">
-								<h1 className="text-md font-bold">
+								<h1 className="text-xl font-bold">
 									Total Users
 								</h1>
 								<button className="py-2 px-4 hover:shadow-green-900 duration-300 bg-green-500 shadow-md rounded-full flex">
@@ -213,14 +217,35 @@ const AdminHome: React.FC = () => {
 							<BsThreeDots className="cursor-pointer" size={20} />
 						</div>
 						<div className="relative mt-5">
-							<div className="text-xl font-bold">
+							<div className="text-2xl font-bold">
 								<p> ≈ {averageTime ? (averageTime / 60).toFixed(2) : 0.00} h</p>
 							</div>
 							<div className="flex font-medium justify-between items-center mt-1">
-								<h1 className="text-md font-bold">
+								<h1 className="text-xl font-bold">
 									Average Time User Had Used
 								</h1>
 								<button className="py-2 px-4 hover:shadow-red-900 duration-300 bg-red-500 shadow-md rounded-full flex">
+									0% <IoMdArrowDropup size={20} />
+								</button>
+							</div>
+						</div>
+					</div>
+					<div className="text-white bg-gradient-to-r from-orange-600 to-orange-400 px-8 py-6 rounded-[30px] w-[30%] mb-4 shadow-xl">
+						<div className="flex justify-between mb-3">
+							<div className="p-3 bg-white text-orange-600 rounded-2xl inline-block">
+								<AiOutlinePercentage size={25} />
+							</div>
+							<BsThreeDots className="cursor-pointer" size={20} />
+						</div>
+						<div className="relative mt-5">
+							<div className="text-2xl font-bold">
+								<p> {(returnRate ? (returnRate * 100) : 0).toFixed(2)}%</p>
+							</div>
+							<div className="flex font-medium justify-between items-center mt-1">
+								<h1 className="text-xl font-bold">
+									Return Purchase Rate
+								</h1>
+								<button className="py-2 px-4 hover:shadow-orange-900 duration-300 bg-orange-500 shadow-md rounded-full flex">
 									0% <IoMdArrowDropup size={20} />
 								</button>
 							</div>
@@ -248,7 +273,7 @@ const AdminHome: React.FC = () => {
 								</div>
 							</div>
 							<div className="flex font-medium justify-between items-center mt-1">
-								<h1 className="text-md font-bold">
+								<h1 className="text-xl font-bold">
 									Customer Satisfaction
 								</h1>
 								<button className="py-2 px-4 hover:shadow-sky-900 duration-300 bg-sky-500 shadow-md rounded-full flex">
