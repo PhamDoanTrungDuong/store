@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Timers;
 using API.Data;
 using API.DTOs;
 using API.Entities;
@@ -23,6 +24,10 @@ namespace API.Controllers
             private readonly StoreContext _context;
             private readonly IMapper _mapper;
             private readonly ImageService _imageService;
+            static Timer timer;
+            static int minute = 0;
+            static DateTime startTime;
+
             public AccountController(UserManager<User> userManager, TokenService tokenService, StoreContext context, IMapper mapper, ImageService imageService)
             {
                   _imageService = imageService;
@@ -44,6 +49,7 @@ namespace API.Controllers
                   if (user == null || !await _userManager.CheckPasswordAsync(user, loginDto.Password))
                         return Unauthorized(new ProblemDetails { Title = "Username or Password incorrect" });
 
+                  MemberTimerStart();
                   var userBasket = await RetrieveBasket(loginDto.UserName);
                   var anonBasket = await RetrieveBasket(Request.Cookies["buyerId"]);
 
@@ -424,6 +430,47 @@ namespace API.Controllers
                       .ToListAsync();
 
                   return subtotal.Count();
+            }
+
+            [HttpGet("member-timer-start")]
+            public ActionResult MemberTimerStart()
+            {
+                  startTime = DateTime.Now;
+                  timer = new Timer();
+                  timer.Interval = 1000 * 60; // 1 minute
+                  timer.Elapsed += OnTimedEvent;
+                  timer.Start();
+
+                  Console.ForegroundColor = ConsoleColor.Red;
+                  Console.WriteLine("System has been counting time...");
+
+                  return Ok();
+            }
+
+            [HttpGet("member-timer-stop")]
+            public async Task<ActionResult> MemberTimerStop()
+            {
+                  timer.Stop();
+                  var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+                  if(user == null) return BadRequest(new ProblemDetails{ Title = "Can't find username"});
+
+                  user.Timer += minute;
+
+                  Console.ForegroundColor = ConsoleColor.Yellow;
+                  Console.WriteLine("Went Logout " + minute + " minute.");
+
+                  var result = await _context.SaveChangesAsync() > 0;
+                  if (result) return Ok(result);
+
+                  return NoContent();
+            }
+
+            private static void OnTimedEvent(Object source, ElapsedEventArgs e)
+            {
+                  TimeSpan elapsed = DateTime.Now - startTime;
+                  minute = (int)elapsed.TotalMinutes;
+                  Console.WriteLine("OnTimedEvent " + minute + " minute.");
             }
 
             private async Task<Basket> RetrieveBasket(string buyerId)

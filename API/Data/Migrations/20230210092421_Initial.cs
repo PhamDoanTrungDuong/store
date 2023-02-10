@@ -170,6 +170,7 @@ namespace API.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     PictureUrl = table.Column<string>(type: "text", nullable: true),
                     PublicId = table.Column<string>(type: "text", nullable: true),
+                    Timer = table.Column<int>(type: "integer", nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -532,25 +533,37 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductColour",
+                name: "ProductDetails",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ColourId = table.Column<int>(type: "integer", nullable: false),
+                    ColourValue = table.Column<string>(type: "text", nullable: true),
+                    SizeId = table.Column<int>(type: "integer", nullable: false),
+                    SizeValue = table.Column<string>(type: "text", nullable: true),
+                    Quantity = table.Column<int>(type: "integer", nullable: false),
                     ProductId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductColour", x => new { x.ColourId, x.ProductId });
+                    table.PrimaryKey("PK_ProductDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductColour_Colours_ColourId",
+                        name: "FK_ProductDetails_Colours_ColourId",
                         column: x => x.ColourId,
                         principalTable: "Colours",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductColour_Products_ProductId",
+                        name: "FK_ProductDetails_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductDetails_Sizes_SizeId",
+                        column: x => x.SizeId,
+                        principalTable: "Sizes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -578,30 +591,6 @@ namespace API.Data.Migrations
                         name: "FK_ProductDiscounts_Products_productId",
                         column: x => x.productId,
                         principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProductSize",
-                columns: table => new
-                {
-                    SizeId = table.Column<int>(type: "integer", nullable: false),
-                    ProductId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductSize", x => new { x.SizeId, x.ProductId });
-                    table.ForeignKey(
-                        name: "FK_ProductSize_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductSize_Sizes_SizeId",
-                        column: x => x.SizeId,
-                        principalTable: "Sizes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -637,8 +626,8 @@ namespace API.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "aebb4d01-8d7c-4f3a-a69d-8cc526447cdf", "Member", "MEMBER" },
-                    { 2, "6377ae8e-7458-444e-8c48-0b00fda1bf95", "Admin", "ADMIN" }
+                    { 1, "59bba87c-3d49-46f5-a924-c02b7ec076c4", "Member", "MEMBER" },
+                    { 2, "37724328-f3cb-4aa0-886f-c13b3287ab72", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -682,9 +671,19 @@ namespace API.Data.Migrations
                 column: "CurrentShipperId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductColour_ProductId",
-                table: "ProductColour",
+                name: "IX_ProductDetails_ColourId",
+                table: "ProductDetails",
+                column: "ColourId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductDetails_ProductId",
+                table: "ProductDetails",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductDetails_SizeId",
+                table: "ProductDetails",
+                column: "SizeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductDiscounts_productId",
@@ -695,11 +694,6 @@ namespace API.Data.Migrations
                 name: "IX_Products_CurrentCateId",
                 table: "Products",
                 column: "CurrentCateId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductSize_ProductId",
-                table: "ProductSize",
-                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",
@@ -768,13 +762,10 @@ namespace API.Data.Migrations
                 name: "Partners");
 
             migrationBuilder.DropTable(
-                name: "ProductColour");
+                name: "ProductDetails");
 
             migrationBuilder.DropTable(
                 name: "ProductDiscounts");
-
-            migrationBuilder.DropTable(
-                name: "ProductSize");
 
             migrationBuilder.DropTable(
                 name: "RoleClaims");
@@ -813,10 +804,10 @@ namespace API.Data.Migrations
                 name: "Colours");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Sizes");
 
             migrationBuilder.DropTable(
-                name: "Sizes");
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Roles");

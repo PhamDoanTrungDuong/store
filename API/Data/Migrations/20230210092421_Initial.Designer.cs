@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20221228025553_Initial")]
+    [Migration("20230210092421_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -350,19 +350,40 @@ namespace API.Data.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("API.Entities.ProductColour", b =>
+            modelBuilder.Entity("API.Entities.ProductDetails", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
                     b.Property<int>("ColourId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("ColourValue")
+                        .HasColumnType("text");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("integer");
 
-                    b.HasKey("ColourId", "ProductId");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SizeId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SizeValue")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ColourId");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductColour");
+                    b.HasIndex("SizeId");
+
+                    b.ToTable("ProductDetails");
                 });
 
             modelBuilder.Entity("API.Entities.ProductDiscount", b =>
@@ -406,21 +427,6 @@ namespace API.Data.Migrations
                     b.ToTable("ProductDiscounts");
                 });
 
-            modelBuilder.Entity("API.Entities.ProductSize", b =>
-                {
-                    b.Property<int>("SizeId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("SizeId", "ProductId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductSize");
-                });
-
             modelBuilder.Entity("API.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -452,14 +458,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "aebb4d01-8d7c-4f3a-a69d-8cc526447cdf",
+                            ConcurrencyStamp = "59bba87c-3d49-46f5-a924-c02b7ec076c4",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "6377ae8e-7458-444e-8c48-0b00fda1bf95",
+                            ConcurrencyStamp = "37724328-f3cb-4aa0-886f-c13b3287ab72",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -639,6 +645,9 @@ namespace API.Data.Migrations
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
+
+                    b.Property<int>("Timer")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
@@ -1001,23 +1010,31 @@ namespace API.Data.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("API.Entities.ProductColour", b =>
+            modelBuilder.Entity("API.Entities.ProductDetails", b =>
                 {
                     b.HasOne("API.Entities.Colour", "Colour")
-                        .WithMany("ProductColours")
+                        .WithMany("ProductDetails")
                         .HasForeignKey("ColourId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API.Entities.Product", "Product")
-                        .WithMany("ProductColours")
+                        .WithMany("ProductDetails")
                         .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Entities.Size", "Size")
+                        .WithMany("ProductDetails")
+                        .HasForeignKey("SizeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Colour");
 
                     b.Navigation("Product");
+
+                    b.Navigation("Size");
                 });
 
             modelBuilder.Entity("API.Entities.ProductDiscount", b =>
@@ -1029,25 +1046,6 @@ namespace API.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("API.Entities.ProductSize", b =>
-                {
-                    b.HasOne("API.Entities.Product", "Product")
-                        .WithMany("ProductSizes")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API.Entities.Size", "Size")
-                        .WithMany("ProductSizes")
-                        .HasForeignKey("SizeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Size");
                 });
 
             modelBuilder.Entity("API.Entities.SelectedAddress", b =>
@@ -1156,7 +1154,7 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Colour", b =>
                 {
-                    b.Navigation("ProductColours");
+                    b.Navigation("ProductDetails");
                 });
 
             modelBuilder.Entity("API.Entities.OrderAggregate.Order", b =>
@@ -1170,11 +1168,9 @@ namespace API.Data.Migrations
 
                     b.Navigation("LikedByUsers");
 
-                    b.Navigation("ProductColours");
+                    b.Navigation("ProductDetails");
 
                     b.Navigation("ProductDiscounts");
-
-                    b.Navigation("ProductSizes");
                 });
 
             modelBuilder.Entity("API.Entities.Role", b =>
@@ -1189,7 +1185,7 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Size", b =>
                 {
-                    b.Navigation("ProductSizes");
+                    b.Navigation("ProductDetails");
                 });
 
             modelBuilder.Entity("API.Entities.User", b =>

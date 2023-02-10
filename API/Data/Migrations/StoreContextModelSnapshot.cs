@@ -456,14 +456,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "3a5bca24-d6aa-44aa-b708-035564e20daf",
+                            ConcurrencyStamp = "59bba87c-3d49-46f5-a924-c02b7ec076c4",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "28586319-d240-4f9a-9ae1-f422be659d38",
+                            ConcurrencyStamp = "37724328-f3cb-4aa0-886f-c13b3287ab72",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -643,6 +643,9 @@ namespace API.Data.Migrations
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
+
+                    b.Property<int>("Timer")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
