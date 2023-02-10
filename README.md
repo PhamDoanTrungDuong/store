@@ -103,9 +103,9 @@ ADMIN
       [x] Thống kê doanh số bán (theo ngày, tháng, năm/ theo danh mục sản phẩm)
       [x] Thống kê sản phẩm bán chạy nhất
       [x] Thống báo sản phẩm ít tương tác trong tác
-      [] Thống kê độ hài lòng của khách hàng với sản phẩm (rating)
-      [] Thống kê tỉ lệ quay lại mua hàng của khách hàng (month chart, d/m/y)
       [x] Thống kê thời gian sử dụng trang web của khách hàng
-      [] Thống kê lợi nhuận (total revenue - (total import + total shipping fee))
+      [x] Thống kê độ hài lòng của khách hàng với sản phẩm (rating)
+      [x] Thống kê lợi nhuận (total revenue - (total import + total shipping fee))
+      [] Thống kê tỉ lệ quay lại mua hàng của khách hàng (month chart, d/m/y)
       [] Chatbox
   -->

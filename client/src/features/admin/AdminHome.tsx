@@ -9,7 +9,7 @@ import { currencyFormat } from "../../app/utilities/util";
 import { fetchMemberCount } from "../account/accountSlice";
 import { fetchProductAsync, getProductCounterAsync, productSelector } from "../catalog/catalogSlice";
 import { fetchAllTotal } from "../orders/orderSlice";
-import { AiOutlineHome } from "react-icons/ai";
+import { AiOutlineHome, AiOutlineStar } from "react-icons/ai";
 import { IoIosStats } from "react-icons/io";
 import { Link } from "react-router-dom";
 import ViewDatePicker from "../../app/components/ViewDatePicker";
@@ -18,6 +18,7 @@ import agent from "../../app/api/agent";
 import { TbGift, TbHome2 } from "react-icons/tb";
 import { RiTruckLine, RiRefund2Line } from "react-icons/ri";
 import { MdOutlineCardGiftcard } from "react-icons/md";
+import { Rating } from "@mui/material";
 
 const AdminHome: React.FC = () => {
 	const { members } = useMembers();
@@ -28,6 +29,7 @@ const AdminHome: React.FC = () => {
 	const { todaySales, bestSeller, lessInteract } = useAppSelector((state) => state.admin);
 	const [deliveryState, setDeliveryState] = useState<any>();
 	const [averageTime, setAverageTime] = useState<any>();
+	const [customerSatisfaction, setCustomerSatisfaction] = useState<any>();
 
 
 	useEffect(() => {
@@ -44,6 +46,9 @@ const AdminHome: React.FC = () => {
 		}
 		agent.Account.getAllTime().then((res) => {
 			setAverageTime(res.reduce((acc: number, curr: number) => acc + curr, 0));
+		});
+		agent.Comment.customerSatisfaction().then((res) => {
+			setCustomerSatisfaction(res);
 		});
 	}, [dispatch, deliveryState]);
 
@@ -67,158 +72,192 @@ const AdminHome: React.FC = () => {
 					</h1>
 				</Link>
 			</div>
-			<div className="flex justify-center gap-4">
-				<div className="text-white bg-gradient-to-r from-indigo-600 to-indigo-400 px-8 py-6 rounded-[30px] w-[30%] mb-4 shadow-xl">
-					<div className="flex justify-between mb-3">
-						<div className="p-3 bg-white text-indigo-600 rounded-2xl inline-block">
-							<MdAttachMoney size={25} />
-						</div>
-						<BsThreeDots className="cursor-pointer" size={20} />
-					</div>
-					<div className="relative mt-5">
-						<div className="text-xl font-bold">
-							<p>{currencyFormat(allTotal)}</p>
-						</div>
-						<div className="flex font-medium justify-between items-center mt-1">
-							<h1 className="text-md font-bold">
-								Total Revenue
-							</h1>
-							<button className="py-2 px-4 hover:shadow-indigo-900 duration-300 bg-indigo-500 shadow-md rounded-full flex">
-								+2,36% <IoMdArrowDropup size={20} />
-							</button>
-						</div>
-					</div>
-				</div>
-
-				<div className="text-white bg-gradient-to-r from-fuchsia-600 to-fuchsia-400 px-8 py-6 rounded-[30px] w-[30%] mb-4 shadow-xl">
-					<div className="flex justify-between mb-3">
-						<div className="p-3 bg-white text-fuchsia-600 rounded-2xl inline-block">
-							<MdAttachMoney size={25} />
-						</div>
-						<BsThreeDots className="cursor-pointer" size={20} />
-					</div>
-					<div className="relative mt-5">
-						<div className="text-xl font-bold">
-							<p>{currencyFormat(todaySales)}</p>
-						</div>
-						<div className="flex font-medium justify-between items-center mt-1">
-							<h1 className="text-md font-bold">
-								Today's Sales
-							</h1>
-							<button className="py-2 px-4 hover:shadow-fuchsia-900 duration-300 bg-fuchsia-500 shadow-md rounded-full flex">
-								0% <IoMdArrowDropup size={20} />
-							</button>
-						</div>
-					</div>
-				</div>
-
-				<div className="text-white bg-gradient-to-r from-cyan-600 to-cyan-400 px-8 py-6 rounded-[30px] w-[30%] mb-4 shadow-xl">
-					<div className="flex justify-between mb-3">
-						<div className="p-3 bg-white text-cyan-600 rounded-2xl inline-block">
-							<BsCart4 size={25} />
-						</div>
-						<BsThreeDots className="cursor-pointer" size={20} />
-					</div>
-					<div className="relative mt-5">
-						<div className="text-xl font-bold">
-							<p>{productCount} Products</p>
-						</div>
-						<div className="flex font-medium justify-between items-center mt-1">
-							<h1 className="text-md font-bold">
-								Total Product
-							</h1>
-							<button className="py-2 px-4 hover:shadow-cyan-900 duration-300 bg-cyan-500 shadow-md rounded-full flex">
-								+2 <IoMdArrowDropup size={20} />
-							</button>
-						</div>
-					</div>
-				</div>
-
-				<div className="text-white bg-gradient-to-r from-green-600 to-green-400 px-8 py-6 rounded-[30px] w-[30%] mb-4 shadow-xl">
-					<div className="flex justify-between mb-3">
-						<div className="p-3 bg-white text-green-600 rounded-2xl inline-block">
-							<BsPeople size={25} />
-						</div>
-						<BsThreeDots className="cursor-pointer" size={20} />
-					</div>
-					<div className="relative mt-5">
-						<div className=" flex justify-center items-center gap-x-6 text-xl font-bold">
-							<div className="flex -space-x-4">
-								{members
-									.slice(0, 3)
-									.map((i: any, idx: any) => {
-										return (
-											<img
-												key={
-													idx
-												}
-												className="w-10 h-10 rounded-full border-2 border-white dark:border-gray-800"
-												// src={
-												// 	i.username.includes(
-												// 		"admin"
-												// 	)
-												// 		? "/images/admin.jpg"
-												// 		: i.pictureUrl ===
-												// 		  null
-												// 		? "/images/empty-user.png"
-												// 		: i.pictureUrl
-												// }
-												src={
-													i.pictureUrl ===
-													null
-														? "/images/empty-user.png"
-														: i.pictureUrl
-												}
-												alt={
-													i.username
-												}
-											/>
-										);
-									})}
-								<a
-									className="flex justify-center items-center w-10 h-10 text-xs font-medium text-white bg-gray-700 rounded-full border-2 border-white hover:bg-gray-600 dark:border-gray-800"
-									href="#">
-									+
-									{count - 3 < 0
-										? 0
-										: count - 3}
-								</a>
+			<div className="rounded-div2">
+				<div className="flex justify-center gap-4">
+					<div className="text-white bg-gradient-to-r from-indigo-600 to-indigo-400 px-8 py-6 rounded-[30px] w-[30%] mb-4 shadow-xl">
+						<div className="flex justify-between mb-3">
+							<div className="p-3 bg-white text-indigo-600 rounded-2xl inline-block">
+								<MdAttachMoney size={25} />
 							</div>
-							<p>{count} Users</p>
+							<BsThreeDots className="cursor-pointer" size={20} />
 						</div>
-						<div className="flex font-medium justify-between items-center mt-1">
-							<h1 className="text-md font-bold">
-								Total Users
-							</h1>
-							<button className="py-2 px-4 hover:shadow-green-900 duration-300 bg-green-500 shadow-md rounded-full flex">
-								+3 <IoMdArrowDropup size={20} />
-							</button>
+						<div className="relative mt-5">
+							<div className="text-xl font-bold py-1 py-1">
+								<p>{currencyFormat(allTotal)}</p>
+							</div>
+							<div className="flex font-medium justify-between items-center mt-1">
+								<h1 className="text-md font-bold">
+									Total Revenue
+								</h1>
+								<button className="py-2 px-4 hover:shadow-indigo-900 duration-300 bg-indigo-500 shadow-md rounded-full flex">
+									+2,36% <IoMdArrowDropup size={20} />
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<div className="text-white bg-gradient-to-r from-fuchsia-600 to-fuchsia-400 px-8 py-6 rounded-[30px] w-[30%] mb-4 shadow-xl">
+						<div className="flex justify-between mb-3">
+							<div className="p-3 bg-white text-fuchsia-600 rounded-2xl inline-block">
+								<MdAttachMoney size={25} />
+							</div>
+							<BsThreeDots className="cursor-pointer" size={20} />
+						</div>
+						<div className="relative mt-5">
+							<div className="text-xl font-bold py-1">
+								<p>{currencyFormat(todaySales)}</p>
+							</div>
+							<div className="flex font-medium justify-between items-center mt-1">
+								<h1 className="text-md font-bold">
+									Today's Sales
+								</h1>
+								<button className="py-2 px-4 hover:shadow-fuchsia-900 duration-300 bg-fuchsia-500 shadow-md rounded-full flex">
+									0% <IoMdArrowDropup size={20} />
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<div className="text-white bg-gradient-to-r from-cyan-600 to-cyan-400 px-8 py-6 rounded-[30px] w-[30%] mb-4 shadow-xl">
+						<div className="flex justify-between mb-3">
+							<div className="p-3 bg-white text-cyan-600 rounded-2xl inline-block">
+								<BsCart4 size={25} />
+							</div>
+							<BsThreeDots className="cursor-pointer" size={20} />
+						</div>
+						<div className="relative mt-5">
+							<div className="text-xl font-bold py-1">
+								<p>{productCount} Products</p>
+							</div>
+							<div className="flex font-medium justify-between items-center mt-1">
+								<h1 className="text-md font-bold">
+									Total Product
+								</h1>
+								<button className="py-2 px-4 hover:shadow-cyan-900 duration-300 bg-cyan-500 shadow-md rounded-full flex">
+									+2 <IoMdArrowDropup size={20} />
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<div className="text-white bg-gradient-to-r from-green-600 to-green-400 px-8 py-6 rounded-[30px] w-[30%] mb-4 shadow-xl">
+						<div className="flex justify-between mb-3">
+							<div className="p-3 bg-white text-green-600 rounded-2xl inline-block">
+								<BsPeople size={25} />
+							</div>
+							<BsThreeDots className="cursor-pointer" size={20} />
+						</div>
+						<div className="relative mt-5">
+							<div className=" flex justify-center items-center gap-x-6 text-xl font-bold">
+								<div className="flex -space-x-4">
+									{members
+										.slice(0, 3)
+										.map((i: any, idx: any) => {
+											return (
+												<img
+													key={
+														idx
+													}
+													className="w-10 h-10 rounded-full border-2 border-white dark:border-gray-800"
+													// src={
+													// 	i.username.includes(
+													// 		"admin"
+													// 	)
+													// 		? "/images/admin.jpg"
+													// 		: i.pictureUrl ===
+													// 		  null
+													// 		? "/images/empty-user.png"
+													// 		: i.pictureUrl
+													// }
+													src={
+														i.pictureUrl ===
+														null
+															? "/images/empty-user.png"
+															: i.pictureUrl
+													}
+													alt={
+														i.username
+													}
+												/>
+											);
+										})}
+									<a
+										className="flex justify-center items-center w-10 h-10 text-xs font-medium text-white bg-gray-700 rounded-full border-2 border-white hover:bg-gray-600 dark:border-gray-800"
+										href="#">
+										+
+										{count - 3 < 0
+											? 0
+											: count - 3}
+									</a>
+								</div>
+								<p>{count} Users</p>
+							</div>
+							<div className="flex font-medium justify-between items-center mt-1">
+								<h1 className="text-md font-bold">
+									Total Users
+								</h1>
+								<button className="py-2 px-4 hover:shadow-green-900 duration-300 bg-green-500 shadow-md rounded-full flex">
+									+3 <IoMdArrowDropup size={20} />
+								</button>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<div className="flex justify-center items-center gap-4">
+					<div className="text-white bg-gradient-to-r from-red-600 to-red-400 px-8 py-6 rounded-[30px] w-[30%] mb-4 shadow-xl">
+						<div className="flex justify-between mb-3">
+							<div className="p-3 bg-white text-red-600 rounded-2xl inline-block">
+								<MdAccessTimeFilled size={25} />
+							</div>
+							<BsThreeDots className="cursor-pointer" size={20} />
+						</div>
+						<div className="relative mt-5">
+							<div className="text-xl font-bold">
+								<p> ≈ {averageTime ? (averageTime / 60).toFixed(2) : 0.00} h</p>
+							</div>
+							<div className="flex font-medium justify-between items-center mt-1">
+								<h1 className="text-md font-bold">
+									Average Time User Had Used
+								</h1>
+								<button className="py-2 px-4 hover:shadow-red-900 duration-300 bg-red-500 shadow-md rounded-full flex">
+									0% <IoMdArrowDropup size={20} />
+								</button>
+							</div>
+						</div>
+					</div>
+					<div className="text-white bg-gradient-to-r from-sky-600 to-sky-400 px-8 py-6 rounded-[30px] w-[30%] mb-4 shadow-xl">
+						<div className="flex justify-between mb-3">
+							<div className="p-3 bg-white text-sky-600 rounded-2xl inline-block">
+								<AiOutlineStar size={25} />
+							</div>
+							<BsThreeDots className="cursor-pointer" size={20} />
+						</div>
+						<div className="relative mt-5">
+							<div className="text-xl font-bold">
+								<div className="flex items-center my-1">
+									<Rating
+										name="read-only"
+										size="large"
+										value={Math.ceil(customerSatisfaction)}
+										readOnly
+									/>
+									<p className="text-xl font-bold ml-2">
+										({customerSatisfaction}) 5
+									</p>
+								</div>
+							</div>
+							<div className="flex font-medium justify-between items-center mt-1">
+								<h1 className="text-md font-bold">
+									Customer Satisfaction
+								</h1>
+								<button className="py-2 px-4 hover:shadow-sky-900 duration-300 bg-sky-500 shadow-md rounded-full flex">
+									0% <IoMdArrowDropup size={20} />
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
-				
-				<div className="text-white bg-gradient-to-r from-red-600 to-red-400 px-8 py-6 rounded-[30px] w-[30%] mb-4 shadow-xl">
-					<div className="flex justify-between mb-3">
-						<div className="p-3 bg-white text-red-600 rounded-2xl inline-block">
-							<MdAccessTimeFilled size={25} />
-						</div>
-						<BsThreeDots className="cursor-pointer" size={20} />
-					</div>
-					<div className="relative mt-5">
-						<div className="text-xl font-bold">
-							<p> ≈ {(averageTime / 60).toFixed(2)} h</p>
-						</div>
-						<div className="flex font-medium justify-between items-center mt-1">
-							<h1 className="text-md font-bold">
-								Average Time User Had Used
-							</h1>
-							<button className="py-2 px-4 hover:shadow-red-900 duration-300 bg-red-500 shadow-md rounded-full flex">
-								0% <IoMdArrowDropup size={20} />
-							</button>
-						</div>
-					</div>
-				</div>
-				
 			</div>
 			<div className="rounded-div2 mt-5">
 				<h3 className="font-medium text-lg p-2 mb-5">Order Statistics</h3>
