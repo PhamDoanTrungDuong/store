@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BsThreeDots, BsPeople, BsCart4 } from "react-icons/bs";
 import { IoIosArrowForward, IoMdArrowDropup } from "react-icons/io";
 import { FaLongArrowAltUp, FaLongArrowAltDown } from "react-icons/fa";
-import { MdAttachMoney } from "react-icons/md";
+import { MdAttachMoney, MdAccessTimeFilled } from "react-icons/md";
 import useMembers from "../../app/hooks/useMembers";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { currencyFormat } from "../../app/utilities/util";
@@ -27,6 +27,7 @@ const AdminHome: React.FC = () => {
 	const { productCount } = useAppSelector((state) => state.catalog);
 	const { todaySales, bestSeller, lessInteract } = useAppSelector((state) => state.admin);
 	const [deliveryState, setDeliveryState] = useState<any>();
+	const [averageTime, setAverageTime] = useState<any>();
 
 
 	useEffect(() => {
@@ -41,7 +42,11 @@ const AdminHome: React.FC = () => {
 				setDeliveryState(res);
 			});
 		}
+		agent.Account.getAllTime().then((res) => {
+			setAverageTime(res.reduce((acc: number, curr: number) => acc + curr, 0));
+		});
 	}, [dispatch, deliveryState]);
+
 
 	return (
 		<>
@@ -141,7 +146,7 @@ const AdminHome: React.FC = () => {
 							<div className="flex -space-x-4">
 								{members
 									.slice(0, 3)
-									.map((i, idx) => {
+									.map((i: any, idx: any) => {
 										return (
 											<img
 												key={
@@ -191,6 +196,29 @@ const AdminHome: React.FC = () => {
 						</div>
 					</div>
 				</div>
+				
+				<div className="text-white bg-gradient-to-r from-red-600 to-red-400 px-8 py-6 rounded-[30px] w-[30%] mb-4 shadow-xl">
+					<div className="flex justify-between mb-3">
+						<div className="p-3 bg-white text-red-600 rounded-2xl inline-block">
+							<MdAccessTimeFilled size={25} />
+						</div>
+						<BsThreeDots className="cursor-pointer" size={20} />
+					</div>
+					<div className="relative mt-5">
+						<div className="text-xl font-bold">
+							<p> ≈ {(averageTime / 60).toFixed(2)} h</p>
+						</div>
+						<div className="flex font-medium justify-between items-center mt-1">
+							<h1 className="text-md font-bold">
+								Average Time User Had Used
+							</h1>
+							<button className="py-2 px-4 hover:shadow-red-900 duration-300 bg-red-500 shadow-md rounded-full flex">
+								0% <IoMdArrowDropup size={20} />
+							</button>
+						</div>
+					</div>
+				</div>
+				
 			</div>
 			<div className="rounded-div2 mt-5">
 				<h3 className="font-medium text-lg p-2 mb-5">Order Statistics</h3>
@@ -307,10 +335,10 @@ const AdminHome: React.FC = () => {
 			<div className="rounded-div2 mt-5">
 				<h3 className="font-medium text-lg p-2 mb-5">Best Seller</h3>
 				<div className="flex justify-center items-center gap-4">
-					{bestSeller.slice(0, 5).map((item: any) => {
+					{bestSeller.slice(0, 5).map((item: any, idx) => {
 						return (
 							<div
-								key={item.productId}
+								key={idx}
 								className="border rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 duration-300">
 								<div>
 									<Link
@@ -357,10 +385,10 @@ const AdminHome: React.FC = () => {
 			<div className="rounded-div2 mt-5">
 				<h3 className="font-medium text-lg p-2 mb-5">Less Interaction</h3>
 				<div className="flex justify-center items-center gap-4">
-					{lessInteract.map((item: any) => {
+					{lessInteract.map((item: any, idx: any) => {
 						return (
 							<div
-								key={item.productId}
+								key={idx}
 								className="border rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 duration-300">
 								<div>
 									<Link

@@ -8,6 +8,7 @@ import { signOut } from "../../features/account/accountSlice";
 import { clearBasket } from "../../features/basket/basketSlice";
 import { NavLink } from "react-router-dom";
 import { googleSignOut } from "../firebase/firebase";
+import agent from "../api/agent";
 
 const SignedInMenu: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -71,7 +72,9 @@ const SignedInMenu: React.FC = () => {
 				)}
 				<MenuItem
 					onClick={() => {
-						dispatch(signOut());
+						agent.Account.memberTimerStop().then(() => {
+							dispatch(signOut());
+						})
 						dispatch(clearBasket());
 						googleSignOut()
 					}}>

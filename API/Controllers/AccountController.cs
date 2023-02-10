@@ -450,7 +450,9 @@ namespace API.Controllers
             [HttpGet("member-timer-stop")]
             public async Task<ActionResult> MemberTimerStop()
             {
-                  timer.Stop();
+                  if(timer != null){
+                        timer.Stop();
+                  }
                   var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
                   if(user == null) return BadRequest(new ProblemDetails{ Title = "Can't find username"});
@@ -465,7 +467,15 @@ namespace API.Controllers
 
                   return NoContent();
             }
+            [HttpGet("get-all-timer")]
+            public async Task<ActionResult> getTimer()
+            {
+                  var time = await _context.Users
+                        .Select(x => x.Timer)
+                        .ToListAsync();
 
+                  return Ok(time);
+            }
             private static void OnTimedEvent(Object source, ElapsedEventArgs e)
             {
                   TimeSpan elapsed = DateTime.Now - startTime;

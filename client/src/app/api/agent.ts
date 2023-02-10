@@ -131,6 +131,8 @@ const Account = {
     newAddress: (values: any) => requests.post('account/new-address', values),
     updateAddress: (values: any) => requests.post('account/update-address', values),
     deleteAddress: (id: number) => requests.delete(`account/delete-address/${id}`),
+    memberTimerStop: () => requests.get('account/member-timer-stop'),
+    getAllTime: () => requests.get('account/get-all-timer'),
 }
 
 const Orders = {
