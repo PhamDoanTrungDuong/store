@@ -6,6 +6,7 @@ import {
 	RiAccountCircleFill,
 	RiPriceTag3Fill,
 	RiCouponLine,
+	RiChat3Line,
 } from "react-icons/ri";
 import { TbSlideshow, TbDiscount } from "react-icons/tb";
 import { SiGooglecolab } from "react-icons/si";
@@ -62,18 +63,29 @@ const SideBar: React.FC = () => {
 		},
 		{
 			id: 4,
+			title: "Messenger",
+			to: "/admin-messenger",
+			icon: (
+				<RiChat3Line
+					size={30}
+					className="rounded-lg fill-[#637381]"
+				/>
+			),
+		},
+		{
+			id: 5,
 			title: "Role",
 			to: "/admin-role",
 			icon: <MdManageAccounts size={30} className="rounded-lg fill-[#637381]" />,
 		},
 		{
-			id: 5,
+			id: 6,
 			title: "Comments",
 			to: "/admin-comments",
 			icon: <MdInsertComment size={30} className="rounded-lg fill-[#637381]" />,
 		},
 		{
-			id: 6,
+			id: 7,
 			title: "Orders",
 			to: "/admin-orders",
 			icon: (
@@ -84,25 +96,25 @@ const SideBar: React.FC = () => {
 			),
 		},
 		{
-			id: 7,
+			id: 8,
 			title: "Slider",
 			to: "/admin-sliders",
 			icon: <TbSlideshow size={30} className="rounded-lg" />,
 		},
 		{
-			id: 8,
+			id: 9,
 			title: "Partner",
 			to: "/admin-partners",
 			icon: <SiGooglecolab size={30} className="rounded-lg" />,
 		},
 		{
-			id: 9,
+			id: 10,
 			title: "Discount Banner",
 			to: "/admin-discountBanner",
 			icon: <TbDiscount size={30} className="rounded-lg" />,
 		},
 		{
-			id: 1,
+			id: 11,
 			title: "Voucher",
 			to: "/admin-vouchers",
 			icon: <RiCouponLine size={30} className="rounded-lg" />,

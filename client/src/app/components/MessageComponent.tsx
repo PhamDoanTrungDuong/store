@@ -14,9 +14,9 @@ const MessageComponent = () => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    loading ? agent.Message.MessageThread("admin").then((res) => {
+    loading ? agent.Message.messageThread("admin").then((res) => {
       setMessages(res)
-    }) : agent.Message.MessageThread("admin").then((res) => {
+    }) : agent.Message.messageThread("admin").then((res) => {
       setMessages(res)
     })    
   }, [loading]);
@@ -27,7 +27,7 @@ const MessageComponent = () => {
   const onSubmit = (data: any) => {
       var recipientUsername = "admin";
       data = {...data, recipientUsername};
-      agent.Message.MessageSend(data).then((res) => {
+      agent.Message.messageSend(data).then((res) => {
         reset({
           content: ''
         })

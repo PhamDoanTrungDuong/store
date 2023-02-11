@@ -217,15 +217,15 @@ const Admin = {
     updateDiscountBanner: (discountBanner: any) => requests.putForm('admin/update-discountBanner', createFormData(discountBanner)),
     deleteDiscountBanner: (id: number) => requests.delete(`admin/delete-discountBanner/${id}`),
 
-     //vouchers
-     getVouchers: () => requests.get('admin/get-vouchers'),
-     newVoucher: (voucher: any) => requests.postForm('admin/add-voucher', createFormData(voucher)),
-     updateVoucher: (voucher: any) => requests.putForm('admin/update-voucher', createFormData(voucher)),
-     deleteVoucher: (id: number) => requests.delete(`admin/delete-voucher/${id}`),
+    //vouchers
+    getVouchers: () => requests.get('admin/get-vouchers'),
+    newVoucher: (voucher: any) => requests.postForm('admin/add-voucher', createFormData(voucher)),
+    updateVoucher: (voucher: any) => requests.putForm('admin/update-voucher', createFormData(voucher)),
+    deleteVoucher: (id: number) => requests.delete(`admin/delete-voucher/${id}`),
 
-     //Admin Notify
-     getAdminNotify: () => requests.get('admin/admin-notifies'),
-     adminCheckNotify: (data: string) => requests.post(`admin/admin-check-notify/${data}`, {}),
+    //Admin Notify
+    getAdminNotify: () => requests.get('admin/admin-notifies'),
+    adminCheckNotify: (data: string) => requests.post(`admin/admin-check-notify/${data}`, {}),
 
 }
 
@@ -241,8 +241,9 @@ const Comment = {
 }
 
 const Message = {
-    MessageSend: (values: any) => requests.post('messages', values),
-    MessageThread: (name: string) => requests.get(`messages/thread/${name}`),
+    getMessages: () => requests.get('messages'),
+    messageSend: (values: any) => requests.post('messages', values),
+    messageThread: (name: string) => requests.get(`messages/thread/${name}`),
 }
 
 const Like = {

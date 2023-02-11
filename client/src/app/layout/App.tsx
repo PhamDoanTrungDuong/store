@@ -46,6 +46,7 @@ import AdminVoucher from "../../features/admin/AdminVoucher";
 import Shipper from "../../features/shipper/Shipper";
 import LikedProduct from "../../features/catalog/LikedProduct";
 import MessageComponent from "../components/MessageComponent";
+import AdminMessenger from "../../features/admin/AdminMessenger";
 
 const App: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -203,6 +204,17 @@ const App: React.FC = () => {
 													"Admin",
 												]}>
 												<AdminVoucher />
+											</PrivateRoute>
+										}
+									/>
+									<Route
+										path="/admin-messenger"
+										element={
+											<PrivateRoute
+												roles={[
+													"Admin",
+												]}>
+												<AdminMessenger />
 											</PrivateRoute>
 										}
 									/>

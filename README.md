@@ -90,7 +90,7 @@ USER
       [] PayPal (~~~)
       [] Cấp lại mật khẩu (email)
       [] Hình ảnh sản phẩm 3D (~~~)
-      [] Chatbox
+      [x] Chatbox
 
 ADMIN
       [x] Thêm, sửa, xóa sản phẩm
