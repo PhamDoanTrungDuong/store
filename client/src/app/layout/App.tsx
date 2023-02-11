@@ -45,6 +45,7 @@ import AdminDiscountBanner from "../../features/admin/AdminDiscountBanner";
 import AdminVoucher from "../../features/admin/AdminVoucher";
 import Shipper from "../../features/shipper/Shipper";
 import LikedProduct from "../../features/catalog/LikedProduct";
+import MessageComponent from "../components/MessageComponent";
 
 const App: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -356,6 +357,15 @@ const App: React.FC = () => {
 								/>
 							</Routes>
 						</div>
+						{user && (
+							user?.roles?.includes("Admin") ? (
+								<div></div>
+							) : (
+								<div className="fixed right-14 bottom-10">
+									<MessageComponent />
+								</div>
+							)
+						)}
 						<Footer />
 					</>
 				)}

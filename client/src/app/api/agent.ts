@@ -240,6 +240,11 @@ const Comment = {
     postComment: (content: string) => requests.post('comment', content),
 }
 
+const Message = {
+    MessageSend: (values: any) => requests.post('messages', values),
+    MessageThread: (name: string) => requests.get(`messages/thread/${name}`),
+}
+
 const Like = {
     addLike: (id: number) => requests.post(`likes?productId=${id}`, {}),
     getAllLike: () => requests.get('likes/get-all-like'),
@@ -273,6 +278,7 @@ const agent = {
     Profile,
     Statistisc,
     Like,
+    Message,
 }
 
 export default agent;
