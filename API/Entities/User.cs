@@ -10,6 +10,9 @@ namespace API.Entities
         public string PublicId { get; set; }
         public int Timer { get; set; } = default;
 
+        public ICollection<Message> MessagesSent { get; set; }
+        public ICollection<Message> MessagesReceived { get; set; }
+
         public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<Comment> CommentSent { get; set; }
         public ICollection<UserLike> LikedProducts { get; set; }

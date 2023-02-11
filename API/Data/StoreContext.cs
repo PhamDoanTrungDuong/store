@@ -30,6 +30,7 @@ namespace API.Data
           public DbSet<Voucher> Vouchers { get; set; }
           public DbSet<Shipper> Shippers { get; set; }
           public DbSet<Notify> Notifies { get; set; }
+          public DbSet<Message> Messages { get; set; }
           protected override void OnModelCreating(ModelBuilder builder)
           {
                base.OnModelCreating(builder);
@@ -88,6 +89,17 @@ namespace API.Data
                //      .HasKey(k => new {k.SizeId, k.ProductId});
                // builder.Entity<ProductDetails>()
                //      .HasKey(k => new {k.ColourId, k.SizeId, k.ProductId});
+
+               //MESSAGE
+               builder.Entity<Message>()
+                .HasOne(u => u.Recipient)
+                .WithMany(m => m.MessagesReceived)
+                .OnDelete(DeleteBehavior.Restrict);
+
+               builder.Entity<Message>()
+                    .HasOne(u => u.Sender)
+                    .WithMany(m => m.MessagesSent)
+                    .OnDelete(DeleteBehavior.Restrict);
 
           }
      }
