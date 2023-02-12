@@ -113,7 +113,7 @@ const Shipper = () => {
 								/>
 							</Tabs>
 						</Box>
-						<div className="h-full overflow-y-scroll">
+						<div className="h-screen overflow-y-scroll">
 							<Box sx={{ width: "100%" }}>
 								<TabPanel value={value} index={0}>
 									<table className="table-auto w-full text-xs sm:text-sm md:text-base">

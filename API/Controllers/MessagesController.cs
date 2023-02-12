@@ -31,6 +31,8 @@ namespace API.Controllers
 
             var sender = _context.Users.SingleOrDefault(x => x.UserName == username);
             var recipient = _context.Users.SingleOrDefault( x => x.UserName == createMessageDto.RecipientUsername);
+            var adminMessageNotify = await _context.Notifies.FindAsync(1);
+
 
             if (recipient == null)
                 return BadRequest("Could not find user");
@@ -43,7 +45,9 @@ namespace API.Controllers
                 RecipientUsername = recipient.UserName,
                 Content = createMessageDto.Content
             };
-
+            if(message.SenderUsername != "admin"){
+                adminMessageNotify.MessengerNotify = true;
+            }
             _context.Messages.Add(message);
 
             var result = await _context.SaveChangesAsync();
@@ -136,6 +140,58 @@ namespace API.Controllers
             }
 
             return Ok(arrayMessagesDto); 
+        }
+
+        [HttpGet("unread-mess/{username}")]
+        public async Task<ActionResult> UnreadMess(string username) {
+            var currentUsername = User.GetUsername();
+            var sender = _context.Users.SingleOrDefault(x => x.UserName == currentUsername);
+            var recipient = _context.Users.SingleOrDefault( x => x.UserName == username);
+
+            List<Message> messages;
+            if(currentUsername != "admin")
+            {
+                messages = await _context.Messages
+                    .Include(u => u.Sender)
+                    .Include(u => u.Recipient)
+                    .Where(m => m.Recipient.UserName == currentUsername && m.RecipientDeleted ==    false && m.Sender.UserName == username
+                    )
+                    .OrderBy(m => m.MessageSent)
+                    .ToListAsync();
+            } else {
+                messages = await _context.Messages
+                    .Include(u => u.Sender)
+                    .Include(u => u.Recipient)
+                    .Where(m => m.Recipient.UserName == currentUsername && m.RecipientDeleted == false && m.DateRead == null
+                    )
+                    .OrderBy(m => m.MessageSent)
+                    .ToListAsync();
+            }
+
+            // var unreadMessages = messages.Where(m => m.DateRead == null 
+            //     && m.Recipient.UserName == currentUsername).ToList();
+
+            var arrayUnreadMessagesDto = new List<MessageDto>();
+            
+            foreach(var message in messages)
+            {
+                var messageDto = new MessageDto {
+                    Id = message.Id,
+                    SenderId = message.SenderId,
+                    SenderUsername = message.SenderUsername,
+                    SenderPhotoUrl = sender.PictureUrl,
+                    RecipientId = message.RecipientId,
+                    RecipientUsername = message.RecipientUsername,
+                    RecipientPhotoUrl = recipient.PictureUrl,
+                    Content = message.Content,
+                    DateRead = message.DateRead,
+                    MessageSent = message.MessageSent
+                };
+
+                arrayUnreadMessagesDto.Add(messageDto);
+            }
+
+            return Ok(arrayUnreadMessagesDto); 
         }
 
         [HttpDelete("{id}")]

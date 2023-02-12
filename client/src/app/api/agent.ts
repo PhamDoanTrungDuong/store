@@ -244,6 +244,7 @@ const Message = {
     getMessages: () => requests.get('messages'),
     messageSend: (values: any) => requests.post('messages', values),
     messageThread: (name: string) => requests.get(`messages/thread/${name}`),
+    unreadMessage: (name: string) => requests.get(`messages/unread-mess/${name}`),
 }
 
 const Like = {

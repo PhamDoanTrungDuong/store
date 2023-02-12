@@ -1,19 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { AiOutlineHome, AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineHome } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
 import { SiGooglecolab } from "react-icons/si";
 import useMembers from "../../app/hooks/useMembers";
 import agent from "../../app/api/agent";
-import Tooltip from "@mui/material/Tooltip";
-import Zoom from "@mui/material/Zoom";
-import { FiEdit3, FiTrash2 } from "react-icons/fi";
-import moment from "moment";
-import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
-import { fetchPartners, setPartnerLoad, setSliderLoad } from "./adminSlice";
-import Swal from "sweetalert2";
-import PartnerForm from "./PartnerForm";
-import Loading from "../../app/layout/Loading";
+import { useAppSelector } from "../../app/store/configureStore";
 import { useForm } from "react-hook-form";
 
 const AdminMessenger = () => {
@@ -24,18 +16,34 @@ const AdminMessenger = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [userThread, setUserThread] = useState<any>();
 	const [messagesThread, setMessagesThread] = useState([]);
-
+	const [unreadMessages, setUnreadMessages] = useState([]);
+	console.log(unreadMessages)
 	useEffect(() => {
 		if (userThread !== undefined) {
 			loading
 				? agent.Message.messageThread(userThread.userName).then((res) => {
 						setMessagesThread(res);
+						agent.Message.unreadMessage("admin").then((res) => {
+							setUnreadMessages(res);
+						})
 				  })
 				: agent.Message.messageThread(userThread.userName).then((res) => {
 						setMessagesThread(res);
+						agent.Message.unreadMessage("admin").then((res) => {
+							setUnreadMessages(res);
+						})
 				  });
 		}
 	}, [loading, userThread]);
+
+	useEffect(() => {
+		if(userThread === undefined){
+			agent.Message.unreadMessage("admin").then((res) => {
+				setUnreadMessages(res);
+			})
+		}
+	}, [userThread]);
+
 	const onSubmit = (data: any) => {
 		if(userThread !== undefined){
 			var recipientUsername = userThread.userName;
@@ -121,12 +129,14 @@ const AdminMessenger = () => {
 												return (
 													<li>
 														<div
-															onClick={() =>
-																setUserThread(
-																	user
-																)
+															onClick={() => {
+																	setUserThread(
+																		user
+																	)
+																	setLoading(true)
+																}
 															}
-															className="flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-300 cursor-pointer hover:bg-gray-100 focus:outline-none">
+															className="flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-300 cursor-pointer hover:bg-gray-100 focus:outline-none relative">
 															<img
 																className="object-cover w-10 h-10 rounded-full"
 																src={
@@ -155,6 +165,22 @@ const AdminMessenger = () => {
 																	Morning
 																</span>
 															</div>
+															<div className="absolute top-2 left-2">
+															<div
+																className={`relative ${
+																	unreadMessages &&
+																	unreadMessages?.find(
+																		(item: any) =>
+																			item.dateRead ===
+																			null && item.senderUsername === user.userName
+																	)
+																		? "flex"
+																		: "hidden"
+																}`}>
+																<div className="animate-ping inline-flex absolute top-0 right-0 w-4 h-4 bg-red-500 rounded-full border-2 border-white"></div>
+																<div className="inline-flex relative top-0 right-0 w-4 h-4 bg-red-500 rounded-full border-2 border-white"></div>
+															</div>
+														</div>
 														</div>
 													</li>
 												);

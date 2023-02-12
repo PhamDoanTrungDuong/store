@@ -31,7 +31,7 @@
       [x] reddot animations
       [x] product color
       [x] create product error
-      [] thông báo mess
+      [x] thông báo mess
       [] thời gian mess và tin nhắn cuối
  -->
 <!--       ==========Main features===========

@@ -25,10 +25,9 @@ const SideBar: React.FC = () => {
 	}, [dispatch, loadNotify]);
 
 	const handleCheckNotify = (notify: string) => {
-		agent.Admin.adminCheckNotify(notify)
-			.then(() => {
-				dispatch(setNotifyLoad());
-			});
+		agent.Admin.adminCheckNotify(notify).then(() => {
+			dispatch(setNotifyLoad());
+		});
 	};
 
 	const Menus = [
@@ -65,12 +64,7 @@ const SideBar: React.FC = () => {
 			id: 4,
 			title: "Messenger",
 			to: "/admin-messenger",
-			icon: (
-				<RiChat3Line
-					size={30}
-					className="rounded-lg fill-[#637381]"
-				/>
-			),
+			icon: <RiChat3Line size={30} className="rounded-lg fill-[#637381]" />,
 		},
 		{
 			id: 5,
@@ -173,6 +167,9 @@ const SideBar: React.FC = () => {
 											: Menu.title ===
 											  "Members"
 											? "Member"
+											: Menu.title ===
+											  "Messenger"
+											? "Messenger"
 											: ""
 									)
 								}>
@@ -207,6 +204,10 @@ const SideBar: React.FC = () => {
 												(Menu.title ===
 													"Members" &&
 													item.memberNotify ===
+														true) ||
+												(Menu.title ===
+													"Messenger" &&
+													item.messengerNotify ===
 														true)
 										)
 											? "flex"

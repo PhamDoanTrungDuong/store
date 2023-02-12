@@ -7,5 +7,6 @@ namespace API.Entities
         public bool CommentNotify { get; set; }
         public bool OrderNotify { get; set; }
         public bool MemberNotify { get; set; }
+        public bool MessengerNotify { get; set; }
     }
 }

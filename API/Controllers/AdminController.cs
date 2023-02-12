@@ -576,8 +576,10 @@ namespace API.Controllers
                         notify.OrderNotify = false;
                   } else if (notifyString == "Comment") {
                         notify.CommentNotify = false;
-                  } else {
+                  } else if (notifyString == "Member") {
                         notify.MemberNotify = false;
+                  } else if (notifyString == "Messenger") {
+                        notify.MessengerNotify = false;
                   }
 
                   var result = await _context.SaveChangesAsync() > 0;
