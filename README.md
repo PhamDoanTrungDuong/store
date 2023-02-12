@@ -31,6 +31,8 @@
       [x] reddot animations
       [x] product color
       [x] create product error
+      [] thông báo mess
+      [] thời gian mess và tin nhắn cuối
  -->
 <!--       ==========Main features===========
       [x] Momo
@@ -87,10 +89,10 @@ USER
       [x] Hủy đơn hàng
       [x] Tìm kiếm bằng giọng nói
       [x] Nhận mã khuyễn mãi
+      [x] Chatbox
       [] PayPal (~~~)
       [] Cấp lại mật khẩu (email)
       [] Hình ảnh sản phẩm 3D (~~~)
-      [x] Chatbox
 
 ADMIN
       [x] Thêm, sửa, xóa sản phẩm
@@ -107,5 +109,5 @@ ADMIN
       [x] Thống kê độ hài lòng của khách hàng với sản phẩm (rating)
       [x] Thống kê lợi nhuận (total revenue - (total import + total shipping fee))
       [x] Thống kê tỉ lệ quay lại mua hàng của khách hàng (month chart, d/m/y)
-      [] Chatbox
+      [x] Chatbox
   -->
