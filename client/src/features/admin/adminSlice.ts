@@ -15,6 +15,8 @@ export interface AdminState {
       loadPartner: boolean;
       loadDiscountBanner: boolean;
       loadNotify: boolean;
+      loadColors: boolean;
+      loadSizes: boolean;
       // categories: ICategory[] | null;
       categories: string[];
       comments: IComment[] | null;
@@ -31,6 +33,8 @@ export interface AdminState {
       notifies: any;
       bestSeller: [];
       lessInteract: [];
+      colors: [];
+      sizes: [];
 }
 
 const initParams = () => {
@@ -55,6 +59,8 @@ const initialState: AdminState = {
       loadVoucher: false,
       loadDiscountBanner: false,
       loadNotify: false,
+      loadColors: false,
+      loadSizes: false,
       categoriesParams: initParams(),
       commentsParams: initParams(),
       ordersParams: initParams(),
@@ -62,7 +68,9 @@ const initialState: AdminState = {
       selectedVoucher: 0,
       notifies: {},
       bestSeller: [],
-      lessInteract: []
+      lessInteract: [],
+      colors: [],
+      sizes: []
 }
 
 const getCategoriesAxiosParams = (categoriesParams: CategoriesParams) => {
@@ -207,6 +215,26 @@ export const lessInteractionProduct = createAsyncThunk(
             }
       }
 )
+export const fetchColor = createAsyncThunk(
+      "admin/fetchColor",
+      async (_, thunkAPI) => {
+            try {
+                  return await agent.Catalog.getColors();
+            } catch( error: any) {
+                  console.log(error)
+            }
+      }
+)
+export const fetchSize = createAsyncThunk(
+      "admin/fetchSize",
+      async (_, thunkAPI) => {
+            try {
+                  return await agent.Catalog.getSizes();
+            } catch( error: any) {
+                  console.log(error)
+            }
+      }
+)
 
 export const adminSlice = createSlice({
     name: 'admin',
@@ -242,6 +270,12 @@ export const adminSlice = createSlice({
       },
       setNotifyLoad: (state) => {
             state.loadNotify = !state.loadNotify;
+      },
+      setColorsLoad: (state) => {
+            state.loadColors = !state.loadColors;
+      },
+      setSizesLoad: (state) => {
+            state.loadSizes = !state.loadSizes;
       },
       setCatagoriesParams: (state, action) => {
             state.categoriesParams = action.payload;
@@ -298,8 +332,14 @@ export const adminSlice = createSlice({
       builder.addCase(lessInteractionProduct.fulfilled, (state, action) => {
             state.lessInteract = action.payload
       })
+      builder.addCase(fetchColor.fulfilled, (state, action) => {
+            state.colors = action.payload
+      })
+      builder.addCase(fetchSize.fulfilled, (state, action) => {
+            state.sizes = action.payload
+      })
     }
 })
 
-export const { setSelectedVoucher, setVoucherNull, setCateLoad, setComLoad, setOrdLoad, setSliderLoad, setPartnerLoad, setDiscountBannerLoad, setVoucherLoad, setNotifyLoad, setCatagoriesParams, setCommentsParams, setOrdersParams } = adminSlice.actions
+export const { setSelectedVoucher, setVoucherNull, setCateLoad, setComLoad, setOrdLoad, setSliderLoad, setPartnerLoad, setDiscountBannerLoad, setVoucherLoad, setNotifyLoad, setCatagoriesParams, setCommentsParams, setOrdersParams, setColorsLoad, setSizesLoad } = adminSlice.actions
 export default adminSlice.reducer

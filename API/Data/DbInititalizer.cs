@@ -57,10 +57,10 @@ namespace API.Data
             if(context.Sizes.Any()) return;
             var sizes = new List<Size>
             {
-                new Size{Id = 1, Size_value = "S"},
-                new Size{Id = 2, Size_value = "M"},
-                new Size{Id = 3, Size_value = "L"},
-                new Size{Id = 4, Size_value = "XL"},
+                new Size{Size_value = "S"},
+                new Size{Size_value = "M"},
+                new Size{Size_value = "L"},
+                new Size{Size_value = "XL"},
             };
 
             foreach (var size in sizes)

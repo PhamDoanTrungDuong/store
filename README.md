@@ -70,7 +70,7 @@
       [x] hiện variants ra chi tiết sản phẩm
       [x] sản phẩm yêu thích
       [x] tìm kiếm sản phẩm với khung giá tiền
-      [] Quản lý color, size
+      [x] Quản lý color, size
       [] gợi ý mua hàng
       [] ~doanh thu (ref thầy Đệ)
       [] ~điểm danh nhận voucher

@@ -227,6 +227,14 @@ const Admin = {
     getAdminNotify: () => requests.get('admin/admin-notifies'),
     adminCheckNotify: (data: string) => requests.post(`admin/admin-check-notify/${data}`, {}),
 
+    //Admin Color, Size
+    createColor: (data: any) => requests.postForm('admin/add-color', createFormData(data)),
+    updateColor: (color: any) => requests.putForm('admin/update-color', createFormData(color)),
+    deleteColor: (id: number) => requests.delete(`admin/delete-color/${id}`),
+    createSize: (data: any) => requests.postForm('admin/add-size', createFormData(data)),
+    updateSize: (size: any) => requests.putForm('admin/update-size', createFormData(size)),
+    deleteSize: (id: number) => requests.delete(`admin/delete-size/${id}`),
+
 }
 
 const Profile = {

@@ -10,7 +10,7 @@ import {
 } from "react-icons/ri";
 import { TbSlideshow, TbDiscount } from "react-icons/tb";
 import { SiGooglecolab } from "react-icons/si";
-import { MdManageAccounts, MdInsertComment, MdOutlineCardGiftcard } from "react-icons/md";
+import { MdManageAccounts, MdInsertComment, MdOutlineCardGiftcard, MdOutlineColorLens, MdOutlinePhotoSizeSelectSmall } from "react-icons/md";
 import { useAppSelector, useAppDispatch } from "../../app/store/configureStore";
 import { fetchNotifies, setNotifyLoad } from "./adminSlice";
 import agent from "../../app/api/agent";
@@ -36,6 +36,18 @@ const SideBar: React.FC = () => {
 			title: "Inventory",
 			to: "/inventory",
 			icon: <RiBarChartBoxFill size={30} className="rounded-lg fill-[#637381]" />,
+		},
+		{
+			id: 0,
+			title: "Color",
+			to: "/admin-color",
+			icon: <MdOutlineColorLens size={30} className="rounded-lg fill-[#637381]" />,
+		},
+		{
+			id: 0,
+			title: "Size",
+			to: "/admin-size",
+			icon: <MdOutlinePhotoSizeSelectSmall size={30} className="rounded-lg fill-[#637381]" />,
 		},
 		{
 			id: 1,
@@ -118,10 +130,10 @@ const SideBar: React.FC = () => {
 		<div
 			className={` ${
 				open ? "w-64" : "w-[95px]"
-			} bg-[#F9FAFB] h-screen z-50 p-5 pt-8 relative duration-300 border border-r-gray-300`}>
+			} bg-[#F9FAFB] h-screen overflow-y-scroll overflow-x-hidden z-50 p-5 pt-8 relative duration-300 border border-r-gray-300`}>
 			<img
 				src="/images/control.png"
-				className={`absolute cursor-pointer -right-3 top-9 w-8 border-2 border-gray-200 rounded-full z-50 ${
+				className={`absolute cursor-pointer -right-1 top-9 w-8 border-2 border-gray-200 rounded-full z-50 ${
 					!open && "rotate-180"
 				}`}
 				onClick={() => setOpen(!open)}

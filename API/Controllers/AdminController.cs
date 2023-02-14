@@ -593,9 +593,12 @@ namespace API.Controllers
             public ActionResult GetPurchaseRate() {
                   double firstTimeCustomers = GetFirstTimeCustomers();
                   double repeatCustomers = GetRepeatCustomers();
-                  double repeatRate = (double)repeatCustomers / (double)firstTimeCustomers;
-                  // double repeatRate = (double)firstTimeCustomers / (double)repeatCustomers;
+                  // double repeatRate = (double)repeatCustomers / (double)firstTimeCustomers;
                   
+                  double repeatRate = (double)firstTimeCustomers / (double)repeatCustomers;
+                  if(double.IsPositiveInfinity(repeatRate) || double.IsNegativeInfinity(repeatRate) || double.IsNaN(repeatRate)){
+                        return Ok(0);
+                  }
                   return Ok(repeatRate);
             }
 
@@ -605,6 +608,8 @@ namespace API.Controllers
                   int firstTimeCustomers = 0;
                   var purchases = _context.Orders
                                     .ToArray();
+                  
+                  if(purchases == null) return firstTimeCustomers = 0;
 
                   foreach (Order purchase in purchases)
                   {
@@ -625,6 +630,8 @@ namespace API.Controllers
                   var purchases = _context.Orders
                                     .ToArray();
 
+                  if(purchases == null) return repeatCustomers = 1;
+
                   foreach (var purchase in purchases)
                   {
                         if (customerIds.Contains(purchase.BuyerId))
@@ -638,6 +645,104 @@ namespace API.Controllers
                   }
 
                   return repeatCustomers;
+            }
+
+            [HttpPost("add-color")]
+            public async Task<ActionResult> AddColor([FromForm] ColorVm colorVm)
+            {
+                  if(colorVm.Colour_value == null || colorVm.Colour_code == null) return BadRequest(new ProblemDetails{ Title = "Value can't be null"});
+
+                  var newColor = new Colour {
+                        Colour_value = colorVm.Colour_value,
+                        Colour_code = colorVm.Colour_code,
+                  };
+
+                  _context.Colours.Add(newColor);
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if (result) return Ok(result);
+
+                  return BadRequest(new ProblemDetails { Title = "Problem adding new color" });
+            }
+
+            [HttpPut("update-color")]
+            public async Task<ActionResult> UpdateColor([FromForm] ColorUpdateVm colorUpdateVm)
+            {
+                  var updateColor = await _context.Colours.FindAsync(colorUpdateVm.Id);
+
+                  updateColor.Colour_value = colorUpdateVm.Colour_value;
+                  updateColor.Colour_code = colorUpdateVm.Colour_code;
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if (result) return Ok(result);
+
+                  return BadRequest(new ProblemDetails { Title = "Problem update color" });
+            }
+
+            [HttpDelete("delete-color/{id}")]
+            public async Task<ActionResult> DeleteColor(int id)
+            {
+                  var color = await _context.Colours.FindAsync(id);
+
+                  if(color == null) return BadRequest(new ProblemDetails{ Title = "Can't found color"});
+
+                  _context.Colours.Remove(color);
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if (result) return Ok(result);
+
+                  return BadRequest(new ProblemDetails { Title = "Can't delete color" });
+            }
+
+            [HttpPost("add-size")]
+            public async Task<ActionResult> AddSize([FromForm] string Size_value)
+            {
+                  if(Size_value == null) return BadRequest(new ProblemDetails{ Title = "Value can't be null"});
+
+                  var newSize = new Size {
+                        Size_value = Size_value,
+                  };
+
+                  _context.Sizes.Add(newSize);
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if (result) return Ok(result);
+
+                  return BadRequest(new ProblemDetails { Title = "Problem adding new size" });
+            }
+
+            [HttpPut("update-size")]
+            public async Task<ActionResult> UpdateSize([FromForm] SizeUpdateVm sizeUpdateVm)
+            {
+                  var updateSize = await _context.Sizes.FindAsync(sizeUpdateVm.Id);
+
+                  updateSize.Size_value = sizeUpdateVm.Size_value;
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if (result) return Ok(result);
+
+                  return BadRequest(new ProblemDetails { Title = "Problem update size" });
+            }
+
+            [HttpDelete("delete-size/{id}")]
+            public async Task<ActionResult> DeleteSize(int id)
+            {
+                  var size = await _context.Sizes.FindAsync(id);
+
+                  if(size == null) return BadRequest(new ProblemDetails{ Title = "Can't found size"});
+
+                  _context.Sizes.Remove(size);
+
+                  var result = await _context.SaveChangesAsync() > 0;
+
+                  if (result) return Ok(result);
+
+                  return BadRequest(new ProblemDetails { Title = "Can't delete size" });
             }
 
       }

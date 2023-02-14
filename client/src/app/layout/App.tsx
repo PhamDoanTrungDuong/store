@@ -47,6 +47,8 @@ import Shipper from "../../features/shipper/Shipper";
 import LikedProduct from "../../features/catalog/LikedProduct";
 import MessageComponent from "../components/MessageComponent";
 import AdminMessenger from "../../features/admin/AdminMessenger";
+import AdminColor from "../../features/admin/AdminColor";
+import AdminSize from "../../features/admin/AdminSize";
 
 const App: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -215,6 +217,28 @@ const App: React.FC = () => {
 													"Admin",
 												]}>
 												<AdminMessenger />
+											</PrivateRoute>
+										}
+									/>
+									<Route
+										path="/admin-color"
+										element={
+											<PrivateRoute
+												roles={[
+													"Admin",
+												]}>
+												<AdminColor />
+											</PrivateRoute>
+										}
+									/>
+									<Route
+										path="/admin-size"
+										element={
+											<PrivateRoute
+												roles={[
+													"Admin",
+												]}>
+												<AdminSize />
 											</PrivateRoute>
 										}
 									/>
