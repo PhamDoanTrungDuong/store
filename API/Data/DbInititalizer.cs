@@ -72,11 +72,13 @@ namespace API.Data
             if(context.Colours.Any()) return;
             var colors = new List<Colour>
             {
-                new Colour{Colour_value = "white"},
-                new Colour{Colour_value = "red"},
-                new Colour{Colour_value = "teal"},
-                new Colour{Colour_value = "orange"},
-                new Colour{Colour_value = "sky"},
+                new Colour{Colour_value = "white", Colour_code = "#ffffff"},
+                new Colour{Colour_value = "black", Colour_code = "#161616"},
+                new Colour{Colour_value = "gray", Colour_code = "#4b5563"},
+                new Colour{Colour_value = "yellow", Colour_code = "#ca8a04"},
+                new Colour{Colour_value = "green", Colour_code = "#16a34a"},
+                new Colour{Colour_value = "blue", Colour_code = "#2563eb"},
+                new Colour{Colour_value = "red", Colour_code = "#dc2626"},
             };
 
             foreach (var color in colors)

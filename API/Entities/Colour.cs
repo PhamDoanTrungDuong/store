@@ -7,6 +7,7 @@ namespace API.Entities
     {
         public int Id { get; set; }
         public string Colour_value { get; set; }
+        public string Colour_code { get; set; }
         public ICollection<ProductDetails> ProductDetails { get; set; }
     }
 }

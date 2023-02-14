@@ -5,6 +5,7 @@ namespace API.Entities
         public int Id { get; set; }
         public int ColourId { get; set; }
         public string ColourValue { get; set; }
+        public string Colour_code { get; set; }
         public Colour Colour { get; set; }
         public int SizeId { get; set; }
         public string SizeValue { get; set; }
