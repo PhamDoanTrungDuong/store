@@ -32,6 +32,7 @@
       [x] product color
       [x] create product error
       [x] thông báo mess
+      [x] màu, size selection multiple
       [] thời gian mess và tin nhắn cuối
  -->
 <!--       ==========Main features===========
@@ -69,6 +70,7 @@
       [x] hiện variants ra chi tiết sản phẩm
       [x] sản phẩm yêu thích
       [x] tìm kiếm sản phẩm với khung giá tiền
+      [] Quản lý color, size
       [] gợi ý mua hàng
       [] ~doanh thu (ref thầy Đệ)
       [] ~điểm danh nhận voucher

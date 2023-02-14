@@ -102,10 +102,10 @@ namespace API.Controllers
                   var arrayQuantity = new List<int>();
                   var variantsQuantity = 0;
 
-                  if(productDetailsDto.Colors != null || productDetailsDto.Size != null || productDetailsDto.Quantity != null) {
-                        var colors = productDetailsDto.Colors.Split(", ");
-                        var sizes = productDetailsDto.Size.Split(", ");
-                        var Quantities = productDetailsDto.Quantity.Split(", ");
+                  if(productDetailsDto.Colors != null || productDetailsDto.Sizes != null || productDetailsDto.Quantity != null) {
+                        var colors = productDetailsDto.Colors.Split(",");
+                        var sizes = productDetailsDto.Sizes.Split(",");
+                        var Quantities = productDetailsDto.Quantity.Split(",");
 
                         var productDetail = new List<ProductDetails>();
                         for (var i = 0; i < colors.Length; i++)
@@ -155,7 +155,7 @@ namespace API.Controllers
 
                   var result = await _context.SaveChangesAsync() > 0;
                   // Details
-                  if(productDetailsDto.Colors != null || productDetailsDto.Size != null || productDetailsDto.Quantity != null) {
+                  if(productDetailsDto.Colors != null || productDetailsDto.Sizes != null || productDetailsDto.Quantity != null) {
 
                         if((arrayColors.Count() != arrayQuantity.Count()) || (arrayColors.Count() != arraySizes.Count()) || (arraySizes.Count() != arrayQuantity.Count())) {
                               return BadRequest(new ProblemDetails{ Title = "Size, Quantity, Color field must equal" });

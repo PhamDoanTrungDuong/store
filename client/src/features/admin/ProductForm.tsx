@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { LoadingButton } from "@mui/lab";
 import { IProduct } from "../../app/interfaces/IProduct";
 import AppSelectList from "../../app/components/AppSelectList";
+import AppSelectMultiple from "../../app/components/AppSelectMultiple";
 import AppDropzone from "../../app/components/AppDropzone";
 import { setProduct } from "../catalog/catalogSlice";
 import { Link } from "react-router-dom";
@@ -30,30 +31,30 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
         const [colors, setColors] = useState([]);
 	    const [sizes, setSizes] = useState([]);
 	    const [variants, setVariants] = useState([]);
-
         const { brands } = useProducts();
 	    const { categories } = useAppSelector((state) => state.admin);
-
+        
         var cate = categories.map((item: any) => {return item.name});
-        // console.log(cate);
+        var colorsList = colors.map((item: any) => {return item.colour_value})
+        var sizesList = sizes.map((item: any) => {return item.size_value})
 
         const watchFile = watch('file', null);
         const dispatch = useAppDispatch();
 
         useEffect(() => {
-		if (product && product.id !== undefined)
+		// if (product && product.id !== undefined)
 			agent.Catalog.getColors()
 				.then((res) => setColors(res))
 				.catch((error) => console.log(error));
             agent.Catalog.getSizes()
                 .then((res) => setSizes(res))
                 .catch((error) => console.log(error));
-            if(product !== undefined){
-                agent.Catalog.productVariants(product.id) 
-                .then((res) => setVariants(res))
-                .catch((error) => console.log(error));
-            }    
-        }, [product]);
+            // if(product !== undefined){
+            //     agent.Catalog.productVariants(product.id) 
+            //     .then((res) => setVariants(res))
+            //     .catch((error) => console.log(error));
+            // }    
+        }, []);
 
         // console.log(variants)
 
@@ -123,10 +124,12 @@ const ProductForm: React.FC<IProps> = ({ product, cancelEdit }) => {
                         {!product ? (
                             <>
                                 <Grid item xs={12} sm={4}>
-                                    <AppTextInput control={control} name='colors' label='Colors (red, teal, sky, white, orange,...)' />
+                                    {/* <AppTextInput control={control} name='colors' label='Colors (red, teal, sky, white, orange,...)' /> */}
+                                    <AppSelectMultiple items={colorsList} control={control} name='colors' label='Colors' />
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
-                                    <AppTextInput control={control} name='size' label='Sizes (S, M, L, XL,...)' />
+                                    {/* <AppTextInput control={control} name='size' label='Sizes (S, M, L, XL,...)' /> */}
+                                    <AppSelectMultiple items={sizesList} control={control} name='sizes' label='Sizes' />
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
                                     <AppTextInput control={control} name='quantity' label='Quantity for each variants (40, 50, 60)' />
