@@ -67,7 +67,6 @@ const AdminColor = () => {
 	if (editMode) return <SizeForm size={selectedSize} cancelEdit={cancelEdit} />;
 
 	if (!sizes) return <Loading message="Loading Sizes..." />;
-	console.log(sizes)
 
 	return (
 		<div className="mt-24 p-5">

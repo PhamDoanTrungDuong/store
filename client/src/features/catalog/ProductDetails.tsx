@@ -220,8 +220,19 @@ const ProductDetails: React.FC = () => {
 	const handleSize = (value: string) => {
 		setSelectedSize(value);
 	};
+	// const numItems = 3;
+	// var randomIndices: any;
+	
+	// // generate 3 unique random indices
+	// while (randomIndices.length < numItems) {
+	//   const randomIndex = Math.floor(Math.random() * colors.length);
+	//   if (!randomIndices.includes(randomIndex)) {
+	// 	 randomIndices.push(randomIndex);
+	//   }
+	// }
 
-
+	// const randomColors = randomIndices.map((index: any) => colors[index]);
+	// console.log(randomColors)
 	return (
 		<div className="mt-5 p-5">
 			<div className="flex items-center ml-3 mt-3 mb-4">

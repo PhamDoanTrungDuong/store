@@ -73,12 +73,15 @@ namespace API.Data
             var colors = new List<Colour>
             {
                 new Colour{Colour_value = "white", Colour_code = "#ffffff"},
-                new Colour{Colour_value = "black", Colour_code = "#161616"},
-                new Colour{Colour_value = "gray", Colour_code = "#4b5563"},
-                new Colour{Colour_value = "yellow", Colour_code = "#ca8a04"},
-                new Colour{Colour_value = "green", Colour_code = "#16a34a"},
-                new Colour{Colour_value = "blue", Colour_code = "#2563eb"},
                 new Colour{Colour_value = "red", Colour_code = "#dc2626"},
+                new Colour{Colour_value = "teal", Colour_code = "#0d9488"},
+                new Colour{Colour_value = "orange", Colour_code = "#f97316"},
+                new Colour{Colour_value = "sky", Colour_code = "#0284c7"},
+                // new Colour{Colour_value = "black", Colour_code = "#161616"},
+                // new Colour{Colour_value = "gray", Colour_code = "#4b5563"},
+                // new Colour{Colour_value = "yellow", Colour_code = "#ca8a04"},
+                // new Colour{Colour_value = "green", Colour_code = "#16a34a"},
+                // new Colour{Colour_value = "blue", Colour_code = "#2563eb"},
             };
 
             foreach (var color in colors)

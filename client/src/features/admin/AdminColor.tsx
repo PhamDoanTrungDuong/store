@@ -66,7 +66,6 @@ const AdminColor = () => {
 	if (editMode) return <ColorForm color={selectedColor} cancelEdit={cancelEdit} />;
 
 	if (!colors) return <Loading message="Loading Colors..." />;
-	console.log(colors)
 
 	return (
 		<div className="mt-24 p-5">
