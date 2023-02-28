@@ -129,7 +129,7 @@ const SideBar: React.FC = () => {
 	return (
 		<div
 			className={` ${
-				open ? "w-64" : "w-[95px]"
+				open ? "w-64" : "w-[105px]"
 			} bg-[#F9FAFB] h-screen overflow-y-scroll overflow-x-hidden z-50 p-5 pt-8 relative duration-300 border border-r-gray-300`}>
 			<img
 				src="/images/control.png"

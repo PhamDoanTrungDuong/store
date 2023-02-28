@@ -13,7 +13,7 @@ import { Popover } from "@mui/material";
 import { changeLanguage } from "i18next";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { locales } from "../i18n/i18n";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const SignedInMenu: React.FC = () => {
 	const { t, i18n } = useTranslation();
@@ -31,51 +31,29 @@ const SignedInMenu: React.FC = () => {
 	//++++++++++++++++
 	const currentLanguage = locales[i18n.language as keyof typeof locales];
 	const [anchorElLng, setAnchorElLng] = useState<HTMLButtonElement | null>(null);
-  const handleClickLng = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorElLng(event.currentTarget);
-  };
+	const handleClickLng = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setAnchorElLng(event.currentTarget);
+	};
 
-  const handleCloseLng = () => {
-    setAnchorElLng(null);
-  };
+	const handleCloseLng = () => {
+		setAnchorElLng(null);
+	};
 
-  const openLng = Boolean(anchorElLng);
-  const id = openLng ? 'simple-popover' : undefined;
+	const openLng = Boolean(anchorElLng);
+	const id = openLng ? "simple-popover" : undefined;
 
-	const changeLanguage = (lng: any) => {
+	const changeLanguages = (lng: any) => {
 		i18n.changeLanguage(lng);
 	};
 
 	return (
 		<div className="flex gap-1 items-center max-w-[200px]">
 			{user?.roles?.includes("Admin") ? (
-				<div className="flex">
-					<div className="mr-3">
-					  <button className="flex justify-center items-center gap-1 hover:bg-slate-200 rounded-lg duration-200 p-2 max-w-[200px]" onClick={handleClickLng}>
-						  <AiOutlineGlobal size={20}/> {currentLanguage}
-					  </button>
-					  <Popover
-					  id={id}
-					  open={openLng}
-					  anchorEl={anchorElLng}
-					  onClose={handleCloseLng}
-					  anchorOrigin={{
-						  vertical: 'bottom',
-						  horizontal: 'left',
-					  }}
-					  >
-						  <div className="flex flex-col py-2 pl-3 pr-28">
-							  <button className="py-2 hover:text-indigo-600 duration-200" onClick={() => {changeLanguage('en'), handleCloseLng()}}>English</button>
-							  <button className="py-2 hover:text-indigo-600 duration-200" onClick={() => {changeLanguage('vi'), handleCloseLng()}}>Tiếng Việt</button>
-						  </div>
-					  </Popover>
-				  </div> 
-				  <img
-					  className="w-[20%] hover:scale-105 duration-200 mx-2 border border-gray-300 cursor-pointer rounded-full"
-					  src="/images/admin.jpg"
-					  alt={user?.username}
-				  />
-				</div>
+					<img
+						className="w-[20%] hover:scale-105 duration-200 mx-2 border border-gray-300 cursor-pointer rounded-full"
+						src="/images/admin.jpg"
+						alt={user?.username}
+					/>
 			) : (
 				<img
 					className="w-[20%] hover:scale-105 duration-200 mx-2 border border-gray-300 cursor-pointer rounded-full"
@@ -97,22 +75,24 @@ const SignedInMenu: React.FC = () => {
 				{!user?.roles?.includes("Admin") && (
 					<span>
 						<MenuItem component={NavLink} to="/profile">
-							{t('SubProfile_Profile')}
+							{t("SubProfile_Profile")}
 						</MenuItem>
 						<MenuItem component={NavLink} to="/orders">
-							{t('SubProfile_MyOrders')}
+							{t("SubProfile_MyOrders")}
 						</MenuItem>
 						<MenuItem component={NavLink} to="/liked-product">
-							{t('SubProfile_LikedProducts')}
+							{t("SubProfile_LikedProducts")}
 						</MenuItem>
 						<MenuItem component={NavLink} to="/face-authen">
-							{t('SubProfile_FaceAuth')}
+							{t("SubProfile_FaceAuth")}
 						</MenuItem>
-						<MenuItem component={NavLink} to="/shipping-address">
-						{t('SubProfile_ShippingAddress')}
+						<MenuItem
+							component={NavLink}
+							to="/shipping-address">
+							{t("SubProfile_ShippingAddress")}
 						</MenuItem>
 						<MenuItem component={NavLink} to="/change-pwd">
-						{t('SubProfile_ChangePwd')}
+							{t("SubProfile_ChangePwd")}
 						</MenuItem>
 					</span>
 				)}
@@ -120,11 +100,11 @@ const SignedInMenu: React.FC = () => {
 					onClick={() => {
 						agent.Account.memberTimerStop().then(() => {
 							dispatch(signOut());
-						})
+						});
 						dispatch(clearBasket());
-						googleSignOut()
+						googleSignOut();
 					}}>
-					{t('SubProfile_Logout')}
+					{t("SubProfile_Logout")}
 				</MenuItem>
 			</Menu>
 		</div>
