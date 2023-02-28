@@ -49,6 +49,7 @@ import MessageComponent from "../components/MessageComponent";
 import AdminMessenger from "../../features/admin/AdminMessenger";
 import AdminColor from "../../features/admin/AdminColor";
 import AdminSize from "../../features/admin/AdminSize";
+import "../i18n/i18n";
 
 const App: React.FC = () => {
 	const dispatch = useAppDispatch();
