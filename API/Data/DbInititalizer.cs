@@ -43,9 +43,9 @@ namespace API.Data
             {
                 new Category{Name = "Tops & T-Shirts"},
                 new Category{Name = "Shorts"},
-                new Category{Name = "Shoes"},
+                new Category{Name = "Trousers & Tights"},
                 new Category{Name = "Jackets"},
-                new Category{Name = "Accessories"},
+                new Category{Name = "Hoodies"},
             };
 
             foreach (var category in categories)
@@ -380,7 +380,7 @@ namespace API.Data
                     Price = 1800,
                     PictureUrl = "/images/products/31.jpg",
                     Brand = "Fila",
-                    Type = "Shoes",
+                    Type = "Trousers & Tights",
                     CurrentCateId = 3,
                     QuantityInStock = 100
                 },
@@ -392,7 +392,7 @@ namespace API.Data
                     Price = 1500,
                     PictureUrl = "/images/products/32.jpg",
                     Brand = "Fila",
-                    Type = "Shoes",
+                    Type = "Trousers & Tights",
                     CurrentCateId = 3,
                     QuantityInStock = 100
                 },
@@ -404,7 +404,7 @@ namespace API.Data
                     Price = 1600,
                     PictureUrl = "/images/products/33.jpg",
                     Brand = "Puma",
-                    Type = "Shoes",
+                    Type = "Trousers & Tights",
                     CurrentCateId = 3,
                     QuantityInStock = 100
                 },
@@ -416,7 +416,7 @@ namespace API.Data
                     Price = 1400,
                     PictureUrl = "/images/products/34.jpg",
                     Brand = "Puma",
-                    Type = "Shoes",
+                    Type = "Trousers & Tights",
                     CurrentCateId = 3,
                     QuantityInStock = 100
                 },
@@ -428,7 +428,7 @@ namespace API.Data
                     Price = 1400,
                     PictureUrl = "/images/products/35.jpg",
                     Brand = "Adidas",
-                    Type = "Shoes",
+                    Type = "Trousers & Tights",
                     CurrentCateId = 3,
                     QuantityInStock = 100
                 },
@@ -440,7 +440,7 @@ namespace API.Data
                     Price = 1400,
                     PictureUrl = "/images/products/36.jpg",
                     Brand = "Under Armour",
-                    Type = "Shoes",
+                    Type = "Trousers & Tights",
                     CurrentCateId = 3,
                     QuantityInStock = 100
                 },
@@ -452,7 +452,7 @@ namespace API.Data
                     Price = 1400,
                     PictureUrl = "/images/products/37.jpg",
                     Brand = "Puma",
-                    Type = "Shoes",
+                    Type = "Trousers & Tights",
                     CurrentCateId = 3,
                     QuantityInStock = 100
                 },
@@ -464,7 +464,7 @@ namespace API.Data
                     Price = 1400,
                     PictureUrl = "/images/products/38.jpg",
                     Brand = "Puma",
-                    Type = "Shoes",
+                    Type = "Trousers & Tights",
                     CurrentCateId = 3,
                     QuantityInStock = 100
                 },
@@ -476,7 +476,7 @@ namespace API.Data
                     Price = 1400,
                     PictureUrl = "/images/products/39.jpg",
                     Brand = "Puma",
-                    Type = "Shoes",
+                    Type = "Trousers & Tights",
                     CurrentCateId = 3,
                     QuantityInStock = 100
                 },
@@ -488,7 +488,7 @@ namespace API.Data
                     Price = 1400,
                     PictureUrl = "/images/products/40.jpg",
                     Brand = "Puma",
-                    Type = "Shoes",
+                    Type = "Trousers & Tights",
                     CurrentCateId = 3,
                     QuantityInStock = 100
                 },
@@ -619,7 +619,7 @@ namespace API.Data
                     Price = 18000,
                     PictureUrl = "/images/products/51.jpg",
                     Brand = "Puma",
-                    Type = "Accessories",
+                    Type = "Hoodies",
                     CurrentCateId = 5,
                     QuantityInStock = 100
                 },
@@ -631,7 +631,7 @@ namespace API.Data
                     Price = 18000,
                     PictureUrl = "/images/products/52.jpg",
                     Brand = "Puma",
-                    Type = "Accessories",
+                    Type = "Hoodies",
                     CurrentCateId = 5,
                     QuantityInStock = 100
                 },
@@ -643,7 +643,7 @@ namespace API.Data
                     Price = 18000,
                     PictureUrl = "/images/products/53.jpg",
                     Brand = "Adidas",
-                    Type = "Accessories",
+                    Type = "Hoodies",
                     CurrentCateId = 5,
                     QuantityInStock = 100
                 },
@@ -655,7 +655,7 @@ namespace API.Data
                     Price = 18000,
                     PictureUrl = "/images/products/54.jpg",
                     Brand = "Reebok",
-                    Type = "Accessories",
+                    Type = "Hoodies",
                     CurrentCateId = 5,
                     QuantityInStock = 100
                 },
@@ -667,7 +667,7 @@ namespace API.Data
                     Price = 18000,
                     PictureUrl = "/images/products/55.jpg",
                     Brand = "Reebok",
-                    Type = "Accessories",
+                    Type = "Hoodies",
                     CurrentCateId = 5,
                     QuantityInStock = 100
                 },
@@ -679,7 +679,7 @@ namespace API.Data
                     Price = 18000,
                     PictureUrl = "/images/products/56.jpg",
                     Brand = "Under Armour",
-                    Type = "Accessories",
+                    Type = "Hoodies",
                     CurrentCateId = 5,
                     QuantityInStock = 100
                 },
@@ -691,7 +691,7 @@ namespace API.Data
                     Price = 18000,
                     PictureUrl = "/images/products/57.jpg",
                     Brand = "Reebok",
-                    Type = "Accessories",
+                    Type = "Hoodies",
                     CurrentCateId = 5,
                     QuantityInStock = 100
                 },
@@ -703,7 +703,7 @@ namespace API.Data
                     Price = 18000,
                     PictureUrl = "/images/products/58.jpg",
                     Brand = "Nike",
-                    Type = "Accessories",
+                    Type = "Hoodies",
                     CurrentCateId = 5,
                     QuantityInStock = 100
                 },
@@ -715,7 +715,7 @@ namespace API.Data
                     Price = 18000,
                     PictureUrl = "/images/products/59.jpg",
                     Brand = "Fila",
-                    Type = "Accessories",
+                    Type = "Hoodies",
                     CurrentCateId = 5,
                     QuantityInStock = 100
                 },
@@ -727,7 +727,7 @@ namespace API.Data
                     Price = 18000,
                     PictureUrl = "/images/products/60.jpg",
                     Brand = "Fila",
-                    Type = "Accessories",
+                    Type = "Hoodies",
                     CurrentCateId = 5,
                     QuantityInStock = 100
                 },
