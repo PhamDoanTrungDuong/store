@@ -72,7 +72,7 @@
       [x] sản phẩm yêu thích
       [x] tìm kiếm sản phẩm với khung giá tiền
       [x] Quản lý color, size
-      [~] đa ngôn ngữ
+      [~] đa ngôn ngữ i18n
       [] gợi ý mua hàng
       [] ~doanh thu (ref thầy Đệ)
       [] ~điểm danh nhận voucher
