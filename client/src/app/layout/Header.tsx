@@ -19,6 +19,7 @@ const Header: React.FC = () => {
 		{ title: t("Menu_Product"), path: "/catalog" },
 		{ title: t("Menu_About"), path: "/about" },
 		{ title: t("Menu_Contact"), path: "/contact" },
+		{ title: "Sales", path: "/sale" },
 	];
 	const currentLanguage = locales[i18n.language as keyof typeof locales];
 	const { basket } = useAppSelector((state) => state.basket);

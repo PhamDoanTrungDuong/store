@@ -50,6 +50,7 @@ import AdminMessenger from "../../features/admin/AdminMessenger";
 import AdminColor from "../../features/admin/AdminColor";
 import AdminSize from "../../features/admin/AdminSize";
 import "../i18n/i18n";
+import ProductDiscount from "../../features/home/ProductDiscount";
 
 const App: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -375,6 +376,14 @@ const App: React.FC = () => {
 									element={
 										<PrivateRoute>
 											<LikedProduct />
+										</PrivateRoute>
+									}
+								/>
+								<Route
+									path="/sale"
+									element={
+										<PrivateRoute>
+											<ProductDiscount />
 										</PrivateRoute>
 									}
 								/>
