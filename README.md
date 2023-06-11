@@ -80,6 +80,28 @@
 
  -->
  <!-- LV
+      1. Giao diện trang chủ: mục đăng nhập, mục đăng ký, hiển thị các quảng cáo sản phẩm.
+      2. Giao diện người dùng:
+      2.1. Người dùng khách: xem quảng cáo trên trang chủ, xem sản phẩm trên trang sản phẩm, đăng ký thành viên
+      2.2. Người dùng Thành Viên:
+      o Đăng nhập, đăng xuất
+      o Tìm kiếm sản phẩm
+      o Xem sản phẩm và đưa sản phẩm vào giỏ hàng.
+      o Xem giỏ hàng.
+      o Thanh toán giỏ hàng.
+      o Bình luận, đánh giá.
+      o Xem lịch sử và trạng thái đơn đặt hàng đã thanh toán.
+      o Thống kê tổng tiền.
+      o Quản lý thông tin cá nhân : xem, sửa thông tin cá nhân.
+      2.3. Quản trị viên:
+      o Đăng nhập, đăng xuất trang quản trị viên
+      o Quản lý tài khoản thành viên, quản trị viên: cấp quyền.
+      o Quản lý hồ sơ thành viên: thông tin cá nhân, địa chỉ.
+      o Quản lý sản phẩm.
+      o Quản lý loại sản phẩm.
+      o Quản lý bình luận, đánh giá.
+      o Quản lý đơn hàng.
+      o Thống kê doanh số.
 USER
       [x] Đăng nhập bằng FB, GG
       [x] Đăng Ký bằng FB, GG
