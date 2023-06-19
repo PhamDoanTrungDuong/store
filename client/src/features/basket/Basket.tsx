@@ -11,6 +11,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { useEffect, useState } from "react";
 import { fetchVouchers, setSelectedVoucher } from "../admin/adminSlice";
+import { useTranslation } from "react-i18next";
 import moment from "moment";
 
 const style = {
@@ -26,6 +27,7 @@ const style = {
 };
 
 const Basket: React.FC = () => {
+	const { t } = useTranslation();
 	const [open, setOpen] = useState(false);
 	const [choosenVoucher, setChoosenVoucher] = useState<any>();
 	const handleOpen = () => setOpen(true);
@@ -77,13 +79,13 @@ const Basket: React.FC = () => {
 					<img src="/images/empty_cart.png" alt="" />
 				</div>
 				<div className="my-10 flex flex-col items-center">
-					<h1 className="text-xl font-bold">Your Cart is Empty</h1>
+					<h1 className="text-xl font-bold">{t('Bas_Empty')}</h1>
 					<p className="text-lg font-medium my-2">
-						Add something to make you happy :)
+						{t('Bas_Text')}
 					</p>
 					<button className="c-btn">
 						<Link className="font-medium" to="/catalog">
-							Go to shopping
+							{t('Bas_GoBack')}
 						</Link>
 					</button>
 				</div>

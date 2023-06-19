@@ -18,13 +18,7 @@ import { AiOutlineHome } from "react-icons/ai";
 import { BiCategoryAlt } from "react-icons/bi";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
-
-const sortOptions = [
-	{ value: "latest", label: "Latest Product" },
-	{ value: "name", label: "Alphabetical" },
-	{ value: "priceDesc", label: "Hight to low" },
-	{ value: "price", label: "Low to hight" },
-];
+import { useTranslation } from "react-i18next";
 
 const marks = [
 	{
@@ -58,6 +52,14 @@ function valuetext(value: number) {
 }
 
 const Catalog: React.FC = () => {
+	const { t } = useTranslation();
+	const sortOptions = [
+		{ value: "latest", label: t('Cat_Latest') },
+		{ value: "name", label: t('Cat_Alpha') },
+		{ value: "priceDesc", label: t('Cat_HTL') },
+		{ value: "price", label: t('Cat_LTH') },
+	];
+
 	const { products, filtersLoaded, brands, categories, pagination } = useProducts();
 
 	const [value, setValue] = useState<number[]>([0, 50000]);
@@ -111,7 +113,7 @@ const Catalog: React.FC = () => {
 									<FiFilter size={20} />
 								</div>
 								<h4 className="ml-[3px] font-medium">
-									Sort Order
+									{t('Cat_Sort')}
 								</h4>
 							</div>
 							<RadioButtonGroup
@@ -137,7 +139,7 @@ const Catalog: React.FC = () => {
 										/>
 									</div>
 									<h4 className="ml-[3px] mb-3 font-medium">
-										Price Range
+										{t('Cat_Price')}
 									</h4>
 								</div>
 								<Box sx={{ width: 200 }}>
@@ -170,7 +172,7 @@ const Catalog: React.FC = () => {
 									/>
 								</div>
 								<h4 className="ml-[3px] font-medium">
-									Brands
+									{t('Cat_Brand')}
 								</h4>
 							</div>
 							<CheckboxButton
@@ -194,7 +196,7 @@ const Catalog: React.FC = () => {
 									/>
 								</div>
 								<h4 className="ml-[3px] font-medium">
-									Categories
+									{t('Cat_Cats')}
 								</h4>
 							</div>
 							<CheckboxButton

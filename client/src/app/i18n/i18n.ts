@@ -79,8 +79,53 @@ const resources = {
       "Reg_Register": "Register",
       "Reg_Already": "Already have an account?",
       "Reg_Signin": "Sign In",
+      
+      //Catalog
+      "Cat_Sort": "Sort Order",
+      "Cat_Latest": "Latest Product",
+      "Cat_Alpha": "Alphabetical",
+      "Cat_HTL": "Hight to low",
+      "Cat_LTH": "Low to hight",
+      "Cat_Price": "Price Range",
+      "Cat_Brand": "Brands",
+      "Cat_Cats": "Categories",
+  
+      //Product Search
+      "ProSear_Search": "Search Products...",
+      
+      //Pagination
+      "Page_Display": "Displaying",
+      "Page_Of": "of",
+      "Page_Items": "items",
+      
+      //Product Details
+      "De_Qty": "Quantity",
+      "De_PIS": "Product in stock",
+      "De_Color": "Color",
+      "De_Size": "Size",
+      "De_AddCart": "Add To Cart",
+      "De_UpdateCart": "Update Quantity",
+      "De_Desc": "DESCRIPTION",
+      "De_Policy": "SHIPPING AND RETURN",
+      "De_Review": "REVIEW",
+      "De_ReturnPolicy": "Returns Policy",
+      "De_Pol1": "+ You may return most new, unopened items within 30 days of delivery for a full refund. We'll also pay the return shipping costs if the return is a result of our error (you received an incorrect or defective item, etc.).",
+      "De_Pol2": "+ You should expect to receive your refund within four weeks of giving your package to the return shipper, however, in many cases you will receive a refund more quickly. This time period includes the transit time for us to receive your return from the shipper (5 to 10 business days), the time it takes us to process your return once we receive it (3 to 5 business days), and the time it takes your bank to process our refund request (5 to 10 business days).",
+      "De_Pol3": "+ If you need to return an item, simply login to your account, view the order using the 'Complete Orders' link under the My Account menu and click the Return Item(s) button. We'll notify you via e-mail of your refund once we've received and processed the returned item.",
+      "De_Ship": "Shipping",
+      "De_ShipPol1": "+ We can ship to virtually any address in the world. Note that there are restrictions on some products, and some products cannot be shipped to international destinations.",
+      "De_ShipPol2": "+ When you place an order, we will estimate shipping and delivery dates for you based on the availability of your items and the shipping options you choose. Depending on the shipping provider you choose, shipping date estimates may appear on the shipping quotes page.",
+      "De_ShipPol3": "+ Please also note that the shipping rates for many items we sell are weight-based. The weight of any such item can be found on its detail page. To reflect the policies of the shipping companies we use, all weights will be rounded up to the next full pound.",
+      "De_Comment": "Add a new comment",
+      "De_Evaluate": "Evaluate",
+      "De_Type": "Type your comment",
+      "De_Submit": "Submit",
 
-
+      //Basket
+      "Bas_Empty": "Your Cart Is Empty",
+      "Bas_Text": "Add something to make you happy (:",
+      "Bas_GoBack": "Go to Shopping",
+      
     }
   },
   vi: {
@@ -156,6 +201,52 @@ const resources = {
       "Reg_Register": "Đăng ký",
       "Reg_Already": "Đã có tài khoản?",
       "Reg_Signin": "Đăng Nhập",
+
+      //Catalog
+      "Cat_Sort": "Thứ tự sắp xếp",
+      "Cat_Latest": "Sản phẩm mới nhất",
+      "Cat_Alpha": "Theo chữ cái",
+      "Cat_HTL": "Cao tới thấp",
+      "Cat_LTH": "Thấp tới cao",
+      "Cat_Price": "Khoảng giá",
+      "Cat_Brand": "Thương hiệu",
+      "Cat_Cats": "Loại hàng",
+      
+      //Product Search
+      "ProSear_Search": "Tìm kiếm sản phẩm...",
+
+      //Pagination
+      "Page_Display": "Hiển thị",
+      "Page_Of": "của",
+      "Page_Items": "sản phẩm",
+
+      //Product Details
+      "De_Qty": "Số Lượng",
+      "De_PIS": "Sản phẩm trong kho",
+      "De_Color": "Màu",
+      "De_Size": "Kích cỡ",
+      "De_AddCart": "Thêm vào giỏ hàng",
+      "De_UpdateCart": "Cập nhật số lượng",
+      "De_Desc": "MÔ TẢ",
+      "De_Policy": "VẬN CHUYỂN VÀ HOÀN TRẢ",
+      "De_Review": "ĐÁNH GIÁ",
+      "De_ReturnPolicy": "Quy định đổi trả",
+      "De_Pol1": "+ Bạn có thể trả lại hầu hết các mặt hàng mới, chưa mở trong vòng 30 ngày kể từ ngày giao hàng để được hoàn lại toàn bộ tiền. Chúng tôi cũng sẽ thanh toán chi phí vận chuyển trả lại nếu việc trả lại là do lỗi của chúng tôi (bạn đã nhận được một mặt hàng không chính xác hoặc bị lỗi, v.v.).",
+      "De_Pol2": "+ Bạn sẽ nhận được tiền hoàn lại trong vòng bốn tuần sau khi giao gói hàng của mình cho người gửi hàng trả lại, tuy nhiên, trong nhiều trường hợp, bạn sẽ nhận được tiền hoàn lại nhanh hơn. Khoảng thời gian này bao gồm thời gian vận chuyển để chúng tôi nhận được hàng trả lại của bạn từ người gửi hàng (5 đến 10 ngày làm việc), thời gian chúng tôi xử lý hàng trả lại của bạn sau khi chúng tôi nhận được hàng (3 đến 5 ngày làm việc) và thời gian cần thiết ngân hàng của bạn để xử lý yêu cầu hoàn tiền của chúng tôi (5 đến 10 ngày làm việc).",
+      "De_Pol3": "+ Nếu bạn cần trả lại một mặt hàng, chỉ cần đăng nhập vào tài khoản của bạn, xem đơn đặt hàng bằng cách sử dụng liên kết 'Hoàn thành đơn đặt hàng' trong menu Tài khoản của tôi và nhấp vào nút Trả lại (các) mặt hàng. Chúng tôi sẽ thông báo cho bạn qua e-mail về khoản hoàn trả của bạn sau khi chúng tôi đã nhận và xử lý mặt hàng bị trả lại.",
+      "De_Ship": "Giao Hàng",
+      "De_ShipPol1": "+ Chúng tôi có thể gửi đến hầu như bất kỳ địa chỉ nào trên thế giới. Lưu ý rằng có những hạn chế đối với một số sản phẩm và một số sản phẩm không thể được vận chuyển đến các điểm đến quốc tế.",
+      "De_ShipPol2": "+ Khi bạn đặt hàng, chúng tôi sẽ ước tính ngày vận chuyển và giao hàng cho bạn dựa trên tình trạng sẵn có của các mặt hàng và các tùy chọn vận chuyển mà bạn chọn. Tùy thuộc vào nhà cung cấp dịch vụ vận chuyển mà bạn chọn, ước tính ngày vận chuyển có thể xuất hiện trên trang báo giá vận chuyển.",
+      "De_ShipPol3": "+ Cũng xin lưu ý rằng giá vận chuyển cho nhiều mặt hàng chúng tôi bán dựa trên trọng lượng. Trọng lượng của bất kỳ mục nào như vậy có thể được tìm thấy trên trang chi tiết của nó. Để phản ánh chính sách của các công ty vận chuyển mà chúng tôi sử dụng, tất cả các trọng lượng sẽ được làm tròn thành pound đầy đủ tiếp theo.",
+      "De_Comment": "Thêm một bình luận mới",
+      "De_Evaluate": "Đánh giá",
+      "De_Type": "Gõ bình luận của bạn",
+      "De_Submit": "Gửi",
+
+      //Basket
+      "Bas_Empty": "Giỏ hàng của bạn rỗng",
+      "Bas_Text": "Thêm vào thứ gì đó để giúp bạn vui vẻ (:",
+      "Bas_GoBack": "Đi mua sắm nào!",
       
     }
   }

@@ -1,6 +1,7 @@
 import { Pagination } from "@mui/material";
 import React, { useState } from "react";
 import { IPagination } from "../interfaces/IPagination";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   pagination: IPagination;
@@ -8,6 +9,8 @@ interface IProps {
 }
 
 const AppPagination: React.FC<IProps> = ({ pagination, onPageChange }) => {
+  const { t } = useTranslation();
+
   const { currentPage, totalCount, totalPages, pageSize } = pagination;
   const [pageNumber, setPageNumber] = useState(currentPage);
 
@@ -19,15 +22,15 @@ const AppPagination: React.FC<IProps> = ({ pagination, onPageChange }) => {
     <div>
       <div className="flex justify-between items-center">
         <p className="hidden lg:block text-lg">
-          Displaying <span className="font-medium">{(currentPage - 1) * pageSize + 1}-
+          {t('Page_Display')} <span className="font-medium">{(currentPage - 1) * pageSize + 1}-
           {currentPage * pageSize > totalCount
             ? totalCount
             : currentPage * pageSize}
-            </span> of{" "}
+            </span> {t('Page_Of')}{" "}
             <span className="font-medium">
               { totalCount}
             </span>
-             {" "}items
+             {" "}{t('Page_Items')}
         </p>
         <Pagination
           size="large"

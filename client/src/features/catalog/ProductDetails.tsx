@@ -18,6 +18,7 @@ import { BiCategoryAlt } from "react-icons/bi";
 import { FaHashtag } from "react-icons/fa";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
+import { useTranslation } from "react-i18next";
 
 interface TabPanelProps {
 	children?: React.ReactNode;
@@ -52,6 +53,8 @@ interface Inputs {
 }
 
 const ProductDetails: React.FC = () => {
+	const { t } = useTranslation();
+
 	const { productDiscount, productsLoaded } = useAppSelector((state) => state.catalog);
 	const [Sales, setSales] = useState<IProductDiscount>();
 
@@ -358,8 +361,8 @@ const ProductDetails: React.FC = () => {
 						<p>{product.description}</p>
 					</div>
 					<div className="my-8 flex justify-between items-center">
-						<div className="flex items-center gap-4 ">
-							<h2>Quantity</h2>
+						<div className="flex items-center gap-4 text-medium ">
+							<h2>{t('De_Qty')}</h2>
 							<button
 								className="hover:text-red-600 p-3 border rounded-full"
 								onClick={handleMinus}>
@@ -372,14 +375,14 @@ const ProductDetails: React.FC = () => {
 								<IoIosArrowForward />
 							</button>
 						</div>
-						<div className="text-lg text-gray-500">
-							{product.quantityInStock} product in stock
+						<div className="text-medium text-gray-500">
+							{product.quantityInStock} {t('De_PIS')}
 						</div>
 					</div>
 					{(variants && (variants.colors.length !== 0 && variants.sizes.length !== 0)) ? (
 						<div className="flex items-center mt-6 pb-5 border-b-2 border-gray-200 mb-5">
 							<div className="flex items-center">
-								<span className="mr-3">Color:</span>
+								<span className="mr-3">{t('De_Color')}:</span>
 								{variants && variants.colors.map((color: any, idx: number) => {
 										// var color1 = `bg-${color.colour_value}-500`;
 										return (
@@ -402,7 +405,7 @@ const ProductDetails: React.FC = () => {
 									})}
 							</div>
 							<div className="flex ml-6 items-center">
-								<span className="mr-3">Size:</span>
+								<span className="mr-3">{t('De_Size')}:</span>
 								<div className="relative">
 									<select
 										onChange={(e) =>
@@ -442,7 +445,7 @@ const ProductDetails: React.FC = () => {
 					) : (
 						<div className="flex items-center mt-6 pb-5 border-b-2 border-gray-200 mb-5">
 							<div className="flex items-center">
-								<span className="mr-3">Color:</span>
+								<span className="mr-3">{t('De_Color')}:</span>
 								{colors &&
 									colors.map((color: any, idx) => {
 										// var color1 = `bg-${color.colour_value}-500`;
@@ -467,7 +470,7 @@ const ProductDetails: React.FC = () => {
 									})}
 							</div>
 							<div className="flex ml-6 items-center">
-								<span className="mr-3">Size:</span>
+								<span className="mr-3">{t("De_Size")}:</span>
 								<div className="relative">
 									<select
 										onChange={(e) =>
@@ -519,7 +522,7 @@ const ProductDetails: React.FC = () => {
 								(!item && quantity === 0)
 							}
 							onClick={hanldeUpdateCart}>
-							{item ? "Update Quantity" : "Add to Cart"}
+							{item ? t('De_UpdateCart') : t('De_AddCart')}
 						</button>
 					</div>
 				</div>
@@ -533,14 +536,14 @@ const ProductDetails: React.FC = () => {
 							onChange={handleChange}
 							aria-label="basic tabs example">
 							<Tab
-								label="Description"
+								label={t('De_Desc')}
 								{...a11yProps(0)}
 							/>
 							<Tab
-								label="Shipping and Return"
+								label={t('De_Policy')}
 								{...a11yProps(1)}
 							/>
-							<Tab label="Review" {...a11yProps(2)} />
+							<Tab label={t('De_Review')} {...a11yProps(2)} />
 						</Tabs>
 					</Box>
 					<TabPanel value={value} index={0}>
@@ -550,63 +553,28 @@ const ProductDetails: React.FC = () => {
 					</TabPanel>
 					<TabPanel value={value} index={1}>
 						<h1 className="text-xl font-bold italic">
-							Returns Policy
+							{t('De_ReturnPolicy')}
 						</h1>
 						<p className="text-md text-gray-400 my-2">
-							+ You may return most new, unopened items
-							within 30 days of delivery for a full
-							refund. We'll also pay the return shipping
-							costs if the return is a result of our error
-							(you received an incorrect or defective
-							item, etc.).
+							{t('De_Pol1')}
 						</p>
 						<p className="text-md text-gray-400 my-2">
-							+ You should expect to receive your refund
-							within four weeks of giving your package to
-							the return shipper, however, in many cases
-							you will receive a refund more quickly. This
-							time period includes the transit time for us
-							to receive your return from the shipper (5
-							to 10 business days), the time it takes us
-							to process your return once we receive it (3
-							to 5 business days), and the time it takes
-							your bank to process our refund request (5
-							to 10 business days).
+							{t('De_Pol2')}
 						</p>
 						<p className="text-md text-gray-400 my-2">
-							+ If you need to return an item, simply
-							login to your account, view the order using
-							the 'Complete Orders' link under the My
-							Account menu and click the Return Item(s)
-							button. We'll notify you via e-mail of your
-							refund once we've received and processed the
-							returned item.
+							{t('De_Pol3')}
 						</p>
 						<h1 className="text-xl font-bold italic">
-							Shipping
+							{t('De_Ship')}
 						</h1>
 						<p className="text-md text-gray-400 my-2">
-							+ We can ship to virtually any address in
-							the world. Note that there are restrictions
-							on some products, and some products cannot
-							be shipped to international destinations.
+							{t('De_ShipPol1')}
 						</p>
 						<p className="text-md text-gray-400 my-2">
-							+ When you place an order, we will estimate
-							shipping and delivery dates for you based on
-							the availability of your items and the
-							shipping options you choose. Depending on
-							the shipping provider you choose, shipping
-							date estimates may appear on the shipping
-							quotes page.
+							{t('De_ShipPol2')}
 						</p>
 						<p className="text-md text-gray-400 my-2">
-							+ Please also note that the shipping rates
-							for many items we sell are weight-based. The
-							weight of any such item can be found on its
-							detail page. To reflect the policies of the
-							shipping companies we use, all weights will
-							be rounded up to the next full pound.
+							{t('De_ShipPol3')}
 						</p>
 					</TabPanel>
 					<TabPanel value={value} index={2}>
@@ -617,13 +585,13 @@ const ProductDetails: React.FC = () => {
 								)}
 								className="w-full bg-white rounded-xl pt-2">
 								<h2 className="px-4 pt-3 pb-2 text-black text-lg font-medium">
-									Add a new comment
+									{t('De_Comment')}
 								</h2>
 								<div className="flex flex-col md:flex-row justify-between mx-3 mb-6">
 									<div className="w-full md:w-full px-2 mb-2 mt-2">
 										<div className="flex justify-start items-center my-2">
 											<span className="mr-3 font-medium">
-												Evaluate:
+												{t('De_Evaluate')}:
 											</span>
 											<div className="flex gap-1">
 												<Rating
@@ -678,7 +646,7 @@ const ProductDetails: React.FC = () => {
 												)}
 												className=" rounded border border-gray-300 leading-normal resize-none w-full px-5 py-3 focus:outline-none focus:bg-white"
 												name="content"
-												placeholder="Type Your Comment"
+												placeholder={t('De_Type') as string}
 											/>
 										</div>
 									</div>
@@ -687,7 +655,7 @@ const ProductDetails: React.FC = () => {
 											<button
 												type="submit"
 												className="bg-indigo-600 border text-sm md:text-base border-indigo-600 text-white p-3 w-full rounded-lg shadow-xl hover:shadow-2xl hover:bg-transparent hover:text-indigo-600 duration-200">
-												Submit
+												{t('De_Submit')}
 											</button>
 										</div>
 									</div>
