@@ -1,10 +1,12 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const Advertise: React.FC = () => {
+	const { t } = useTranslation();
 	return (
 		<div className="mx-auto text-center py-16 px-4">
-			<h1 className="text-4xl capitalize font-bold">All-Product in Store</h1>
-			<p className="text-xl py-6 text-gray-500">On the Store's Best Product</p>
+			<h1 className="text-4xl capitalize font-bold">{t('Home_AllProduct')}</h1>
+			<p className="text-xl py-6 text-gray-500">{t('Home_OnTheStore')}</p>
 			<div className="grid md:grid-cols-5 py-4 gap-4 md:gap-5">
 				<img
 					src="/images/ad3.jpg"

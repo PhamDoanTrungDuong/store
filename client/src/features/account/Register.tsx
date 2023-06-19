@@ -4,15 +4,15 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import agent from "../../app/api/agent";
 import { history } from "../..";
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
+	const { t } = useTranslation();
 	type FormData = {
 		email: string;
 		password: string;
 		username: string;
 	};
-
-
 
 	const {
 		register,
@@ -41,6 +41,11 @@ const Register = () => {
 		}
 	};
 
+	const usernamereq = t('Reg_UsernameReq');
+	const passreq = t('Reg_PassReq');
+	const passcomplex = t('Reg_PassComplex');
+	const emailreq = t('Reg_EmailReq');
+
 	return (
 		<div className="mt-5">
 			<div className="max-w-[350px] md:max-w-[400px] border h-auto border-slate-300 rounded-2xl px-4 py-10 my-[100px] mx-auto">
@@ -49,7 +54,7 @@ const Register = () => {
 						<LockOutlinedIcon />
 					</div>
 					<h1 className="font-bold text-2xl">
-						Sign Up
+						{t('Reg_Signup')}
 					</h1>
 					<form
 						onSubmit={handleSubmit((data) =>
@@ -73,11 +78,11 @@ const Register = () => {
 						<TextField
 							margin="normal"
 							fullWidth
-							label="Username"
+							label={t('Reg_Username')}
 							{...register(
 								"username",
 								{
-									required: "Username is required",
+									required: usernamereq,
 								}
 							)}
 							error={
@@ -91,9 +96,9 @@ const Register = () => {
 						<TextField
 							margin="normal"
 							fullWidth
-							label="Email"
+							label={t('Reg_Email')}
 							{...register("email", {
-								required: "Email is required",
+								required: emailreq,
 								pattern: {
 									value: /^\w+[\w-.]*@\w+((-\w+)|(\w*)).[a-z]{2,3}$/,
 									message: "Not a valid email address",
@@ -108,15 +113,15 @@ const Register = () => {
 						<TextField
 							margin="normal"
 							fullWidth
-							label="Password"
+							label={t('Reg_Pass')}
 							type="password"
 							{...register(
 								"password",
 								{
-									required: "Username is required",
+									required: passreq,
 									pattern: {
 										value: /(?=^.{6,10}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$/,
-										message: "Password is not complex enough",
+										message: passcomplex,
 									},
 								}
 							)}
@@ -132,12 +137,12 @@ const Register = () => {
 							className={!isValid ? "p-3 my-5 w-full bg-slate-400 rounded-lg" : "p-3 my-5 w-full c-btn"}
 							disabled={!isValid}
 							type="submit">
-							Register
+							{t('Reg_Register')}
 						</button>
 						<div className="text-center mt-3">
 								<Link to="/login">
 										<h4>
-										Already have an account? <span className="font-medium underline underline-offset-2 text-indigo-600 hover:text-indigo-400 duration-300">Sign In</span>
+										{t('Reg_Already')} <span className="font-medium underline underline-offset-2 text-indigo-600 hover:text-indigo-400 duration-300">{t('Reg_Signin')}</span>
 										</h4>
 								</Link>
 								

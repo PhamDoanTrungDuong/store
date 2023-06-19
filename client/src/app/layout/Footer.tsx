@@ -2,36 +2,38 @@ import React from "react";
 import { AiOutlineInstagram } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { FaFacebookF, FaGithub, FaTiktok, FaTwitter, FaStripe } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const Footer: React.FC = () => {
+	const { t } = useTranslation();
 	return (
 		<div className="rounded-div mt-8 pt-8 text-primary">
 			<div className="grid md:grid-cols-2">
 				<div className="flex justify-evenly w-full uppercase">
 					<div>
-						<h2 className="font-bold">Support</h2>
+						<h2 className="font-bold">{t('Footer_Support')}</h2>
 						<ul>
 							<li className="text-sm py-2">
-								Help Center
+								{t('Footer_Help')}
 							</li>
-							<li className="text-sm py-2">Contact Us</li>
-							<li className="text-sm py-2">API Status</li>
+							<li className="text-sm py-2">{t('Footer_Contact')}</li>
+							<li className="text-sm py-2">{t('Footer_API')}</li>
 							<li className="text-sm py-2">
-								Documentation
+								{t('Footer_Docs')}
 							</li>
 						</ul>
 					</div>
 					<div>
-						<h2 className="font-bold">Info</h2>
+						<h2 className="font-bold">{t('Footer_Info')}</h2>
 						<ul>
-							<li className="text-sm py-2">About Us</li>
-							<li className="text-sm py-2">Careers</li>
-							<li className="text-sm py-2">Invest</li>
-							<li className="text-sm py-2">Legal</li>
+							<li className="text-sm py-2">{t('Footer_About')}</li>
+							<li className="text-sm py-2">{t('Footer_Carrers')}</li>
+							<li className="text-sm py-2">{t('Footer_Invest')}</li>
+							<li className="text-sm py-2">{t('Footer_Legal')}</li>
 						</ul>
 					</div>
 					<div>
-						<h2 className="font-bold">Payments</h2>
+						<h2 className="font-bold">{t('Footer_Payments')}</h2>
 						<ul className="flex flex-col justify-between items-center gap-2">
 							<li>
 								<FaStripe size={40} className="fill-indigo-600 p-0"/>
@@ -58,7 +60,7 @@ const Footer: React.FC = () => {
 					<div className="w-full flex justify-end">
 						<div className="w-full md:w-[450px] relative text-left">
 							<p className="text-center mt-5 sm:mt-0 sm:text-left text-lg font-medium">
-								Sign up for shopping
+								{t('Footer_SignUpShopping')}
 							</p>
 							<div className="py-4">
 								<form className="flex justify-between items-center gap-3">
@@ -71,9 +73,8 @@ const Footer: React.FC = () => {
 									</div>
 									<div className="w-1/5">
 										<Link to="register">
-											<button className="bg-indigo-600 border border-indigo-600 text-white px-4 p-2 w-full rounded-xl shadow-xl hover:shadow-2xl my-2 hover:bg-transparent hover:text-indigo-600 duration-200">
-												Sign
-												up
+											<button className="bg-indigo-600 border border-indigo-600 text-white text-sm font-medium px-4 p-2 w-full rounded-xl shadow-xl hover:shadow-2xl my-2 hover:bg-transparent hover:text-indigo-600 duration-200">
+												{t('Footer_SignUp')}
 											</button>
 										</Link>
 									</div>
@@ -103,7 +104,7 @@ const Footer: React.FC = () => {
 				</div>
 			</div>
 			<p className="text-center text-lg font-bold py-4">
-				Welcom to the <span className="text-indigo-600">Store.</span>
+				{t('Footer_Welcom')} <span className="text-indigo-600">Store.</span>
 			</p>
 		</div>
 	);

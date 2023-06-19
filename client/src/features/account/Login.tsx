@@ -15,8 +15,10 @@ import agent from "../../app/api/agent";
 import useMembers from "../../app/hooks/useMembers";
 import useFaceAuthen from "../../app/hooks/useFaceAuthen";
 import Swal from "sweetalert2";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
+	const { t } = useTranslation();
 	const { faceRegistration, faceSignIn, dataFaceRegister, dataFaceLogin, dataUserLogin } =
 		useFaceAuthen();
 
@@ -141,6 +143,8 @@ const Login = () => {
 			}
 		}
 	}, [dataFaceLogin, members, dispatch, from]);
+	const usernamereq = t('Login_UsernameReq');
+	const passreq = t('Login_PassReq');
 	return (
 		<div className="mt-5">
 			<div className="max-w-[350px] md:max-w-[400px] border h-auto border-slate-300 rounded-2xl px-4 py-10 my-[100px] mx-auto">
@@ -148,15 +152,15 @@ const Login = () => {
 					<div className="bg-indigo-600 p-4 text-white rounded-full">
 						<LockOutlinedIcon />
 					</div>
-					<h1 className="font-bold text-2xl">Sign in</h1>
+					<h1 className="font-bold text-2xl">{t('Login_Signin')}</h1>
 					<form onSubmit={handleSubmit(submitForm)}>
 						<TextField
 							margin="normal"
 							fullWidth
-							label="Username"
+							label={t('Login_Username')}
 							autoFocus
 							{...register("username", {
-								required: "Username is required",
+								required: usernamereq,
 							})}
 							error={!!errors.username}
 							helperText={errors?.username?.message}
@@ -164,10 +168,10 @@ const Login = () => {
 						<TextField
 							margin="normal"
 							fullWidth
-							label="Password"
+							label={t('Login_Pass')}
 							type="password"
 							{...register("password", {
-								required: "Username is required",
+								required: passreq,
 							})}
 							error={!!errors.password}
 							helperText={errors?.password?.message}
@@ -176,13 +180,14 @@ const Login = () => {
 							className="p-3 my-5 w-full c-btn"
 							disabled={!isValid}
 							type="submit">
-							Sign In
+							{t('Login_Signin')}
 						</button>
 						<hr />
 						<div className="flex flex-col justify-center items-center gap-2">
-							<p>or</p>
+							<p>{t('Login_Or')}</p>
 							<div>
 								<GoogleButton
+									label={t('Login_GG') as string}
 									onClick={handleGoogleSignIn}
 								/>
 							</div>
@@ -191,9 +196,9 @@ const Login = () => {
 						<div className="text-center mt-3">
 							<Link to="/register">
 								<h4>
-									Don't have an account?{" "}
+									{t('Login_Account')}{" "}
 									<span className="font-medium underline underline-offset-2 text-indigo-600 hover:text-indigo-400 duration-300">
-										Sign Up
+										{t('Login_Signup')}
 									</span>{" "}
 								</h4>
 							</Link>

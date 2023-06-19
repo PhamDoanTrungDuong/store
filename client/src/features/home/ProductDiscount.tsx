@@ -9,9 +9,11 @@ import { Tooltip } from "@mui/material";
 import Swal from "sweetalert2";
 import HeadDealOfDay from "../../app/components/TimeCountDown";
 import agent from "../../app/api/agent";
+import { useTranslation } from "react-i18next";
 
 const ProductDiscount: React.FC = () => {
 	const dispatch = useAppDispatch();
+	const { t } = useTranslation();
 
 	const { productDiscount } = useProducts();
 	// console.log(productDiscount)
@@ -59,7 +61,7 @@ const ProductDiscount: React.FC = () => {
 			<div className="max-w-[1140px] mx-auto">
 				<div className="text-center">
 					<h2 className="text-4xl capitalize font-bold">
-						Sales Product
+						{t('Home_SalesProduct')}
 					</h2>
 				</div>
 				<div>

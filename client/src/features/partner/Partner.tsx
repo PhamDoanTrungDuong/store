@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { fetchPartners } from "../admin/adminSlice";
+import { useTranslation } from "react-i18next";
 
 const Partner: React.FC = () => {
 	const { partners } = useAppSelector((state) => state.admin);
+	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
 	useEffect(() => {
 		dispatch(fetchPartners);
@@ -13,7 +15,7 @@ const Partner: React.FC = () => {
 			<div className="max-w-[1140px] mx-auto">
 				<div className="text-center py-6">
 					<h2 className="text-4xl capitalize font-bold">
-						Collaboration
+						{t('Home_Collaboration')}
 					</h2>
 				</div>
 				<div className="grid md:grid-cols-4 gap-3 px-2 text-center">

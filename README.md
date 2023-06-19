@@ -77,7 +77,9 @@
       [] ~doanh thu (ref thầy Đệ)
       [] ~điểm danh nhận voucher
       [] ~games (maybe)
-
+      [] số lượng sản phẩm khi chọn màu
+      [] đánh giá, bình luận sản phẩm sau khi mua hàng
+      [] điểm danh nhận voucher
  -->
  <!-- LV
       1. Giao diện trang chủ: mục đăng nhập, mục đăng ký, hiển thị các quảng cáo sản phẩm.

@@ -2,27 +2,18 @@ import React from "react";
 import { MdOutlineTravelExplore } from "react-icons/md";
 import { RiCustomerService2Line } from "react-icons/ri";
 import { AiOutlinePhone } from "react-icons/ai";
+import { useTranslation } from "react-i18next";
 
 const Contact: React.FC = () => {
+	const { t } = useTranslation();
 	return (
 		<div className="lg:col-span-2 flex flex-col justify-evenly my-20 max-w-[1130px] mx-auto">
 			<div>
 				<h2 className="text-4xl capitalize font-bold">
-					To make things convenient for site visitors
+					{t('Home_MakeThings')}
 				</h2>
 				<p className="text-xl py-6 text-gray-500">
-					The contact us page on Dija Ouija website includes an image
-					of her product - in this case, the artist work - to catch
-					the eye of site visitors. To the left of an image is a form
-					labeled “Contact Me.” Between the light pink, black and
-					white used on both the image and the form, the artist,
-					Kahdija Murray, has customized the contact page to fit her
-					brand colors. Interestingly, the contact us page not only
-					includes the standard name, email and message fields, but it
-					also includes several social media buttons. Clicking on
-					these buttons takes the user directly to Kahdija social
-					media pages, providing yet another option for viewing her
-					work and getting in touch.
+					{t('Home_Contact')}
 				</p>
 			</div>
 			<div className="grid sm:grid-cols-3 gap-8 py-4">
@@ -32,9 +23,9 @@ const Contact: React.FC = () => {
 					</button>
 					<div className="p-4">
 						<h3 className="py-2 text-xl font-bold">
-							LEADING SERVICES
+							{t('Home_Leading')}
 						</h3>
-						<p>ALL-INCLUSIVE COMPANY FOR 20 YEARS IN-A-ROW</p>
+						<p>{t('Home_AllInclusive')}</p>
 					</div>
 				</div>
 				<div className="flex flex-col lg:flex-row items-center text-center md:text-left">
@@ -43,7 +34,7 @@ const Contact: React.FC = () => {
 					</button>
 					<div className="p-4">
 						<h3 className="py-2 text-xl font-bold">
-							PHONE NUMBER
+							{t('Home_PhoneNumber')}
 						</h3>
 						<div>
 							<p>
@@ -64,9 +55,9 @@ const Contact: React.FC = () => {
 					</button>
 					<div className="p-4">
 						<h3 className="py-2 text-xl font-bold">
-							AROUND THE WORLD
+							{t('Home_Around')}
 						</h3>
-						<p>ALL-INCLUSIVE COMPANY FOR 20 YEARS IN-A-ROW</p>
+						<p>{t('Home_AllInclusive')}</p>
 					</div>
 				</div>
 			</div>
