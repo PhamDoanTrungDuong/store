@@ -5,6 +5,7 @@ import AppTextInput from "../../app/components/AppTextInput";
 import { CardCvcElement, CardExpiryElement, CardNumberElement } from "@stripe/react-stripe-js";
 import { StripeInput } from "./StripeInput";
 import { StripeElementType } from "@stripe/stripe-js";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
 	cardState: { elementError: { [key in StripeElementType]?: string } };
@@ -12,11 +13,13 @@ interface IProps {
 }
 
 const PaymentForm: React.FC<IProps> = ({ cardState, onCardInputChange }) => {
+	const { t } = useTranslation();
+
 	const { control } = useFormContext();
 
 	return (
 		<>
-			<h6 className="text-xl font-medium">Payment method</h6>
+			<h6 className="text-xl font-medium">{t('Check_PayMethod')}</h6>
 			<div>
 				<div className="grid grid-cols-2 py-4">
 					<div className="mr-2">

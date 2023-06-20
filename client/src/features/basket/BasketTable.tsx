@@ -3,6 +3,7 @@ import { useAppSelector, useAppDispatch } from "../../app/store/configureStore";
 import { BasketItem } from "../../app/interfaces/IBasket";
 import { useEffect } from "react";
 import BasketTableItem from "./BasketTableItem";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
 	items: BasketItem[];
@@ -10,6 +11,8 @@ interface IProps {
 }
 
 const BasketTable: React.FC<IProps> = ({ items, isBasket = true }) => {
+	const { t } = useTranslation();
+
 	const { status } = useAppSelector((state) => state.basket);
 	const dispatch = useAppDispatch();
 
@@ -22,19 +25,19 @@ const BasketTable: React.FC<IProps> = ({ items, isBasket = true }) => {
 			<thead>
 				<tr>
 					<th align="left" className="px-5 md:px-20 pb-5">
-						Product
+						{t('Ca_Product')}
 					</th>
 					<th align="center" className="px-5 md:px-10 pb-5">
-						Variations
+						{t('Ca_Var')}
 					</th>
 					<th align="center" className="px-5 md:px-10 pb-5">
-						Price
+						{t('Ca_Price')}
 					</th>
 					<th align="center" className="px-5 md:px-10 pb-5">
-						Quantity
+						{t('Ca_Quantity')}
 					</th>
 					<th align="center" className="px-5 md:px-10 pb-5">
-						Subtotal
+						{t('Ca_Subtotal')}
 					</th>
 					{isBasket && <th align="right"></th>}
 				</tr>

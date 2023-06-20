@@ -29,6 +29,7 @@ import Swal from "sweetalert2";
 import moment from "moment";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
+import { useTranslation } from "react-i18next";
 interface TabPanelProps {
 	children?: React.ReactNode;
 	index: number;
@@ -58,6 +59,8 @@ function a11yProps(index: number) {
 }
 
 const Order: React.FC = () => {
+	const { t } = useTranslation();
+
 	const [value, setValue] = useState(0);
 	const [open, setOpen] = useState(false);
 	const [currentOrder, setCurrentOrder] = useState<any>();
@@ -188,12 +191,12 @@ const Order: React.FC = () => {
 							onChange={handleChange}
 							aria-label="basic tabs example">
 							<Tab
-								label="Pending Orders"
+								label={t('Ord_Pending')}
 								{...a11yProps(0)}
 							/>
-							<Tab label="Confirmed" {...a11yProps(1)} />
-							<Tab label="Delivered" {...a11yProps(2)} />
-							<Tab label="Refunded" {...a11yProps(3)} />
+							<Tab label={t('Ord_Comfirmed')} {...a11yProps(1)} />
+							<Tab label={t('Ord_Delivered')} {...a11yProps(2)} />
+							<Tab label={t('Ord_Refunded')} {...a11yProps(3)} />
 						</Tabs>
 					</Box>
 					<TabPanel value={value} index={0}>
@@ -203,27 +206,27 @@ const Order: React.FC = () => {
 									<td
 										className="px-0 md:px-4 py-3"
 										align="center">
-										Order number
+										{t('Ord_OrdNum')}
 									</td>
 									<td
 										className="px-4 py-3"
 										align="center">
-										Address
+										{t('Ord_Addr')}
 									</td>
 									<td
 										className="px-4 py-3"
 										align="center">
-										City
+										{t('Ord_City')}
 									</td>
 									<td
 										className="px-4 py-3"
 										align="center">
-										Total
+										{t('Ord_Total')}
 									</td>
 									<td
 										className="px-4 py-3"
 										align="center">
-										Order Date
+										{t('Ord_OrdDate')}
 									</td>
 									{/* <td
 										className="px-4 py-3"
@@ -233,7 +236,7 @@ const Order: React.FC = () => {
 									<td
 										className="px-4 py-3"
 										align="center">
-										Delivery Status
+										{t('Ord_Status')}
 									</td>
 									<td
 										className="px-4 py-3"
@@ -301,29 +304,28 @@ const Order: React.FC = () => {
 													true ? (
 													<span className="p-2 bg-red-100 rounded-lg">
 														<span className="text-red-700 font-medium">
-															Cancel
-															Order
+															{t('Ord_RefundStatus')}
 														</span>
 													</span>
 												) : order.deliveryStatus ===
 												  "OnTheWay" ? (
 													<span className="p-2 bg-blue-100 rounded-lg">
 														<span className="text-blue-700 font-medium">
-															Comfirmed
+															{t('Ord_ComfirmedStatus')}
 														</span>
 													</span>
 												) : order.deliveryStatus ===
 												  "ProductDelivered" ? (
 													<span className="p-2 bg-green-100 rounded-lg">
 														<span className="text-green-700 font-medium">
-															Delivered
+															{t('Ord_DeliveryStatus')}
 														</span>
 													</span>
 												) : order.deliveryStatus ===
 												  "PendingConfirm" ? (
 													<span className="p-2 bg-yellow-100 rounded-lg">
 														<span className="text-yellow-700 font-medium">
-															Pending
+															{t('Ord_PendingStatus')}
 														</span>
 													</span>
 												) : (
@@ -423,27 +425,27 @@ const Order: React.FC = () => {
 									<td
 										className="px-0 md:px-4 py-3"
 										align="center">
-										Order number
+										{t('Ord_OrdNum')}
 									</td>
 									<td
 										className="px-4 py-3"
 										align="center">
-										Address
+										{t('Ord_Addr')}
 									</td>
 									<td
 										className="px-4 py-3"
 										align="center">
-										City
+										{t('Ord_City')}
 									</td>
 									<td
 										className="px-4 py-3"
 										align="center">
-										Total
+										{t('Ord_Total')}
 									</td>
 									<td
 										className="px-4 py-3"
 										align="center">
-										Order Date
+										{t('Ord_OrdDate')}
 									</td>
 									{/* <td
 										className="px-4 py-3"
@@ -453,7 +455,7 @@ const Order: React.FC = () => {
 									<td
 										className="px-4 py-3"
 										align="center">
-										Delivery Status
+										{t('Ord_Status')}
 									</td>
 									<td
 										className="px-4 py-3"
@@ -521,29 +523,28 @@ const Order: React.FC = () => {
 													true ? (
 													<span className="p-2 bg-red-100 rounded-lg">
 														<span className="text-red-700 font-medium">
-															Cancel
-															Order
+															{t('Ord_RefundStatus')}
 														</span>
 													</span>
 												) : order.deliveryStatus ===
 												  "OnTheWay" ? (
 													<span className="p-2 bg-blue-100 rounded-lg">
 														<span className="text-blue-700 font-medium">
-															Comfirmed
+															{t('Ord_ComfirmedStatus')}
 														</span>
 													</span>
 												) : order.deliveryStatus ===
 												  "ProductDelivered" ? (
 													<span className="p-2 bg-green-100 rounded-lg">
 														<span className="text-green-700 font-medium">
-															Delivered
+															{t('Ord_DeliveryStatus')}
 														</span>
 													</span>
 												) : order.deliveryStatus ===
 												  "PendingConfirm" ? (
 													<span className="p-2 bg-yellow-100 rounded-lg">
 														<span className="text-yellow-700 font-medium">
-															Pending
+															{t('Ord_PendingStatus')}
 														</span>
 													</span>
 												) : (
@@ -584,27 +585,27 @@ const Order: React.FC = () => {
 									<td
 										align="center"
 										className="px-0 md:px-4 py-3">
-										Order number
+										{t('Ord_OrdNum')}
 									</td>
 									<td
 										className="px-4 py-3"
 										align="center">
-										Address
+										{t('Ord_Addr')}
 									</td>
 									<td
 										className="px-4 py-3"
 										align="center">
-										City
+										{t('Ord_City')}
 									</td>
 									<td
 										className="px-4 py-3"
 										align="center">
-										Total
+										{t('Ord_Total')}
 									</td>
 									<td
 										className="px-4 py-3"
 										align="center">
-										Order Date
+										{t('Ord_OrdDate')}
 									</td>
 									{/* <td
 										className="px-4 py-3"
@@ -614,7 +615,7 @@ const Order: React.FC = () => {
 									<td
 										className="px-4 py-3"
 										align="center">
-										Delivery Status
+										{t('Ord_Status')}
 									</td>
 									<td
 										className="px-4 py-3"
@@ -682,29 +683,28 @@ const Order: React.FC = () => {
 													true ? (
 													<span className="p-2 bg-red-100 rounded-lg">
 														<span className="text-red-700 font-medium">
-															Cancel
-															Order
+															{t('Ord_RefundStatus')}
 														</span>
 													</span>
 												) : order.deliveryStatus ===
 												  "OnTheWay" ? (
 													<span className="p-2 bg-blue-100 rounded-lg">
 														<span className="text-blue-700 font-medium">
-															Comfirmed
+															{t('Ord_ComfirmedStatus')}
 														</span>
 													</span>
 												) : order.deliveryStatus ===
 												  "ProductDelivered" ? (
 													<span className="p-2 bg-green-100 rounded-lg">
 														<span className="text-green-700 font-medium">
-															Delivered
+															{t('Ord_DeliveryStatus')}
 														</span>
 													</span>
 												) : order.deliveryStatus ===
 												  "PendingConfirm" ? (
 													<span className="p-2 bg-yellow-100 rounded-lg">
 														<span className="text-yellow-700 font-medium">
-															Pending
+															{t('Ord_PendingStatus')}
 														</span>
 													</span>
 												) : (
@@ -745,17 +745,17 @@ const Order: React.FC = () => {
 									<td
 										align="center"
 										className="px-0 md:px-4 py-3">
-										Order number
+										{t('Ord_OrdNum')}
 									</td>
 									<td
 										className="px-4 py-3"
 										align="center">
-										Total
+										{t('Ord_Total')}
 									</td>
 									<td
 										className="px-4 py-3"
 										align="center">
-										Order Date
+										{t('Ord_OrdDate')}
 									</td>
 									{/* <td
 										className="px-4 py-3"
@@ -765,7 +765,7 @@ const Order: React.FC = () => {
 									<td
 										className="px-4 py-3"
 										align="center">
-										Delivery Status
+										{t('Ord_Status')}
 									</td>
 									<td
 										className="px-4 py-3"
@@ -817,29 +817,28 @@ const Order: React.FC = () => {
 													true ? (
 													<span className="p-2 bg-red-100 rounded-lg">
 														<span className="text-red-700 font-medium">
-															Cancel
-															Order
+															{t('Ord_RefundStatus')}
 														</span>
 													</span>
 												) : order.deliveryStatus ===
 												  "OnTheWay" ? (
 													<span className="p-2 bg-blue-100 rounded-lg">
 														<span className="text-blue-700 font-medium">
-															Comfirmed
+															{t('Ord_ComfirmedStatus')}
 														</span>
 													</span>
 												) : order.deliveryStatus ===
 												  "ProductDelivered" ? (
 													<span className="p-2 bg-green-100 rounded-lg">
 														<span className="text-green-700 font-medium">
-															Delivered
+															{t('Ord_DeliveryStatus')}
 														</span>
 													</span>
 												) : order.deliveryStatus ===
 												  "PendingConfirm" ? (
 													<span className="p-2 bg-yellow-100 rounded-lg">
 														<span className="text-yellow-700 font-medium">
-															Pending
+															{t('Ord_PendingStatus')}
 														</span>
 													</span>
 												) : (
@@ -960,7 +959,7 @@ const Order: React.FC = () => {
 								)}
 							</tbody>
 						</table>
-						Total: {currencyFormat(momoOrderQuery.amount)}
+						{t('Ord_Total')}: {currencyFormat(momoOrderQuery.amount)}
 					</DialogContent>
 					<DialogActions>
 						<Button onClick={handleClose}>Disagree</Button>

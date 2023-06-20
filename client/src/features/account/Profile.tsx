@@ -11,14 +11,17 @@ import ProfileForm from "./ProfileForm";
 import Loading from "../../app/layout/Loading";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationProfile } from "./validationProfile";
+import { useTranslation } from "react-i18next";
 
 const Profile: React.FC = () => {
+	const { t } = useTranslation();
+
 	const { user } = useAppSelector((state) => state.account);
 	const [loading, setLoading] = useState(false);
 
 	const methods = useForm({
 		mode: "all",
-		resolver: yupResolver<any>(validationProfile)
+		resolver: yupResolver<any>(validationProfile),
 	});
 
 	useEffect(() => {
@@ -36,10 +39,10 @@ const Profile: React.FC = () => {
 	async function handleSubmitData(data: FieldValues) {
 		try {
 			if (data) {
-				setLoading(true)
-				let response = await agent.Profile.updateProfile(data)
+				setLoading(true);
+				let response = await agent.Profile.updateProfile(data);
 				if (response) {
-					setLoading(false)
+					setLoading(false);
 					Swal.fire({
 						icon: "success",
 						title: "Update Profile Successful",
@@ -98,7 +101,7 @@ const Profile: React.FC = () => {
 					<button
 						type="submit"
 						className="bg-indigo-600 border border-indigo-600 text-white px-4 p-2 w-full rounded-xl shadow-xl mt-10 hover:shadow-2xl my-2 hover:bg-transparent hover:text-indigo-600 duration-200">
-						Save Changes
+						{t("Pro_Save")}
 					</button>
 				</form>
 			</FormProvider>

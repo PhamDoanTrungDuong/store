@@ -119,19 +119,19 @@ const Basket: React.FC = () => {
 					<BasketSumary />
 					{selectedVoucher !== 0 ?
 						<div className="p-3 border border-orange-400 mt-4">
-							<p className="text-xl">Discount for basket: <span className="font-bold">{selectedVoucher.value}%</span></p>
+							<p className="text-xl">{t('Ca_Dis')}: <span className="font-bold">{selectedVoucher.value}%</span></p>
 						</div> : <div></div>
 					}
 					<div className="my-3 w-full">
 						<button
 							className="bg-orange-600 border border-orange-600 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-orange-600 duration-200 w-full"
 							onClick={handleOpen}>
-							Vouchers
+							{t('Ca_Voucher')}
 						</button>
 					</div>
 					<div className="mt-5">
 						<h1 className="text-lg text-center text-gray-400 font-bold italic">
-							Please choose your payment methods!!!
+							{t('Ca_Methods')}
 						</h1>
 						<div className="flex justify-between gap-3">
 							<div className="w-[50%]">
@@ -167,7 +167,7 @@ const Basket: React.FC = () => {
 								className="w-full">
 								<button className="bg-indigo-400 border border-indigo-400 text-white p-2 w-full rounded-lg shadow-lg my-2 hover:scale-105 hover:shadow-xl duration-200 flex justify-center items-center gap-2">
 									<p className="pt-1 font-bold italic">
-										Checkout
+										{t('Ca_Checkout')}
 									</p>
 								</button>
 							</Link>
@@ -206,8 +206,8 @@ const Basket: React.FC = () => {
 						})}
 					</div>
 					<div className="flex justify-end gap-4">
-						<button className="c-btn" onClick={() => handleClose()}>Cancel</button>
-						<button className="bg-orange-600 border border-orange-600 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-orange-600 duration-200" onClick={handleSelectedVoucher}>Aplly</button>
+						<button className="c-btn" onClick={() => handleClose()}>{t('Ca_Cancel')}</button>
+						<button className="bg-orange-600 border border-orange-600 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-orange-600 duration-200" onClick={handleSelectedVoucher}>{t('Ca_Apply')}</button>
 					</div>
 				</Box>
 			</Modal>

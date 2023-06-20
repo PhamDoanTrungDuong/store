@@ -24,10 +24,13 @@ import Swal from "sweetalert2";
 import { setStateUser } from "../account/accountSlice";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { setVoucherNull } from "../admin/adminSlice";
+import { useTranslation } from "react-i18next";
 
-const steps = ["Shipping address", "Review your order", "Payment details"];
 
 const Checkout: React.FC = () => {
+	const { t } = useTranslation();
+	const steps = [t('Check_ShippingAddr'), t('Check_Review'), t('Check_PaymentDetail')];
+
 	const { selectedVoucher } = useAppSelector((state) => state.admin);
 
 	const [activeStep, setActiveStep] = useState(0);
@@ -214,7 +217,7 @@ const Checkout: React.FC = () => {
 							p: { xs: 2, md: 3 },
 						}}>
 						<h1 className="text-3xl font-bold uppercase text-center">
-							Checkout
+							{t('Check_Checkout')}
 						</h1>
 						<Stepper
 							activeStep={activeStep}
@@ -236,37 +239,11 @@ const Checkout: React.FC = () => {
 									{paymentSucceeded ? (
 										<>
 											<h1 className="text-2xl my-2">
-												Your
-												order
-												number
-												is #
+												{t('Check_YourOrder')} #
 												{
 													orderNumber
 												}
-												. We
-												have
-												not
-												emailed
-												your
-												order
-												confirmation,
-												and
-												will
-												not
-												send
-												you
-												an
-												update
-												when
-												your
-												order
-												has
-												shipped
-												as
-												this
-												is a
-												fake
-												store
+												. {t('Check_Noti')}
 											</h1>
 											<div className="w-full flex justify-end ">
 												<div className="flex justify-center items-center gap-2">
@@ -281,19 +258,14 @@ const Checkout: React.FC = () => {
 																	20
 																}
 															/>{" "}
-															Back
-															to
-															Catalog
+															{t('Check_BackCat')}
 														</Link>
 													</button>
 													<button className="mt-2 px-4 py-2 rounded-xl text-white bg-indigo-600 border border-indigo-600 hover:text-indigo-600 hover:bg-transparent duration-300">
 														<Link
 															to="/orders"
 															className="flex items-center gap-2 font-medium">
-															Go
-															to
-															your
-															Order{" "}
+															{t('Check_GoOrder')}{" "}
 															<AiOutlineArrowRight
 																className="font-bold"
 																size={
@@ -338,7 +310,7 @@ const Checkout: React.FC = () => {
 													mt: 3,
 													ml: 1,
 												}}>
-												Back
+												{t('Check_Back')}
 											</Button>
 										)}
 										<LoadingButton
@@ -355,8 +327,8 @@ const Checkout: React.FC = () => {
 											{activeStep ===
 											steps.length -
 												1
-												? "Place order"
-												: "Next"}
+												? t('Check_PlaceOrder')
+												: t('Check_Next')}
 										</LoadingButton>
 									</Box>
 								</form>

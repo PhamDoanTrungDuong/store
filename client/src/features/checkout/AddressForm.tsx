@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import { useTranslation } from "react-i18next";
 
 const style = {
 	position: "absolute" as "absolute",
@@ -26,6 +27,8 @@ interface IProps {
 	handleSelected: (address: any) => void;
 }
 const AddressForm: React.FC<IProps> = (props) => {
+	const { t } = useTranslation();
+
 	const { control, formState } = useFormContext();
 	const [open, setOpen] = useState(false);
 	const handleOpen = () => setOpen(true);
@@ -124,37 +127,37 @@ const AddressForm: React.FC<IProps> = (props) => {
 			<div className="flex justify-between items-center cursor-pointer">
 				<div></div>
 				<div className="c-btn" onClick={handleOpen}>
-					Choose Another Address
+					{t('Check_ChooseAddr')}
 				</div>
 			</div>
-			<h6 className="text-xl font-medium my-2">New Shipping address</h6>
+			<h6 className="text-xl font-medium my-2">{t('Check_NewShipAddre')}</h6>
 			<div>
 				<div className="py-4">
 					<AppTextInput
 						control={control}
 						name="fullName"
-						label="Full Name"
+						label={t('Check_Fullname')}
 					/>
 				</div>
 				<div className="py-4">
 					<AppTextInput
 						control={control}
 						name="phoneNumber"
-						label="Phone Number"
+						label={t('Check_Phone')}
 					/>
 				</div>
 				<div className="py-4">
 					<AppTextInput
 						control={control}
 						name="address1"
-						label="Address 1"
+						label={t('Check_Addr1')}
 					/>
 				</div>
 				<div className="py-4">
 					<AppTextInput
 						control={control}
 						name="address2"
-						label="Address 2"
+						label={t('Check_Addr2')}
 					/>
 				</div>
 				<div className="grid grid-cols-2 py-4">
@@ -162,14 +165,14 @@ const AddressForm: React.FC<IProps> = (props) => {
 						<AppTextInput
 							control={control}
 							name="city"
-							label="City"
+							label={t('Check_City')}
 						/>
 					</div>
 					<div className="pl-2">
 						<AppTextInput
 							control={control}
 							name="state"
-							label="State"
+							label={t('Check_State')}
 						/>
 					</div>
 				</div>
@@ -185,14 +188,14 @@ const AddressForm: React.FC<IProps> = (props) => {
 						<AppTextInput
 							control={control}
 							name="country"
-							label="Country"
+							label={t('Check_Country')}
 						/>
 					</div>
 				</div>
 				<div>
 					<AppCheckbox
 						name="saveAddress"
-						label="Save this as the default address"
+						label={t('Check_Save')}
 						control={control}
 						disabled={!formState.isDirty}
 					/>
