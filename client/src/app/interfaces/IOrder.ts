@@ -36,6 +36,7 @@ export interface IOrder {
   orderId: string;
   paymentIntentId: string;
   discount: number;
+  currentShipperId: number;
 }
 
 export interface OrdersParams {

@@ -84,7 +84,7 @@
       [x] giao diện admin, mod
       [] đăng nhập giao hàng
       [] xác nhận giao hàng
-      [] thông tin giao hàng
+      [x] thông tin giao hàng
  -->
  <!-- TLTN
       1. Giao diện trang chủ: mục đăng nhập, mục đăng ký, hiển thị các quảng cáo sản phẩm.

@@ -9,12 +9,12 @@ import { FaHashtag } from "react-icons/fa";
 import { RiTruckLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import PDFPrint from "../../app/components/PDFPrint";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
 import { currencyFormat } from "../../app/utilities/util";
 import agent from "../../app/api/agent";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
-import { setOrdLoad } from "../admin/adminSlice";
+import { fetchShipper, setOrdLoad } from "../admin/adminSlice";
 import Swal from "sweetalert2";
 
 interface IProps {
@@ -23,13 +23,22 @@ interface IProps {
 	isAdmin: boolean;
 }
 
+
 const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin }) => {
 	const dispatch = useAppDispatch();
 	const { user } = useAppSelector((state) => state.account);
+	const { shipper } = useAppSelector((state) => state.admin);
+
+	console.log(shipper) 
 
 	const subtotal =
 		order.orderItems.reduce((sum, item) => sum + item.quantity * item.price, 0) ?? 0;
 	const steps = ["Order Placed", "On The Way", "Product Delivered"];
+
+	useEffect(() => {
+		dispatch(fetchShipper(+order.currentShipperId));
+	}, [dispatch, order.currentShipperId])
+	
 	const [openPdf, setOpenPdf] = useState<boolean>(false);
 	const handlePDF = () => {
 		setOpenPdf(true);
@@ -40,7 +49,7 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin }) =
 	};
 
 	if (openPdf) {
-		return <PDFPrint cancelExport={cancelExport} order={order} />;
+		return <PDFPrint cancelExport={cancelExport} order={order} shipper={shipper} />;
 	}
 
 	const handleShipper = (idOrder: number, deliveryOrder: string) => {
@@ -273,6 +282,22 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin }) =
 							</span>{" "}
 							{order.shippingAddress.address1}
 						</div>
+						{ (order.deliveryStatus !== "PendingConfirm" || order.isRefund)  && (
+							<>
+								<div className="my-3">
+									<span className="font-bold text-base mr-4">
+										Shipper Name:{" "}
+									</span>{" "}
+									{shipper.name}
+								</div>
+								<div className="my-3">
+									<span className="font-bold text-base mr-4">
+										Shipper Phone Number:{" "}
+									</span>{" "}
+									{shipper.phone}
+								</div>
+							</>
+						)}
 					</div>
 				</div>
 				<div className="basis-2/5">

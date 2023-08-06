@@ -235,6 +235,10 @@ const Admin = {
     updateSize: (size: any) => requests.putForm('admin/update-size', createFormData(size)),
     deleteSize: (id: number) => requests.delete(`admin/delete-size/${id}`),
 
+    //Shipper
+    getShipper: (id: number) => requests.get(`admin/get-shipper/${id}`),
+
+
 }
 
 const Profile = {

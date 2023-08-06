@@ -745,5 +745,10 @@ namespace API.Controllers
                   return BadRequest(new ProblemDetails { Title = "Can't delete size" });
             }
 
+            [HttpGet("get-shipper/{id}")]
+            public async Task<Shipper> GetShipper(int id) {
+                  return await _context.Shippers.FindAsync(id);
+            }
+
       }
 }

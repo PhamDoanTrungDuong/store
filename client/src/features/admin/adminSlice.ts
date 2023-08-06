@@ -35,6 +35,7 @@ export interface AdminState {
       lessInteract: [];
       colors: [];
       sizes: [];
+      shipper: any;
 }
 
 const initParams = () => {
@@ -70,7 +71,8 @@ const initialState: AdminState = {
       bestSeller: [],
       lessInteract: [],
       colors: [],
-      sizes: []
+      sizes: [],
+      shipper: null
 }
 
 const getCategoriesAxiosParams = (categoriesParams: CategoriesParams) => {
@@ -236,6 +238,17 @@ export const fetchSize = createAsyncThunk(
       }
 )
 
+export const fetchShipper = createAsyncThunk(
+      "admin/fetchShipper",
+      async (id: number, thunkAPI) => {
+            try {
+                  return await agent.Admin.getShipper(+id);
+            } catch( error: any) {
+                  console.log(error)
+            }
+      }
+)
+
 export const adminSlice = createSlice({
     name: 'admin',
     initialState,
@@ -337,6 +350,9 @@ export const adminSlice = createSlice({
       })
       builder.addCase(fetchSize.fulfilled, (state, action) => {
             state.sizes = action.payload
+      })
+      builder.addCase(fetchShipper.fulfilled, (state, action) => {
+            state.shipper = action.payload
       })
     }
 })

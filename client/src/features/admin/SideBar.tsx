@@ -141,9 +141,6 @@ const SideBar: React.FC = () => {
 		},
 	];
 
-	console.log(user)
-	console.log(Menus)
-
 	return (
 		<div
 			className={` ${

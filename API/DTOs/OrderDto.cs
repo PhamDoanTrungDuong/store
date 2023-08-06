@@ -31,5 +31,7 @@ namespace API.DTOs
         public string paymentIntentId { get; set; }
         public double Discount { get; set; }
 
+        public int CurrentShipperId { get; set; }
+
     }
 }

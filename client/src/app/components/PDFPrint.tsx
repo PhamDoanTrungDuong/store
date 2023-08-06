@@ -8,8 +8,9 @@ import { currencyFormat } from "../utilities/util";
 interface IProps {
 	cancelExport: () => void;
 	order: IOrder;
+	shipper?: any;
 }
-const PDFPrint: React.FC<IProps> = ({ cancelExport, order }) => {
+const PDFPrint: React.FC<IProps> = ({ cancelExport, order, shipper }) => {
 	let dateTime = new Date();
 	const componentRef = useRef<any>();
 	const handlePrint = useReactToPrint({
@@ -29,8 +30,8 @@ const PDFPrint: React.FC<IProps> = ({ cancelExport, order }) => {
 							---------------------------------------------------------------------------------
 						</p>
 						<h3 className="flex justify-center">
-							{moment(dateTime.getDay()).format(
-								"MMMM Do YYYY"
+							{moment(order.orderDate).format(
+								"MMMM Do YYYY , h:mm:ss a"
 							)}
 						</h3>
 						<div className="p-4">
@@ -64,8 +65,20 @@ const PDFPrint: React.FC<IProps> = ({ cancelExport, order }) => {
 								</span>
 								:{" "}
 								{moment(order.orderDate).format(
-									"MMMM Do YYYY"
+									"MMMM Do YYYY, h:mm:ss a"
 								)}
+							</h3>
+							<h3 className="my-1">
+								<span className="text-lg font-medium">
+									Shipper Name
+								</span>
+								: {shipper.name}
+							</h3>
+							<h3 className="my-1">
+								<span className="text-lg font-medium">
+									Shipper Phone Number
+								</span>
+								: {shipper.phone}
 							</h3>
 						</div>
 						<div>

@@ -27,6 +27,7 @@ namespace API.Extensions
                     orderId = order.orderId,
                     paymentIntentId = order.PaymentIntentId,
                     Discount = order.Discount,
+                    CurrentShipperId = order.CurrentShipperId,
                     OrderItems = order.OrderItems.Select(item => new OrderItemDto
                     {
                         ProductId = item.ItemOrdered.ProductId,
