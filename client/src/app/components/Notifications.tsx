@@ -4,8 +4,11 @@ import { fetchCommentsAsync, setComLoad } from "../../features/admin/adminSlice"
 import { useAppSelector, useAppDispatch } from "../store/configureStore";
 import moment from "moment";
 import agent from "../api/agent";
+import { useTranslation } from "react-i18next";
 
 const Notifications: React.FC = () => {
+	const { t } = useTranslation();
+
 	const [isOpen, setIsOpen] = useState(false);
 	const handleOpen = () => {
 		setIsOpen(!isOpen);
@@ -54,7 +57,7 @@ const Notifications: React.FC = () => {
 					!isOpen ? "hidden" : ""
 				} duration-300 absolute right-12 top-16 text-black w-full max-w-sm bg-white divide-y shadow dark:bg-white divide-indigo-600 rounded-xl h-[400px] overflow-hidden overflow-y-scroll`}>
 				<div className="block py-2 px-4 font-medium text-center bg-indigo-600 text-white rounded-t-xl">
-					Notifications
+					{t('Noti_Notify')}
 				</div>
 				<div className="divide-y divide-gray-200">
 					{comments

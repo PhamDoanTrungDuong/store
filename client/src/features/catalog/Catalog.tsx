@@ -83,12 +83,12 @@ const Catalog: React.FC = () => {
 	const { status } = useAppSelector((state) => state.basket);
 
 	const dispatch = useAppDispatch();
-
+	var titleSwal = t('Sw_AddedSuccess');
 	useEffect(() => {
 		if (status === "addSuccess") {
 			Swal.fire({
 				icon: "success",
-				title: "Added Product Successful",
+				title: titleSwal,
 				showConfirmButton: false,
 				timer: 1500,
 			});
@@ -96,7 +96,7 @@ const Catalog: React.FC = () => {
 		return () => {
 			dispatch(setStateBasket());
 		};
-	}, [dispatch, status]);
+	}, [dispatch, status, titleSwal]);
 
 	if (!filtersLoaded) return <Loading message="Loading Catalog..." />;
 
@@ -217,7 +217,7 @@ const Catalog: React.FC = () => {
 							<Link to="/">
 								<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
 									<AiOutlineHome size={20} />
-									Home
+									{t('Cat_Home')}
 								</h1>
 							</Link>
 							<div className="mx-2">
@@ -226,7 +226,7 @@ const Catalog: React.FC = () => {
 							<Link to="/catalog">
 								<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
 									<BiCategoryAlt size={20} />
-									Catalog
+									{t('Cat_Catalog')}
 								</h1>
 							</Link>
 						</div>

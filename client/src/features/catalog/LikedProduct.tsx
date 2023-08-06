@@ -8,8 +8,11 @@ import { addBasketItemAsync, setStateBasket } from "../basket/basketSlice";
 import { Tooltip } from "@mui/material";
 import Swal from "sweetalert2";
 import agent from "../../app/api/agent";
+import { useTranslation } from "react-i18next";
 
 const LikedProduct: React.FC = () => {
+	const { t } = useTranslation();
+
 	const { status } = useAppSelector((state) => state.basket);
 
 	const [userLikedProduct, setUserLikedProduct] = useState<any>();
@@ -29,12 +32,13 @@ const LikedProduct: React.FC = () => {
 	const handleLike = async (productId: number) => {
 		await agent.Like.addLike(productId);
 	};
+	var titleSwal = t('Sw_AddedSuccess');
 
 	useEffect(() => {
 		if (status === "addSuccess") {
 			Swal.fire({
 				icon: "success",
-				title: "Added Product Successful",
+				title: titleSwal,
 				showConfirmButton: false,
 				timer: 1500,
 			});
@@ -42,14 +46,14 @@ const LikedProduct: React.FC = () => {
 		return () => {
 			dispatch(setStateBasket());
 		};
-	}, [dispatch, status]);
+	}, [dispatch, status, titleSwal]);
 
 	return (
 		<div className="w-full mb-32 mt-10">
 			<div className="max-w-[1140px] h-screen mx-auto">
 				<div className="text-center">
 					<h2 className="text-4xl capitalize font-bold">
-						Liked Product
+						{t('Liked_Product')}
 					</h2>
 				</div>
 				<div className="my-6 grid sm:grid-cols-3 md:grid-cols-4 gap-4">

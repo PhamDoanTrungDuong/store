@@ -41,12 +41,13 @@ const ProductDiscount: React.FC = () => {
 			});
 		});
 	};
+	var titleSwal = t('Sw_AddedSuccess');
 
 	useEffect(() => {
 		if (status === "addSuccess") {
 			Swal.fire({
 				icon: "success",
-				title: "Added Product Successful",
+				title: titleSwal,
 				showConfirmButton: false,
 				timer: 1500,
 			});
@@ -54,7 +55,7 @@ const ProductDiscount: React.FC = () => {
 		return () => {
 			dispatch(setStateBasket());
 		};
-	}, [dispatch, status]);
+	}, [dispatch, status, titleSwal]);
 
 	return (
 		<div className="w-full mb-32 mt-10">

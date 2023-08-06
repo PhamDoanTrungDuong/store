@@ -5,8 +5,11 @@ import { IoIosArrowForward } from "react-icons/io";
 import { AiOutlineHome } from "react-icons/ai";
 import { BiCategoryAlt } from "react-icons/bi";
 import ShippingAddressForm from "./ShippingAddressForm";
+import { useTranslation } from "react-i18next";
 
 const ShippingAddress: React.FC = () => {
+	const { t } = useTranslation();
+
 	const [addresses, setAddresses] = useState<any>([]);
 	const [editMode, setEditMode] = useState(false);
 	const [selectedAddress, setSelectedAddress] = useState<any>(undefined);
@@ -42,7 +45,7 @@ const ShippingAddress: React.FC = () => {
 				<Link to="/">
 					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
 						<AiOutlineHome size={20} />
-						Home
+						{t('Ship_Home')}
 					</h1>
 				</Link>
 				<div className="mx-2">
@@ -51,7 +54,7 @@ const ShippingAddress: React.FC = () => {
 				<Link to="/catalog">
 					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
 						<BiCategoryAlt size={20} />
-						Shipping Addresses
+						{t('Ship_ShipAddr')}
 					</h1>
 				</Link>
 			</div>
@@ -59,11 +62,11 @@ const ShippingAddress: React.FC = () => {
 				<button
 					onClick={() => setEditMode(true)}
 					className="border text-white px-6 py-1 border-indigo-600 bg-indigo-600 text-lg rounded-lg hover:text-indigo-600 hover:bg-transparent duration-200 ease-in-out ">
-					Add new Address
+					{t('Ship_ShipAdd')}
 				</button>
 			</div>
 			{addresses.length === 0 ? (
-				<h1>None Address Has Create</h1>
+				<h1>{t('Ship_None')}</h1>
 			) : (
 				<>
 					<div className="max-h-[800px] overflow-y-scroll">
@@ -79,25 +82,25 @@ const ShippingAddress: React.FC = () => {
 									className={`flex flex-col gap-5 my-3 p-4 border rounded-xl hover:border-gray-600 duration-100 cursor-pointer border-gray-300 `}>
 									<p>
 										<span className="text-lg font-bold">
-											Full Name
+										{t('Ship_FullName')}
 										</span>
 										: {item.fullName}
 									</p>
 									<p>
 										<span className="text-lg font-bold">
-											Phone Number
+										{t('Ship_PN')}
 										</span>
 										: {item.phoneNumber}
 									</p>
 									<p>
 										<span className="text-lg font-bold">
-											Address 1
+										{t('Ship_Addr1')}
 										</span>
 										: {item.address1}
 									</p>
 									<p>
 										<span className="text-lg font-bold">
-											Address 2
+										{t('Ship_Addr2')}
 										</span>
 										: {item.address2}
 									</p>

@@ -22,10 +22,13 @@ import Swal from "sweetalert2";
 import { setStateUser } from "../account/accountSlice";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { setVoucherNull } from "../admin/adminSlice";
+import { useTranslation } from "react-i18next";
 
 const steps = ["Shipping address", "Review your order"];
 
 const NormalCheckout: React.FC = () => {
+	const { t } = useTranslation();
+
 	const [activeStep, setActiveStep] = useState(0);
 	const [orderNumber, setOrderNumber] = useState(0);
 	const [loading, setLoading] = useState(false);
@@ -49,7 +52,7 @@ const NormalCheckout: React.FC = () => {
 		if (status === "loginSuccess") {
 			Swal.fire({
 				icon: "success",
-				title: "Your has been Login",
+				title: t("Swal_login") as string,
 				showConfirmButton: false,
 				timer: 1500,
 			});
@@ -57,24 +60,30 @@ const NormalCheckout: React.FC = () => {
 		return () => {
 			dispatch(setStateUser());
 		};
-	}, [dispatch, status]);
+	}, [dispatch, status, t]);
 
 	// For Choose Address
 	const [addresses, setAddresses] = useState<any>([]);
 	useEffect(() => {
 		agent.Account.userAddresses().then((res) => {
-			setAddresses(res)
-		})
-	}, [])
+			setAddresses(res);
+		});
+	}, []);
 
 	const handleSelected = (address: any): void => {
-		setSelectedAddress(address)
-	}
+		setSelectedAddress(address);
+	};
 
 	function getStepContent(step: number) {
 		switch (step) {
 			case 0:
-				return <AddressForm addresses={addresses} handleSelected={handleSelected} selectedAddress={selectedAddress}/>;
+				return (
+					<AddressForm
+						addresses={addresses}
+						handleSelected={handleSelected}
+						selectedAddress={selectedAddress}
+					/>
+				);
 			case 1:
 				return <Review />;
 			default:
@@ -83,18 +92,18 @@ const NormalCheckout: React.FC = () => {
 	}
 
 	useEffect(() => {
-		if(selectedAddress === undefined){
+		if (selectedAddress === undefined) {
 			agent.Account.fetchAddress().then((res) => {
 				// console.log(methods);
-			if (res) {
-				methods.reset({
-					...methods.getValues(),
-					...res,
+				if (res) {
+					methods.reset({
+						...methods.getValues(),
+						...res,
 						saveAddress: false,
 					});
 				}
 			});
-		}else{
+		} else {
 			methods.reset({
 				...methods.getValues(),
 				...selectedAddress,
@@ -113,7 +122,7 @@ const NormalCheckout: React.FC = () => {
 				const orderNumber = await agent.Orders.create({
 					saveAddress,
 					shippingAddress,
-					discount
+					discount,
 				});
 				setOrderNumber(orderNumber);
 				setPaymentSucceeded(true);
@@ -147,9 +156,7 @@ const NormalCheckout: React.FC = () => {
 
 	const submitDisabled = (): boolean => {
 		if (activeStep === steps.length - 1) {
-			return (
-				!methods.formState.isValid
-			);
+			return !methods.formState.isValid;
 		} else {
 			return !methods.formState.isValid;
 		}

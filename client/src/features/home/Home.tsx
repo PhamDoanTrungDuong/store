@@ -10,8 +10,11 @@ import Advertise from "../Advertise/Advertise";
 import Contact from "../contact/Contact";
 import Partner from "../partner/Partner";
 import ProductDiscount from "./ProductDiscount";
+import { useTranslation } from "react-i18next";
 
 const Home: React.FC = () => {
+	const { t } = useTranslation();
+
 	var settings = {
 		dots: true,
 		infinite: true,
@@ -36,7 +39,7 @@ const Home: React.FC = () => {
 		if (status === "loginSuccess") {
 			Swal.fire({
 				icon: "success",
-				title: "Your has been Login",
+				title: t('Sw_Login') as string,
 				showConfirmButton: false,
 				timer: 1500,
 			});
@@ -44,7 +47,7 @@ const Home: React.FC = () => {
 		if (status === "logoutSuccess") {
 			Swal.fire({
 				icon: "warning",
-				title: "Your has been Logout",
+				title: t('Sw_Logout') as string,
 				showConfirmButton: false,
 				timer: 1500,
 			});
@@ -52,7 +55,7 @@ const Home: React.FC = () => {
 		return () => {
 			dispatch(setStateUser());
 		};
-	}, [dispatch, status]);
+	}, [dispatch, status, t]);
 
 	return (
 		<div className="max-w-[1140px] mx-auto mt-2">

@@ -11,13 +11,15 @@ import { Link } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import { AiOutlineHome } from "react-icons/ai";
 import { BiCategoryAlt } from "react-icons/bi";
-
+import { useTranslation } from "react-i18next";
 interface IProps {
 	address?: any;
 	cancelEdit: () => void;
 }
 
 const ShippingAddressForm: React.FC<IProps> = ({ address, cancelEdit }) => {
+	const { t } = useTranslation();
+
 	// console.log(address)
 	const {
 		control,
@@ -39,7 +41,7 @@ const ShippingAddressForm: React.FC<IProps> = ({ address, cancelEdit }) => {
         await agent.Account.updateAddress(data).then(() => {
           Swal.fire({
             icon: "success",
-            title: "Update Address Successful",
+            title: t('Sw_UpdateAddr') as string,
             showConfirmButton: false,
             timer: 1500,
           });
@@ -48,7 +50,7 @@ const ShippingAddressForm: React.FC<IProps> = ({ address, cancelEdit }) => {
         await agent.Account.newAddress(data).then(() => {
           Swal.fire({
             icon: "success",
-            title: "Create Address Successful",
+            title: t('Sw_CreateAddr') as string,
             showConfirmButton: false,
             timer: 1500,
           });
@@ -64,7 +66,7 @@ const ShippingAddressForm: React.FC<IProps> = ({ address, cancelEdit }) => {
 		agent.Account.deleteAddress(id).then(() => {
 			Swal.fire({
 			  icon: "success",
-			  title: "Delete Address Successful",
+			  title: t('Sw_DelAddr') as string,
 			  showConfirmButton: false,
 			  timer: 1500,
 			});
@@ -77,7 +79,7 @@ const ShippingAddressForm: React.FC<IProps> = ({ address, cancelEdit }) => {
 				<Link to="/">
 					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
 						<AiOutlineHome size={20} />
-						Home
+						{t('Ship_Home')}
 					</h1>
 				</Link>
 				<div className="mx-2">
@@ -86,7 +88,7 @@ const ShippingAddressForm: React.FC<IProps> = ({ address, cancelEdit }) => {
 				<Link to="/catalog">
 					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
 						<BiCategoryAlt size={20} />
-						Shipping Addresse Form
+						{t('Ship_ShippAddrForm')}
 					</h1>
 				</Link>
 			</div>
@@ -96,56 +98,56 @@ const ShippingAddressForm: React.FC<IProps> = ({ address, cancelEdit }) => {
 						<AppTextInput
 							control={control}
 							name="fullName"
-							label="Full Name"
+							label={t('Ship_FullName')}
 						/>
 					</Grid>
 					<Grid item xs={12} sm={12}>
 						<AppTextInput
 							control={control}
 							name="phoneNumber"
-							label="Phone Number"
+							label={t('Ship_PN')}
 						/>
 					</Grid>
 					<Grid item xs={12} sm={12}>
 						<AppTextInput
 							control={control}
 							name="address1"
-							label="Address 1"
+							label={t('Ship_Addr1')}
 						/>
 					</Grid>
 					<Grid item xs={12} sm={12}>
 						<AppTextInput
 							control={control}
 							name="address2"
-							label="Address 2"
+							label={t('Ship_Addr2')}
 						/>
 					</Grid>
 					<Grid item xs={12} sm={12}>
 						<AppTextInput
 							control={control}
 							name="city"
-							label="City"
+							label={t('Ship_City')}
 						/>
 					</Grid>
           <Grid item xs={12} sm={12}>
 						<AppTextInput
 							control={control}
 							name="state"
-							label="State"
+							label={t('Ship_State')}
 						/>
 					</Grid>
           <Grid item xs={12} sm={12}>
 						<AppTextInput
 							control={control}
 							name="zip"
-							label="Zip"
+							label={t('Ship_Zip')}
 						/>
 					</Grid>
           <Grid item xs={12} sm={12}>
 						<AppTextInput
 							control={control}
 							name="country"
-							label="Country"
+							label={t('Ship_Country')}
 						/>
 					</Grid>
 				</Grid>
@@ -153,14 +155,14 @@ const ShippingAddressForm: React.FC<IProps> = ({ address, cancelEdit }) => {
 				<Box display="flex" justifyContent="space-between" sx={{ mt: 3 }}>
 					<div className="flex">
 						<button onClick={cancelEdit} className="c-btn mr-3">
-							Cancel
+						{t('Ship_Cancel')}
 						</button>
 						{address === undefined ? "" : (address && address.id === 0 ? "" : (
 							<div onClick={() => {
 									deleteCurrentAddress(address.id)
 									cancelEdit()
 								}} className="bg-red-600 border border-red-600 text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl hover:bg-transparent hover:text-red-600 duration-200 cursor-pointer">
-							Delete
+							{t('Ship_Del')}
 						</div>
 						))}
 					</div>
@@ -169,7 +171,7 @@ const ShippingAddressForm: React.FC<IProps> = ({ address, cancelEdit }) => {
 						type="submit"
 						variant="contained"
 						color="success">
-						Submit
+						{t('Ship_Submit')}
 					</LoadingButton>
 				</Box>
 			</form>

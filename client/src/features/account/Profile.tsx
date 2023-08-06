@@ -45,14 +45,14 @@ const Profile: React.FC = () => {
 					setLoading(false);
 					Swal.fire({
 						icon: "success",
-						title: "Update Profile Successful",
+						title: t('Sw_UpdateProfile') as string,
 						showConfirmButton: false,
 						timer: 1500,
 					});
 				} else {
 					Swal.fire({
 						icon: "error",
-						title: "Failed To Update Profile",
+						title: t('Sw_UpdateProfileFail') as string,
 						showConfirmButton: false,
 						timer: 1500,
 					});
@@ -71,7 +71,7 @@ const Profile: React.FC = () => {
 				<Link to="/">
 					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
 						<AiOutlineHome size={20} />
-						Home
+						{t('Pro_Home')}
 					</h1>
 				</Link>
 				<div className="mx-2">
@@ -80,7 +80,7 @@ const Profile: React.FC = () => {
 				<Link to="/profile">
 					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
 						<BiUser size={20} />
-						Profile
+						{t('Pro_Profile')}
 					</h1>
 				</Link>
 			</div>

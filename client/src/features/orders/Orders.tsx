@@ -120,7 +120,7 @@ const Order: React.FC = () => {
 			setLoading(true);
 			Swal.fire({
 				icon: "success",
-				title: "Your order has been refunded, please wait for the system to process",
+				title: t('Sw_Refund') as string,
 				showConfirmButton: false,
 				timer: 2500,
 			});
@@ -132,7 +132,7 @@ const Order: React.FC = () => {
 			setLoading(true);
 			Swal.fire({
 				icon: "success",
-				title: "Your order has been refunded, please wait for the system to process",
+				title: t('Sw_Refund') as string,
 				showConfirmButton: false,
 				timer: 2500,
 			});

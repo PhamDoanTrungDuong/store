@@ -87,12 +87,12 @@ const ProductDetails: React.FC = () => {
 	function getLabelText(value: number) {
 		return `${value} Star${value !== 1 ? "s" : ""}, ${labels[value]}`;
 	}
-
+	var titleSwal = t('Sw_AddedSuccess');
 	useEffect(() => {
 		if (status === "addSuccess") {
 			Swal.fire({
 				icon: "success",
-				title: "Added Product Successful",
+				title: titleSwal,
 				showConfirmButton: false,
 				timer: 1500,
 			});
@@ -100,7 +100,7 @@ const ProductDetails: React.FC = () => {
 		return () => {
 			dispatch(setStateBasket());
 		};
-	}, [dispatch, status]);
+	}, [dispatch, status, titleSwal]);
 
 	const idProduct = params.id;
 
@@ -209,7 +209,7 @@ const ProductDetails: React.FC = () => {
 			agent.Comment.postComment(data).then(() => {
 				Swal.fire({
 					icon: "success",
-					title: "Your comments had been record",
+					title: t('Swal_Record') as string,
 					showConfirmButton: false,
 					timer: 1500,
 				});
@@ -242,7 +242,7 @@ const ProductDetails: React.FC = () => {
 				<Link to="/">
 					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
 						<AiOutlineHome size={20} />
-						Home
+						{t('Cat_Home')}
 					</h1>
 				</Link>
 				<div className="mx-2">
@@ -251,7 +251,7 @@ const ProductDetails: React.FC = () => {
 				<Link to="/catalog">
 					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
 						<BiCategoryAlt size={20} />
-						Catalog
+						{t('Cat_Catalog')}
 					</h1>
 				</Link>
 				<div className="mx-2">

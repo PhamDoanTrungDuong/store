@@ -64,7 +64,7 @@ const Checkout: React.FC = () => {
 		if (status === "loginSuccess") {
 			Swal.fire({
 				icon: "success",
-				title: "Your has been Login",
+				title: t('Swal_login') as string,
 				showConfirmButton: false,
 				timer: 1500,
 			});
@@ -72,7 +72,7 @@ const Checkout: React.FC = () => {
 		return () => {
 			dispatch(setStateUser());
 		};
-	}, [dispatch, status]);
+	}, [dispatch, status, t]);
 
 	const onCardInputChange = (e: any) => {
 		setCardState({

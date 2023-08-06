@@ -89,6 +89,8 @@ const resources = {
       "Cat_Price": "Price Range",
       "Cat_Brand": "Brands",
       "Cat_Cats": "Categories",
+      "Cat_Home": "Home",
+      "Cat_Catalog": "Catalog",
   
       //Product Search
       "ProSear_Search": "Search Products...",
@@ -136,6 +138,8 @@ const resources = {
       "Pro_State": "State",
       "Pro_Country": "Country",
       "Pro_Save": "Save Changes",
+      "Pro_Home": "Home",
+      "Pro_Profile": "Profile",
       
       //Cart
       "Ca_Product": "Product",
@@ -194,6 +198,53 @@ const resources = {
       "Ord_ComfirmedStatus": "Comfirmed",
       "Ord_DeliveryStatus": "Delivered",
       "Ord_RefundStatus": "Cancel Order",
+
+      //Swal
+      "Sw_AddedSuccess": "Added Product Successful",
+      "Sw_Login": "You has been Login",
+      "Sw_Logout": "You has been Logout",
+      "Sw_PwdChange": "Your password has been change",
+      "Sw_UpdateProfile": "Update Profile Successful",
+      "Sw_UpdateProfileFail": "Failed To Update Profile",
+      "Sw_UpdateAddr": "Update Address Successful",
+      "Sw_CreateAddr": "Create Address Successful",
+      "Sw_DelAddr": "Delete Address Successful",
+      "Sw_Refund": "Your order has been refunded, please wait for the system to process",
+      "Sw_Record": "Your comments had been record",
+
+      //LikedProduct
+      "Liked_Product": "Liked Product",
+
+      //ShippingAddress
+      "Ship_Home": "Home",
+      "Ship_ShipAddr": "Shipping Address",
+      "Ship_ShipAddrForm": "Shipping Address Form",
+      "Ship_None": "None Address Created",
+      "Ship_Add": "Add new Address",
+      "Ship_FullName": "FullName",
+      "Ship_PN": "Phone Number",
+      "Ship_Addr1": "Address 1",
+      "Ship_Addr2": "Address 2",
+      "Ship_City": "City",
+      "Ship_State": "State",
+      "Ship_Country": "Country",
+      "Ship_Zip": "Zip",
+      "Ship_Cancel": "Cancel",
+      "Ship_Del": "Delete",
+      "Ship_Submit": "Submit",
+
+      //ChangePwd
+      "Pwd_Change": "Change Password",
+      "Pwd_Current": "Current Password",
+      "Pwd_New": "New Password",
+      "Pwd_Confirm": "Confirm Password",
+      "Pwd_CurPassReq": "Current Password is require",
+      "Pwd_NewPassReq": "New Password is require",
+      "Pwd_ConPassReq": "Confirm Password is require",
+      "Pwd_PassComplex": "Password is not complex enough",
+
+      //Notifi
+      "Noti_Notify": "Notifications",
 
     }
   },
@@ -280,6 +331,8 @@ const resources = {
       "Cat_Price": "Khoảng giá",
       "Cat_Brand": "Thương hiệu",
       "Cat_Cats": "Loại hàng",
+      "Cat_Home": "Trang chủ",
+      "Cat_Catalog": "Danh mục",
       
       //Product Search
       "ProSear_Search": "Tìm kiếm sản phẩm...",
@@ -327,6 +380,8 @@ const resources = {
       "Pro_State": "Tiểu Bang",
       "Pro_Country": "Vùng",
       "Pro_Save": "Lưu Thay Đổi",
+      "Pro_Home": "Trang chủ",
+      "Pro_Profile": "Thông tin",
       
       //Cart
       "Ca_Product": "Sản Phẩm",
@@ -385,6 +440,43 @@ const resources = {
       "Ord_ComfirmedStatus": "Đã xác nhận",
       "Ord_DeliveryStatus": "Đã giao",
       "Ord_RefundStatus": "Hủy đơn",
+
+      //Swal
+      "Sw_AddedSuccess": "Thêm sản phẩm thành công",
+
+      //LikedProduct
+      "Liked_Product": "Sản Phẩm Yêu Thích",
+
+      //ShippingAddress
+      "Ship_Home": "Trang Chủ",
+      "Ship_ShipAddr": "Địa chỉ giao hàng",
+      "Ship_ShipAddrForm": "Form địa chỉ giao hàng",
+      "Ship_None": "Không có địa chỉ nào được tạo",
+      "Ship_Add": "Thêm Địa Chỉ Mới",
+      "Ship_FullName": "Họ và Tên",
+      "Ship_PN": "Số Điện Thoại",
+      "Ship_Addr1": "Địa chỉ 1",
+      "Ship_Addr2": "Địa chỉ 2",
+      "Ship_City": "Thành Phố",
+      "Ship_State": "Tiểu Bang",
+      "Ship_Country": "Vùng",
+      "Ship_Zip": "Zip",
+      "Ship_Cancel": "Hủy",
+      "Ship_Del": "Xóa",
+      "Ship_Submit": "Gửi",
+
+      //ChangePwd
+      "Pwd_Change": "Thay Đổi Mật Khẩu",
+      "Pwd_Current": "Mật khẩu hiện tại",
+      "Pwd_New": "Mật khẩu mới",
+      "Pwd_Confirm": "Xác nhận mật khẩu",
+      "Pwd_CurPassReq": "Mật khẩu hiện tại không được bỏ trống",
+      "Pwd_NewPassReq": "Mật khẩu mới không được bỏ trống",
+      "Pwd_ConPassReq": "Mật khẩu xác nhận không được bỏ trống",
+      "Pwd_PassComplex": "Mật khẩu không đủ phức tạp",
+
+      //Notifi
+      "Noti_Notify": "Thông báo",
     }
   }
 };
