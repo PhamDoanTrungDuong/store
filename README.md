@@ -79,9 +79,14 @@
       [] ~games (maybe)
       [] số lượng sản phẩm khi chọn màu
       [] đánh giá, bình luận sản phẩm sau khi mua hàng
+      [] góp ý sản phẩm sau khi đã được giao
       [] điểm danh nhận voucher
+      [] giao diện admin, mod
+      [] đăng nhập giao hàng
+      [] xác nhận giao hàng
+      [] thông tin giao hàng
  -->
- <!-- LV
+ <!-- TLTN
       1. Giao diện trang chủ: mục đăng nhập, mục đăng ký, hiển thị các quảng cáo sản phẩm.
       2. Giao diện người dùng:
       2.1. Người dùng khách: xem quảng cáo trên trang chủ, xem sản phẩm trên trang sản phẩm, đăng ký thành viên
