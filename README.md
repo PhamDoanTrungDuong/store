@@ -72,16 +72,16 @@
       [x] sản phẩm yêu thích
       [x] tìm kiếm sản phẩm với khung giá tiền
       [x] Quản lý color, size
-      [~] đa ngôn ngữ i18n
+      [x] đa ngôn ngữ i18n
       [] gợi ý mua hàng
       [] ~doanh thu (ref thầy Đệ)
       [] ~điểm danh nhận voucher
       [] ~games (maybe)
-      [] số lượng sản phẩm khi chọn màu
+      [] điểm danh nhận voucher
+      [x] số lượng sản phẩm khi chọn màu
       [] đánh giá, bình luận sản phẩm sau khi mua hàng
       [] góp ý sản phẩm sau khi đã được giao
-      [] điểm danh nhận voucher
-      [] giao diện admin, mod
+      [x] giao diện admin, mod
       [] đăng nhập giao hàng
       [] xác nhận giao hàng
       [] thông tin giao hàng

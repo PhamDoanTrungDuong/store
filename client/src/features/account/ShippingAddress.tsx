@@ -62,7 +62,7 @@ const ShippingAddress: React.FC = () => {
 				<button
 					onClick={() => setEditMode(true)}
 					className="border text-white px-6 py-1 border-indigo-600 bg-indigo-600 text-lg rounded-lg hover:text-indigo-600 hover:bg-transparent duration-200 ease-in-out ">
-					{t('Ship_ShipAdd')}
+					{t('Ship_Add')}
 				</button>
 			</div>
 			{addresses.length === 0 ? (

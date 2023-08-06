@@ -16,6 +16,7 @@ import { fetchNotifies, setNotifyLoad } from "./adminSlice";
 import agent from "../../app/api/agent";
 
 const SideBar: React.FC = () => {
+	const { user } = useAppSelector((state) => state.account);
 	const { notifies, loadNotify } = useAppSelector((state) => state.admin);
 	const dispatch = useAppDispatch();
 	const [open, setOpen] = useState(true);
@@ -35,36 +36,42 @@ const SideBar: React.FC = () => {
 			id: 0,
 			title: "Inventory",
 			to: "/inventory",
+			roles: "Admin",
 			icon: <RiBarChartBoxFill size={30} className="rounded-lg fill-[#637381]" />,
 		},
 		{
 			id: 0,
 			title: "Color",
 			to: "/admin-color",
+			roles: "Admin",
 			icon: <MdOutlineColorLens size={30} className="rounded-lg fill-[#637381]" />,
 		},
 		{
 			id: 0,
 			title: "Size",
 			to: "/admin-size",
+			roles: "Admin",
 			icon: <MdOutlinePhotoSizeSelectSmall size={30} className="rounded-lg fill-[#637381]" />,
 		},
 		{
 			id: 1,
 			title: "Sales",
 			to: "/admin-sales",
+			roles: "Admin",
 			icon: <RiPriceTag3Fill size={30} className="rounded-lg fill-[#637381]" />,
 		},
 		{
 			id: 2,
 			title: "Categories",
 			to: "/admin-categories",
+			roles: "Admin",
 			icon: <RiTableFill size={30} className="rounded-lg fill-[#637381]" />,
 		},
 		{
 			id: 3,
 			title: "Members",
 			to: "/admin-members",
+			roles: "Admin",
 			icon: (
 				<RiAccountCircleFill
 					size={30}
@@ -76,24 +83,28 @@ const SideBar: React.FC = () => {
 			id: 4,
 			title: "Messenger",
 			to: "/admin-messenger",
+			roles: ["Admin", "Moderator"],
 			icon: <RiChat3Line size={30} className="rounded-lg fill-[#637381]" />,
 		},
 		{
 			id: 5,
 			title: "Role",
 			to: "/admin-role",
+			roles: "Admin",
 			icon: <MdManageAccounts size={30} className="rounded-lg fill-[#637381]" />,
 		},
 		{
 			id: 6,
 			title: "Comments",
 			to: "/admin-comments",
+			roles: ["Admin", "Moderator"],
 			icon: <MdInsertComment size={30} className="rounded-lg fill-[#637381]" />,
 		},
 		{
 			id: 7,
 			title: "Orders",
 			to: "/admin-orders",
+			roles: ["Admin", "Moderator"],
 			icon: (
 				<MdOutlineCardGiftcard
 					size={30}
@@ -105,6 +116,7 @@ const SideBar: React.FC = () => {
 			id: 8,
 			title: "Slider",
 			to: "/admin-sliders",
+			roles: ["Admin", "Moderator"],
 			icon: <TbSlideshow size={30} className="rounded-lg" />,
 		},
 		{
@@ -117,15 +129,21 @@ const SideBar: React.FC = () => {
 			id: 10,
 			title: "Discount Banner",
 			to: "/admin-discountBanner",
+			roles: ["Admin", "Moderator"],
 			icon: <TbDiscount size={30} className="rounded-lg" />,
 		},
 		{
 			id: 11,
 			title: "Voucher",
 			to: "/admin-vouchers",
+			roles: ["Admin", "Moderator"],
 			icon: <RiCouponLine size={30} className="rounded-lg" />,
 		},
 	];
+
+	console.log(user)
+	console.log(Menus)
+
 	return (
 		<div
 			className={` ${
@@ -156,82 +174,164 @@ const SideBar: React.FC = () => {
 				</Link>
 			</div>
 			<ul className="pt-12">
-				{Menus.map((Menu, index) => (
-					<NavLink
-						to={Menu.to}
-						key={index}
-						className={({ isActive }) => {
-							return `flex rounded-lg p-3 cursor-pointer ${
-								isActive ? "bg-blue-300/40" : ""
-							} hover:bg-gray-300/60 duration-100 text-[#637381] my-1 text-sm group`;
-						}}>
-						{({ isActive }) => (
-							<li
-								className="flex w-full items-center gap-x-4 "
-								onClick={() =>
-									handleCheckNotify(
-										Menu.title ===
-											"Orders"
-											? "Order"
-											: Menu.title ===
-											  "Comments"
-											? "Comment"
-											: Menu.title ===
-											  "Members"
-											? "Member"
-											: Menu.title ===
-											  "Messenger"
-											? "Messenger"
-											: ""
-									)
-								}>
-								{Menu.icon}
-								<span
-									className={`${
-										!open && "hidden"
-									} origin-left text-[#637381]  ${
-										isActive
-											? "text-sky-600"
-											: ""
-									} duration-200`}>
-									{Menu.title}
-								</span>
-								<div
-									className={`relative ${
-										Array.isArray(
-											notifies
-										) &&
-										notifies?.find(
-											(
-												item: any
-											) =>
-												(Menu.title ===
-													"Orders" &&
-													item.orderNotify ===
-														true) ||
-												(Menu.title ===
-													"Comments" &&
-													item.commentNotify ===
-														true) ||
-												(Menu.title ===
-													"Members" &&
-													item.memberNotify ===
-														true) ||
-												(Menu.title ===
-													"Messenger" &&
-													item.messengerNotify ===
-														true)
-										)
-											? "flex"
-											: "hidden"
-									}`}>
-									<div className="animate-ping inline-flex absolute -top-3 right-3 w-[10px] h-[10px] bg-red-600 rounded-full dark:border-gray-900"></div>
-									<div className="inline-flex relative -top-3 right-3 w-[10px] h-[10px] bg-red-600 rounded-full dark:border-gray-900"></div>
-								</div>
-							</li>
-						)}
-					</NavLink>
-				))}
+				{
+					user?.roles?.includes("Moderator") ? (
+						Menus.map((Menu, index) => (
+							Menu.roles?.includes("Moderator") &&
+							<NavLink
+								to={Menu.to}
+								key={index}
+								className={({ isActive }) => {
+									return `flex rounded-lg p-3 cursor-pointer ${
+										isActive ? "bg-blue-300/40" : ""
+									} hover:bg-gray-300/60 duration-100 text-[#637381] my-1 text-sm group`;
+								}}>
+								{({ isActive }) => (
+									<li
+										className="flex w-full items-center gap-x-4 "
+										onClick={() =>
+											handleCheckNotify(
+												Menu.title ===
+													"Orders"
+													? "Order"
+													: Menu.title ===
+													  "Comments"
+													? "Comment"
+													: Menu.title ===
+													  "Members"
+													? "Member"
+													: Menu.title ===
+													  "Messenger"
+													? "Messenger"
+													: ""
+											)
+										}>
+										{Menu.icon}
+										<span
+											className={`${
+												!open && "hidden"
+											} origin-left text-[#637381]  ${
+												isActive
+													? "text-sky-600"
+													: ""
+											} duration-200`}>
+											{Menu.title}
+										</span>
+										<div
+											className={`relative ${
+												Array.isArray(
+													notifies
+												) &&
+												notifies?.find(
+													(
+														item: any
+													) =>
+														(Menu.title ===
+															"Orders" &&
+															item.orderNotify ===
+																true) ||
+														(Menu.title ===
+															"Comments" &&
+															item.commentNotify ===
+																true) ||
+														(Menu.title ===
+															"Members" &&
+															item.memberNotify ===
+																true) ||
+														(Menu.title ===
+															"Messenger" &&
+															item.messengerNotify ===
+																true)
+												)
+													? "flex"
+													: "hidden"
+											}`}>
+											<div className="animate-ping inline-flex absolute -top-3 right-3 w-[10px] h-[10px] bg-red-600 rounded-full dark:border-gray-900"></div>
+											<div className="inline-flex relative -top-3 right-3 w-[10px] h-[10px] bg-red-600 rounded-full dark:border-gray-900"></div>
+										</div>
+									</li>
+								)}
+							</NavLink>
+						))
+					) : (
+						Menus.map((Menu, index) => (
+							<NavLink
+								to={Menu.to}
+								key={index}
+								className={({ isActive }) => {
+									return `flex rounded-lg p-3 cursor-pointer ${
+										isActive ? "bg-blue-300/40" : ""
+									} hover:bg-gray-300/60 duration-100 text-[#637381] my-1 text-sm group`;
+								}}>
+								{({ isActive }) => (
+									<li
+										className="flex w-full items-center gap-x-4 "
+										onClick={() =>
+											handleCheckNotify(
+												Menu.title ===
+													"Orders"
+													? "Order"
+													: Menu.title ===
+													  "Comments"
+													? "Comment"
+													: Menu.title ===
+													  "Members"
+													? "Member"
+													: Menu.title ===
+													  "Messenger"
+													? "Messenger"
+													: ""
+											)
+										}>
+										{Menu.icon}
+										<span
+											className={`${
+												!open && "hidden"
+											} origin-left text-[#637381]  ${
+												isActive
+													? "text-sky-600"
+													: ""
+											} duration-200`}>
+											{Menu.title}
+										</span>
+										<div
+											className={`relative ${
+												Array.isArray(
+													notifies
+												) &&
+												notifies?.find(
+													(
+														item: any
+													) =>
+														(Menu.title ===
+															"Orders" &&
+															item.orderNotify ===
+																true) ||
+														(Menu.title ===
+															"Comments" &&
+															item.commentNotify ===
+																true) ||
+														(Menu.title ===
+															"Members" &&
+															item.memberNotify ===
+																true) ||
+														(Menu.title ===
+															"Messenger" &&
+															item.messengerNotify ===
+																true)
+												)
+													? "flex"
+													: "hidden"
+											}`}>
+											<div className="animate-ping inline-flex absolute -top-3 right-3 w-[10px] h-[10px] bg-red-600 rounded-full dark:border-gray-900"></div>
+											<div className="inline-flex relative -top-3 right-3 w-[10px] h-[10px] bg-red-600 rounded-full dark:border-gray-900"></div>
+										</div>
+									</li>
+								)}
+							</NavLink>
+						))
+					)
+				}
 			</ul>
 		</div>
 	);

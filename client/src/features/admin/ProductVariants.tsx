@@ -25,9 +25,9 @@ const ProductVariants: React.FC<IProps> = ({ product, cancelEdit }) => {
 			agent.Catalog.getColors()
 				.then((res) => setColors(res))
 				.catch((error) => console.log(error));
-		agent.Catalog.getSizes()
-			.then((res) => setSizes(res))
-			.catch((error) => console.log(error));
+			agent.Catalog.getSizes()
+				.then((res) => setSizes(res))
+				.catch((error) => console.log(error));
 		if (product !== undefined) {
 			agent.Catalog.productVariants(product.id)
 				.then((res) => setVariants(res))

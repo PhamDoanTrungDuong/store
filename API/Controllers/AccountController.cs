@@ -422,7 +422,7 @@ namespace API.Controllers
                         return NotFound("User Not Found");
             }
 
-            [Authorize(Roles = "Admin")]
+            [Authorize(Roles = "Admin, Moderator")]
             [HttpGet("get-member-count")]
             public async Task<int> GetMemberCount()
             {

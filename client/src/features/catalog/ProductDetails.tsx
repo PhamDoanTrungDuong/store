@@ -70,6 +70,8 @@ const ProductDetails: React.FC = () => {
 	const [variants, setVariantPerProduct] = useState<any>();
 	const [selectedColor, setSelectedColor] = useState("white");
 	const [selectedSize, setSelectedSize] = useState("S");
+	const [variantsProduct, setVariantsProduct] = useState<any>();
+	const [productQty, setProductQty] = useState<any>();
 	const [avg, setAvg] = useState<number>(0);
 	const { basket } = useAppSelector((state) => state.basket);
 	const { status: productStatus } = useAppSelector((state) => state.catalog);
@@ -153,16 +155,28 @@ const ProductDetails: React.FC = () => {
 		}
 	}, [id]);
 
-	// console.log(variants)
-
 	const [quantity, setQuantity] = useState(0);
 
 	const item = basket?.items.find((i) => i.productId === product?.id);
 
 	useEffect(() => {
 		if (item) setQuantity(item.quantity);
-		if (!product) dispatch(fetchProductAsync(+id));
+		if (!product) {
+			dispatch(fetchProductAsync(+id));
+		}
 	}, [id, item, dispatch, product]);
+
+	useEffect(() => {
+		agent.Catalog.productVariants(+id)
+				.then((res) => setVariantsProduct(res))
+				.catch((error) => console.log(error));
+	}, [id])
+
+	useEffect(() => {
+		variantsProduct && variantsProduct.filter((item: any) => (
+					item.colourValue === selectedColor && item.sizeValue === selectedSize
+				)).map((i: any) => setProductQty(i.quantity))
+	}, [selectedColor, selectedSize, variantsProduct])
 
 	const handlePlus = () => {
 		if (quantity <= 9) {
@@ -218,7 +232,7 @@ const ProductDetails: React.FC = () => {
 	};
 
 	const handleColor = (value: string) => {
-		setSelectedColor(value);
+		setSelectedColor(value)
 	};
 	const handleSize = (value: string) => {
 		setSelectedSize(value);
@@ -236,6 +250,7 @@ const ProductDetails: React.FC = () => {
 
 	// const randomColors = randomIndices.map((index: any) => colors[index]);
 	// console.log(randomColors)
+
 	return (
 		<div className="mt-5 p-5">
 			<div className="flex items-center ml-3 mt-3 mb-4">
@@ -376,7 +391,13 @@ const ProductDetails: React.FC = () => {
 							</button>
 						</div>
 						<div className="text-medium text-gray-500">
-							{product.quantityInStock} {t('De_PIS')}
+							{
+								selectedColor !== "white" && selectedSize !== "S" && productQty !== undefined ? (
+									productQty
+								) : (product.quantityInStock)
+							}
+							{" "}
+							{t('De_PIS')}
 						</div>
 					</div>
 					{(variants && (variants.colors.length !== 0 && variants.sizes.length !== 0)) ? (
@@ -395,7 +416,7 @@ const ProductDetails: React.FC = () => {
 															color.colour_value
 														)
 													}
-													className={`${color.colour_value === "red" ? "bg-red-500" : color.colour_value === "teal" ? "bg-teal-500" : color.colour_value === "orange" ? "bg-orange-500" : color.colour_value === "sky" ? "bg-sky-500" : ""} border-2 border-gray-300 ${
+													className={`${color.colour_value === "red" ? "bg-red-500" : color.colour_value === "teal" ? "bg-teal-500" : color.colour_value === "orange" ? "bg-orange-500" : color.colour_value === "sky" ? "bg-sky-500" : ""} border-[3px] border-gray-300 ${
 														selectedColor ===
 														color.colour_value
 															? "border-black/70"
@@ -415,7 +436,7 @@ const ProductDetails: React.FC = () => {
 											)
 										}
 										className="rounded border appearance-none border-gray-700 py-2 focus:outline-none focus:border-indigo-600 text-base pl-3 pr-10">
-										{variants && variants.sizes.map(
+										{variants && [" ", ...variants.sizes].map(
 												(
 													size: any,
 													idx: number
@@ -481,7 +502,7 @@ const ProductDetails: React.FC = () => {
 										}
 										className="rounded border appearance-none border-gray-700 py-2 focus:outline-none focus:border-indigo-600 text-base pl-3 pr-10">
 										{sizes &&
-											sizes.map(
+											[" ", ...sizes].map(
 												(
 													size: any,
 													idx

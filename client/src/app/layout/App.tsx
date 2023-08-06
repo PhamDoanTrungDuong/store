@@ -77,7 +77,7 @@ const App: React.FC = () => {
 			<section className="">
 				<CssBaseline />
 				{/* <Header /> */}
-				{user?.roles?.includes("Admin") ? (
+				{user?.roles?.includes("Admin") || user?.roles?.includes("Moderator") ? (
 					<>
 						<div className="flex">
 							<SideBar />
@@ -107,6 +107,7 @@ const App: React.FC = () => {
 											<PrivateRoute
 												roles={[
 													"Admin",
+													"Moderator",
 												]}>
 												<Inventory />
 											</PrivateRoute>
@@ -118,6 +119,7 @@ const App: React.FC = () => {
 											<PrivateRoute
 												roles={[
 													"Admin",
+													"Moderator",
 												]}>
 												<AdminSales />
 											</PrivateRoute>
@@ -129,6 +131,7 @@ const App: React.FC = () => {
 											<PrivateRoute
 												roles={[
 													"Admin",
+													"Moderator",
 												]}>
 												<AdminRole />
 											</PrivateRoute>
@@ -140,6 +143,7 @@ const App: React.FC = () => {
 											<PrivateRoute
 												roles={[
 													"Admin",
+													"Moderator",
 												]}>
 												<AdminOrders />
 											</PrivateRoute>
@@ -151,6 +155,7 @@ const App: React.FC = () => {
 											<PrivateRoute
 												roles={[
 													"Admin",
+													"Moderator",
 												]}>
 												<AdminComment />
 											</PrivateRoute>
@@ -162,6 +167,7 @@ const App: React.FC = () => {
 											<PrivateRoute
 												roles={[
 													"Admin",
+													"Moderator",
 												]}>
 												<AdminMembers />
 											</PrivateRoute>
@@ -173,6 +179,7 @@ const App: React.FC = () => {
 											<PrivateRoute
 												roles={[
 													"Admin",
+													"Moderator",
 												]}>
 												<AdminCategories />
 											</PrivateRoute>
@@ -184,6 +191,7 @@ const App: React.FC = () => {
 											<PrivateRoute
 												roles={[
 													"Admin",
+													"Moderator",
 												]}>
 												<AdminSlider />
 											</PrivateRoute>
@@ -195,6 +203,7 @@ const App: React.FC = () => {
 											<PrivateRoute
 												roles={[
 													"Admin",
+													"Moderator",
 												]}>
 												<AdminPartner />
 											</PrivateRoute>
@@ -206,6 +215,7 @@ const App: React.FC = () => {
 											<PrivateRoute
 												roles={[
 													"Admin",
+													"Moderator",
 												]}>
 												<AdminVoucher />
 											</PrivateRoute>
@@ -217,6 +227,7 @@ const App: React.FC = () => {
 											<PrivateRoute
 												roles={[
 													"Admin",
+													"Moderator",
 												]}>
 												<AdminMessenger />
 											</PrivateRoute>
@@ -228,6 +239,7 @@ const App: React.FC = () => {
 											<PrivateRoute
 												roles={[
 													"Admin",
+													"Moderator",
 												]}>
 												<AdminColor />
 											</PrivateRoute>
@@ -239,6 +251,7 @@ const App: React.FC = () => {
 											<PrivateRoute
 												roles={[
 													"Admin",
+													"Moderator",
 												]}>
 												<AdminSize />
 											</PrivateRoute>
@@ -250,6 +263,7 @@ const App: React.FC = () => {
 											<PrivateRoute
 												roles={[
 													"Admin",
+													"Moderator",
 												]}>
 												<AdminDiscountBanner />
 											</PrivateRoute>
@@ -261,6 +275,7 @@ const App: React.FC = () => {
 											<PrivateRoute
 												roles={[
 													"Admin",
+													"Moderator",
 												]}>
 												<Shipper />
 											</PrivateRoute>
@@ -404,7 +419,7 @@ const App: React.FC = () => {
 							</Routes>
 						</div>
 						{user && (
-							user?.roles?.includes("Admin") ? (
+							user?.roles?.includes("Admin") || user?.roles?.includes("Moderator") ? (
 								<div></div>
 							) : (
 								<div className="fixed right-14 bottom-10">

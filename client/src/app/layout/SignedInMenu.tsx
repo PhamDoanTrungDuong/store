@@ -48,7 +48,7 @@ const SignedInMenu: React.FC = () => {
 
 	return (
 		<div className="flex gap-1 items-center max-w-[200px]">
-			{user?.roles?.includes("Admin") ? (
+			{user?.roles?.includes("Admin") || user?.roles?.includes("Moderator") ? (
 					<img
 						className="w-[20%] hover:scale-105 duration-200 mx-2 border border-gray-300 cursor-pointer rounded-full"
 						src="/images/admin.jpg"
@@ -72,7 +72,7 @@ const SignedInMenu: React.FC = () => {
 				</span>
 			</Button>
 			<Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-				{!user?.roles?.includes("Admin") && (
+				{(!user?.roles?.includes("Admin") && !user?.roles?.includes("Moderator")) && (
 					<span>
 						<MenuItem component={NavLink} to="/profile">
 							{t("SubProfile_Profile")}

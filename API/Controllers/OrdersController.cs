@@ -46,7 +46,7 @@ namespace API.Controllers
                 return subtotal.Sum();
             }
 
-            [Authorize(Roles = "Admin")]
+            [Authorize(Roles = "Admin, Moderator")]
             [HttpGet("getAll-total-order")]
             public async Task<long> GetAllTotalOrder()
             {
