@@ -7,16 +7,26 @@ import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import useProducts from "../../app/hooks/useProducts";
 import { IProductDiscount } from "../../app/interfaces/IProduct";
 import { FiTrash2 } from "react-icons/fi";
-
+import { BiCommentEdit } from "react-icons/bi";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from "@mui/material/Zoom";
+import { IOrder } from "../../app/interfaces/IOrder";
+import agent from "../../app/api/agent";
 interface IProps {
+	order?: IOrder;
 	item: BasketItem;
+	statusOrder?: string;
 	isBasket?: boolean;
 }
-const BasketTableItem: React.FC<IProps> = ({ item, isBasket }) => {
+const BasketTableItem: React.FC<IProps> = ({ item, isBasket, statusOrder, order }) => {
 	const dispatch = useAppDispatch();
 	const { status } = useAppSelector((state) => state.basket);
+	const { user } = useAppSelector((state) => state.account);
+
+	// console.log(statusOrder);
 	const { productDiscount } = useProducts();
 	const [itemSales, setItemSales] = useState<IProductDiscount>();
+	const [itemOrder, setItemOrder] = useState<any>();
 
 	useEffect(() => {
 		productDiscount.filter((e: any) => {
@@ -25,6 +35,9 @@ const BasketTableItem: React.FC<IProps> = ({ item, isBasket }) => {
 			}
 			return item.productId;
 		});
+		// (!isBasket && +order!.id !== undefined) && agent.Orders.getOrder(+order!.id)
+		// 					.then((res) => setItemOrder(res))
+		// 					.catch((err) => console.log(err));
 	}, [productDiscount, item.productId]);
 
 	return (
@@ -132,6 +145,53 @@ const BasketTableItem: React.FC<IProps> = ({ item, isBasket }) => {
 					</h5>
 				)}
 			</td>
+			{(statusOrder === "ProductDelivered") &&
+				 !(user?.roles?.includes("Admin") || user?.roles?.includes("Moderator")) && (
+					<td align="center">
+						<Link to={`/catalog/${item.productId}`}>
+							<div
+								// onClick={focusOnComponent}
+								className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer">
+								<Tooltip
+									TransitionComponent={
+										Zoom
+									}
+									title="Comment">
+									<BiCommentEdit
+										className="text-green-600"
+										size={30}
+									/>
+								</Tooltip>
+							</div>
+						</Link>
+					</td>
+				 )
+				// itemOrder && itemOrder.map((irt: any) => {
+				// 		(irt.productId !== item.productId) ? 
+				// 		(
+				// 			<td align="center">
+				// 				<Link to={`/catalog/${item.productId}`}>
+				// 					<div
+				// 						// onClick={focusOnComponent}
+				// 						className="p-2 hover:bg-indigo-200/30 rounded-full duration-200 cursor-pointer">
+				// 						<Tooltip
+				// 							TransitionComponent={
+				// 								Zoom
+				// 							}
+				// 							title="Comment">
+				// 							<BiCommentEdit
+				// 								className="text-green-600"
+				// 								size={30}
+				// 							/>
+				// 						</Tooltip>
+				// 					</div>
+				// 				</Link>
+				// 			</td>
+				// 		) : (
+				// 			<td align="center"></td>
+				// 		);
+				// })
+			}
 			{isBasket && (
 				<td>
 					<div

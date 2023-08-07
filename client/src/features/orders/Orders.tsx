@@ -139,8 +139,6 @@ const Order: React.FC = () => {
 		});
 	};
 
-	console.log(orders)
-
 	const handleClose = () => {
 		setOpen(false);
 	};

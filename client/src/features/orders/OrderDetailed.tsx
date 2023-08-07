@@ -29,8 +29,6 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin }) =
 	const { user } = useAppSelector((state) => state.account);
 	const { shipper } = useAppSelector((state) => state.admin);
 
-	console.log(shipper) 
-
 	const subtotal =
 		order.orderItems.reduce((sum, item) => sum + item.quantity * item.price, 0) ?? 0;
 	const steps = ["Order Placed", "On The Way", "Product Delivered"];
@@ -282,7 +280,7 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin }) =
 							</span>{" "}
 							{order.shippingAddress.address1}
 						</div>
-						{ (order.deliveryStatus !== "PendingConfirm" || order.isRefund)  && (
+						{ ((order.deliveryStatus !== "PendingConfirm" || order.isRefund) && shipper) && (
 							<>
 								<div className="my-3">
 									<span className="font-bold text-base mr-4">
@@ -334,7 +332,9 @@ const OrderDetailed: React.FC<IProps> = ({ order, setSelectedOrder, isAdmin }) =
 			</div>
 			<div className="rounded-div2 flex justify-center gap-3 mt-10">
 				<BasketTable
+					order={order}
 					items={order.orderItems as BasketItem[]}
+					statusOrder={order.deliveryStatus}
 					isBasket={false}
 				/>
 				{/* <div className="basis md:basis-2/3 overflow-y-scroll scroll-smooth h-[500px]">

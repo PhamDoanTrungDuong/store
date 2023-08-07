@@ -4,13 +4,16 @@ import { BasketItem } from "../../app/interfaces/IBasket";
 import { useEffect } from "react";
 import BasketTableItem from "./BasketTableItem";
 import { useTranslation } from "react-i18next";
+import { IOrder } from "../../app/interfaces/IOrder";
 
 interface IProps {
+	order?: IOrder
 	items: BasketItem[];
+	statusOrder?: string
 	isBasket?: boolean;
 }
 
-const BasketTable: React.FC<IProps> = ({ items, isBasket = true }) => {
+const BasketTable: React.FC<IProps> = ({ items, isBasket = true, statusOrder, order }) => {
 	const { t } = useTranslation();
 
 	const { status } = useAppSelector((state) => state.basket);
@@ -39,13 +42,20 @@ const BasketTable: React.FC<IProps> = ({ items, isBasket = true }) => {
 					<th align="center" className="px-5 md:px-10 pb-5">
 						{t('Ca_Subtotal')}
 					</th>
+					{
+						statusOrder === "statusOrder" && (
+							<th align="center" className="px-5 md:px-10 pb-5">
+								
+							</th>
+						)
+					}
 					{isBasket && <th align="right"></th>}
 				</tr>
 			</thead>
 			<tbody>
 				{items.map((item, idx) => (
 					<tr key={item.productId}>
-						<BasketTableItem item={item} isBasket={isBasket} />
+						<BasketTableItem item={item} isBasket={isBasket} statusOrder={statusOrder} order={order} />
 					</tr>
 				))}
 			</tbody>

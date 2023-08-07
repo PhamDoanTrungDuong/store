@@ -33,7 +33,6 @@ namespace API.Controllers
                     .ToListAsync();
             }
 
-
             [Authorize]
             [HttpGet("get-total-order")]
             public async Task<long> GetTotalOrder()
@@ -55,6 +54,40 @@ namespace API.Controllers
                     .ToListAsync();
 
                 return subtotal.Sum();
+            }
+
+            // [HttpGet("getOrder/{id}")]
+            // public async Task<System.Collections.Generic.List<OrderItemDto>> GetOrder(int id)
+            // {
+            //     var order = await _context.Orders
+            //         .Include(x => x.OrderItems)
+            //         .Where(x => x.BuyerId == User.Identity.Name && x.Id == id)
+            //         .FirstOrDefaultAsync();
+            //     if(order != null) {
+            //         var OrderItems = order.OrderItems.Select(item => new OrderItemDto
+            //             {
+            //                 ProductId = item.ItemOrdered.ProductId,
+            //                 Name = item.ItemOrdered.Name,
+            //                 PictureUrl = item.ItemOrdered.PictureUrl,
+            //                 Price = item.Price,
+            //                 Quantity = item.Quantity,
+            //                 Color = item.ItemOrdered.Color,
+            //                 Size = item.ItemOrdered.Size
+            //             }).ToList();
+            //             return OrderItems;
+            //     }
+            //     return null;
+            // }
+
+            [HttpGet("getOrderComment")]
+            public async Task<List<List<OrderItem>>> GetOrderComment()
+            {
+                var order = await _context.Orders
+                    // .Include(x => x.OrderItems)
+                    .Where(x => x.BuyerId == User.Identity.Name)
+                    .Select(x => x.OrderItems)
+                    .ToListAsync();
+                return order;
             }
 
             [HttpGet("{id}", Name = "GetOrder")]

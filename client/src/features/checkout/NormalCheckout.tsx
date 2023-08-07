@@ -52,7 +52,7 @@ const NormalCheckout: React.FC = () => {
 		if (status === "loginSuccess") {
 			Swal.fire({
 				icon: "success",
-				title: t("Swal_login") as string,
+				title: t("Sw_login") as string,
 				showConfirmButton: false,
 				timer: 1500,
 			});

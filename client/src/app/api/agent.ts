@@ -137,6 +137,8 @@ const Account = {
 
 const Orders = {
     list: () => requests.get('orders'),
+    getOrder: (id?: number) => requests.get(`orders/getOrder/${id}`),
+    getOrderComment: () => requests.get(`orders/getOrderComment`),
     fetch: (id: number) => requests.get(`orders/${id}`),
     create: (values: any) => requests.post('orders', values),
     Momocreate: (data: any) => requests.get(`orders/momo-order?orderId=${data.orderId}&requestId=${data.requestId}&transId=${data.transId}&discount=${data.discount}`),

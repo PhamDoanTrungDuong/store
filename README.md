@@ -73,18 +73,18 @@
       [x] tìm kiếm sản phẩm với khung giá tiền
       [x] Quản lý color, size
       [x] đa ngôn ngữ i18n
+      [x] số lượng sản phẩm khi chọn màu
+      [x] giao diện admin, mod
+      [x] thông tin giao hàng
+      [x] đánh giá, bình luận sản phẩm sau khi mua hàng
+      [x] góp ý sản phẩm sau khi đã được giao
+      [] xác nhận giao hàng
+      [] đăng nhập giao hàng
       [] gợi ý mua hàng
       [] ~doanh thu (ref thầy Đệ)
       [] ~điểm danh nhận voucher
       [] ~games (maybe)
       [] điểm danh nhận voucher
-      [x] số lượng sản phẩm khi chọn màu
-      [] đánh giá, bình luận sản phẩm sau khi mua hàng
-      [] góp ý sản phẩm sau khi đã được giao
-      [x] giao diện admin, mod
-      [] đăng nhập giao hàng
-      [] xác nhận giao hàng
-      [x] thông tin giao hàng
  -->
  <!-- TLTN
       1. Giao diện trang chủ: mục đăng nhập, mục đăng ký, hiển thị các quảng cáo sản phẩm.

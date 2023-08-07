@@ -1,5 +1,5 @@
 import { Box, Rating } from "@mui/material";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import NotFound from "../../app/errors/NotFound";
 import Loading from "../../app/layout/Loading";
@@ -52,7 +52,15 @@ interface Inputs {
 	content: string;
 }
 
+
 const ProductDetails: React.FC = () => {
+	// const myComponentRef = useRef<any>(null);
+
+	// const focusOnComponent = () => {
+	// 		myComponentRef.current!.focus();
+	// };
+	const { user } = useAppSelector((state) => state.account);
+	
 	const { t } = useTranslation();
 
 	const { productDiscount, productsLoaded } = useAppSelector((state) => state.catalog);
@@ -67,6 +75,7 @@ const ProductDetails: React.FC = () => {
 	const [valuesStar, setValuesStar] = useState<number | null>(0);
 	const [colors, setColors] = useState([]);
 	const [sizes, setSizes] = useState([]);
+	const [orderComment, setOrderComment] = useState<any>();
 	const [variants, setVariantPerProduct] = useState<any>();
 	const [selectedColor, setSelectedColor] = useState("white");
 	const [selectedSize, setSelectedSize] = useState("S");
@@ -178,6 +187,16 @@ const ProductDetails: React.FC = () => {
 				)).map((i: any) => setProductQty(i.quantity))
 	}, [selectedColor, selectedSize, variantsProduct])
 
+	useEffect(() => {
+		agent.Orders.getOrderComment()
+			.then((res) => setOrderComment(res))
+			.catch((err) => console.log(err))
+	}, [])
+	var arr: number[] = []
+	orderComment && orderComment.flat().map((item: any) => {
+		arr.push(item.itemOrdered.productId)
+	})
+
 	const handlePlus = () => {
 		if (quantity <= 9) {
 			setQuantity(+quantity + 1);
@@ -212,9 +231,7 @@ const ProductDetails: React.FC = () => {
 	};
 
 	if (productStatus.includes("pending")) return <Loading message="Loading Detail..." />;
-
 	if (!product) return <NotFound />;
-
 	const submitComment: SubmitHandler<Inputs> = (data: any, e: any) => {
 		e.target.reset();
 		setValuesStar(0);
@@ -223,7 +240,7 @@ const ProductDetails: React.FC = () => {
 			agent.Comment.postComment(data).then(() => {
 				Swal.fire({
 					icon: "success",
-					title: t('Swal_Record') as string,
+					title: t('Sw_Record') as string,
 					showConfirmButton: false,
 					timer: 1500,
 				});
@@ -599,90 +616,102 @@ const ProductDetails: React.FC = () => {
 						</p>
 					</TabPanel>
 					<TabPanel value={value} index={2}>
-						<div>
-							<form
-								onSubmit={handleSubmit(
-									submitComment
-								)}
-								className="w-full bg-white rounded-xl pt-2">
-								<h2 className="px-4 pt-3 pb-2 text-black text-lg font-medium">
-									{t('De_Comment')}
-								</h2>
-								<div className="flex flex-col md:flex-row justify-between mx-3 mb-6">
-									<div className="w-full md:w-full px-2 mb-2 mt-2">
-										<div className="flex justify-start items-center my-2">
-											<span className="mr-3 font-medium">
-												{t('De_Evaluate')}:
-											</span>
-											<div className="flex gap-1">
-												<Rating
-													name="simple-controlled"
-													value={
-														valuesStar
-													}
-													getLabelText={
-														getLabelText
-													}
-													onChange={(
-														event,
-														newValue
-													) => {
-														setValuesStar(
-															newValue
-														);
-													}}
-													onChangeActive={(
-														event,
-														newHover
-													) => {
-														setHover(
-															newHover
-														);
-													}}
-												/>
-												<span>
-													{valuesStar !==
-														null && (
-														<Box
-															sx={{
-																ml: 2,
-															}}>
-															{
-																labels[
-																	hover !==
-																	-1
-																		? hover
-																		: valuesStar
-																]
-															}
-														</Box>
-													)}
+						{
+							(arr.includes(+idProduct!) && user) ? (
+								<div>
+								<form
+									onSubmit={handleSubmit(
+										submitComment
+									)}
+									className="w-full bg-white rounded-xl pt-2">
+									<h2 className="px-4 pt-3 pb-2 text-black text-lg font-medium">
+										{t('De_Comment')}
+									</h2>
+									<div className="flex flex-col md:flex-row justify-between mx-3 mb-6">
+										<div className="w-full md:w-full px-2 mb-2 mt-2">
+											<div className="flex justify-start items-center my-2">
+												<span className="mr-3 font-medium">
+													{t('De_Evaluate')}:
 												</span>
+												<div className="flex gap-1">
+													<Rating
+														name="simple-controlled"
+														value={
+															valuesStar
+														}
+														getLabelText={
+															getLabelText
+														}
+														onChange={(
+															event,
+															newValue
+														) => {
+															setValuesStar(
+																newValue
+															);
+														}}
+														onChangeActive={(
+															event,
+															newHover
+														) => {
+															setHover(
+																newHover
+															);
+														}}
+													/>
+													<span>
+														{valuesStar !==
+															null && (
+															<Box
+																sx={{
+																	ml: 2,
+																}}>
+																{
+																	labels[
+																		hover !==
+																		-1
+																			? hover
+																			: valuesStar
+																	]
+																}
+															</Box>
+														)}
+													</span>
+												</div>
+											</div>
+											<div>
+												<input
+													{...register(
+														"content"
+													)}
+													className=" rounded border border-gray-300 leading-normal resize-none w-full px-5 py-3 focus:outline-none focus:bg-white"
+													name="content"
+													placeholder={t('De_Type') as string}
+													// ref={myComponentRef}
+												/>
 											</div>
 										</div>
-										<div>
-											<input
-												{...register(
-													"content"
-												)}
-												className=" rounded border border-gray-300 leading-normal resize-none w-full px-5 py-3 focus:outline-none focus:bg-white"
-												name="content"
-												placeholder={t('De_Type') as string}
-											/>
+										<div className="w-full md:w-full flex flex-row justify-end md:justify-start px-1 md:m-2 items-end">
+											<div className="mr-1">
+												<button
+													type="submit"
+													className="bg-indigo-600 border text-sm md:text-base border-indigo-600 text-white p-3 w-full rounded-lg shadow-xl hover:shadow-2xl hover:bg-transparent hover:text-indigo-600 duration-200">
+													{t('De_Submit')}
+												</button>
+											</div>
 										</div>
 									</div>
-									<div className="w-full md:w-full flex flex-row justify-end md:justify-start px-1 md:m-2 items-end">
-										<div className="mr-1">
-											<button
-												type="submit"
-												className="bg-indigo-600 border text-sm md:text-base border-indigo-600 text-white p-3 w-full rounded-lg shadow-xl hover:shadow-2xl hover:bg-transparent hover:text-indigo-600 duration-200">
-												{t('De_Submit')}
-											</button>
-										</div>
-									</div>
+								</form>
+							</div>
+							) : (
+								<div>
+									<h2 className="px-4 pt-3 pb-2 text-black text-lg font-medium">
+										{t('De_CommentRe')}
+									</h2>
 								</div>
-							</form>
-						</div>
+							)
+						}
+						
 						<div className="my-5 w-full md:w-4/6 h-auto overflow-y-scroll scrollbar-hide">
 							<CommentThread idProduct={idProduct} />
 						</div>

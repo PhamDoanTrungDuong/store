@@ -122,6 +122,7 @@ const resources = {
       "De_Evaluate": "Evaluate",
       "De_Type": "Type your comment",
       "De_Submit": "Submit",
+      "De_CommentRe": "You Need To Login and Purchase to Comment",
 
       //Basket
       "Bas_Empty": "Your Cart Is Empty",
@@ -364,6 +365,8 @@ const resources = {
       "De_Evaluate": "Đánh giá",
       "De_Type": "Gõ bình luận của bạn",
       "De_Submit": "Gửi",
+      "De_CommentRe": "Bạn cần phải đăng nhập và mua hàng để bình luận",
+
 
       //Basket
       "Bas_Empty": "Giỏ hàng của bạn rỗng",
