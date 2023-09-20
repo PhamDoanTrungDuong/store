@@ -31,6 +31,9 @@ namespace API.Data
           public DbSet<Shipper> Shippers { get; set; }
           public DbSet<Notify> Notifies { get; set; }
           public DbSet<Message> Messages { get; set; }
+          public DbSet<Receipt> Receipts { get; set; }
+          public DbSet<ReceiptDetails> ReceiptDetails { get; set; }
+
           protected override void OnModelCreating(ModelBuilder builder)
           {
                base.OnModelCreating(builder);

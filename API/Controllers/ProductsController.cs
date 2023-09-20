@@ -130,10 +130,7 @@ namespace API.Controllers
                         } else {
                               for (var i = 0; i < arrayColors.Count(); i++)
                               {
-                                    for (int j = 0; j < arraySizes.Count(); j++)
-                                    {
-                                          variantsQuantity += arrayQuantity[i];
-                                    }
+                                    variantsQuantity += arrayQuantity[i];
                               }
                         }
                   }
@@ -160,19 +157,16 @@ namespace API.Controllers
                         if((arrayColors.Count() != arrayQuantity.Count()) || (arrayColors.Count() != arraySizes.Count()) || (arraySizes.Count() != arrayQuantity.Count())) {
                               return BadRequest(new ProblemDetails{ Title = "Size, Quantity, Color field must equal" });
                         } else {
-                              for (var i = 0; i < arrayColors.Count(); i++)
-                              {
-                                    for (int j = 0; j < arraySizes.Count(); j++) {
-                                          var detail = new ProductDetails {
-                                                ProductId = product.Id,
-                                                ColourId = arrayColors[i].Id,
-                                                ColourValue = arrayColors[i].Colour_value,
-                                                SizeId = arraySizes[j].Id,
-                                                SizeValue = arraySizes[j].Size_value,
-                                                Quantity = arrayQuantity[i]
-                                          };
-                                          _context.ProductDetails.Add(detail);
-                                    }
+                              for (int i = 0; i < arraySizes.Count(); i++) {
+                                    var detail = new ProductDetails {
+                                          ProductId = product.Id,
+                                          ColourId = arrayColors[i].Id,
+                                          ColourValue = arrayColors[i].Colour_value,
+                                          SizeId = arraySizes[i].Id,
+                                          SizeValue = arraySizes[i].Size_value,
+                                          Quantity = arrayQuantity[i]
+                                    };
+                                    _context.ProductDetails.Add(detail);
                               }
                         }
                   }
