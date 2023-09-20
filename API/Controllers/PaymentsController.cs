@@ -177,7 +177,8 @@ namespace API.Controllers
                   double subtotal = 0;
                   double discountValue = discount / 100;
                   var gggg = items.Sum(item => item.Price * item.Quantity);
-                  var subtotal2 = items.Sum(item => item.Price * item.Quantity) * 23.444;
+                  // cash value update
+                  var subtotal2 = items.Sum(item => item.Price * item.Quantity) * 230.444;
 
                   if(discount != 0) {
                         subtotal = subtotal2 - (subtotal2 * discountValue);
