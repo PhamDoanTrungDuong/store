@@ -1,7 +1,9 @@
+using System.Drawing;
 using System.Linq;
 using API.Entities;
 using System.Collections.Generic;
 using System;
+using API.DTOs;
 
 namespace API.Extensions
 {
@@ -51,7 +53,24 @@ namespace API.Extensions
 
             return query;
         }
-
+        public static IQueryable<ProductReceiptDto> ProjectOrderToOrderDto(this IQueryable<Product> query)
+        {
+            return query
+                .Select(product => new ProductReceiptDto
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    PictureUrl = product.PictureUrl,
+                    ProductDetails = product.ProductDetails.Select(item => new ProductReceiptDetailsDto
+                    {
+                        ColourId = item.ColourId,
+                        ColorsValue = item.ColourValue,
+                        SizeId = item.SizeId,
+                        SizesValue = item.SizeValue,
+                        Quantity = item.Quantity,
+                    }).ToList()
+                });
+        }
 
     }
 }

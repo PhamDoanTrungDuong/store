@@ -750,5 +750,12 @@ namespace API.Controllers
                   return await _context.Shippers.FindAsync(id);
             }
 
+            [HttpGet("get-product-with-details")]
+            public async Task<ActionResult<List<ProductReceiptDto>>> GetProductWithDetails() {
+                  return await _context.Products
+                        .ProjectOrderToOrderDto()
+                        .ToListAsync();
+            }
+
       }
 }

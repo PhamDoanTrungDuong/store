@@ -29,4 +29,5 @@ namespace API.Entities
         public int CurrentCateId { get; set; }
         public Category Category { get; set; }
     }
+    
 }
