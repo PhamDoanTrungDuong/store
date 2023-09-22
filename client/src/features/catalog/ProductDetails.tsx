@@ -346,7 +346,10 @@ const ProductDetails: React.FC = () => {
 					</div>
 					<div className="mt-8">
 						<h4 className="text-3xl font-bold">
-							{product.name}
+							{product.name} 
+							<div className="text-base text-gray-400 mr-3 pt-2">
+								{product.quantityInStock} Total in Stock
+							</div>
 						</h4>
 						<div className="my-4">
 							{Sales?.discountValue ? (
@@ -409,7 +412,7 @@ const ProductDetails: React.FC = () => {
 						</div>
 						<div className="text-medium text-gray-500">
 							{
-								selectedColor !== "white" && selectedSize !== "S" && productQty !== undefined ? (
+								(selectedColor !== "white" && selectedSize !== "S") || productQty !== undefined ? (
 									productQty
 								) : (product.quantityInStock)
 							}

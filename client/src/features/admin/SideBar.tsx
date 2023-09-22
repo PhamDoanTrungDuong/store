@@ -10,6 +10,7 @@ import {
 } from "react-icons/ri";
 import { TbSlideshow, TbDiscount } from "react-icons/tb";
 import { SiGooglecolab } from "react-icons/si";
+import { BsReceipt } from "react-icons/bs";
 import { MdManageAccounts, MdInsertComment, MdOutlineCardGiftcard, MdOutlineColorLens, MdOutlinePhotoSizeSelectSmall } from "react-icons/md";
 import { useAppSelector, useAppDispatch } from "../../app/store/configureStore";
 import { fetchNotifies, setNotifyLoad } from "./adminSlice";
@@ -138,6 +139,13 @@ const SideBar: React.FC = () => {
 			to: "/admin-vouchers",
 			roles: ["Admin", "Moderator"],
 			icon: <RiCouponLine size={30} className="rounded-lg" />,
+		},
+		{
+			id: 11,
+			title: "Receipt",
+			to: "/admin-receipt",
+			roles: ["Admin", "Moderator"],
+			icon: <BsReceipt size={30} className="rounded-lg" />,
 		},
 	];
 

@@ -125,13 +125,22 @@ namespace API.Controllers
                               arrayQuantity.Add(Int32.Parse(qty));
                               // variantsQuantity += Int32.Parse(qty);
                         }
-                        if((arrayColors.Count() != arrayQuantity.Count()) || (arrayColors.Count() != arraySizes.Count()) || (arraySizes.Count() != arrayQuantity.Count())) {
-                              return BadRequest(new ProblemDetails{ Title = "Size, Quantity, Color field must equal" });
+                        if((arrayColors.Count() == 0) || arraySizes.Count() == 0 || (arraySizes.Count() == 0)) {
+                              return BadRequest(new ProblemDetails{ Title = "Size or Quantity or Color field must have values" });
                         } else {
-                              for (var i = 0; i < arrayColors.Count(); i++)
-                              {
-                                    variantsQuantity += arrayQuantity[i];
-                              }
+                              variantsQuantity += arrayColors.Count() * arraySizes.Count() * arrayQuantity[0];
+
+                              // for (var i = 0; i < arrayColors.Count(); i++)
+                              // {
+                              //       for (int j = 0; j < arraySizes.Count(); j++)
+                              //       {
+                              //             variantsQuantity += arrayQuantity[i];
+                              //       }
+                              // }
+                              // for (var i = 0; i < arrayColors.Count(); i++)
+                              // {
+                              //       variantsQuantity += arrayQuantity[i];
+                              // }
                         }
                   }
 
@@ -153,21 +162,35 @@ namespace API.Controllers
                   var result = await _context.SaveChangesAsync() > 0;
                   // Details
                   if(productDetailsDto.Colors != null || productDetailsDto.Sizes != null || productDetailsDto.Quantity != null) {
-
-                        if((arrayColors.Count() != arrayQuantity.Count()) || (arrayColors.Count() != arraySizes.Count()) || (arraySizes.Count() != arrayQuantity.Count())) {
-                              return BadRequest(new ProblemDetails{ Title = "Size, Quantity, Color field must equal" });
+                        // (arrayColors.Count() != arrayQuantity.Count()) || (arrayColors.Count() != arraySizes.Count()) || (arraySizes.Count() != arrayQuantity.Count())
+                        if((arrayColors.Count() == 0) || arraySizes.Count() == 0 || (arraySizes.Count() == 0)) {
+                              return BadRequest(new ProblemDetails{ Title = "Size or Quantity or Color must have value" });
                         } else {
-                              for (int i = 0; i < arraySizes.Count(); i++) {
-                                    var detail = new ProductDetails {
-                                          ProductId = product.Id,
-                                          ColourId = arrayColors[i].Id,
-                                          ColourValue = arrayColors[i].Colour_value,
-                                          SizeId = arraySizes[i].Id,
-                                          SizeValue = arraySizes[i].Size_value,
-                                          Quantity = arrayQuantity[i]
-                                    };
-                                    _context.ProductDetails.Add(detail);
+                              for (var i = 0; i < arrayColors.Count(); i++)
+                              {
+                                    for (int j = 0; j < arraySizes.Count(); j++) {
+                                          var detail = new ProductDetails {
+                                                ProductId = product.Id,
+                                                ColourId = arrayColors[i].Id,
+                                                ColourValue = arrayColors[i].Colour_value,
+                                                SizeId = arraySizes[j].Id,
+                                                SizeValue = arraySizes[j].Size_value,
+                                                Quantity = arrayQuantity[0]
+                                          };
+                                          _context.ProductDetails.Add(detail);
+                                    }
                               }
+                              // for (int i = 0; i < arraySizes.Count(); i++) {
+                              //       var detail = new ProductDetails {
+                              //             ProductId = product.Id,
+                              //             ColourId = arrayColors[i].Id,
+                              //             ColourValue = arrayColors[i].Colour_value,
+                              //             SizeId = arraySizes[i].Id,
+                              //             SizeValue = arraySizes[i].Size_value,
+                              //             Quantity = arrayQuantity[0]
+                              //       };
+                              //       _context.ProductDetails.Add(detail);
+                              // }
                         }
                   }
                   var resultDetails = await _context.SaveChangesAsync() > 0;

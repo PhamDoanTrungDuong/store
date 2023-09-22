@@ -753,7 +753,16 @@ namespace API.Controllers
             [HttpGet("get-product-with-details")]
             public async Task<ActionResult<List<ProductReceiptDto>>> GetProductWithDetails() {
                   return await _context.Products
+                        .OrderByDescending(x => x.Id)
                         .ProjectOrderToOrderDto()
+                        .ToListAsync();
+            }
+
+            [HttpGet("get-receipts")]
+            public async Task<ActionResult<List<ReceiptDto>>> GetReceipt() {
+                  return await _context.Receipts
+                        .OrderByDescending(x => x.DateCreate)
+                        .ProjectReceiptToReceiptDto()
                         .ToListAsync();
             }
 

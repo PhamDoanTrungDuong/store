@@ -240,6 +240,10 @@ const Admin = {
     //Shipper
     getShipper: (id: number) => requests.get(`admin/get-shipper/${id}`),
 
+    //Receipt
+    getReceipts: () => requests.get('admin/get-receipts'),
+    getProductDetails: () => requests.get('admin/get-product-with-details'),
+
 
 }
 

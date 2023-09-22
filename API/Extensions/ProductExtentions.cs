@@ -4,6 +4,7 @@ using API.Entities;
 using System.Collections.Generic;
 using System;
 using API.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions
 {
@@ -58,11 +59,14 @@ namespace API.Extensions
             return query
                 .Select(product => new ProductReceiptDto
                 {
-                    Id = product.Id,
+                    ProductId = product.Id,
                     Name = product.Name,
+                    Quantity = product.QuantityInStock,
                     PictureUrl = product.PictureUrl,
                     ProductDetails = product.ProductDetails.Select(item => new ProductReceiptDetailsDto
                     {
+                        Id = item.Id,
+                        ParentProductId = product.Id,
                         ColourId = item.ColourId,
                         ColorsValue = item.ColourValue,
                         SizeId = item.SizeId,
@@ -70,6 +74,28 @@ namespace API.Extensions
                         Quantity = item.Quantity,
                     }).ToList()
                 });
+        }
+
+        public static IQueryable<ReceiptDto> ProjectReceiptToReceiptDto(this IQueryable<Receipt> query)
+        {
+            return query
+                .Select(receipt => new ReceiptDto
+                {
+                    Id = receipt.Id,
+                    DateCreate = receipt.DateCreate,
+                    PartnerId = receipt.PartnerId,
+                    Status = receipt.Status,
+                    Total = receipt.Total,
+                    ReceiptDetails = receipt.ReceiptDetails.Select(item => new ReceiptDetailsDto
+                    {
+                        Id = item.Id,
+                        ReceiptId = item.ReceiptId,
+                        AfterPrice = item.AfterPrice,
+                        Price = item.Price,
+                        ProductId = item.ProductId,
+                        Quantity = item.Quantity,
+                    }).ToList()
+                }).AsNoTracking();;
         }
 
     }

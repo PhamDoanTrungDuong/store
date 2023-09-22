@@ -29,6 +29,7 @@ import Footer from "./Footer";
 import Profile from "../../features/account/Profile";
 import AdminMembers from "../../features/admin/AdminMembers";
 import AdminCategories from "../../features/admin/AdminCategories";
+import AdminReceipt from "../../features/admin/AdminReceipt";
 import AdminSlider from "../../features/admin/AdminSlider";
 import AdminHome from "../../features/admin/AdminHome";
 import SideBar from "../../features/admin/SideBar";
@@ -266,6 +267,18 @@ const App: React.FC = () => {
 													"Moderator",
 												]}>
 												<AdminDiscountBanner />
+											</PrivateRoute>
+										}
+									/>
+									<Route
+										path="/admin-receipt"
+										element={
+											<PrivateRoute
+												roles={[
+													"Admin",
+													"Moderator",
+												]}>
+												<AdminReceipt />
 											</PrivateRoute>
 										}
 									/>

@@ -78,15 +78,16 @@ namespace API.Controllers
             //     }
             //     return null;
             // }
-
+            
+            [AllowAnonymous]
             [HttpGet("getOrderComment")]
             public async Task<List<List<OrderItem>>> GetOrderComment()
             {
                 var order = await _context.Orders
-                    // .Include(x => x.OrderItems)
-                    .Where(x => x.BuyerId == User.Identity.Name)
-                    .Select(x => x.OrderItems)
-                    .ToListAsync();
+                        // .Include(x => x.OrderItems)
+                        .Where(x => x.BuyerId == User.Identity.Name)
+                        .Select(x => x.OrderItems)
+                        .ToListAsync();
                 return order;
             }
 

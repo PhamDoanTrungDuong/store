@@ -7,6 +7,8 @@ namespace API.DTOs
 {
     public class ProductReceiptDetailsDto
     {
+        public int Id { get; set; }
+        public int ParentProductId { get; set; }
          public int ColourId { get; set; }
         public string ColorsValue { get; set; }
         public int SizeId { get; set; }
