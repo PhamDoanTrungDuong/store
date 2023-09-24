@@ -7,17 +7,21 @@ interface IProps {
 }
 
 const ProductCheckboxTable: React.FC<IProps> = ({ data, onSelectedItemsChange }) => {
-	// State to track selected items
+
 	const [selectedItems, setSelectedItems] = useState<any>([]);
 	const [selectedParentItems, setSelectedParentItems] = useState<any>([]);
   onSelectedItemsChange([...selectedItems, ...selectedParentItems].length, selectedItems, selectedParentItems)
 
+//   console.log(selectedItems)
+//   console.log(selectedParentItems)
+
 	// Function to toggle item selection
-	const toggleItemSelection = (productId: any) => {
+	const toggleItemSelection = (productId: any, parentId: any) => {
 		if (selectedItems.includes(productId)) {
 			setSelectedItems(selectedItems.filter((id: any) => id !== productId));
 		} else {
 			setSelectedItems([...selectedItems, productId]);
+			!selectedParentItems.includes(parentId) && setSelectedParentItems([...selectedParentItems, parentId]);
 		}
 	};
 	const toggleParentSelection = (productId: any) => {
@@ -28,11 +32,13 @@ const ProductCheckboxTable: React.FC<IProps> = ({ data, onSelectedItemsChange })
 		}
 	};
 
+	// if (editMode) return <ReceiptForm cancelEdit={cancelEdit} />;
+
 	return (
 		<table className="table-auto w-full bg-white  overflow-hidden">
 			<thead className="text-gray-700">
 				<tr>
-					<th className="px-4 py-2 text-left"></th>
+					<th className="px-3 text-center py-2"></th>
 					<th className="px-4 py-2 text-left">Product Name</th>
 					<th className="px-4 py-2 text-left">Unit</th>
 					<th className="px-4 py-2">Total Quantity</th>
@@ -42,7 +48,7 @@ const ProductCheckboxTable: React.FC<IProps> = ({ data, onSelectedItemsChange })
 				{data.map((product: any) => (
 					<React.Fragment key={product.productId}>
 						<tr>
-							<td className="px-4 py-2">
+							<td className="px-3 text-center py-2">
 								<input
 									type="checkbox"
 									checked={selectedParentItems.includes(
@@ -68,8 +74,8 @@ const ProductCheckboxTable: React.FC<IProps> = ({ data, onSelectedItemsChange })
 								/>
 								<span className="text-medium font-medium">{product.name}</span>
 							</td>
-              <td className="px-4 py-2">
-                $
+							<td className="px-4 py-2">
+								$
 							</td>
 							<td className="px-4 py-2 text-center text-medium font-medium">
 								{product.quantity}

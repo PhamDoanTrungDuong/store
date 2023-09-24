@@ -12,17 +12,24 @@ import { IoIosArrowForward } from "react-icons/io";
 import { FiTrash2 } from "react-icons/fi";
 import CategorySearch from "../../app/components/CategorySearch";
 import ProductCheckboxTable from "../../app/components/ProductCheckboxTable";
+import ReceiptEdit from "./ReceiptEdit";
 interface Props {
 	cancelEdit: () => void;
 }
 
 const ReceiptForm: React.FC<Props> = ({ cancelEdit }) => {
+	const [editItems, setEditItems] = useState(false);
+
 	const { productDetails, loadProductDetails } = useAppSelector((state) => state.admin);
 	const [selectedItems, setSelectedItems] = useState();
 	const [childrenItems, setChildrenItems] = useState();
 	const [parentItems, setParentItems] = useState();
-	console.log(childrenItems)
-	console.log(parentItems)
+
+	function cancelEditItems() {
+		// if (selectedReceipt) setSelectedReceipt(undefined);
+		setEditItems(false);
+	}
+
 	const handleSelectedItems = (selectedItems: any, childrenItems: any, parentItems: any) => {
 		// Perform your action here with selectedItems
 		setSelectedItems(selectedItems);
@@ -47,8 +54,6 @@ const ReceiptForm: React.FC<Props> = ({ cancelEdit }) => {
 		!loadProductDetails ? dispatch(fetchProductDetails()) : dispatch(fetchProductDetails());
 	}, [dispatch, loadProductDetails])
 
-	console.log(productDetails)
-
 	async function handleSubmitData(data: any) {
 		try {
 			await agent.Admin.createCategory(data);
@@ -58,14 +63,8 @@ const ReceiptForm: React.FC<Props> = ({ cancelEdit }) => {
 			console.log(error);
 		}
 	}
-	// useEffect(() => {
-	// 	try {
-	// 		agent.Admin.getProductDetails()
-	// 			.then((res) => console.log(res))
-	// 	} catch (error) {
-	// 		console.log(error)
-	// 	}
-	// }, [])
+	if (editItems) return <ReceiptEdit cancelEditItems={cancelEditItems} childrenItems={childrenItems} parentItems={parentItems} />;
+
 	return (
 		<div className="mt-24 p-5">
 			<div className="flex justify-between items-center mb-8">
@@ -103,7 +102,7 @@ const ReceiptForm: React.FC<Props> = ({ cancelEdit }) => {
 								Cancel
 							</button>
 							<button
-								// onClick={() => setEditMode(true)}
+								onClick={() => setEditItems(true)}
 								className="flex justify-between items-center gap-2 border text-white px-3 py-2 border-indigo-600 bg-indigo-600 rounded-lg hover:text-indigo-600 hover:bg-transparent duration-200 ease-in-out ">
 								Select
 							</button>

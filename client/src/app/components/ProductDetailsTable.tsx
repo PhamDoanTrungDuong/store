@@ -25,7 +25,7 @@ const ProductDetailsTable: React.FC<IProps> = ({ data, selectedItems, toggleItem
             <input
               type="checkbox"
               checked={selectedItems.includes(detail.id)}
-              onChange={() => toggleItemSelection(detail.id)}
+              onChange={() => toggleItemSelection(detail.id, detail.parentProductId)}
               className="form-checkbox h-5 w-5 text-indigo-600"
             />
           </td>
