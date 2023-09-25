@@ -3,15 +3,17 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20230925113108_UpdateReiceiptDetails")]
+    partial class UpdateReiceiptDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -513,9 +515,6 @@ namespace API.Data.Migrations
                     b.Property<long>("AfterPrice")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("ChildrenId")
-                        .HasColumnType("text");
-
                     b.Property<string>("Color")
                         .HasColumnType("text");
 
@@ -574,14 +573,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "fa8d31be-be4b-447b-aea2-5b20a3a3f458",
+                            ConcurrencyStamp = "c24a0a62-3b74-438a-9dbe-0726f6948b3c",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "6912d9ca-c771-4c4a-b67e-6d388623a117",
+                            ConcurrencyStamp = "68893b54-9d8f-4a40-b106-ffb8a9302c32",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

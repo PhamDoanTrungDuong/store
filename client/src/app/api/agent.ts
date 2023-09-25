@@ -243,7 +243,7 @@ const Admin = {
     //Receipt
     getReceipts: () => requests.get('admin/get-receipts'),
     getProductDetails: () => requests.get('admin/get-product-with-details'),
-
+    newReceipt: (values: any) => requests.post('admin/new-receipt', values),
 
 }
 

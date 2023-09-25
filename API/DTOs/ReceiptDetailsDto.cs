@@ -13,5 +13,7 @@ namespace API.DTOs
         public int Quantity { get; set; }
         public long Price { get; set; }
         public long AfterPrice { get; set; }
+        public string Size { get; set; }
+        public string Color { get; set; }
     }
 }

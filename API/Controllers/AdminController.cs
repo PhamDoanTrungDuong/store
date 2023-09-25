@@ -766,5 +766,95 @@ namespace API.Controllers
                         .ToListAsync();
             }
 
+            [HttpPost("new-receipt")]
+            public async Task<ActionResult<CreateReceiptVm>> CreateReceipt(CreateReceiptVm receiptVm)
+            {
+                  try
+                  {
+                        // Parse the incoming JSON request
+                        var partnerName = receiptVm.Partner;
+                        var updateItems = receiptVm.Update;
+
+                        // Find the partner by name (you should have a Partner repository/service)
+                        var partner = await _context.Partners.FirstOrDefaultAsync(p => p.Name == partnerName);
+
+                        if (partner == null)
+                        {
+                              return NotFound("Partner not found");
+                        }
+
+                        // Create a new receipt
+                        var newReceipt = new Receipt
+                        {
+                              Total = 0, // Calculate the total based on receipt details
+                              DateCreate = DateTime.Now,
+                              Status = 0, // Set the initial status as needed
+                              PartnerId = partner.Id,
+                              Partner = partner,
+                              ReceiptDetails = new List<ReceiptDetails>()
+                        };
+
+                        foreach (var updateItem in updateItems)
+                        {
+                              var receiptDetail = new ReceiptDetails
+                              {
+                                    Receipt = newReceipt,
+                                    ProductId = updateItem.ProductId,
+                                    Quantity = updateItem.Quantity,
+                                    Size = updateItem.Size,
+                                    Color = updateItem.Color,
+                                    Price = updateItem.Price,
+                                    AfterPrice = updateItem.Price,
+                                    ChildrenId = updateItem.ChildrenId
+                              };
+
+                              // Check if there is a childrenId, update ProductDetails
+                              if (!string.IsNullOrEmpty(updateItem.ChildrenId))
+                              {
+                                    int childrenId = int.Parse(updateItem.ChildrenId);
+                                    var productDetail = _context.ProductDetails.FirstOrDefault(pd => pd.Id == childrenId);
+                                    var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == updateItem.ProductId);
+
+                                    if (productDetail != null && product != null)
+                                    {
+                                          productDetail.Quantity += updateItem.Quantity;
+                                          product.QuantityInStock += updateItem.Quantity;
+                                    }
+                                    else
+                                    {
+                                          return NotFound("Can't update Product Quantity");
+                                    }
+                              }
+                              else
+                              {
+                                    // Update QuantityInStock in Product
+                                    var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == updateItem.ProductId);
+                                    if (product != null)
+                                    {
+                                          product.QuantityInStock += updateItem.Quantity;
+                                    }
+                                    else
+                                    {
+                                          return NotFound("Can't update Quantity in stock");
+                                    }
+                              }
+
+                              newReceipt.ReceiptDetails.Add(receiptDetail);
+                        }
+
+                        // Calculate the total for the receipt based on receipt details
+                        newReceipt.Total = newReceipt.ReceiptDetails.Sum(rd => rd.Price * rd.Quantity);
+
+                        // Save the receipt to the database
+                        _context.Receipts.Add(newReceipt);
+                        await _context.SaveChangesAsync();
+
+                        return Ok("Receipt created successfully");
+                  }
+                  catch (Exception ex)
+                  {
+                        return BadRequest($"Error: {ex.Message}");
+                  }
+            }
       }
 }

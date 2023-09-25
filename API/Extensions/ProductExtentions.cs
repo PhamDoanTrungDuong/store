@@ -84,6 +84,7 @@ namespace API.Extensions
                     Id = receipt.Id,
                     DateCreate = receipt.DateCreate,
                     PartnerId = receipt.PartnerId,
+                    Partner = receipt.Partner.Name,
                     Status = receipt.Status,
                     Total = receipt.Total,
                     ReceiptDetails = receipt.ReceiptDetails.Select(item => new ReceiptDetailsDto
@@ -94,6 +95,8 @@ namespace API.Extensions
                         Price = item.Price,
                         ProductId = item.ProductId,
                         Quantity = item.Quantity,
+                        Size = item.Size,
+                        Color = item.Color
                     }).ToList()
                 }).AsNoTracking();;
         }

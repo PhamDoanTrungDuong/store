@@ -11,7 +11,7 @@ import { IProduct } from "../../app/interfaces/IProduct";
 import useProducts from "../../app/hooks/useProducts";
 import ProductSearch from "../catalog/ProductSearch";
 import { HiDotsVertical } from "react-icons/hi";
-import { FiTrash2, FiEdit3 } from "react-icons/fi";
+import { FiTrash2, FiEdit3, FiEye } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { AiOutlineHome, AiOutlinePlus } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
@@ -20,7 +20,6 @@ import Swal from "sweetalert2";
 import Loading from "../../app/layout/Loading";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
-import { FiEye } from "react-icons/fi";
 import ProductVariants from "./ProductVariants";
 
 const Inventory: React.FC = () => {

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { AiOutlineHome, AiOutlinePlus } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
@@ -11,38 +10,44 @@ import { fetchCategories, fetchReceipts, setCateLoad } from "./adminSlice";
 import ReceiptForm from "./ReceiptForm";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import { FiTrash2 } from "react-icons/fi";
+import { FiTrash2, FiEye } from "react-icons/fi";
 import Loading from "../../app/layout/Loading";
 import Tooltip from "@mui/material/Tooltip";
-import Zoom from '@mui/material/Zoom';
+import Zoom from "@mui/material/Zoom";
+import moment from "moment";
+import { currencyFormat } from "../../app/utilities/util";
+import ReceiptDetails from "./ReceiptDetails";
+
 
 const AdminReceipt: React.FC = () => {
 	const { receipts, loadReceipt } = useAppSelector((state) => state.admin);
+	console.log(receipts);
 	const [editMode, setEditMode] = useState(false);
-
 	const [selectedReceipt, setSelectedReceipt] = useState<ICategory | undefined>(undefined);
-
+	const [detailMode, setDetailMode] = useState(false);
+	const [selectedReceiptDetail, setSelectedReceiptDetail] = useState(undefined);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		!loadReceipt ? dispatch(fetchReceipts()) : dispatch(fetchReceipts());
-	}, [dispatch, loadReceipt])
+	}, [dispatch, loadReceipt]);
 
-	const handleDeleteReceipt = async (id: number) => {
-		let response = await agent.Admin.deleteCategory(id)
-			.then(() => dispatch(setCateLoad()))
-			.catch((error) => console.log(error))
-		return response
-	};
+	function handleReceiptDetails(receipt: any) {
+		setSelectedReceiptDetail(receipt);
+		setDetailMode(true);
+	}
 
 	function cancelEdit() {
 		if (selectedReceipt) setSelectedReceipt(undefined);
 		setEditMode(false);
+		setDetailMode(false);
+
 	}
 
 	if (editMode) return <ReceiptForm cancelEdit={cancelEdit} />;
+	if (detailMode) return <ReceiptDetails receipt={selectedReceiptDetail} cancelEdit={cancelEdit} />;
 
-	if(!receipts) return <Loading message="Loading receipts" />;
+	if (!receipts) return <Loading message="Loading receipts" />;
 
 	// const handleDeleteCate = (id: number) => {
 	// 	Swal.fire({
@@ -90,7 +95,7 @@ const AdminReceipt: React.FC = () => {
 					<button
 						onClick={() => setEditMode(true)}
 						className="flex justify-between items-center gap-2 border text-white px-3 py-2 border-indigo-600 bg-indigo-600 rounded-lg hover:text-indigo-600 hover:bg-transparent duration-200 ease-in-out ">
-							<AiOutlinePlus />
+						<AiOutlinePlus />
 						New Receipt
 					</button>
 				</div>
@@ -102,57 +107,107 @@ const AdminReceipt: React.FC = () => {
 					</div>
 					<div></div>
 				</div>
-				<div className="h-[400px] overflow-y-scroll">
-						<table className="table-auto w-full text-xs sm:text-sm md:text-base">
-							<thead>
-								<tr className="border-b border-gray-200">
-									<td className="px-4 py-3" align="center">Id</td>
-									<td className="px-4 py-3"align="left">
-										Date Create
+				<div className="h-[600px] overflow-y-scroll">
+					<table className="table-auto w-full text-xs sm:text-sm md:text-base">
+						<thead>
+							<tr className="border-b border-gray-200">
+								<td
+									className="px-4 py-3"
+									align="center">
+									Id
+								</td>
+								<td
+									className="px-4 py-3"
+									align="center">
+									Date Create
+								</td>
+								<td
+									className="px-4 py-3"
+									align="center">
+									Partner
+								</td>
+								<td
+									className="px-4 py-3"
+									align="center">
+									Status
+								</td>
+								<td
+									className="px-4 py-3"
+									align="center">
+									Total
+								</td>
+								<td></td>
+							</tr>
+						</thead>
+						<tbody>
+							{receipts?.map((receipt: any, idx) => (
+								<tr
+									className="border-b border-gray-200"
+									key={idx}>
+									<td
+										className="py-7"
+										align="center">
+										{receipt.id}
 									</td>
-									<td className="px-4 py-3"align="left">
-										Total
+									<td align="center">
+										<span>
+											{moment(
+												receipt.dateCreate
+											).format(
+												"MMM Do YY, h:mm a"
+											)}
+										</span>
 									</td>
-									<td className="px-4 py-3"align="left">
-										Status
+									<td align="center">
+										<span>
+											{
+												receipt.partner
+											}
+										</span>
 									</td>
-									<td className="px-4 py-3"align="left">
-										Partner
+									<td align="center">
+										<span>
+											{
+												receipt.status
+											}
+										</span>
 									</td>
-									<td></td>
-								</tr>
-							</thead>
-							<tbody>
-								{/* {receipts?.map((cate: any, idx) => (
-									<tr
-										className="border-b border-gray-200"
-										key={idx}>
-										<td className="py-7" align="center">
-											{cate.cateId}
-										</td>
-										<td align="left">
-											<span>
-												{cate.name}
-											</span>
-										</td>
-										<td align="right" className="flex justify-center items-center gap-2 mt-[20%]">
-											<div
-											className="p-2 hover:bg-red-300/30 rounded-full duration-200 cursor-pointer"
-												// onClick={() =>
-												// 	handleDeleteCate(
-												// 		cate.cateId
-												// 	)
-												// }
+									<td align="center">
+										<span>
+											{currencyFormat(
+												receipt.total
+											)}
+										</span>
+									</td>
+									<td
+										align="right"
+										className="flex justify-center items-center gap-2 mt-[20%]">
+										<div
+											className="p-2 hover:bg-green-300/30 rounded-full duration-200 cursor-pointer"
+											onClick={() =>
+												handleReceiptDetails(
+													receipt
+												)
+											}
 											>
-												<Tooltip TransitionComponent={Zoom} title="Delete">
-													<FiTrash2 size={20} className='text-red-600' />
-												</Tooltip>
-											</div>
-										</td>
-									</tr>
-								))} */}
-							</tbody>
-						</table>
+											<Tooltip
+												TransitionComponent={
+													Zoom
+												}
+												title="Details">
+												<FiEye
+													className="text-green-600"
+													size={
+														20
+													}
+												/>
+											</Tooltip>
+										</div>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

@@ -12,6 +12,7 @@ namespace API.DTOs
         public DateTime DateCreate { get; set; }
         public int Status { get; set; }
         public int PartnerId { get; set; }
+        public string Partner {get; set;}
         public ICollection<ReceiptDetailsDto> ReceiptDetails { get; set; }
     }
 }

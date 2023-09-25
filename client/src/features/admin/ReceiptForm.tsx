@@ -63,7 +63,7 @@ const ReceiptForm: React.FC<Props> = ({ cancelEdit }) => {
 			console.log(error);
 		}
 	}
-	if (editItems) return <ReceiptEdit cancelEditItems={cancelEditItems} childrenItems={childrenItems} parentItems={parentItems} />;
+	if (editItems) return <ReceiptEdit cancelEditItems={cancelEditItems} childrenItems={childrenItems} parentItems={parentItems} cancelEdit={cancelEdit} />;
 
 	return (
 		<div className="mt-24 p-5">

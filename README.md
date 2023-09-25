@@ -145,6 +145,6 @@ ADMIN
       [x] Thống kê lợi nhuận (total revenue - (total import + total shipping fee))
       [x] Thống kê tỉ lệ quay lại mua hàng của khách hàng (month chart, d/m/y)
       [x] Chatbox
+      [x] phiếu nhập xuất
       [] Thống kê lợi nhuận (= phiếu nhập xuất)
-      [] phiếu nhập xuất
   -->

@@ -8,32 +8,15 @@ import { Link } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
 import { RiBarChartBoxFill } from "react-icons/ri";
+import { currencyFormat } from "../../app/utilities/util";
+
 interface IProps {
-	product?: IProduct;
+	receipt?: any;
 	cancelEdit: () => void;
 }
 
-const ProductVariants: React.FC<IProps> = ({ product, cancelEdit }) => {
-	const [colors, setColors] = useState([]);
-	const [sizes, setSizes] = useState([]);
-	const [variants, setVariants] = useState([]);
-
-	const dispatch = useAppDispatch();
-
-	useEffect(() => {
-		if (product && product.id !== undefined)
-			agent.Catalog.getColors()
-				.then((res) => setColors(res))
-				.catch((error) => console.log(error));
-			agent.Catalog.getSizes()
-				.then((res) => setSizes(res))
-				.catch((error) => console.log(error));
-		if (product !== undefined) {
-			agent.Catalog.productVariants(product.id)
-				.then((res) => setVariants(res))
-				.catch((error) => console.log(error));
-		}
-	}, [product]);
+const ReceiptDetails: React.FC<IProps> = ({ receipt, cancelEdit }) => {
+	console.log(receipt);
 
 	return (
 		<div className="mt-24 p-5 rounded-div2">
@@ -50,7 +33,7 @@ const ProductVariants: React.FC<IProps> = ({ product, cancelEdit }) => {
 				<Link to="/">
 					<h1 className="flex items-center gap-1 hover:text-indigo-600 duration-200 text-lg font-rubik ">
 						<RiBarChartBoxFill size={20} />
-						Product Variants
+						Receipt Details
 					</h1>
 				</Link>
 			</div>
@@ -84,11 +67,16 @@ const ProductVariants: React.FC<IProps> = ({ product, cancelEdit }) => {
 									align="center">
 									Quantity
 								</td>
+								<td
+									className="px-4 py-3"
+									align="center">
+									Price
+								</td>
 								<td></td>
 							</tr>
 						</thead>
 						<tbody>
-							{variants?.map(
+							{receipt.receiptDetails?.map(
 								(variant: any, idx: number) => (
 									<tr
 										className="border-b border-gray-200"
@@ -103,19 +91,23 @@ const ProductVariants: React.FC<IProps> = ({ product, cancelEdit }) => {
 												variant.productId
 											}
 										</td>
-										<td align="center" className="flex justify-center items-center gap-4 mt-[10%]">
-											<div
-												className={`bg-${variant.colourValue}-500 border-2 border-gray-300  ml-1 rounded-full w-6 h-6 focus:outline-none`}></div>
+										<td
+											align="center"
+											className="flex justify-center items-center gap-4 mt-[10%]">
+												{variant.color && 
+													<div
+														className={`bg-${variant.color}-500 border-2 border-gray-300  ml-1 rounded-full w-6 h-6 focus:outline-none`}></div>
+												}
 											<span className="capitalize">
 												{
-													variant.colourValue
+													variant.color
 												}
 											</span>
 										</td>
 										<td align="center">
 											<span>
 												{
-													variant.sizeValue
+													variant.size
 												}
 											</span>
 										</td>
@@ -123,6 +115,11 @@ const ProductVariants: React.FC<IProps> = ({ product, cancelEdit }) => {
 											{
 												variant.quantity
 											}
+										</td>
+										<td align="center">
+											{currencyFormat(
+												variant.price
+											)}
 										</td>
 									</tr>
 								)
@@ -145,4 +142,4 @@ const ProductVariants: React.FC<IProps> = ({ product, cancelEdit }) => {
 	);
 };
 
-export default ProductVariants;
+export default ReceiptDetails;

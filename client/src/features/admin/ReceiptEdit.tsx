@@ -8,11 +8,12 @@ import ReceiptEditTable from "../../app/components/ReceiptEditTable";
 
 interface IProps {
    cancelEditItems: () => void;
+	cancelEdit: () => void;
    childrenItems: any;
    parentItems: any;
 }
 
-const ReceiptEdit: React.FC<IProps> = ({ cancelEditItems, childrenItems, parentItems }) => {
+const ReceiptEdit: React.FC<IProps> = ({ cancelEditItems, childrenItems, parentItems, cancelEdit }) => {
 
 	const { productDetails, loadProductDetails } = useAppSelector((state) => state.admin);
 
@@ -50,7 +51,7 @@ const ReceiptEdit: React.FC<IProps> = ({ cancelEditItems, childrenItems, parentI
 			</div>
 			<div className="rounded-div2 p-0">
 				<div className="h-[600px] overflow-y-scroll">
-						<ReceiptEditTable data={filteredData} cancelEditItems={cancelEditItems}/>
+						<ReceiptEditTable data={filteredData} cancelEditItems={cancelEditItems} cancelEdit={cancelEdit}/>
 				</div>
 			</div>
 		</div>

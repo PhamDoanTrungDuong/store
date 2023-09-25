@@ -1,17 +1,26 @@
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReceiptEditDetail from "./ReceiptEditDetail";
 import AppTextInputReceipt from "./AppTextInputReceipt";
+import AppSelectList from "./AppSelectList";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FieldValues, useForm } from "react-hook-form";
 import { receiptValidation } from "../../features/admin/receiptValidation";
+import { fetchPartners } from "../../features/admin/adminSlice";
+import { useAppSelector, useAppDispatch } from "../store/configureStore";
+import agent from "../api/agent";
 
 interface IProps {
 	data: any;
 	cancelEditItems: () => void;
+	cancelEdit: () => void;
 }
 
-const ReceiptEditTable: React.FC<IProps> = ({ data, cancelEditItems }) => {
+const ReceiptEditTable: React.FC<IProps> = ({ data, cancelEditItems, cancelEdit }) => {
+	const { partners, loadPartner } = useAppSelector((state) => state.admin);
+	const dispatch = useAppDispatch();
+
+	
 	const {
 		control,
 		reset,
@@ -27,21 +36,33 @@ const ReceiptEditTable: React.FC<IProps> = ({ data, cancelEditItems }) => {
 		// resolver: yupResolver<any>(receiptValidation)
 	});
 
-	async function handleSubmitData(data: any) {
-		console.log(data);
+	useEffect(() => {
+		loadPartner ? dispatch(fetchPartners()) : dispatch(fetchPartners());
+	}, [dispatch, loadPartner]);
+	const namesArray = partners && partners.map((item: any) => item.name);
 
-		// try {
-		// 	 cancelEdit();
-		// } catch (error) {
-		// 	 console.log(error)
-		// }
+	async function handleSubmitData(data: any) {
+		let flatData = data.update.flat()
+		console.log(flatData)
+		var dataUpdate = {update: flatData, partner: data.partner}
+		try {
+			var result = agent.Admin.newReceipt(dataUpdate)
+									.then(() => cancelEdit())
+									.then(() => setReceiptLoad())
+			return result
+			//  cancelEdit();
+		} catch (error) {
+			 console.log(error)
+		}
 	}
 
 	return (
 		<div>
 			<form onSubmit={handleSubmit(handleSubmitData)}>
 				<div className="flex justify-between p-6 items-center">
-					<div className="w-[30%]">Partner ...</div>
+					<div className="w-[30%]">
+						<AppSelectList items={namesArray} control={control} name='partner' label='Partners' />
+					</div>
 					<div className="flex justify-between items-center gap-2">
 						<button
 							onClick={() => cancelEditItems()}
@@ -205,6 +226,24 @@ const ReceiptEditTable: React.FC<IProps> = ({ data, cancelEditItems }) => {
 																			detail.quantity
 																		}
 																	</td>
+																	<input
+																		type="hidden"
+																		{...register(
+																			`update[${idx}][${index}].color`
+																		)}
+																		value={
+																			detail.colorsValue
+																		}
+																	/>
+																	<input
+																		type="hidden"
+																		{...register(
+																			`update[${idx}][${index}].size`
+																		)}
+																		value={
+																			detail.sizesValue
+																		}
+																	/>
 																	<input
 																		type="hidden"
 																		{...register(
