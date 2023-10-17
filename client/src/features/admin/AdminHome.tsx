@@ -396,6 +396,9 @@ const AdminHome: React.FC = () => {
 					</div>
 				</div>
 			</div>
+			<div className="mt-5">
+				<ViewDatePicker />
+			</div>
 			<div className="rounded-div2 mt-5">
 				<h3 className="font-medium text-lg p-2 mb-5">Best Seller</h3>
 				<div className="flex justify-center items-center gap-4">
@@ -494,9 +497,6 @@ const AdminHome: React.FC = () => {
 						);
 					})}
 				</div>
-			</div>
-			<div className="mt-5">
-				<ViewDatePicker />
 			</div>
 		</>
 	);

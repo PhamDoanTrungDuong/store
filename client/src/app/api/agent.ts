@@ -104,6 +104,7 @@ const Catalog = {
     getProductCount: () => requests.get('products/get-product-count'),
     getColors: () => requests.get('products/get-colors'),
     getSizes: () => requests.get('products/get-sizes'),
+    // productVariants: (data: any) => requests.post('products/product-variants', data),
     productVariants: (id: number) => requests.get(`products/product-variants/${id}`),
     variantsDetail: (id: number) => requests.get(`products/variants-details/${id}`),
     getProductDiscount: () => requests.get('discount'),

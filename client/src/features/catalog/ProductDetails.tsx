@@ -81,6 +81,7 @@ const ProductDetails: React.FC = () => {
 	const [selectedSize, setSelectedSize] = useState("S");
 	const [variantsProduct, setVariantsProduct] = useState<any>();
 	const [productQty, setProductQty] = useState<any>();
+	const [productPrice, setProductPrice] = useState<any>();
 	const [avg, setAvg] = useState<number>(0);
 	const { basket } = useAppSelector((state) => state.basket);
 	const { status: productStatus } = useAppSelector((state) => state.catalog);
@@ -186,6 +187,8 @@ const ProductDetails: React.FC = () => {
 					item.colourValue === selectedColor && item.sizeValue === selectedSize
 				)).map((i: any) => setProductQty(i.quantity))
 	}, [selectedColor, selectedSize, variantsProduct])
+
+	console.log(variantsProduct)
 
 	useEffect(() => {
 		agent.Orders.getOrderComment()

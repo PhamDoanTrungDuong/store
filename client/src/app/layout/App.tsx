@@ -410,9 +410,7 @@ const App: React.FC = () => {
 								<Route
 									path="/sale"
 									element={
-										<PrivateRoute>
 											<ProductDiscount />
-										</PrivateRoute>
 									}
 								/>
 								<Route

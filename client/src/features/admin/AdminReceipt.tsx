@@ -103,7 +103,7 @@ const AdminReceipt: React.FC = () => {
 			<div className="rounded-div2 p-0">
 				<div className="flex justify-between p-6 items-center">
 					<div className="w-[30%]">
-						<CategorySearch />
+						{/* <CategorySearch /> */}
 					</div>
 					<div></div>
 				</div>

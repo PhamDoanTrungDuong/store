@@ -272,6 +272,45 @@ namespace API.Controllers
                   return Ok(productDetails);
             }
 
+            // [HttpPost("product-variants/")]
+            // public async Task<ActionResult> ProductVariants(ProductVarVm productVarVm)
+            // {
+            //       // var productDetails = await _context.ProductDetails.Where(x => x.ProductId == id).ToListAsync();
+            //       // if(productDetails == null) return BadRequest(new ProblemDetails{Title = "Can't find product"});
+            //       // return Ok(productDetails);
+                  
+            
+            //       var combinedDetails = _context.ProductDetails
+            //             .Where(pd =>
+            //                   pd.ProductId == productVarVm.Id &&
+            //                   pd.ColourValue == productVarVm.colourValue &&
+            //                   pd.SizeValue == productVarVm.sizeValue)
+            //             .Join(
+            //                   _context.ReceiptDetails,
+            //                   pd => pd.ProductId,
+            //                   rd => rd.ProductId,
+            //                   (pd, rd) => new
+            //                   {
+            //                         ProductDetailsId = pd.Id,
+            //                         ColourId = pd.ColourId,
+            //                         ColourValue = pd.ColourValue,
+            //                         Colour_code = pd.Colour_code,
+            //                         SizeId = pd.SizeId,
+            //                         SizeValue = pd.SizeValue,
+            //                         Quantity = pd.Quantity,
+            //                         ProductId = pd.ProductId,
+            //                         Price = rd.Price,
+            //                         AfterPrice = rd.AfterPrice
+            //                   })
+            //             .FirstOrDefault();
+
+            //       if (combinedDetails != null)
+            //       {
+            //             return Ok(combinedDetails);
+            //       }
+            //       return NoContent();
+            // }
+
             [HttpGet("variants-details/{id}")]
             public async Task<ActionResult> VariantsDetails(int id)
             {

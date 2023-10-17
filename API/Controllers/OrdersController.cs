@@ -56,6 +56,64 @@ namespace API.Controllers
                 return subtotal.Sum();
             }
 
+            [HttpGet("calculateProfitMonth")]
+            public async Task<IActionResult> CalculateProfitForMonthAsync(int year, int month)
+            {
+                // Calculate the start and end of the specified month
+                DateTime startDate = new DateTime(year, month, 1);
+                DateTime endDate = startDate.AddMonths(1).AddDays(-1);
+
+                // Calculate Total Sales for the specified month asynchronously
+                var ordersInMonth = await _context.Orders
+                    .Where(order => order.OrderDate >= startDate && order.OrderDate <= endDate)
+                    .ToListAsync();
+
+                decimal totalSales = ordersInMonth.Sum(order => order.GetTotal());
+
+                // Calculate COGS for the specified month asynchronously
+                var receiptDetailsInMonth = await _context.ReceiptDetails
+                    .Where(rd => rd.Receipt.DateCreate >= startDate && rd.Receipt.DateCreate <= endDate)
+                    .ToListAsync();
+
+                decimal cogs = receiptDetailsInMonth.Sum(rd => rd.Price); // Assuming Price represents the cost of the product
+
+                // Calculate Revenue
+                decimal revenue = totalSales;
+
+                // Calculate Profit
+                decimal profit = revenue - cogs;
+
+                return Ok(new { Revenue = revenue, Profit = profit });
+            }
+
+            [HttpGet("calculateProfitDate")]
+            public async Task<IActionResult> CalculateProfitAndRevenueForDateRangeAsync(DateTime startDate, DateTime endDate)
+            {
+                // Calculate Total Sales for the specified date range asynchronously
+                var ordersInRange = await _context.Orders
+                    .Where(order => order.OrderDate >= startDate && order.OrderDate <= endDate)
+                    .ToListAsync();
+
+                decimal totalSales = ordersInRange.Sum(order => order.GetTotal());
+
+                // Calculate COGS for the specified date range asynchronously
+                var receiptDetailsInRange = await _context.ReceiptDetails
+                    .Where(rd => rd.Receipt.DateCreate >= startDate && rd.Receipt.DateCreate <= endDate)
+                    .ToListAsync();
+
+                decimal cogs = receiptDetailsInRange.Sum(rd => rd.Price); // Assuming Price represents the cost of the product
+
+                // Calculate Revenue for the date range
+                decimal revenue = totalSales;
+
+                // Calculate Profit for the date range
+                decimal profit = revenue - cogs;
+
+                return Ok(new { Revenue = revenue, Profit = profit });
+            }
+
+
+
             // [HttpGet("getOrder/{id}")]
             // public async Task<System.Collections.Generic.List<OrderItemDto>> GetOrder(int id)
             // {

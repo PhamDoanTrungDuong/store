@@ -5,6 +5,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+// import { DemoContainer } from '@mui/x-date-pickers';
+import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import agent from "../api/agent";
 
 import {
@@ -18,6 +20,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { currencyFormat } from "../utilities/util";
+import { useAppSelector } from "../store/configureStore";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -54,6 +57,7 @@ const ViewDatePicker: React.FC = () => {
 	const [month, setMonth] = useState<any>();
 	const [yearValue, setYearValue] = useState<any>(dayjs());
 	const [salePerDay, setSalePerDay] = useState<any>();
+	const { allTotal } = useAppSelector((state) => state.order);
 
 	const data = {
 		labels,
@@ -85,11 +89,11 @@ const ViewDatePicker: React.FC = () => {
 	}, [value, yearValue]);
 	return (
 		<>
-			<div className="flex justify-start items-center w-[40%]">
+			<div className="flex justify-between items-center">
 				<div className="rounded-div2">
-					<h2 className="p-2 font-medium text-lg">Total Revenue Per Day</h2>
+					<h2 className="p-2 font-medium text-lg">Revenue Per Day</h2>
 					<div className="w-[100%] mt-4 flex justify-center items-center">
-						<p className="font-medium mr-2">Date:</p>
+						{/* <p className="font-medium mr-2">Date:</p> */}
 						<LocalizationProvider dateAdapter={AdapterDayjs}>
 							<Stack spacing={3}>
 								<DatePicker
@@ -113,15 +117,33 @@ const ViewDatePicker: React.FC = () => {
 						</div>
 					</div>
 				</div>
+				{/* <div className="rounded-div2">
+					<h2 className="p-2 font-medium text-lg">Revenue Date To Date</h2>
+					<div className="w-[100%] mt-4 flex justify-center items-center">
+						<LocalizationProvider dateAdapter={AdapterDayjs}>
+							<DemoContainer components={['DateRangePicker']}>
+								<DateRangePicker localeText={{ start: 'Check-in', end: 'Check-out' }} />
+							</DemoContainer>
+						</LocalizationProvider>
+						<div className="text-white mx-3 p-4 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-400">
+								<p>
+									{currencyFormat(salePerDay)}
+								</p>
+						</div>
+					</div>
+				</div> */}
 			</div>
 			<div className="rounded-div2 mt-5">
 				<h3 className="text-lg font-medium p-2">Total Revenue Per Month</h3>
-				<div className="flex justify-end items-center w-full">
+				<div className="flex justify-end items-center w-full gap-6">
+					<div className="text-white mx-3 p-4 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-400 font-bold text-xl">
+						<p>{currencyFormat(allTotal)}</p>
+					</div>
 					<LocalizationProvider dateAdapter={AdapterDayjs}>
 						<Stack spacing={3}>
 							<DatePicker
 								views={['year']}
-								label="Year only"
+								label="Year"
 								value={yearValue}
 								onChange={(newValue: any) => {
 									setYearValue(newValue);
