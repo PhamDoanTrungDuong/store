@@ -218,6 +218,7 @@ namespace API.Controllers
 
                     if(productItem == null) return NotFound();
                     if(productItem.QuantityInStock < 1) return BadRequest(new ProblemDetails{Title = $"Product {productItem.Name} is out of stock"});
+                    
                     var itemOrdered = new ProductItemOrdered
                     {
                         ProductId = productItem.Id,
@@ -238,6 +239,9 @@ namespace API.Controllers
                     productItem.QuantityInStock -= item.Quantity;
                     if(productVariants != null) {
                         if(productVariants.ProductId == item.ProductId && productVariants.SizeValue == item.Size && productVariants.ColourValue == item.Color){
+                            if (productVariants.Quantity < item.Quantity) {
+                                return BadRequest(new ProblemDetails { Title = $"Not enough stock for product variant" });
+                            }
                             productVariants.Quantity -= item.Quantity;
                         }
                     }
@@ -341,6 +345,9 @@ namespace API.Controllers
                     productItem.QuantityInStock -= item.Quantity;
                     if(productVariants != null) {
                         if(productVariants.ProductId == item.ProductId && productVariants.SizeValue == item.Size && productVariants.ColourValue == item.Color){
+                            if (productVariants.Quantity < item.Quantity) {
+                                return BadRequest(new ProblemDetails { Title = $"Not enough stock for product variant" });
+                            }
                             productVariants.Quantity -= item.Quantity;
                         }
                     }
@@ -443,6 +450,9 @@ namespace API.Controllers
                     productItem.QuantityInStock -= item.Quantity;
                     if(productVariants != null) {
                         if(productVariants.ProductId == item.ProductId && productVariants.SizeValue == item.Size && productVariants.ColourValue == item.Color){
+                            if (productVariants.Quantity < item.Quantity) {
+                                return BadRequest(new ProblemDetails { Title = $"Not enough stock for product variant" });
+                            }
                             productVariants.Quantity -= item.Quantity;
                         }
                     }

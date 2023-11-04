@@ -1,6 +1,6 @@
 namespace API.Entities
 {
-    public enum VoucherFeature
+    public enum VoucherFeature 
     {
         Percent,
         FreeShip,

@@ -2,7 +2,7 @@ namespace API.Entities
 {
     public class ProductDetails
     {
-        public int Id { get; set; }
+        public int Id { get; set; } 
         public int ColourId { get; set; }
         public string ColourValue { get; set; }
         public string Colour_code { get; set; }

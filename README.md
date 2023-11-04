@@ -34,8 +34,15 @@
       [x] thông báo mess
       [x] màu, size selection multiple
       [x] fix eslint
+      [x] sidebar UI
       [] thời gian mess và tin nhắn cuối
-      [] sidebar UI
+      [x] input số lượng ở productdetails
+      [] hiện thị số lượng sản phẩm được bỏ vào giỏ hàng?????????????????????
+      [x] số lượng tổng sản phẩm sau khi nhập hàng
+      [] thêm địa chỉ mới ở phần checkout
+      [] chat với admin khi chưa dăng nhập
+      [] phản hồi người dùng sau khi vận chuyển
+      [] sảm phẩm 3D
 
  -->
 <!--       ==========Main features===========
@@ -87,6 +94,7 @@
       [] ~điểm danh nhận voucher
       [] ~games (maybe)
       [] điểm danh nhận voucher
+
  -->
  <!-- TLTN
       1. Giao diện trang chủ: mục đăng nhập, mục đăng ký, hiển thị các quảng cáo sản phẩm.

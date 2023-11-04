@@ -15,7 +15,7 @@ namespace API.Entities.OrderAggregate
 
         public List<OrderItem> OrderItems { get; set; }
 
-        public long Subtotal { get; set; }
+        public long Subtotal { get; set; } 
 
         public long DeliveryFee { get; set; }
 

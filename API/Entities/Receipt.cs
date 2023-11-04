@@ -7,7 +7,7 @@ namespace API.Entities
 {
     public class Receipt
     {
-        public int Id { get; set; }
+        public int Id { get; set; } 
         public long Total { get; set; }
         public DateTime DateCreate { get; set; }
         public int Status { get; set; }

@@ -2,7 +2,7 @@ namespace API.Entities.OrderAggregate
 {
     public enum DeliveryStatus
     {
-        PendingConfirm,
+        PendingConfirm, 
         OnTheWay,
         ProductDelivered,
         CancelOrder

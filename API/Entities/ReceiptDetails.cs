@@ -7,7 +7,7 @@ namespace API.Entities
 {
     public class ReceiptDetails
     {
-        public int Id { get; set; }
+        public int Id { get; set; } 
         public int ReceiptId { get; set; }
         public Receipt Receipt { get; set; }
         public int ProductId { get; set; }

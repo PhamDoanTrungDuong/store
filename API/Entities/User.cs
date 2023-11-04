@@ -7,7 +7,7 @@ namespace API.Entities
     {
         public UserAddress Address { get; set; }
         public string PictureUrl { get; set; }
-        public string PublicId { get; set; }
+        public string PublicId { get; set; } 
         public int Timer { get; set; } = default;
 
         public ICollection<Message> MessagesSent { get; set; }

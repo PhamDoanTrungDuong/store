@@ -7,7 +7,7 @@ namespace API.Entities
     public class Category
     {
         [Key]
-        public int CateId { get; set; }
+        public int CateId { get; set; } 
         public string Name { get; set; }
 
         [ForeignKey("CurrentCateId")]

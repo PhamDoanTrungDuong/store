@@ -16,7 +16,7 @@ namespace API.Entities
         public string Phone { get; set; }
         public DateTime DayBirth { get; set; }
         public string LicensePlates { get; set; }
-        public string Sex { get; set; }
+        public string Sex { get; set; } 
         public string Address { get; set; }
         public string Status { get; set; }
         public string Role { get; set; }

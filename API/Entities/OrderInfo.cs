@@ -7,7 +7,7 @@ namespace API.Entities
     public class OrderInfo
     {
         public long OrderId { get; set; }
-        public long Amount { get; set; }
+        public long Amount { get; set; } 
         public string OrderDesc { get; set; }
 
         public DateTime CreatedDate { get; set; }

@@ -4,7 +4,7 @@ namespace API.Entities
 {
     public class Comment
     {
-        public int Id { get; set; }
+        public int Id { get; set; } 
         public int userId { get; set; }
         public string Username { get; set; }
         public User User { get; set; }

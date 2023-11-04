@@ -1,6 +1,6 @@
 namespace API.Entities
 {
-    public class Address
+    public class Address 
     {
         public string FullName { get; set; }
 

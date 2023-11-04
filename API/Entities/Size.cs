@@ -5,7 +5,7 @@ namespace API.Entities
 {
     public class Size
     {
-        public int Id { get; set; }
+        public int Id { get; set; } 
         public string Size_value { get; set; }
         public ICollection<ProductDetails> ProductDetails { get; set; }
     }

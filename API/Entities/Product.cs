@@ -23,7 +23,7 @@ namespace API.Entities
 
         public ICollection<ProductDetails> ProductDetails { get; set; }
         public ICollection<ProductDiscount> ProductDiscounts { get; set; }
-        public ICollection<ReceiptDetails> ReceiptDetails { get; set; }
+        public ICollection<ReceiptDetails> ReceiptDetails { get; set; } 
 
 
         public int CurrentCateId { get; set; }

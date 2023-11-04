@@ -6,7 +6,7 @@ namespace API.Entities
     {
         public int Id { get; set; }
         public User User {get; set;}
-        public int UserId { get; set; }
+        public int UserId { get; set; } 
         public Product LikedProduct { get; set; }
         public int LikedProductId { get; set; }
         public bool isLike { get; set; }
