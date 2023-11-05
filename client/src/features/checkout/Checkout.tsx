@@ -89,12 +89,12 @@ const Checkout: React.FC = () => {
 	};
 
 	// For Choose Address
-	const [addresses, setAddresses] = useState<any>([]);
-	useEffect(() => {
-		agent.Account.userAddresses().then((res) => {
-			setAddresses(res)
-		})
-	}, [])
+	// const [addresses, setAddresses] = useState<any>([]);
+	// useEffect(() => {
+	// 	agent.Account.userAddresses().then((res) => {
+	// 		setAddresses(res)
+	// 	})
+	// }, [])
 
 	const handleSelected = (address: any): void => {
 		setSelectedAddress(address)
@@ -103,7 +103,7 @@ const Checkout: React.FC = () => {
 	function getStepContent(step: number) {
 		switch (step) {
 			case 0:
-				return <AddressForm addresses={addresses} handleSelected={handleSelected} selectedAddress={selectedAddress}/>;
+				return <AddressForm handleSelected={handleSelected} selectedAddress={selectedAddress}/>;
 			case 1:
 				return <Review />;
 			case 2:

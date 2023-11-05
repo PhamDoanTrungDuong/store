@@ -12,6 +12,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { AiOutlineHome } from "react-icons/ai";
 import { BiCategoryAlt } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
+import { setAddressState } from "./accountSlice";
 interface IProps {
 	address?: any;
 	cancelEdit: () => void;
@@ -54,6 +55,7 @@ const ShippingAddressForm: React.FC<IProps> = ({ address, cancelEdit }) => {
             showConfirmButton: false,
             timer: 1500,
           });
+			 setAddressState();
         });
       }
 			cancelEdit();

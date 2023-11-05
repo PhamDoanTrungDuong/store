@@ -18,10 +18,12 @@ const memberAdapter = createEntityAdapter<IUser>();
 
 interface AccountState {
 	membersLoaded: boolean;
+	addresses: any;
 	user: IUser | null;
 	users: IUsers[] | null;
 	isError: boolean;
 	accountState: boolean
+	addressState: boolean
 	status: string;
 	count: number;
 	memberParams: MemberParams;
@@ -117,14 +119,25 @@ export const fetchMemberCount = createAsyncThunk<number>("order/fetchMemberCount
 	}
 });
 
+export const fetchAddresses = createAsyncThunk("account/fetchAddresses", async () => {
+	try {
+		const addresses = await agent.Account.userAddresses();
+		return addresses;
+	} catch (error) {
+		console.log(error);
+	}
+});
+
 export const accountSlice = createSlice({
 	name: "account",
 	initialState: memberAdapter.getInitialState<AccountState>({
 		membersLoaded: false,
+		addresses: [],
 		user: null,
 		users: [],
 		isError: true,
 		accountState: false,
+		addressState: false,
 		status: "idle",
 		count: 0,
 		memberParams: initParams(),
@@ -156,6 +169,9 @@ export const accountSlice = createSlice({
 		},
 		setRoleState: (state) => {
 			state.accountState = !state.accountState;
+		},
+		setAddressState: (state) => {
+			state.addressState = !state.addressState;
 		},
 		setPagination: (state, action) => {
 			state.pagination = action.payload;
@@ -206,6 +222,9 @@ export const accountSlice = createSlice({
 		builder.addCase(fetchMemberCount.fulfilled, (state, action) => {
 			state.count = action.payload;
 		});
+		builder.addCase(fetchAddresses.fulfilled, (state, action) => {
+			state.addresses = action.payload;
+		});
 		builder.addCase(signInUser.pending, (state) => {
 			state.status = "loginSuccess";
 		});
@@ -236,6 +255,7 @@ export const {
 	signOut,
 	setUser,
 	setStateUser,
+	setAddressState,
 	setPagination,
 	setPageNumber,
 	setMember,

@@ -19,7 +19,7 @@ import { clearBasket } from "../basket/basketSlice";
 import { LoadingButton } from "@mui/lab";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import { setStateUser } from "../account/accountSlice";
+import { fetchAddresses, setStateUser } from "../account/accountSlice";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { setVoucherNull } from "../admin/adminSlice";
 import { useTranslation } from "react-i18next";
@@ -47,7 +47,7 @@ const NormalCheckout: React.FC = () => {
 	const { basket } = useAppSelector((state) => state.basket);
 	const { selectedVoucher } = useAppSelector((state) => state.admin);
 
-	const { status } = useAppSelector((state) => state.account);
+	const { status, addressState, addresses } = useAppSelector((state) => state.account);
 	useEffect(() => {
 		if (status === "loginSuccess") {
 			Swal.fire({
@@ -63,12 +63,10 @@ const NormalCheckout: React.FC = () => {
 	}, [dispatch, status, t]);
 
 	// For Choose Address
-	const [addresses, setAddresses] = useState<any>([]);
-	useEffect(() => {
-		agent.Account.userAddresses().then((res) => {
-			setAddresses(res);
-		});
-	}, []);
+	// const [addresses, setAddresses] = useState<any>([]);
+	// useEffect(() => {
+	// 	addressState ? dispatch(fetchAddresses()) : dispatch(fetchAddresses());
+	// }, [addressState, dispatch])
 
 	const handleSelected = (address: any): void => {
 		setSelectedAddress(address);
@@ -79,7 +77,7 @@ const NormalCheckout: React.FC = () => {
 			case 0:
 				return (
 					<AddressForm
-						addresses={addresses}
+						// addresses={addresses}
 						handleSelected={handleSelected}
 						selectedAddress={selectedAddress}
 					/>

@@ -9,6 +9,9 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useTranslation } from "react-i18next";
+import ShippingAddressForm from "../account/ShippingAddressForm";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import { fetchAddresses } from "../account/accountSlice";
 
 const style = {
 	position: "absolute" as "absolute",
@@ -22,10 +25,49 @@ const style = {
 	p: 4,
 };
 interface IProps {
-	addresses: any;
+	// addresses?: any;
 	selectedAddress: any;
 	handleSelected: (address: any) => void;
 }
+
+function ChildModal() {
+	const [open, setOpen] = React.useState(false);
+	const handleOpen = () => {
+	  setOpen(true);
+	};
+	const handleClose = () => {
+	  setOpen(false);
+	};
+
+	function cancelEdit() {
+		handleClose();
+	}
+
+	return (
+	  <React.Fragment>
+		 {/* <Button onClick={handleOpen}>Open Child Modal</Button> */}
+		 <div className="flex justify-end py-4">
+				<button
+					onClick={handleOpen}
+					className="border text-white px-6 py-1 border-indigo-600 bg-indigo-600 text-lg rounded-lg hover:text-indigo-600 hover:bg-transparent duration-200 ease-in-out ">
+					{/* {t('Ship_Add')} */}
+					Add New Address
+				</button>
+			</div>
+		 <Modal
+			open={open}
+			onClose={handleClose}
+			aria-labelledby="child-modal-title"
+			aria-describedby="child-modal-description"
+		 >
+			<Box sx={{ ...style}}>
+				<ShippingAddressForm cancelEdit={cancelEdit} />
+			</Box>
+		 </Modal>
+	  </React.Fragment>
+	);
+ }
+
 const AddressForm: React.FC<IProps> = (props) => {
 	const { t } = useTranslation();
 
@@ -34,10 +76,105 @@ const AddressForm: React.FC<IProps> = (props) => {
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 
+	const dispatch = useAppDispatch();
+	const { addressState, addresses } = useAppSelector((state) => state.account);
+
+	React.useEffect(() => {
+		addressState ? dispatch(fetchAddresses()) : dispatch(fetchAddresses());
+	}, [addressState, dispatch])
+
 	return (
 		<>
 			<div>
-				<div>
+			<div>
+				<Modal
+				open={open}
+				onClose={handleClose}
+				aria-labelledby="parent-modal-title"
+				aria-describedby="parent-modal-description"
+				>
+				<Box sx={style}>
+							<Typography
+								id="modal-modal-title"
+								variant="h6"
+								component="h2">
+								Choose Address
+							</Typography>
+							<div className="max-h-[400px] overflow-y-scroll">
+								{addresses.map(
+									(item: any) => {
+										return (
+											<div
+												key={
+													item.id
+												}
+												onClick={() => {
+													props.handleSelected(
+														item
+													);
+													handleClose();
+												}}
+												className={`flex flex-col  gap-3 my-3 p-4 border rounded-xl hover:border-gray-600 duration-100 cursor-pointer ${
+													props.selectedAddress &&
+													(props
+														.selectedAddress
+														.id ===
+													item.id
+														? "border-slate-800"
+														: "border-gray-300")
+												} `}>
+												<p>
+													<span className="text-lg font-bold">
+														FullName
+													</span>
+
+													:{" "}
+													{
+														item.fullName
+													}
+												</p>
+												<p>
+													<span className="text-lg font-bold">
+														Phone Number
+													</span>
+
+													:{" "}
+													{
+														item.phoneNumber
+													}
+												</p>
+												<p>
+													<span className="text-lg font-bold">
+														Address
+														1
+													</span>
+
+													:{" "}
+													{
+														item.address1
+													}
+												</p>
+												<p>
+													<span className="text-lg font-bold">
+														Address
+														2
+													</span>
+
+													:{" "}
+													{
+														item.address2
+													}
+												</p>
+											</div>
+										);
+									}
+								)}
+							</div>
+							<ChildModal />
+						</Box>
+				</Modal>
+			</div>
+				{/* <div>
 					<Modal
 						open={open}
 						onClose={handleClose}
@@ -122,7 +259,7 @@ const AddressForm: React.FC<IProps> = (props) => {
 							</div>
 						</Box>
 					</Modal>
-				</div>
+				</div> */}
 			</div>
 			<div className="flex justify-between items-center cursor-pointer">
 				<div></div>

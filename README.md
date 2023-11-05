@@ -35,11 +35,11 @@
       [x] màu, size selection multiple
       [x] fix eslint
       [x] sidebar UI
-      [] thời gian mess và tin nhắn cuối
       [x] input số lượng ở productdetails
-      [] hiện thị số lượng sản phẩm được bỏ vào giỏ hàng?????????????????????
       [x] số lượng tổng sản phẩm sau khi nhập hàng
-      [] thêm địa chỉ mới ở phần checkout
+      [x] thêm địa chỉ mới ở phần checkout
+      [] hiện thị số lượng sản phẩm được bỏ vào giỏ hàng?????????????????????
+      [] thời gian mess và tin nhắn cuối
       [] chat với admin khi chưa dăng nhập
       [] phản hồi người dùng sau khi vận chuyển
       [] sảm phẩm 3D
